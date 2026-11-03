@@ -568,7 +568,7 @@ footer{padding-block:24px 48px}
 #turntoggle{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:600 13px var(--f-body);cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
 #turntoggle i{width:30px;height:16px;border-radius:99px;background:var(--line2);position:relative;transition:background .2s;flex:none}
 #turntoggle i::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--ink2,#999);transition:transform .2s,background .2s}
-#turntoggle[hidden]{display:none!important}
+#turntoggle,#turntoggle[hidden]{display:none!important}
 #turntoggle[aria-pressed="true"]{border-color:var(--gold)}
 #turntoggle[aria-pressed="true"] i{background:var(--gold)}
 #turntoggle[aria-pressed="true"] i::after{transform:translateX(14px);background:#1a1200}
@@ -905,6 +905,7 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f197","t":"2026-11-03T23:56:00Z","tag":"Hír","title":"Kentucky szenátus: Barr 61,8%, Booker 36,4% a szavazatok 4%-ánál","text":"Andy Barr 35 858, Charles Booker 21 112 szavazatnál tart. Az előny a korábbi 18 pont után ismét 25 pont fölé nőtt, az eredmény még nagyon korai; a kentuckyi és indianai körzetekben a számolás folyamatban van.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
 {"id":"f195","t":"2026-11-03T23:46:00Z","tag":"Hír","title":"Kentucky 1. körzet: Comer előnye 6 pontra olvadt","text":"Az AP szerint James Comer (R) előnye a 6%-nyi megszámolt szavazat után már csak 6 pont. Korábban, 1–2%-nál még 40 pont fölött járt, a különbség a nagyobb megyék számaival fogy.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-results/"},
 {"id":"f196","t":"2026-11-03T23:46:00Z","tag":"Hír","title":"Kentucky szenátus: Booker közelebb jön Barrhoz, 39,8% a 58,4% ellen","text":"A demokrata Charles Booker 15 615 szavazatnál tart, a republikánus Andy Barr 22 909-nél. A szavazatok kb. 2%-át számolták meg, Barr előnye a korai 47 pontról 18,6-ra csökkent.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
 {"id":"f193","t":"2026-11-03T23:34:00Z","tag":"Hír","title":"Kentucky: Barr korán vezet a Booker elleni szenátusi versenyben","text":"Az AP szerint a szavazatok kb. 1%-ának megszámolása után Andy Barr (R) 65,4%-on, Charles Booker (D) 32,8%-on áll. Barr 15 080, Booker 7 547 szavazatot kapott. A verseny McConnell visszavonulása miatt nyitott.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
@@ -1865,7 +1866,8 @@ function preTip(st){
 }
 /* ---------- turnout ---------- */
 function turnData(){const o=Object.assign({},TURN0),m=(S.meta&&S.meta.turnout)||{};Object.keys(m).forEach(k=>{if(m[k]&&typeof m[k]==="object")o[k]=Object.assign({},o[k]||{},m[k]);});return o;}
-function turnLiveHTML(st){
+function turnLiveHTML(st){return "";}
+function turnLiveHTML_old(st){
   const t=turnData()[st],prev=TURN[st];let main;
   if(t&&t.p!=null&&t.p!=="")main='<b>'+pct(t.p)+'%</b>részvétel'+(t.n?' · '+fmtN(t.n)+' szavazat':'');
   else if(t&&t.n)main='<b>'+fmtN(t.n)+'</b>leadott szavazat eddig'+(t.asOf?' <span class="muted">('+esc(t.asOf)+')</span>':'');
@@ -1874,7 +1876,8 @@ function turnLiveHTML(st){
   const cmp=prev?'Előző választásokon: 2022: '+pct(prev[1])+'% · 2024: '+pct(prev[2])+'%':'';
   return '<section class="qrace qturn"><div class="qrh"><span class="lbl">Részvétel</span></div><div class="turnmain">'+main+'</div>'+(cmp?'<div class="prevline">'+cmp+'</div>':'')+'</section>';
 }
-function turnTip(st){const t=turnData()[st];if(!t)return "";if(t.p!=null&&t.p!=="")return "<br>Részvétel: "+pct(t.p)+"%";if(t.n)return "<br>Leadott szavazat: "+fmtN(t.n)+(t.asOf?" ("+esc(t.asOf)+")":"");return t.note?"<br>"+esc(t.note):"";}
+function turnTip(st){return "";}
+function turnTip_old(st){const t=turnData()[st];if(!t)return "";if(t.p!=null&&t.p!=="")return "<br>Részvétel: "+pct(t.p)+"%";if(t.n)return "<br>Leadott szavazat: "+fmtN(t.n)+(t.asOf?" ("+esc(t.asOf)+")":"");return t.note?"<br>"+esc(t.note):"";}
 function updateTurnFact(){
   renderTurnCard();renderExit();paintTurn();
   const b=$("fact-turn");if(!b)return;const u=turnData()._us;
@@ -1892,17 +1895,17 @@ function renderTurnCard(){
   const sum=rows.reduce((a,k)=>a+num(d[k].n),0);
   const list=rows.map(k=>{const t=d[k];return '<li title="'+esc(NAMES[k]+(t.asOf?" · "+t.asOf:""))+'"><b>'+k+'</b><span class="tb"><i style="width:'+Math.max(2,num(t.n)/mx*100).toFixed(1)+'%"></i></span><span class="tv">'+(t.p!=null&&t.p!==""?pct(t.p)+'% · ':'')+(t.n?fmtN(t.n):'–')+'</span></li>';}).join("")+notes.map(k=>'<li class="tn"><b>'+k+'</b><span class="muted" style="grid-column:2/4">'+esc(d[k].note)+'</span></li>').join("");
   const M=v=>(v/1e6).toFixed(1).replace(".",",")+" M";
-  const head=us&&us.n?us.n:sum;
+  const head=us&&us.n?us.n:0;
   let sub=us&&us.n?'Országos összesítés ('+esc(us.asOf||"")+')'+(us.mail&&us.inperson?': '+M(us.mail)+' levélszavazat + '+M(us.inperson)+' személyesen leadott korai szavazat.':'.'):'';
   if(us&&us.party)sub+=' A korai szavazók regisztrációja: '+us.party.D+'% demokrata, '+us.party.R+'% republikánus, '+us.party.O+'% egyéb.';
-  el.innerHTML='<span class="tg">Részvétel · összesítés</span><h3>'+(head?fmtN(head)+' leadott szavazat eddig':'–')+'</h3><p class="muted">'+sub+' Az alábbi '+rows.length+' államnál ismert szám összege: '+fmtN(sum)+' (államonként eltérő dátummal, az állam fölé víve látszik). A végső részvételi arány az eredményekkel együtt érkezik.</p><ul class="turnlist">'+list+'</ul>';
+  el.innerHTML='<span class="tg">Részvétel · összesítés</span><h3>'+(head?fmtN(head)+' leadott szavazat eddig':'–')+'</h3><p class="muted">'+sub+' A végső részvételi arány az eredményekkel együtt érkezik.</p>';
 }
 let turnOn=true;try{turnOn=localStorage.getItem("turnOn")!=="0";}catch(e){}
 function turnShort(n){n=num(n);if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1).replace(".",",")+"M";if(n>=1e3)return Math.round(n/1e3)+"E";return String(Math.round(n));}
 function paintTurn(){
   const bt=$("turntoggle");if(bt){bt.setAttribute("aria-pressed",String(turnOn));bt.hidden=(era==="pre");}
   const g=$("tlabels");if(!g)return;g.innerHTML="";
-  if(!turnOn||era==="pre"||view!=="geo"||mode==="house"||typeof geo==="undefined"||!geo.lbs)return;
+  if(true||!turnOn||era==="pre"||view!=="geo"||mode==="house"||typeof geo==="undefined"||!geo.lbs)return;
   const d=turnData();let h="";
   Object.keys(geo.lbs).forEach(st=>{
     const t=d[st];if(!t||!t.n)return;const l=geo.lbs[st];
