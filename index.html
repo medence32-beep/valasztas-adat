@@ -207,6 +207,7 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 .c-R{--fill:var(--rep);--txt:var(--on-rep)}
 .c-I{--fill:var(--ind);--txt:var(--on-ind)}
 .c-P{--fill:var(--pend);--txt:var(--ink)}
+#counties.pend .cty{fill:var(--pend)}
 .c-LD{--fill:color-mix(in srgb,var(--dem) 58%,var(--pend));--txt:var(--ink)}
 .c-LR{--fill:color-mix(in srgb,var(--rep) 58%,var(--pend));--txt:var(--ink)}
 .c-LI{--fill:color-mix(in srgb,var(--ind) 58%,var(--pend));--txt:var(--ink)}
@@ -1153,7 +1154,7 @@ function stClass(st){
   return "T"+RAMP_HOURS.indexOf(h);
 }
 function leadCls(doc){
-  if(!doc||!(num(doc.rep)>0||doc.dv!=null||doc.rv!=null))return null;
+  if(!doc||!(num(doc.rep)>=1))return null;
   const v=[["D",doc.dn!=null?num(doc.dn):null,num(doc.dv)],["R",doc.rn!=null?num(doc.rn):null,num(doc.rv)],["I",doc.on!=null?num(doc.on):null,num(doc.ov)]];
   const useV=v.every(x=>x[1]!=null||x[0]==="I")&&v[0][1]!=null&&v[1][1]!=null;
   v.sort((a,b)=>useV?((b[1]||0)-(a[1]||0)):(b[2]-a[2]));
@@ -1469,9 +1470,9 @@ function drawCty(st){
   if(!st||!CTY||!CTY[st]||!geo.els[st])return;
   ctyEra=era;g.classList.add("cin");clearTimeout(g._cin);g._cin=setTimeout(()=>g.classList.remove("cin"),1200);
   g.innerHTML=CTY[st].map((c,i)=>'<path class="cty" data-i="'+i+'" d="'+c[1]+'" style="animation-delay:'+((i%40)*12)+'ms'+(era==="pre"&&ctyColor(c)?';fill:'+ctyColor(c):'')+'"/>').join("");
-  $("geo").classList.add("hascty");ctyLabelState();
+  $("geo").classList.add("hascty");ctyFill();ctyLabelState();
 }
-function ctyFill(){}
+function ctyFill(){const g=$("counties");if(!g)return;const c=zoomSt?(mode==="gov"?govCall(zoomSt):senCall(zoomSt)):null;g.classList.toggle("pend",era==="live"&&!c);}
 function zoomMark(st){
   Object.keys(geo.els).forEach(k=>{geo.els[k].classList.toggle("zsel",k===st);});
   Object.keys(geo.lbs).forEach(k=>{geo.lbs[k].classList.toggle("zsel",k===st);});
@@ -1720,7 +1721,7 @@ function paintHGrid(){
   hrects.forEach(o=>{
     const cur=HOLD[o.st][o.i][0];let cls;
     if(era==="pre"){const v=sub==="prev"?PHOLD[o.st][o.i][0]:cur;cls="k-"+PCLS[v];}
-    else{const c=callOf(S.house[o.id]);const hd=S.house[o.id];const ld=(!c&&hd&&(hd.lead==="D"||hd.lead==="R"||hd.lead==="I")&&num(hd.rep)>0)?hd.lead.toLowerCase():null;cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):(ld?"l-"+ld:"k-v");if(HOT.has(o.id))cls+=" hot";}
+    else{const c=callOf(S.house[o.id]);const hd=S.house[o.id];const ld=(!c&&hd&&(hd.lead==="D"||hd.lead==="R"||hd.lead==="I")&&num(hd.rep)>=1)?hd.lead.toLowerCase():null;cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):(ld?"l-"+ld:"k-v");if(HOT.has(o.id))cls+=" hot";}
     if(o.id===selD)cls+=" sel";
     if(o.el.getAttribute("class")!==cls)o.el.setAttribute("class",cls);
   });
