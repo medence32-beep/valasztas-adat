@@ -552,6 +552,16 @@ footer{padding-block:24px 48px}
 .turnlist .tb{height:8px;border-radius:5px;background:var(--line);overflow:hidden}
 .turnlist .tb i{display:block;height:100%;background:var(--teal);border-radius:5px}
 .turnlist .tv{font-variant-numeric:tabular-nums;color:var(--ink2)}
+#turntoggle{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:600 13px var(--f-body);cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
+#turntoggle i{width:30px;height:16px;border-radius:99px;background:var(--line2);position:relative;transition:background .2s;flex:none}
+#turntoggle i::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--ink2,#999);transition:transform .2s,background .2s}
+#turntoggle[aria-pressed="true"]{border-color:var(--gold)}
+#turntoggle[aria-pressed="true"] i{background:var(--gold)}
+#turntoggle[aria-pressed="true"] i::after{transform:translateX(14px);background:#1a1200}
+#tlabels{pointer-events:none}
+#tlabels .tl{font-weight:700;letter-spacing:0;opacity:.92}
+#geo.zoomed #tlabels{opacity:.45}
+#geo.hascty #tlabels{display:none}
 </style>
 
 <div class="top">
@@ -614,6 +624,7 @@ footer{padding-block:24px 48px}
             <button type="button" data-m="time" aria-pressed="false">Urnazárás</button>
           </div>
           <button type="button" id="zoomtoggle" aria-pressed="false" title="Bekapcsolva egy állam megnyomására ráközelít, és megjelennek a megyék"><i></i>Nagyítás és megyék</button>
+          <button type="button" id="turntoggle" aria-pressed="true" title="Az államok neve alatt megjelenik az eddig leadott korai és levélszavazatok száma"><i></i>Részvétel a térképen</button>
           <div class="seg" id="seg-view" role="group" aria-label="Térkép típusa">
             <button type="button" data-v="geo" aria-pressed="true">Földrajzi</button>
             <button type="button" data-v="tiles" aria-pressed="false">Csempék</button>
@@ -629,7 +640,7 @@ footer{padding-block:24px 48px}
         <div class="stage" id="stage" data-narrow="0">
           <svg id="geo" viewBox="20 0 900 512" role="group" aria-label="Az Egyesült Államok térképe">
             <defs><pattern id="smsp" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="12" style="fill:var(--dem)"/><rect x="6" width="6" height="12" style="fill:var(--rep)"/></pattern></defs>
-            <g id="states"></g><g id="counties"></g><g id="labels"></g><g id="decided"></g><g id="pdots"></g><g id="rings"></g><g id="flashes"></g><g id="pings"></g><g id="selring"></g>
+            <g id="states"></g><g id="counties"></g><g id="labels"></g><g id="tlabels"></g><g id="decided"></g><g id="pdots"></g><g id="rings"></g><g id="flashes"></g><g id="pings"></g><g id="selring"></g>
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
@@ -854,8 +865,10 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f161","t":"2026-11-03T20:49:00Z","tag":"Hír","title":"Megindult a 2028-as előkészületek: kit emlegetnek már most?","text":"A Washington Examiner elemzése szerint a félidős választás éjszakáján már a 2028-as elnökjelölések körül is megindult a találgatás: republikánus oldalon JD Vance, Ted Cruz és Ron DeSantis neve merül fel, a demokraták közül pedig többek között Alexandria Ocasio-Cortez.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f159","t":"2026-11-03T20:15:00Z","tag":"Hír","title":"Szakértő: a szavazás zavartalan, de a Szenátus sorsa nem biztos, hogy este dől el","text":"David Becker választási szakértő szerint a szavazás rendben zajlik, csak kisebb gondok voltak, például egyes szavazóhelyeken Észak-Karolinában és Pennsylvaniában meghosszabbították a nyitvatartást. Arra is figyelmeztetett, hogy a Szenátus irányítása lehet, hogy nem derül ki egy éjszaka alatt.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f158","t":"2026-11-03T20:10:00Z","tag":"Hír","title":"New York 17: a Lawler-versenyben hajnalig tarthat az eredményvárakozás","text":"Mike Lawler republikánus képviselő szerint a New York-i 17. körzet eredménye késni fog, mert Westchester megyében szkennerhibák lassították a szavazatfeldolgozást. A kampánya, az állami bizottság és az ellenfele előzetesen megállapodott, hogy az érintett szavazatokat a bizottság irodájában számolják meg.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
+{"id":"f160","t":"2026-11-03T20:06:00Z","tag":"Hír","title":"Lawler: New York 17. körzetében szerda reggelig is eltarthat a számlálás","text":"Mike Lawler képviselő szerint a westchesteri szavazatszámláló gépek hibái miatt a New York 17. választókerület eredménye szerda reggelig késhet. Az érintett szavazólapok megszámolására előzetes tervet említett.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f157","t":"2026-11-03T19:40:00Z","tag":"Hír","title":"Texas: hamis tűzjelzés zavarta meg a szavazást az egyetemen","text":"A Texasi Egyetem rendőrsége két hamis tűzjelzés ügyében nyomoz a Texas Union szavazóhelyén. A riasztások miatt nagyjából tíz percig állt a szavazás.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f156","t":"2026-11-03T19:30:00Z","tag":"Hír","title":"Észak-Karolina: a választási bizottság a szavazási idő meghosszabbításáról is dönthet","text":"Az NC-i választási bizottság szerint négy megyében technikai hiba miatt késhetnek az eredmények. Az állami testület ülésezik arról, hogy meghosszabbítsák-e a szavazás időtartamát.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f155","t":"2026-11-03T19:15:00Z","tag":"Hír","title":"Alaszka: újraszámlálási alapot hozott létre az NRSC","text":"A republikánus szenátusi kampányszervezet (NRSC) bejegyeztette az FEC-nél az alaszkai szenátusi verseny újraszámlálási alapját. A szavazólapon két, Dan Sullivan nevű jelölt is szerepel.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
@@ -1096,7 +1109,7 @@ function paintMap(spawnFlash){
     }
   });
   paintSel();
-  renderLegend();paintHGrid();paintDots();paintDecided();renderMapSum();
+  renderLegend();paintHGrid();paintDots();paintDecided();renderMapSum();paintTurn();
 }
 function paintSel(){
   const s=$("selring"); s.innerHTML="";
@@ -1754,24 +1767,44 @@ function turnLiveHTML(st){
   const t=turnData()[st],prev=TURN[st];let main;
   if(t&&t.p!=null&&t.p!=="")main='<b>'+pct(t.p)+'%</b>részvétel'+(t.n?' · '+fmtN(t.n)+' szavazat':'');
   else if(t&&t.n)main='<b>'+fmtN(t.n)+'</b>leadott szavazat eddig'+(t.asOf?' <span class="muted">('+esc(t.asOf)+')</span>':'');
+  else if(t&&t.note)main='<span class="muted">'+esc(t.note)+'</span>';
   else main='<b>–</b>';
   const cmp=prev?'Előző választásokon: 2022: '+pct(prev[1])+'% · 2024: '+pct(prev[2])+'%':'';
   return '<section class="qrace qturn"><div class="qrh"><span class="lbl">Részvétel</span></div><div class="turnmain">'+main+'</div>'+(cmp?'<div class="prevline">'+cmp+'</div>':'')+'</section>';
 }
-function turnTip(st){const t=turnData()[st];if(!t)return "";if(t.p!=null&&t.p!=="")return "<br>Részvétel: "+pct(t.p)+"%";return t.n?"<br>Leadott szavazat: "+fmtN(t.n):"";}
+function turnTip(st){const t=turnData()[st];if(!t)return "";if(t.p!=null&&t.p!=="")return "<br>Részvétel: "+pct(t.p)+"%";if(t.n)return "<br>Leadott szavazat: "+fmtN(t.n)+(t.asOf?" ("+esc(t.asOf)+")":"");return t.note?"<br>"+esc(t.note):"";}
 function updateTurnFact(){
-  renderTurnCard();
+  renderTurnCard();paintTurn();
   const b=$("fact-turn");if(!b)return;const u=turnData()._us;
   if(u&&u.n){b.textContent=(u.n/1e6).toFixed(1).replace(".",",")+"M";$("fact-turn-l").textContent="leadott szavazat eddig"+(u.asOf?" ("+u.asOf+")":"");}
   else b.textContent="–";
 }
 function renderTurnCard(){
   const el=$("turncard");if(!el)return;const d=turnData(),us=d._us;
-  const rows=Object.keys(d).filter(k=>k!=="_us"&&NAMES[k]&&d[k]&&(d[k].n||d[k].p!=null)).sort((a,b)=>num(d[b].n)-num(d[a].n));
+  const all=Object.keys(d).filter(k=>k!=="_us"&&NAMES[k]&&d[k]);
+  const rows=all.filter(k=>d[k].n||d[k].p!=null).sort((a,b)=>num(d[b].n)-num(d[a].n));
+  const notes=all.filter(k=>!(d[k].n||d[k].p!=null)&&d[k].note).sort();
   const mx=Math.max(1,...rows.map(k=>num(d[k].n)));
-  const list=rows.map(k=>{const t=d[k];return '<li><b>'+k+'</b><span class="tb"><i style="width:'+Math.max(2,num(t.n)/mx*100).toFixed(1)+'%"></i></span><span class="tv">'+(t.p!=null&&t.p!==""?pct(t.p)+'% · ':'')+(t.n?fmtN(t.n):'–')+'</span></li>';}).join("");
-  el.innerHTML='<span class="tg">Részvétel</span><h3>'+(us&&us.n?fmtN(us.n)+' leadott szavazat eddig':'–')+'</h3><p class="muted">'+(us&&us.asOf?'Adat: '+esc(us.asOf)+' · ':'')+'korai és levélben leadott szavazatok, '+rows.length+' államról van adat. Ahol még nincs szám, ott „–” áll. A végső részvételi arány az eredményekkel együtt érkezik.</p><ul class="turnlist">'+list+'</ul>';
+  const sum=rows.reduce((a,k)=>a+num(d[k].n),0);
+  const list=rows.map(k=>{const t=d[k];return '<li title="'+esc(NAMES[k]+(t.asOf?" · "+t.asOf:""))+'"><b>'+k+'</b><span class="tb"><i style="width:'+Math.max(2,num(t.n)/mx*100).toFixed(1)+'%"></i></span><span class="tv">'+(t.p!=null&&t.p!==""?pct(t.p)+'% · ':'')+(t.n?fmtN(t.n):'–')+'</span></li>';}).join("")+notes.map(k=>'<li class="tn"><b>'+k+'</b><span class="muted" style="grid-column:2/4">'+esc(d[k].note)+'</span></li>').join("");
+  const usTxt=us&&us.n?' Országos becslés (AP/TIME): '+(us.n/1e6).toFixed(1).replace(".",",")+' M'+(us.asOf?' ('+esc(us.asOf)+')':'')+'.':'';
+  el.innerHTML='<span class="tg">Részvétel · összesítés</span><h3>'+(sum?fmtN(sum)+' leadott szavazat eddig':'–')+'</h3><p class="muted">'+rows.length+' állam adatának összege (korai és levélben leadott szavazatok, államonként eltérő dátummal – a kártyán az állam fölé víve látszik).'+usTxt+' A végső részvételi arány az eredményekkel együtt érkezik.</p><ul class="turnlist">'+list+'</ul>';
 }
+let turnOn=true;try{turnOn=localStorage.getItem("turnOn")!=="0";}catch(e){}
+function turnShort(n){n=num(n);if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1).replace(".",",")+"M";if(n>=1e3)return Math.round(n/1e3)+"E";return String(Math.round(n));}
+function paintTurn(){
+  const bt=$("turntoggle");if(bt)bt.setAttribute("aria-pressed",String(turnOn));
+  const g=$("tlabels");if(!g)return;g.innerHTML="";
+  if(!turnOn||view!=="geo"||mode==="house"||typeof geo==="undefined"||!geo.lbs)return;
+  const d=turnData();let h="";
+  Object.keys(geo.lbs).forEach(st=>{
+    const t=d[st];if(!t||!t.n)return;const l=geo.lbs[st];
+    const x=Number(l.getAttribute("x")),y=Number(l.getAttribute("y")),fs=Number(l.getAttribute("font-size"))||10;
+    h+='<text class="'+esc(l.getAttribute("class"))+' tl" x="'+x+'" y="'+(y+fs*0.95).toFixed(1)+'" font-size="'+Math.max(7,fs*0.62).toFixed(1)+'">'+turnShort(t.n)+'</text>';
+  });
+  g.innerHTML=h;
+}
+$("turntoggle").addEventListener("click",()=>{turnOn=!turnOn;try{localStorage.setItem("turnOn",turnOn?"1":"0");}catch(e){}paintTurn();});
 let _dsig="";
 function paintDecided(){
   const g=$("decided"),on=era==="live"&&(mode==="sen"||mode==="gov");
@@ -1807,7 +1840,7 @@ function setMode(m){
   syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();
 }
 function setView(v){
-  view=v;if(v!=="geo")zoomReset(true);
+  view=v;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo")zoomReset(true);
   document.querySelectorAll("#seg-view button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
   syncUI();hideTip();paintSel();
 }
