@@ -170,6 +170,15 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #geo .st{transition:fill .55s ease,filter .2s,opacity .5s}
 #zoomback{position:absolute;left:10px;top:10px;z-index:3;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
 #zoomback:hover{border-color:var(--gold)}
+#zoomtoggle{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:600 13px var(--f-body);cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
+#zoomtoggle i{width:30px;height:16px;border-radius:99px;background:var(--line2);position:relative;transition:background .2s;flex:none}
+#zoomtoggle i::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--ink2,#999);transition:transform .2s,background .2s}
+#zoomtoggle[aria-pressed="true"]{border-color:var(--gold)}
+#zoomtoggle[aria-pressed="true"] i{background:var(--gold)}
+#zoomtoggle[aria-pressed="true"] i::after{transform:translateX(14px);background:#1a1200}
+.cty{fill:var(--zfill,var(--off));stroke:var(--bg);stroke-width:.8;vector-effect:non-scaling-stroke;stroke-linejoin:round;animation:ctyin .5s ease both;transition:filter .12s}
+.cty:hover{filter:brightness(1.3);stroke:var(--ink);stroke-width:1.4}
+@keyframes ctyin{from{opacity:0}}
 
 @keyframes pop{from{opacity:0;transform:scale(.9)}}
 .lb{font-family:var(--f-display);font-weight:800;text-anchor:middle;dominant-baseline:central;fill:var(--txt,var(--ink));pointer-events:none;transition:fill .5s;letter-spacing:.02em}
@@ -592,6 +601,7 @@ footer{padding-block:24px 48px}
             <button type="button" data-m="house" aria-pressed="false">Ház</button>
             <button type="button" data-m="time" aria-pressed="false">Urnazárás</button>
           </div>
+          <button type="button" id="zoomtoggle" aria-pressed="false" title="Bekapcsolva egy állam megnyomására ráközelít, és megjelennek a megyék"><i></i>Nagyítás és megyék</button>
           <div class="seg" id="seg-view" role="group" aria-label="Térkép típusa">
             <button type="button" data-v="geo" aria-pressed="true">Földrajzi</button>
             <button type="button" data-v="tiles" aria-pressed="false">Csempék</button>
@@ -607,7 +617,7 @@ footer{padding-block:24px 48px}
         <div class="stage" id="stage" data-narrow="0">
           <svg id="geo" viewBox="20 0 900 512" role="group" aria-label="Az Egyesült Államok térképe">
             <defs><pattern id="smsp" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="6" height="12" style="fill:var(--dem)"/><rect x="6" width="6" height="12" style="fill:var(--rep)"/></pattern></defs>
-            <g id="states"></g><g id="labels"></g><g id="decided"></g><g id="pdots"></g><g id="rings"></g><g id="flashes"></g><g id="pings"></g><g id="selring"></g>
+            <g id="states"></g><g id="counties"></g><g id="labels"></g><g id="decided"></g><g id="pdots"></g><g id="rings"></g><g id="flashes"></g><g id="pings"></g><g id="selring"></g>
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
@@ -832,9 +842,11 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f150","t":"2026-11-03T17:20:00Z","tag":"Hír","title":"Guam: a republikánus Tony Ada vezet a kormányzói versenyben","text":"A guami választási bizottság nem hivatalos összesítése szerint Ada megelőzi a demokrata Therese Terlajét, ami a kormányzói poszt republikánus megszerzését jelentené. A részvétel 53 százalék fölött volt, a hivatalos megerősítés még várat magára.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f147","t":"2026-11-03T16:20:00Z","tag":"Hír","title":"Trump: az USA év végéig leállítja az Izraelnek nyújtott támogatást","text":"Trump a Fox News-nak azt mondta, hogy megállapodott Netanjahuval a kifizetések befejezéséről: „nem fizetünk Izraelnek”. Nem világos, melyik támogatásra gondolt; a TIME szerint az éves keret 3,8 milliárd dollár 2028-ig.","src":"TIME","url":"https://time.com/live/2026/11/03/midterm-elections-2026-key-races-live-results-latest-news-updates/"},
 {"id":"f131","t":"2026-11-03T15:52:00Z","tag":"Hír","title":"Demokrata szuper-PAC 30 millió dollárt költ orvos- és STEM-hátterű jelöltekre","text":"A 314 Action Fund a beszámolók szerint több mint 30 milliót költött a ciklusban, ebből kb. 4 milliót Annie Andrewsra Dél-Karolinában és 3 milliót Amy Actonra Ohióban.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f148","t":"2026-11-03T15:50:00Z","tag":"Hír","title":"Schumer: „görcsösen optimista” a Szenátus iránt","text":"A brooklyni szavazása után a demokrata szenátusi vezető azt mondta, hogy demokrata többséget vár a Szenátusban, de óvatosságra int.","src":"TIME","url":"https://time.com/live/2026/11/03/midterm-elections-2026-key-races-live-results-latest-news-updates/"},
+{"id":"f151","t":"2026-11-03T15:50:00Z","tag":"Hír","title":"Maine: Susan Collins biddefordi irodáját fenyegető felirattal firkálták össze","text":"Az iroda falára vörös festékkel a „blood on her hands” feliratot festették. A beszámoló szerint kedd délutánra eltakarították.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f136","t":"2026-11-03T15:40:00Z","tag":"Hír","title":"RNC-elnök Gruters: ha a mi szavazóink kijönnek, nyerünk","text":"A republikánusok szűk többséget védenek mindkét házban, a kampányt az infláció és az Irán-konfliktus népszerűtlensége nehézíti, az AP szerint 54 millió felett van a korai szavazatok száma.","src":"Fox News (AP)","url":"https://www.foxnews.com/politics/battle-congress-just-beginning-heres-whats-stake-election-day"},
 {"id":"f133","t":"2026-11-03T15:30:00Z","tag":"Hír","title":"Alaszka: a második Dan Sullivant Peltola kampánya toboroztatta a CBS szerint","text":"A CBS News jelentése szerint Mary Peltola kampánya toborozta a második, azonos nevű jelöltet. Peltola azt mondja, nem tudott róla.","src":"CBS News","url":"https://www.cbsnews.com/live-updates/election-day-2026-midterms/"},
 {"id":"f132","t":"2026-11-03T15:27:00Z","tag":"Hír","title":"Talarico záró reklámja: „a hátrányból indulók” mellé állásra hív","text":"A texasi demokrata jelölt újabb záró hirdetést tett közz. A Cook Political Report a Ken Paxton elleni versenyt toss-up besorolásúnak tartja.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
@@ -1252,7 +1264,27 @@ function hideTip(){$("tip").classList.remove("on");}
 function select(st){
   if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);
 }
-const VB0=[20,0,900,512];let zoomSt=null,zRaf=0;
+const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,ctyP=null;
+try{zoomOn=localStorage.getItem("zoomOn")==="1";}catch(e){}
+function syncZT(){$("zoomtoggle").setAttribute("aria-pressed",String(zoomOn));}
+const LSAD={CA:"Census Area","Cty&Bor":"City and Borough",Muny:"Municipality"};
+function loadCty(){
+  if(ctyP)return ctyP;
+  ctyP=(async()=>{
+    for(const u of ["counties.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/counties.json"]){
+      try{const r=await fetch(u,{cache:"force-cache"});if(r.ok){CTY=await r.json();break;}}catch(e){}
+    }
+    if(!CTY)ctyP=null;return CTY;
+  })();
+  return ctyP;
+}
+function drawCty(st){
+  const g=$("counties");g.innerHTML="";
+  if(!st||!CTY||!CTY[st]||!geo.els[st])return;
+  try{g.style.setProperty("--zfill",getComputedStyle(geo.els[st]).fill);}catch(e){}
+  g.innerHTML=CTY[st].map((c,i)=>'<path class="cty" data-i="'+i+'" d="'+c[1]+'" style="animation-delay:'+((i%40)*12)+'ms"/>').join("");
+}
+function ctyFill(){if(zoomSt&&CTY&&CTY[zoomSt]){try{$("counties").style.setProperty("--zfill",getComputedStyle(geo.els[zoomSt]).fill);}catch(e){}}}
 function zoomMark(st){
   Object.keys(geo.els).forEach(k=>{geo.els[k].classList.toggle("zsel",k===st);});
   Object.keys(geo.lbs).forEach(k=>{geo.lbs[k].classList.toggle("zsel",k===st);});
@@ -1270,7 +1302,7 @@ function vbAnim(to,instant){
   zRaf=requestAnimationFrame(step);
 }
 function zoomTo(st){
-  if(view!=="geo"||mode==="house"||!geo.els[st])return;
+  if(!zoomOn||view!=="geo"||mode==="house"||!geo.els[st])return;
   const p=geo.els[st];let b;try{b=p.getBBox();}catch(e){return;}
   if(!b||!b.width)return;
   const AR=VB0[2]/VB0[3];
@@ -1280,15 +1312,30 @@ function zoomTo(st){
   if(w>VB0[2]){w=VB0[2];h=w/AR;}
   let x=b.x+b.width/2-w/2,y=b.y+b.height/2-h/2;
   x=Math.max(0,Math.min(x,975-w));y=Math.max(0,Math.min(y,620-h));
+  hideTip();if(zoomSt!==st)drawCty(null);
   zoomSt=st;zoomMark(st);vbAnim([x,y,w,h]);
+  loadCty().then(()=>{if(zoomSt===st&&!$("counties").firstChild)drawCty(st);});
 }
 function zoomReset(instant){
   if(!zoomSt&&!$("geo").classList.contains("zoomed"))return;
-  zoomSt=null;zoomMark(null);vbAnim(VB0,instant);
+  hideTip();zoomSt=null;drawCty(null);zoomMark(null);vbAnim(VB0,instant);
 }
+syncZT();
+$("zoomtoggle").addEventListener("click",()=>{
+  zoomOn=!zoomOn;try{localStorage.setItem("zoomOn",zoomOn?"1":"0");}catch(e){}
+  syncZT();
+  if(zoomOn){if(MAP[sel])zoomTo(sel);}else zoomReset();
+});
 $("zoomback").addEventListener("click",e=>{e.stopPropagation();zoomReset();});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&zoomSt)zoomReset();});
-$("stage").addEventListener("click",e=>{if(zoomSt&&!e.target.closest("[data-st]")&&!e.target.closest("#zoomback"))zoomReset();});
+$("stage").addEventListener("click",e=>{if(zoomSt&&!e.target.closest("[data-st]")&&!e.target.closest("#zoomback")&&!e.target.closest(".cty"))zoomReset();});
+$("counties").addEventListener("pointermove",e=>{
+  const t=e.target.closest(".cty");if(!t||!CTY||!CTY[zoomSt]){return;}
+  e.stopPropagation();const c=CTY[zoomSt][Number(t.dataset.i)];if(!c)return;
+  const r=$("stage").getBoundingClientRect();
+  const nm=c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));
+  showTipHTML('<b>'+esc(nm)+'</b><br>'+esc(NAMES[zoomSt])+'<br><span class="muted">Megyei eredmény: nincs adat</span>',e.clientX-r.left,e.clientY-r.top);
+});
 
 /* ---------- lists ---------- */
 function renderTimeline(){
@@ -1410,7 +1457,7 @@ function renderStatus(){
   $("link-note").textContent=base+(u?" Utolsó frissítés: "+u+".":"")+(window.__SRC?" (adatforrás: "+window.__SRC+")":"");
 }
 function renderData(spawn){
-  updateTurnFact();updateBoards();paintMap(!!spawn);renderDetail();renderTimeline();renderRaces(false);renderGovs();renderHouse();renderMeasures();renderFeed();renderStatus();
+  updateTurnFact();updateBoards();paintMap(!!spawn);renderDetail();renderTimeline();renderRaces(false);renderGovs();renderHouse();renderMeasures();renderFeed();renderStatus();if(typeof ctyFill==="function")ctyFill();
 }
 let pend=false;function schedule(){if(pend)return;pend=true;requestAnimationFrame(()=>{pend=false;renderData(true);});}
 
