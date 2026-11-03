@@ -412,6 +412,7 @@ footer{padding-block:24px 48px}
 .sm-grid rect{stroke:transparent;stroke-width:.22;transition:fill .4s;cursor:pointer;fill:var(--off)}
 .sm-grid rect:hover{stroke:var(--ink)}
 .sm-grid rect.k-d{fill:var(--dem)}.sm-grid rect.k-r{fill:var(--rep)}.sm-grid rect.k-i{fill:var(--ind)}.sm-grid rect.k-v{fill:var(--off);stroke:var(--line2)}
+.sm-grid rect.l-d{fill:color-mix(in srgb,var(--dem) 58%,var(--off))}.sm-grid rect.l-r{fill:color-mix(in srgb,var(--rep) 58%,var(--off))}.sm-grid rect.l-i{fill:color-mix(in srgb,var(--ind) 58%,var(--off))}
 .sm-grid rect.u-d{fill:color-mix(in srgb,var(--dem) 48%,var(--off))}.sm-grid rect.u-r{fill:color-mix(in srgb,var(--rep) 48%,var(--off))}.sm-grid rect.u-i{fill:color-mix(in srgb,var(--ind) 48%,var(--off))}
 .sm-grid rect.hot{stroke:var(--gold);stroke-width:.3}
 .sm-grid rect.flip{stroke:var(--gold);stroke-width:.34}
@@ -897,6 +898,11 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f188","t":"2026-11-03T23:17:00Z","tag":"Hír","title":"Észak-Karolina: legalább 45 perccel később jönnek az eredmények","text":"Több szavazóhelyen technikai gondok miatt meghosszabbították a szavazási időt, ezért az észak-karolinai eredmények legalább 45 perccel a tervezettnél később kerülnek ki.","src":"Fox News","url":"https://foxnews.com/live-news/election-day-results-11-3-2026"},
+{"id":"f189","t":"2026-11-03T23:17:00Z","tag":"Hír","title":"Georgia: a Fulton megye hamis SMS-ekre figyelmeztet","text":"A megye közölte, hogy azok az üzenetek, amelyek szerint megváltoztak a szavazóhelyek, nem tőlük származnak.","src":"Fox News","url":"https://foxnews.com/live-news/election-day-results-11-3-2026"},
+{"id":"f190","t":"2026-11-03T23:17:00Z","tag":"Hír","title":"Newsom: állami törvény szerint büntethetők a szövetségi ügynökök, ha beavatkoznak a szavazásba","text":"Gavin Newsom kaliforniai kormányzó figyelmeztette a szövetségi ügynököket, hogy felelősségre vonhatók, ha beleavatkoznak a választásba.","src":"Fox News","url":"https://foxnews.com/live-news/election-day-results-11-3-2026"},
+{"id":"f191","t":"2026-11-03T23:17:00Z","tag":"Hír","title":"Cruz Talarico ellen: „radikális” múltat rejt a mérsékelt álca mögött","text":"Ted Cruz szenátor szerint a demokrata szenátusi jelölt, James Talarico egy mérsékelt személyiség mögé bújtatja radikális múltját.","src":"Fox News","url":"https://foxnews.com/live-news/election-day-results-11-3-2026"},
+{"id":"f192","t":"2026-11-03T23:17:00Z","tag":"Hír","title":"Fox News Voter Poll: 100 ezer szavazót kérdeznek meg mind az 50 államban","text":"A felmérés eredményei államonként jelennek meg, ahogy zárnak az urnák. A Fox Decision Desk hívja a futamokat.","src":"Fox News","url":"https://foxnews.com/live-news/election-day-results-11-3-2026"},
 {"id":"f187","t":"2026-11-03T23:07:00Z","tag":"Hír","title":"Zártak az első urnák: Kentuckyban megkezdődött a szenátusi szavazatok számlálása","text":"Az AP jelentése szerint Kentucky nyitott szenátusi helyén megindult az eredmények érkezése, de a verseny még nem dőlt el. A kentuckyi és az indianai urnák az első zárások közé tartoznak.","src":"AP","url":"https://apnews.com/hub/election-2026"},
 {"id":"f185","t":"2026-11-03T23:04:00Z","tag":"Hír","title":"Texas: a demokraták a latin szavazók visszanyerésére játszanak","text":"A latinok Texas jogosult szavazóinak több mint 30%-át adják, és két éve Trump felé tolódtak. A Talarico–Paxton szenátusi és az Abbott–Hinojosa kormányzói verseny is szoros lehet.","src":"CBS News","url":"https://www.cbsnews.com/live-updates/election-day-2026-midterms/"},
 {"id":"f186","t":"2026-11-03T23:04:00Z","tag":"Hír","title":"Trump: „megoldódott az infláció”, a cikk szerint éves szinten 3,7%","text":"Trump a Fox Newsnak azt mondta, a félidős eredmény „jobb lesz, mint gondolnád”. A PBS szerint az infláció 3,7% éves szinten, szemben a második ciklus kezdetén mért 3%-kal.","src":"PBS NewsHour","url":"https://www.pbs.org/newshour/politics/live-updates-midterm-voters-go-to-the-polls-on-election-day"},
@@ -1714,7 +1720,7 @@ function paintHGrid(){
   hrects.forEach(o=>{
     const cur=HOLD[o.st][o.i][0];let cls;
     if(era==="pre"){const v=sub==="prev"?PHOLD[o.st][o.i][0]:cur;cls="k-"+PCLS[v];}
-    else{const c=callOf(S.house[o.id]);cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):"k-v";if(HOT.has(o.id))cls+=" hot";}
+    else{const c=callOf(S.house[o.id]);const hd=S.house[o.id];const ld=(!c&&hd&&(hd.lead==="D"||hd.lead==="R"||hd.lead==="I")&&num(hd.rep)>0)?hd.lead.toLowerCase():null;cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):(ld?"l-"+ld:"k-v");if(HOT.has(o.id))cls+=" hot";}
     if(o.id===selD)cls+=" sel";
     if(o.el.getAttribute("class")!==cls)o.el.setAttribute("class",cls);
   });
@@ -1816,7 +1822,7 @@ function houseDetail(st){
     let right="";
     if(era==="live"){right=c?'<span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
     const p=pl[i];
-    return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':'Még nincs eredmény')+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
+    return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':(houseLeadTxt(S.house[id],"")||'Még nincs eredmény'))+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
   return h;
 }
 function showTipHTML(html,x,y){
@@ -1824,10 +1830,14 @@ function showTipHTML(html,x,y){
   const w=stage.clientWidth,tw=tip.offsetWidth,th=tip.offsetHeight;
   tip.style.left=Math.max(4,Math.min(w-tw-4,x+14))+"px";tip.style.top=Math.max(4,y-th-10)+"px";
 }
+function houseLeadTxt(d,sep){
+  if(!d||!(d.lead==="D"||d.lead==="R"||d.lead==="I")||!(num(d.rep)>0))return "";
+  return sep+esc(d.name||partyName(d.lead))+" ("+d.lead+") vezet"+(d.margin!=null?" "+pct(d.margin)+" ponttal":"")+" · "+(num(d.rep)<1?"<1":pct(d.rep))+"% megszámolva";
+}
 function distTip(id){const m=id.split("-"),st=m[0],i=Number(m[1])-1,cur=HOLD[st][i],p=PHOLD[st][i];
   let t='<b>'+id+'</b>'+(era==="live"?"":(cur[0]==="V"?"Üres hely":esc(cur[1])+" ("+cur[0]+")"));
   if(era==="pre")t+='<br>2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem';
-  if(era==="live"){const c=callOf(S.house[id]);t+=c?"<br>✓ Valószínűleg eldőlt: "+partyName(c)+" győzelem":"";if(HNOTE[id])t+="<br>"+HNOTE[id];}
+  if(era==="live"){const c=callOf(S.house[id]);t+=c?"<br>✓ Valószínűleg eldőlt: "+partyName(c)+" győzelem":houseLeadTxt(S.house[id],"<br>");if(HNOTE[id])t+="<br>"+HNOTE[id];}
   return t;}
 function preTip(st){
   const nm='<b>'+esc(NAMES[st])+'</b>';
