@@ -1286,7 +1286,7 @@ function hideTip(){$("tip").classList.remove("on");}
 function select(st){
   if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);
 }
-const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,C24=null,ctyP=null,zoomC=null,ctyEra="";
+const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,CR=null,ctyP=null,zoomC=null,ctyEra="";
 try{zoomOn=localStorage.getItem("zoomOn")==="1";}catch(e){}
 function syncZT(){$("zoomtoggle").setAttribute("aria-pressed",String(zoomOn));}
 const LSAD={CA:"Census Area","Cty&Bor":"City and Borough",Muny:"Municipality"};
@@ -1299,28 +1299,34 @@ async function getJ(name){
 function loadCty(){
   if(ctyP)return ctyP;
   ctyP=(async()=>{
-    const [a,b]=await Promise.all([getJ("counties.json"),getJ("county2024.json")]);
-    CTY=a;C24=b;if(!CTY)ctyP=null;return CTY;
+    const [a,b]=await Promise.all([getJ("counties.json"),getJ("countyres.json")]);
+    CTY=a;CR=b;if(!CTY)ctyP=null;return CTY;
   })();
   return ctyP;
 }
+function ctyRace(st){const o=CR&&CR[st];if(!o)return null;return mode==="gov"?(o.g||null):(o.s||null);}
+function ctyD(c){const r=ctyRace(zoomSt);return r&&r.v[c[3]]||null;}
 function ctyColor(c){
-  const d=C24&&C24[c[3]];if(!d)return "var(--off)";
-  const m=d[0]-d[1];if(Math.abs(m)<0.05)return "var(--off)";
+  const d=ctyD(c);if(!d)return "var(--off)";
+  const m=(d[0]-d[1])/10;if(Math.abs(m)<0.05)return "var(--off)";
   const t=Math.min(1,Math.abs(m)/35),P=Math.round(28+72*t);
   return "color-mix(in srgb,"+(m>0?"var(--dem)":"var(--rep)")+" "+P+"%,var(--off))";
 }
+function ctyRaceName(st){const r=ctyRace(st);if(!r)return "";return r.y+"-es "+(mode==="gov"?"kormányzóválasztás":"szenátusi választás")+(r.n?" ("+r.n+")":"");}
 function ctyInfo(c){
   if(era==="pre"){
-    const d=C24&&C24[c[3]];
-    if(d)return '2024-es elnökválasztás: <b>D '+pct(d[0])+'%</b> · <b>R '+pct(d[1])+'%</b><br><span class="muted">'+fmtN(d[2])+' leadott szavazat · szenátusi/kormányzói megyei adat nincs</span>';
-    return '<span class="muted">Ehhez a megyéhez nincs 2024-es megyei adat</span>';
+    const d=ctyD(c),r=ctyRace(zoomSt);
+    if(d&&r)return ctyRaceName(zoomSt)+': <b>D '+(d[0]/10).toFixed(1)+'%</b> · <b>R '+(d[1]/10).toFixed(1)+'%</b><br><span class="muted">'+fmtN(d[2])+' leadott szavazat</span>';
+    return '<span class="muted">Ehhez az államhoz/megyéhez nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat</span>';
   }
   return '<span class="muted">Megyei eredmény: nincs adat</span>';
 }
 function ctyLabelState(){
   const L=$("ctylabel");
-  if(zoomSt&&zoomC==null&&era==="pre"&&C24){L.innerHTML='Megyék színe: 2024-es elnökválasztás<small>D kék · R piros · minél sötétebb, annál nagyobb a különbség</small>';L.hidden=false;}
+  if(zoomSt&&zoomC==null&&era==="pre"&&CR){
+    const r=ctyRace(zoomSt);
+    L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb a különbség</small>':'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(a megyehatárok így is kattinthatók)</small>';
+    L.hidden=false;}
   else if(zoomC==null)L.hidden=true;
 }
 function ctyEraSync(){
@@ -1758,7 +1764,7 @@ function setMode(m){
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
-  syncUI();paintMap(false);renderDetail();bump();
+  syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();
 }
 function setView(v){
   view=v;if(v!=="geo")zoomReset(true);
