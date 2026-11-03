@@ -556,6 +556,7 @@ footer{padding-block:24px 48px}
 #turntoggle{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:600 13px var(--f-body);cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
 #turntoggle i{width:30px;height:16px;border-radius:99px;background:var(--line2);position:relative;transition:background .2s;flex:none}
 #turntoggle i::after{content:"";position:absolute;left:2px;top:2px;width:12px;height:12px;border-radius:50%;background:var(--ink2,#999);transition:transform .2s,background .2s}
+#turntoggle[hidden]{display:none!important}
 #turntoggle[aria-pressed="true"]{border-color:var(--gold)}
 #turntoggle[aria-pressed="true"] i{background:var(--gold)}
 #turntoggle[aria-pressed="true"] i::after{transform:translateX(14px);background:#1a1200}
@@ -1849,9 +1850,9 @@ function renderTurnCard(){
 let turnOn=true;try{turnOn=localStorage.getItem("turnOn")!=="0";}catch(e){}
 function turnShort(n){n=num(n);if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1).replace(".",",")+"M";if(n>=1e3)return Math.round(n/1e3)+"E";return String(Math.round(n));}
 function paintTurn(){
-  const bt=$("turntoggle");if(bt)bt.setAttribute("aria-pressed",String(turnOn));
+  const bt=$("turntoggle");if(bt){bt.setAttribute("aria-pressed",String(turnOn));bt.hidden=(era==="pre");}
   const g=$("tlabels");if(!g)return;g.innerHTML="";
-  if(!turnOn||view!=="geo"||mode==="house"||typeof geo==="undefined"||!geo.lbs)return;
+  if(!turnOn||era==="pre"||view!=="geo"||mode==="house"||typeof geo==="undefined"||!geo.lbs)return;
   const d=turnData();let h="";
   Object.keys(geo.lbs).forEach(st=>{
     const t=d[st];if(!t||!t.n)return;const l=geo.lbs[st];
