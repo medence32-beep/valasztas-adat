@@ -1340,7 +1340,7 @@ function ctyLabelState(){
   const L=$("ctylabel");
   if(zoomSt&&zoomC==null&&era==="pre"&&CR){
     const r=ctyRace(zoomSt);
-    L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb a különbség</small>':'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(a megyehatárok így is kattinthatók)</small>';
+    L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb a különbség</small><small style="opacity:.55">oldalverzió: v3 · 21:08</small>':'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(a megyehatárok így is kattinthatók)</small><small style="opacity:.55">oldalverzió: v3 · 21:08</small>';
     L.hidden=false;}
   else if(zoomC==null)L.hidden=true;
 }
