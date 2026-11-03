@@ -176,6 +176,12 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #zoomtoggle[aria-pressed="true"]{border-color:var(--gold)}
 #zoomtoggle[aria-pressed="true"] i{background:var(--gold)}
 #zoomtoggle[aria-pressed="true"] i::after{transform:translateX(14px);background:#1a1200}
+#zoombackstate{position:absolute;left:10px;top:50px;z-index:3;border:1px solid var(--gold);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
+#ctylabel{position:absolute;left:10px;top:92px;z-index:3;background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:10px;padding:6px 12px;font:600 13px var(--f-body);box-shadow:var(--shadow);max-width:70%}
+#ctylabel small{display:block;font-weight:500;opacity:.7}
+.cty.dim{fill-opacity:.55}
+.cty.csel{stroke:var(--ink);stroke-width:2.2;filter:brightness(1.12)}
+.cty{cursor:pointer}
 .cty{fill:var(--zfill,var(--off));stroke:var(--bg);stroke-width:.8;vector-effect:non-scaling-stroke;stroke-linejoin:round;animation:ctyin .5s ease both;transition:filter .12s}
 .cty:hover{filter:brightness(1.3);stroke:var(--ink);stroke-width:1.4}
 @keyframes ctyin{from{opacity:0}}
@@ -621,7 +627,7 @@ footer{padding-block:24px 48px}
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
-          <button type="button" id="zoomback" hidden>← Teljes térkép</button><div class="tip" id="tip" role="tooltip"></div>
+          <button type="button" id="zoomback" hidden>← Teljes térkép</button><button type="button" id="zoombackstate" hidden>← Vissza az államra</button><div id="ctylabel" hidden></div><div class="tip" id="tip" role="tooltip"></div>
         </div>
         <div class="legend" id="legend"></div>
       </div>
@@ -842,7 +848,9 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
-{"id":"f150","t":"2026-11-03T17:20:00Z","tag":"Hír","title":"Guam: a republikánus Tony Ada vezet a kormányzói versenyben","text":"A guami választási bizottság nem hivatalos összesítése szerint Ada megelőzi a demokrata Therese Terlajét, ami a kormányzói poszt republikánus megszerzését jelentené. A részvétel 53 százalék fölött volt, a hivatalos megerősítés még várat magára.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
+{"id":"f153","t":"2026-11-03T18:00:00Z","tag":"Hír","title":"Michigan: Rogers „csalódott” a demokraták reakciója miatt Stevens támogatása után","text":"A republikánus szenátusi jelölt szerint csalódást okozott neki, ahogy a demokraták reagáltak Haley Stevens támogatására. Stevens a lap szerint azt mondta, döntése Izraelről szólt.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
+{"id":"f152","t":"2026-11-03T17:49:00Z","tag":"Hír","title":"Észak-Karolina: négy megyében technikai hiba, késhetnek az eredmények","text":"Az állami választási bizottság szerint a hibák lassíthatják az egész állam eredményeinek közlését. A bizottság meghosszabbíthatja a szavazási időt, amit az állami törvény számítási problémák esetén enged.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
+{"id":"f150","t":"2026-11-03T17:20:00Z","tag":"Hír","title":"Guam: a republikánus Tony Ada nyeri a kormányzói versenyt","text":"A guami választási bizottság nem hivatalos összesítése szerint Ada 51,45–48,15 százalékkal előzi meg a demokrata Therese Terlajét, így nem lesz pótválasztás. A hivatalos megerősítés még várat magára. A demokraták a terület nem szavazó képviselői helyét megszerzik.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f147","t":"2026-11-03T16:20:00Z","tag":"Hír","title":"Trump: az USA év végéig leállítja az Izraelnek nyújtott támogatást","text":"Trump a Fox News-nak azt mondta, hogy megállapodott Netanjahuval a kifizetések befejezéséről: „nem fizetünk Izraelnek”. Nem világos, melyik támogatásra gondolt; a TIME szerint az éves keret 3,8 milliárd dollár 2028-ig.","src":"TIME","url":"https://time.com/live/2026/11/03/midterm-elections-2026-key-races-live-results-latest-news-updates/"},
 {"id":"f131","t":"2026-11-03T15:52:00Z","tag":"Hír","title":"Demokrata szuper-PAC 30 millió dollárt költ orvos- és STEM-hátterű jelöltekre","text":"A 314 Action Fund a beszámolók szerint több mint 30 milliót költött a ciklusban, ebből kb. 4 milliót Annie Andrewsra Dél-Karolinában és 3 milliót Amy Actonra Ohióban.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f148","t":"2026-11-03T15:50:00Z","tag":"Hír","title":"Schumer: „görcsösen optimista” a Szenátus iránt","text":"A brooklyni szavazása után a demokrata szenátusi vezető azt mondta, hogy demokrata többséget vár a Szenátusban, de óvatosságra int.","src":"TIME","url":"https://time.com/live/2026/11/03/midterm-elections-2026-key-races-live-results-latest-news-updates/"},
@@ -1264,7 +1272,7 @@ function hideTip(){$("tip").classList.remove("on");}
 function select(st){
   if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);
 }
-const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,ctyP=null;
+const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,ctyP=null,zoomC=null;
 try{zoomOn=localStorage.getItem("zoomOn")==="1";}catch(e){}
 function syncZT(){$("zoomtoggle").setAttribute("aria-pressed",String(zoomOn));}
 const LSAD={CA:"Census Area","Cty&Bor":"City and Borough",Muny:"Municipality"};
@@ -1301,6 +1309,29 @@ function vbAnim(to,instant){
     set(f.map((a,i)=>a+(to[i]-a)*e));if(k<1)zRaf=requestAnimationFrame(step);};
   zRaf=requestAnimationFrame(step);
 }
+function ctyClear(){
+  zoomC=null;$("zoombackstate").hidden=true;$("ctylabel").hidden=true;
+  $("counties").querySelectorAll(".cty.dim,.cty.csel").forEach(e=>e.classList.remove("dim","csel"));
+}
+function ctyName(c){return c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));}
+function zoomCty(i){
+  const g=$("counties"),p=g.querySelector('.cty[data-i="'+i+'"]');if(!p||!zoomSt||!CTY||!CTY[zoomSt])return;
+  let b;try{b=p.getBBox();}catch(e){return;}
+  if(!b||!b.width)return;
+  const AR=VB0[2]/VB0[3];
+  let w=b.width*2.6,h=b.height*2.6;
+  w=Math.max(w,75);h=Math.max(h,75/AR);
+  if(w/h<AR)w=h*AR;else h=w/AR;
+  let x=b.x+b.width/2-w/2,y=b.y+b.height/2-h/2;
+  x=Math.max(0,Math.min(x,975-w));y=Math.max(0,Math.min(y,620-h));
+  zoomC=i;hideTip();
+  g.querySelectorAll(".cty").forEach(e=>{e.classList.toggle("dim",e!==p);e.classList.toggle("csel",e===p);});
+  g.appendChild(p);
+  const c=CTY[zoomSt][i];
+  $("ctylabel").innerHTML=esc(ctyName(c))+'<small>'+esc(NAMES[zoomSt])+' · megyei eredmény: nincs adat</small>';$("ctylabel").hidden=false;
+  $("zoombackstate").hidden=false;
+  vbAnim([x,y,w,h]);
+}
 function zoomTo(st){
   if(!zoomOn||view!=="geo"||mode==="house"||!geo.els[st])return;
   const p=geo.els[st];let b;try{b=p.getBBox();}catch(e){return;}
@@ -1312,13 +1343,13 @@ function zoomTo(st){
   if(w>VB0[2]){w=VB0[2];h=w/AR;}
   let x=b.x+b.width/2-w/2,y=b.y+b.height/2-h/2;
   x=Math.max(0,Math.min(x,975-w));y=Math.max(0,Math.min(y,620-h));
-  hideTip();if(zoomSt!==st)drawCty(null);
+  hideTip();ctyClear();if(zoomSt!==st)drawCty(null);
   zoomSt=st;zoomMark(st);vbAnim([x,y,w,h]);
   loadCty().then(()=>{if(zoomSt===st&&!$("counties").firstChild)drawCty(st);});
 }
 function zoomReset(instant){
   if(!zoomSt&&!$("geo").classList.contains("zoomed"))return;
-  hideTip();zoomSt=null;drawCty(null);zoomMark(null);vbAnim(VB0,instant);
+  hideTip();ctyClear();zoomSt=null;drawCty(null);zoomMark(null);vbAnim(VB0,instant);
 }
 syncZT();
 $("zoomtoggle").addEventListener("click",()=>{
@@ -1327,13 +1358,15 @@ $("zoomtoggle").addEventListener("click",()=>{
   if(zoomOn){if(MAP[sel])zoomTo(sel);}else zoomReset();
 });
 $("zoomback").addEventListener("click",e=>{e.stopPropagation();zoomReset();});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&zoomSt)zoomReset();});
-$("stage").addEventListener("click",e=>{if(zoomSt&&!e.target.closest("[data-st]")&&!e.target.closest("#zoomback")&&!e.target.closest(".cty"))zoomReset();});
+$("zoombackstate").addEventListener("click",e=>{e.stopPropagation();if(zoomSt)zoomTo(zoomSt);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&zoomSt){if(zoomC!=null)zoomTo(zoomSt);else zoomReset();}});
+$("counties").addEventListener("click",e=>{const t=e.target.closest(".cty");if(!t)return;e.stopPropagation();zoomCty(Number(t.dataset.i));});
+$("stage").addEventListener("click",e=>{if(zoomSt&&!e.target.closest("[data-st]")&&!e.target.closest("#zoomback")&&!e.target.closest("#zoombackstate")&&!e.target.closest(".cty")){if(zoomC!=null)zoomTo(zoomSt);else zoomReset();}});
 $("counties").addEventListener("pointermove",e=>{
   const t=e.target.closest(".cty");if(!t||!CTY||!CTY[zoomSt]){return;}
   e.stopPropagation();const c=CTY[zoomSt][Number(t.dataset.i)];if(!c)return;
   const r=$("stage").getBoundingClientRect();
-  const nm=c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));
+  const nm=ctyName(c);
   showTipHTML('<b>'+esc(nm)+'</b><br>'+esc(NAMES[zoomSt])+'<br><span class="muted">Megyei eredmény: nincs adat</span>',e.clientX-r.left,e.clientY-r.top);
 });
 
