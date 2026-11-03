@@ -1374,7 +1374,6 @@ $("zoomback").addEventListener("click",e=>{e.stopPropagation();zoomReset();});
 $("zoombackstate").addEventListener("click",e=>{e.stopPropagation();if(zoomSt)zoomTo(zoomSt);});
 document.addEventListener("keydown",e=>{if(e.key==="Escape"&&zoomSt){if(zoomC!=null)zoomTo(zoomSt);else zoomReset();}});
 $("counties").addEventListener("click",e=>{const t=e.target.closest(".cty");if(!t)return;e.stopPropagation();zoomCty(Number(t.dataset.i));});
-$("stage").addEventListener("click",e=>{if(zoomSt&&!e.target.closest("[data-st]")&&!e.target.closest("#zoomback")&&!e.target.closest("#zoombackstate")&&!e.target.closest(".cty")){if(zoomC!=null)zoomTo(zoomSt);else zoomReset();}});
 $("counties").addEventListener("pointermove",e=>{
   const t=e.target.closest(".cty");if(!t||!CTY||!CTY[zoomSt]){return;}
   e.stopPropagation();const c=CTY[zoomSt][Number(t.dataset.i)];if(!c)return;
