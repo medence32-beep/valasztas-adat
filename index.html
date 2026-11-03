@@ -1295,14 +1295,14 @@ function syncZT(){$("zoomtoggle").setAttribute("aria-pressed",String(zoomOn));}
 const LSAD={CA:"Census Area","Cty&Bor":"City and Borough",Muny:"Municipality"};
 async function getJ(name){
   for(const u of [name,"https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/"+name]){
-    try{const r=await fetch(u,{cache:"force-cache"});if(r.ok)return await r.json();}catch(e){}
+    try{const r=await fetch(u,{cache:"no-cache"});if(r.ok)return await r.json();}catch(e){}
   }
   return null;
 }
 function loadCty(){
   if(ctyP)return ctyP;
   ctyP=(async()=>{
-    const [a,b]=await Promise.all([getJ("counties.json"),(window.__CR?Promise.resolve(window.__CR):getJ("countyres.json"))]);
+    const [a,b]=await Promise.all([getJ("counties.json?v=3"),(window.__CR?Promise.resolve(window.__CR):getJ("countyres.json"))]);
     CTY=a;CR=b;if(!CTY)ctyP=null;return CTY;
   })();
   return ctyP;
@@ -1340,7 +1340,7 @@ function ctyLabelState(){
   const L=$("ctylabel");
   if(zoomSt&&zoomC==null&&era==="pre"&&CR){
     const r=ctyRace(zoomSt);
-    L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb a különbség</small><small style="opacity:.55">oldalverzió: v3 · 21:08</small>':'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(a megyehatárok így is kattinthatók)</small><small style="opacity:.55">oldalverzió: v3 · 21:08</small>';
+    L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb a különbség</small><small style="opacity:.55">oldalverzió: v4 · 21:12</small>':'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(a megyehatárok így is kattinthatók)</small><small style="opacity:.55">oldalverzió: v4 · 21:12</small>';
     L.hidden=false;}
   else if(zoomC==null)L.hidden=true;
 }
