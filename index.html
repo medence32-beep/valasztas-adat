@@ -168,6 +168,9 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #geo.zoomed .lb{opacity:.5}
 #geo.zoomed .lb.zsel{opacity:1}
 #geo .st{transition:fill .55s ease,filter .2s,opacity .5s}
+.pdot{animation:pop .75s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center}
+.dchk{animation:none}
+.dchk circle,.dchk path{animation:pop .5s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center}
 #zoomback{position:absolute;left:10px;top:10px;z-index:3;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
 #zoomback:hover{border-color:var(--gold)}
 #zoomtoggle{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;padding:7px 14px;font:600 13px var(--f-body);cursor:pointer;display:inline-flex;gap:8px;align-items:center;white-space:nowrap}
