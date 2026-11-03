@@ -162,6 +162,7 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #geo{display:block;width:100%;height:auto}
 .st{fill:var(--fill,var(--off));stroke:var(--bg);stroke-width:1.1;stroke-linejoin:round;cursor:pointer;transition:fill .55s ease,filter .2s;animation:pop .75s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s);transform-box:fill-box;transform-origin:center;outline:none}
 .st:hover{filter:brightness(1.18)}
+.qrace.qact{box-shadow:inset 3px 0 0 var(--gold)}
 #geo .st,#geo .ring-s,#geo .ring-h,#geo .dchk circle{vector-effect:non-scaling-stroke}
 #geo.zoomed .st{opacity:.42}
 #geo.zoomed .st.zsel{opacity:1}
@@ -851,6 +852,7 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f154","t":"2026-11-03T18:50:00Z","tag":"Hír","title":"Iowa: Josh Turek nem szavazott egy pártra","text":"Az iowai demokrata szenátusi jelölt, Josh Turek arra a kérdésre, hogy egy pártra adta-e le a szavazatát, „Nem”-et mondott, és hozzátette, hogy lejjebb néhány republikánusra is szavazott. Ellenfele Ashley Hinson, a Cook Political Report szerint toss-up verseny.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f153","t":"2026-11-03T18:00:00Z","tag":"Hír","title":"Michigan: Rogers „csalódott” a demokraták reakciója miatt Stevens támogatása után","text":"A republikánus szenátusi jelölt szerint csalódást okozott neki, ahogy a demokraták reagáltak Haley Stevens támogatására. Stevens a lap szerint azt mondta, döntése Izraelről szólt.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f152","t":"2026-11-03T17:49:00Z","tag":"Hír","title":"Észak-Karolina: négy megyében technikai hiba, késhetnek az eredmények","text":"Az állami választási bizottság szerint a hibák lassíthatják az egész állam eredményeinek közlését. A bizottság meghosszabbíthatja a szavazási időt, amit az állami törvény számítási problémák esetén enged.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f150","t":"2026-11-03T17:20:00Z","tag":"Hír","title":"Guam: a republikánus Tony Ada nyeri a kormányzói versenyt","text":"A guami választási bizottság nem hivatalos összesítése szerint Ada 51,45–48,15 százalékkal előzi meg a demokrata Therese Terlajét, így nem lesz pótválasztás. A hivatalos megerősítés még várat magára. A demokraták a terület nem szavazó képviselői helyét megszerzik.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
@@ -1225,10 +1227,19 @@ function raceHTML(c,st,label,names,held){
   }
   return '<section class="qrace"><div class="qrh"><span class="lbl">'+label+'</span><span>'+badge+'</span></div><div class="qsd">'+sides+'</div>'+split+meter+chart+'</section>';
 }
+function orderDetail(box){
+  const secs=[...box.querySelectorAll(":scope > section.qrace")];
+  const by=t=>secs.find(s=>{const l=s.querySelector(".lbl");return l&&l.textContent.trim()===t;});
+  const S=by("Szenátus"),G=by("Kormányzó");
+  secs.forEach(s=>s.classList.remove("qact"));
+  if(!S||!G)return;
+  if(mode==="gov"){if(S.compareDocumentPosition(G)&Node.DOCUMENT_POSITION_FOLLOWING)box.insertBefore(G,S);G.classList.add("qact");}
+  else if(mode==="sen"){if(G.compareDocumentPosition(S)&Node.DOCUMENT_POSITION_FOLLOWING)box.insertBefore(S,G);S.classList.add("qact");}
+}
 function renderDetail(){
   const st=sel,sd=SENMAP[st],gd=GOVMAP[st],h=CLOSE[st],box=$("detail");
   const dkey=st+"|"+era+"|"+mode+"|"+sub;const changed=box.dataset.st!==dkey;box.dataset.st=dkey;box.classList.toggle("anim",changed);
-  if(mode==="house"||era==="pre"){const keep0=box.scrollTop;box.innerHTML=mode==="house"?houseDetail(st):preDetail(st);if(!changed)box.scrollTop=keep0;return;}
+  if(mode==="house"||era==="pre"){const keep0=box.scrollTop;box.innerHTML=mode==="house"?houseDetail(st):preDetail(st);orderDetail(box);if(!changed)box.scrollTop=keep0;return;}
   const keep=box.scrollTop;
   let html='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+(h!=null?esc(closeText(st)):"Nincs adat")+'</span></div></div>';
   html+=turnLiveHTML(st);
@@ -1240,7 +1251,7 @@ function renderDetail(){
     html+=gd?raceHTML("governor",st,"Kormányzó",{d:gd.d,r:gd.r,o:gd.o?gd.o:""},GOV_HELD[st]).replace('</section>','<div class="meta" style="display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center"><span class="rate'+(gd.rate==="Toss-up"?" t":"")+'">'+esc(gd.tag)+'</span><span class="muted" style="font-size:13px">jelenleg: '+(GOV_HELD[st]==="D"?"demokrata":"republikánus")+' kormányzó</span></div>'+(gd.note?'<span class="muted" style="font-size:13px">'+esc(gd.note)+'</span>':'')+'</section>')
       :'<section class="qrace"><span class="lbl">Kormányzó</span><span class="muted">Ebben az államban nincs kormányzói választás.</span></section>';
   }
-  box.innerHTML=html;
+  box.innerHTML=html;orderDetail(box);
   if(!changed)box.scrollTop=keep;
 }
 $("detail").addEventListener("click",e=>{
