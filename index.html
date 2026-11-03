@@ -162,6 +162,15 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #geo{display:block;width:100%;height:auto}
 .st{fill:var(--fill,var(--off));stroke:var(--bg);stroke-width:1.1;stroke-linejoin:round;cursor:pointer;transition:fill .55s ease,filter .2s;animation:pop .75s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s);transform-box:fill-box;transform-origin:center;outline:none}
 .st:hover{filter:brightness(1.18)}
+#geo .st,#geo .ring-s,#geo .ring-h,#geo .dchk circle{vector-effect:non-scaling-stroke}
+#geo.zoomed .st{opacity:.42}
+#geo.zoomed .st.zsel{opacity:1}
+#geo.zoomed .lb{opacity:.5}
+#geo.zoomed .lb.zsel{opacity:1}
+#geo .st{transition:fill .55s ease,filter .2s,opacity .5s}
+#zoomback{position:absolute;left:10px;top:10px;z-index:3;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
+#zoomback:hover{border-color:var(--gold)}
+
 @keyframes pop{from{opacity:0;transform:scale(.9)}}
 .lb{font-family:var(--f-display);font-weight:800;text-anchor:middle;dominant-baseline:central;fill:var(--txt,var(--ink));pointer-events:none;transition:fill .5s;letter-spacing:.02em}
 .leader{stroke:var(--ink3);stroke-width:.8;fill:none;pointer-events:none}
@@ -602,7 +611,7 @@ footer{padding-block:24px 48px}
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
-          <div class="tip" id="tip" role="tooltip"></div>
+          <button type="button" id="zoomback" hidden>← Teljes térkép</button><div class="tip" id="tip" role="tooltip"></div>
         </div>
         <div class="legend" id="legend"></div>
       </div>
@@ -850,6 +859,7 @@ const FEED0=[
 {"id":"f127","t":"2026-11-03T13:00:00Z","tag":"Hír","title":"Texas: 7:00 és 19:00 között lehet szavazni","text":"A texasi szavazóhelyek helyi idő szerint 7 és 19 óra között vannak nyitva. A korai szavazás pénteken 19 órakor zárult.","src":"FOX 4","url":"https://www.fox4news.com/news/paxton-slips-past-talarico-latest-poll-senate-race-enters-final-days.amp"},
 {"id":"f104","t":"2026-11-03T12:46:00Z","tag":"Hír","title":"Trump utolsó kampányüzenete: az eredményeit dicsérte és az iráni háborút védte","text":"Egy Fox News-nak adott telefonos interjúban Trump a republikánusokra szavazásra buzdított, az interjú nagy részében az Iránnal vívott konfliktust védte.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f105","t":"2026-11-03T12:40:00Z","tag":"Hír","title":"New York, Westchester megye: leálltak a szavazatszámláló gépek","text":"Westchester megyében a nyitáskor hibásodtak meg a szkennerek, a szavazóhelyek egy időre nem fogadtak el szavazólapot. A választókat papírszavazólap kitöltésére kérték, és a sorban maradásra.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
+{"id":"f149","t":"2026-11-03T12:30:00Z","tag":"Hír","title":"Maryland, Brandywine: elfogyott a papírszavazólap egy szavazóhelyen","text":"A Prince George’s megyei szavazóhelyen nyitáskor csak két elektronikus gép működött, a szavazók több tucatnyian várakoztak. A helyszíni munkatársak szerint a szállított lapok hiányosak voltak, az újabb csomag rövidesen megérkezett.","src":"WJLA (7News)","url":"https://wjla.com/news/local/brandywine-elections-election-day-2026-paper-ballot-shortage-polling-place-delays-issues-voter-lines-voting-machines-prince-georges-county-maryland-problems-midterm"},
 {"id":"f139","t":"2026-11-03T12:15:00Z","tag":"Hír","title":"Florida: 19 szavazóhelyet kellett áthelyezni eső és árvíz miatt","text":"DeSantis hat megyében rendkvüli állapotot hirdetett, ami lehetővé teszi új szavazóhelyek kijelölését. Néhány körzetet összevontak.","src":"TIME","url":"https://time.com/live/2026/11/03/midterm-elections-2026-key-races-live-results-latest-news-updates/"},
 {"id":"f144","t":"2026-11-03T11:15:00Z","tag":"Hír","title":"A TIME szerint 58 millió fölötti a korai szavazatok száma, az AP 54 milliót ír","text":"A források között eltérés van: az AP és a Fox 54 millió fölötti, a TIME 58 millió fölötti korai szavazatot említ. Az oldal részvételi számlálója az On Point Politics 54,9 milliós számát használja.","src":"TIME / AP","url":"https://time.com/live/2026/11/03/midterm-elections-2026-key-races-live-results-latest-news-updates/"},
 {"id":"f145","t":"2026-11-03T11:10:00Z","tag":"Háttér","title":"Texas: a demokraták szerint a latinó szavazók visszafordulhatnak a republikánusoktól","text":"A latinók Texas szavazásra jogosult népességének több mint 30 százalékát adják. A CBS szerint a szenátusi verseny Talarico és Paxton között szoros.","src":"CBS News","url":"https://www.cbsnews.com/live-updates/election-day-2026-midterms/"},
@@ -1240,8 +1250,45 @@ function showTip(st,x,y){
 }
 function hideTip(){$("tip").classList.remove("on");}
 function select(st){
-  if(!NAMES[st])return;sel=st;paintSel();renderDetail();
+  if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);
 }
+const VB0=[20,0,900,512];let zoomSt=null,zRaf=0;
+function zoomMark(st){
+  Object.keys(geo.els).forEach(k=>{geo.els[k].classList.toggle("zsel",k===st);});
+  Object.keys(geo.lbs).forEach(k=>{geo.lbs[k].classList.toggle("zsel",k===st);});
+  $("geo").classList.toggle("zoomed",!!st);
+  $("zoomback").hidden=!st;
+}
+function vbAnim(to,instant){
+  const svg=$("geo");cancelAnimationFrame(zRaf);
+  const from=svg.viewBox.baseVal;const f=[from.x,from.y,from.width,from.height];
+  const set=v=>svg.setAttribute("viewBox",v.map(n=>n.toFixed(2)).join(" "));
+  if(instant||matchMedia("(prefers-reduced-motion: reduce)").matches){set(to);return;}
+  const t0=performance.now(),D=650;
+  const step=now=>{const k=Math.min(1,(now-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;
+    set(f.map((a,i)=>a+(to[i]-a)*e));if(k<1)zRaf=requestAnimationFrame(step);};
+  zRaf=requestAnimationFrame(step);
+}
+function zoomTo(st){
+  if(view!=="geo"||mode==="house"||!geo.els[st])return;
+  const p=geo.els[st];let b;try{b=p.getBBox();}catch(e){return;}
+  if(!b||!b.width)return;
+  const AR=VB0[2]/VB0[3];
+  let w=b.width*1.9,h=b.height*1.9;
+  w=Math.max(w,320);h=Math.max(h,320/AR);
+  if(w/h<AR)w=h*AR;else h=w/AR;
+  if(w>VB0[2]){w=VB0[2];h=w/AR;}
+  let x=b.x+b.width/2-w/2,y=b.y+b.height/2-h/2;
+  x=Math.max(0,Math.min(x,975-w));y=Math.max(0,Math.min(y,620-h));
+  zoomSt=st;zoomMark(st);vbAnim([x,y,w,h]);
+}
+function zoomReset(instant){
+  if(!zoomSt&&!$("geo").classList.contains("zoomed"))return;
+  zoomSt=null;zoomMark(null);vbAnim(VB0,instant);
+}
+$("zoomback").addEventListener("click",e=>{e.stopPropagation();zoomReset();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&zoomSt)zoomReset();});
+$("stage").addEventListener("click",e=>{if(zoomSt&&!e.target.closest("[data-st]")&&!e.target.closest("#zoomback"))zoomReset();});
 
 /* ---------- lists ---------- */
 function renderTimeline(){
@@ -1580,14 +1627,14 @@ function tick(){
 
 /* ---------- events ---------- */
 function setMode(m){
-  mode=m;prevCall={};selD=null;
+  mode=m;prevCall={};selD=null;if(m==="house")zoomReset(true);
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
   syncUI();paintMap(false);renderDetail();bump();
 }
 function setView(v){
-  view=v;
+  view=v;if(v!=="geo")zoomReset(true);
   document.querySelectorAll("#seg-view button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
   syncUI();hideTip();paintSel();
 }
