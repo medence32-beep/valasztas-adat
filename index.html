@@ -1777,8 +1777,8 @@ function updateTurnFact(){
   renderTurnCard();paintTurn();
   const b=$("fact-turn");if(!b)return;const u=turnData()._us;
   const dd=turnData();let sm=0,cnt=0;Object.keys(dd).forEach(k=>{if(k!=="_us"&&NAMES[k]&&dd[k]&&dd[k].n){sm+=num(dd[k].n);cnt++;}});
-  if(sm>0){b.textContent=(sm/1e6).toFixed(1).replace(".",",")+"M";$("fact-turn-l").textContent="leadott szavazat eddig ("+cnt+" állam összege)";}
-  else if(u&&u.n){b.textContent=(u.n/1e6).toFixed(1).replace(".",",")+"M";$("fact-turn-l").textContent="leadott szavazat eddig"+(u.asOf?" ("+u.asOf+")":"");}
+  if(u&&u.n){b.textContent=(u.n/1e6).toFixed(1).replace(".",",")+"M";$("fact-turn-l").textContent="leadott szavazat eddig"+(u.asOf?" ("+u.asOf+")":"");}
+  else if(sm>0){b.textContent=(sm/1e6).toFixed(1).replace(".",",")+"M";$("fact-turn-l").textContent="leadott szavazat eddig ("+cnt+" állam összege)";}
   else b.textContent="–";
 }
 function renderTurnCard(){
@@ -1789,8 +1789,11 @@ function renderTurnCard(){
   const mx=Math.max(1,...rows.map(k=>num(d[k].n)));
   const sum=rows.reduce((a,k)=>a+num(d[k].n),0);
   const list=rows.map(k=>{const t=d[k];return '<li title="'+esc(NAMES[k]+(t.asOf?" · "+t.asOf:""))+'"><b>'+k+'</b><span class="tb"><i style="width:'+Math.max(2,num(t.n)/mx*100).toFixed(1)+'%"></i></span><span class="tv">'+(t.p!=null&&t.p!==""?pct(t.p)+'% · ':'')+(t.n?fmtN(t.n):'–')+'</span></li>';}).join("")+notes.map(k=>'<li class="tn"><b>'+k+'</b><span class="muted" style="grid-column:2/4">'+esc(d[k].note)+'</span></li>').join("");
-  const usTxt=us&&us.n?' Országos becslés (AP/TIME): '+(us.n/1e6).toFixed(1).replace(".",",")+' M'+(us.asOf?' ('+esc(us.asOf)+')':'')+'.':'';
-  el.innerHTML='<span class="tg">Részvétel · összesítés</span><h3>'+(sum?fmtN(sum)+' leadott szavazat eddig':'–')+'</h3><p class="muted">'+rows.length+' állam adatának összege (korai és levélben leadott szavazatok, államonként eltérő dátummal – a kártyán az állam fölé víve látszik).'+usTxt+' A végső részvételi arány az eredményekkel együtt érkezik.</p><ul class="turnlist">'+list+'</ul>';
+  const M=v=>(v/1e6).toFixed(1).replace(".",",")+" M";
+  const head=us&&us.n?us.n:sum;
+  let sub=us&&us.n?'Országos összesítés ('+esc(us.asOf||"")+')'+(us.mail&&us.inperson?': '+M(us.mail)+' levélszavazat + '+M(us.inperson)+' személyesen leadott korai szavazat.':'.'):'';
+  if(us&&us.party)sub+=' A korai szavazók regisztrációja: '+us.party.D+'% demokrata, '+us.party.R+'% republikánus, '+us.party.O+'% egyéb.';
+  el.innerHTML='<span class="tg">Részvétel · összesítés</span><h3>'+(head?fmtN(head)+' leadott szavazat eddig':'–')+'</h3><p class="muted">'+sub+' Az alábbi '+rows.length+' államnál ismert szám összege: '+fmtN(sum)+' (államonként eltérő dátummal, az állam fölé víve látszik). A végső részvételi arány az eredményekkel együtt érkezik.</p><ul class="turnlist">'+list+'</ul>';
 }
 let turnOn=true;try{turnOn=localStorage.getItem("turnOn")!=="0";}catch(e){}
 function turnShort(n){n=num(n);if(n>=1e6)return (n/1e6).toFixed(n>=1e7?0:1).replace(".",",")+"M";if(n>=1e3)return Math.round(n/1e3)+"E";return String(Math.round(n));}
