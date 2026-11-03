@@ -1228,13 +1228,12 @@ function raceHTML(c,st,label,names,held){
   return '<section class="qrace"><div class="qrh"><span class="lbl">'+label+'</span><span>'+badge+'</span></div><div class="qsd">'+sides+'</div>'+split+meter+chart+'</section>';
 }
 function orderDetail(box){
-  const secs=[...box.querySelectorAll(":scope > section.qrace")];
-  const by=t=>secs.find(s=>{const l=s.querySelector(".lbl");return l&&l.textContent.trim()===t;});
-  const S=by("Szenátus"),G=by("Kormányzó");
-  secs.forEach(s=>s.classList.remove("qact"));
-  if(!S||!G)return;
-  if(mode==="gov"){if(S.compareDocumentPosition(G)&Node.DOCUMENT_POSITION_FOLLOWING)box.insertBefore(G,S);G.classList.add("qact");}
-  else if(mode==="sen"){if(G.compareDocumentPosition(S)&Node.DOCUMENT_POSITION_FOLLOWING)box.insertBefore(S,G);S.classList.add("qact");}
+  const lab=s=>{const l=s.querySelector(".lbl");return l?l.textContent.trim():"";};
+  [...box.querySelectorAll(":scope > section.qrace")].forEach(s=>{
+    const t=lab(s);
+    if(mode==="gov"&&(t==="Szenátus"||t==="Képviselőház"))s.remove();
+    else if(mode==="sen"&&(t==="Kormányzó"||t==="Képviselőház"))s.remove();
+  });
 }
 function renderDetail(){
   const st=sel,sd=SENMAP[st],gd=GOVMAP[st],h=CLOSE[st],box=$("detail");
