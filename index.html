@@ -562,6 +562,21 @@ footer{padding-block:24px 48px}
 #tlabels .tl{font-weight:700;letter-spacing:0;opacity:.92}
 #geo.zoomed #tlabels{opacity:.45}
 #geo.hascty #tlabels{display:none}
+.exitgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.exitwait{display:grid;gap:10px;justify-items:start}
+.exitwait .cd{font:800 38px/1 var(--f-display);letter-spacing:.02em;font-variant-numeric:tabular-nums;color:var(--gold)}
+.exitwait p{margin:0;color:var(--ink2);font-size:14px;max-width:70ch}
+.exitwait a,.exitsrc a{color:var(--gold);font-weight:600}
+.excard{display:grid;gap:8px;align-content:start;box-shadow:none}
+.excard h3{font-size:16px;margin:0}
+.exrow{display:grid;grid-template-columns:minmax(90px,.9fr) minmax(0,1.6fr) auto;gap:8px;align-items:center;font-size:13.5px}
+.exrow .tb{height:9px;border-radius:5px;background:var(--line);overflow:hidden;display:flex}
+.exrow .tb i{display:block;height:100%}
+.exrow .tb .d{background:var(--dem)}.exrow .tb .r{background:var(--rep)}.exrow .tb .o{background:var(--teal)}
+.exrow .tv{font-variant-numeric:tabular-nums;color:var(--ink2);white-space:nowrap}
+.exsrc{margin:10px 0 0;font-size:12.5px;color:var(--ink2)}
+.exlegend{display:flex;gap:14px;font-size:12.5px;color:var(--ink2)}
+.exlegend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
 </style>
 
 <div class="top">
@@ -652,6 +667,10 @@ footer{padding-block:24px 48px}
     </div>
   </section>
 
+  <section aria-labelledby="h-exit" class="sec-anim" id="sec-exit">
+    <div class="sec-h"><h2 id="h-exit">Exit pollok</h2><p>Kilépő felmérések: kik szavaztak kire, és mi számított a legtöbbet. A számok csak az urnazárás után kerülnek nyilvánosságra, és az első adatok még előzetesek.</p></div>
+    <div class="card" id="exitbox"></div>
+  </section>
   <section aria-labelledby="h-time" class="sec-anim">
     <div class="sec-h"><h2 id="h-time">Mikor zárnak az urnák?</h2><p>Keleti idő (ET) szerint. Egy államon belül időzónánként eltérhet, a lista a fő zárást mutatja.</p></div>
     <div class="rail" id="rail" aria-hidden="true"></div>
@@ -1774,7 +1793,7 @@ function turnLiveHTML(st){
 }
 function turnTip(st){const t=turnData()[st];if(!t)return "";if(t.p!=null&&t.p!=="")return "<br>Részvétel: "+pct(t.p)+"%";if(t.n)return "<br>Leadott szavazat: "+fmtN(t.n)+(t.asOf?" ("+esc(t.asOf)+")":"");return t.note?"<br>"+esc(t.note):"";}
 function updateTurnFact(){
-  renderTurnCard();paintTurn();
+  renderTurnCard();renderExit();paintTurn();
   const b=$("fact-turn");if(!b)return;const u=turnData()._us;
   const dd=turnData();let sm=0,cnt=0;Object.keys(dd).forEach(k=>{if(k!=="_us"&&NAMES[k]&&dd[k]&&dd[k].n){sm+=num(dd[k].n);cnt++;}});
   if(u&&u.n){b.textContent=(u.n/1e6).toFixed(1).replace(".",",")+"M";$("fact-turn-l").textContent="leadott szavazat eddig"+(u.asOf?" ("+u.asOf+")":"");}
@@ -1810,6 +1829,32 @@ function paintTurn(){
   g.innerHTML=h;
 }
 $("turntoggle").addEventListener("click",()=>{turnOn=!turnOn;try{localStorage.setItem("turnOn",turnOn?"1":"0");}catch(e){}paintTurn();});
+const EXIT_T0=Date.UTC(2026,10,4,1,0,0);
+let _exSig="";
+function exitCD(ms){if(ms<=0)return "most";const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60,p=n=>(n<10?"0":"")+n;return p(h)+":"+p(m)+":"+p(ss);}
+function renderExit(){
+  const box=$("exitbox");if(!box)return;
+  const x=(S.meta&&S.meta.exitpoll)||{};const items=(x.items||[]).filter(i=>i&&i.rows&&i.rows.length);
+  const t0=x.target?Date.parse(x.target):EXIT_T0;
+  const link=x.url||"https://www.nbcnews.com/politics/2026-elections/exit-polls";
+  const sig=JSON.stringify([items,x.updated,x.source,x.note,t0]);
+  if(items.length){
+    if(sig===_exSig)return;_exSig=sig;
+    const anyS=items.some(i=>i.rows.some(r=>r.d!=null&&r.r!=null));
+    let h=(anyS?'<div class="exlegend" style="margin-bottom:10px"><span><i style="background:var(--dem)"></i>Demokrata</span><span><i style="background:var(--rep)"></i>Republikánus</span></div>':'')+'<div class="exitgrid">';
+    items.forEach(i=>{
+      h+='<div class="card excard"><h3>'+esc(i.q||"")+'</h3>'+(i.scope?'<span class="muted">'+esc(i.scope)+'</span>':"")+i.rows.map(r=>{
+        if(r.d!=null&&r.r!=null){const o=Math.max(0,100-num(r.d)-num(r.r));return '<div class="exrow"><span>'+esc(r.l)+'</span><span class="tb"><i class="d" style="width:'+num(r.d)+'%"></i><i class="o" style="width:'+o+'%;opacity:.35"></i><i class="r" style="width:'+num(r.r)+'%"></i></span><span class="tv">'+pct(r.d)+' – '+pct(r.r)+'</span></div>';}
+        return '<div class="exrow"><span>'+esc(r.l)+'</span><span class="tb"><i class="o" style="width:'+Math.min(100,num(r.p))+'%"></i></span><span class="tv">'+pct(r.p)+'%</span></div>';}).join("")+(i.note?'<span class="muted" style="font-size:12.5px">'+esc(i.note)+'</span>':"")+'</div>';
+    });
+    h+='</div><p class="exsrc">Forrás: '+esc(x.source||"NBC News exit poll")+(x.updated?' · frissítve: '+esc(x.updated):"")+'. Az első számok előzetesek, később a súlyozott végleges adat felülírhatja őket. <a href="'+esc(link)+'" target="_blank" rel="noopener">Megnyitás az eredeti oldalon</a>'+(x.note?' · '+esc(x.note):"")+'</p>';
+    box.innerHTML=h;return;
+  }
+  _exSig="";
+  const left=t0-Date.now();
+  box.innerHTML='<div class="exitwait"><span class="tg" style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--gold)">Az első exit poll érkezéséig</span><div class="cd" id="excd">'+(left>0?exitCD(left):"hamarosan")+'</div><p>'+(left>0?'Az NBC News első exit pollja várhatóan <b>'+esc(loc(t0))+'</b> körül jelenik meg (kb. '+etLabel((t0-Date.UTC(2026,10,3,ET,0))/36e5)+' ET). Amint megjelenik, ide kerülnek az országos számok: a legfontosabb témák, a választók összetétele és a kormányzati megítélés.':'Az exit poll adatai az NBC News oldalán jelennek meg, és itt is frissülnek, amint megérkeznek. Még várjuk az első számokat.')+' <a href="'+esc(link)+'" target="_blank" rel="noopener">NBC News exit poll oldal</a></p></div>';
+}
+setInterval(()=>{const e=$("excd");if(!e)return;const left=EXIT_T0-Date.now();const x=(S.meta&&S.meta.exitpoll)||{};const t0=x.target?Date.parse(x.target):EXIT_T0;const l=t0-Date.now();e.textContent=l>0?exitCD(l):"hamarosan";},1000);
 let _dsig="";
 function paintDecided(){
   const g=$("decided"),on=era==="live"&&(mode==="sen"||mode==="gov");
