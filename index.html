@@ -579,6 +579,9 @@ footer{padding-block:24px 48px}
 .exlegend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px}
 .bday{display:inline-flex;align-items:center;gap:10px;margin:6px 0 2px;padding:5px 16px 5px 6px;border-radius:999px;border:1px solid var(--gold);background:color-mix(in srgb,var(--gold) 14%,transparent);color:var(--gold);font:700 15px var(--f-display);letter-spacing:.03em}
 .bday img{width:34px;height:34px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);display:block;flex:none}
+#viewc{position:fixed;left:max(10px,env(safe-area-inset-left,0px));bottom:max(10px,env(safe-area-inset-bottom,0px));z-index:40;background:var(--card);color:var(--ink2);border:1px solid var(--line2);border-radius:999px;padding:5px 12px;font:600 12.5px var(--f-body);box-shadow:var(--shadow);display:none;gap:6px;align-items:center;font-variant-numeric:tabular-nums}
+#viewc.on{display:inline-flex}
+#viewc b{color:var(--ink);font-weight:700}
 </style>
 
 <div class="top">
@@ -1864,6 +1867,20 @@ function renderExit(){
   box.innerHTML='<div class="exitwait"><span class="tg" style="font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--gold)">Az első exit poll érkezéséig</span><div class="cd" id="excd">'+(left>0?exitCD(left):"hamarosan")+'</div><p>'+(left>0?'Az NBC News első exit pollja várhatóan <b>'+esc(loc(t0))+'</b> körül jelenik meg (kb. '+etLabel((t0-Date.UTC(2026,10,3,ET,0))/36e5)+' ET). Amint megjelenik, ide kerülnek az országos számok: a legfontosabb témák, a választók összetétele és a kormányzati megítélés.':'Az exit poll adatai az NBC News oldalán jelennek meg, és itt is frissülnek, amint megérkeznek. Még várjuk az első számokat.')+' <a href="'+esc(link)+'" target="_blank" rel="noopener">NBC News exit poll oldal</a></p></div>';
 }
 setInterval(()=>{const e=$("excd");if(!e)return;const left=EXIT_T0-Date.now();const x=(S.meta&&S.meta.exitpoll)||{};const t0=x.target?Date.parse(x.target):EXIT_T0;const l=t0-Date.now();e.textContent=l>0?exitCD(l):"hamarosan";},1000);
+const VC_NS="valasztas-2026-medence32",VC_API="https://abacus.jasoncameron.dev/";
+function vcGet(path){return fetch(VC_API+path,{cache:"no-store"}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(j=>Number(j.value));}
+function vcShow(v,u){let el=$("viewc");if(!el){el=document.createElement("div");el.id="viewc";el.title="Az oldal megtekintései és a különböző látogatók száma";document.body.appendChild(el);}
+  if(!(v>0))return;el.innerHTML='<span aria-hidden="true">👁</span><b>'+fmtN(v)+'</b> megtekintés'+(u>0?' · <b>'+fmtN(u)+'</b> látogató':'');el.classList.add("on");}
+(function(){
+  let seenS=false,seenL=false;try{seenS=sessionStorage.getItem("vcS")==="1";seenL=localStorage.getItem("vcL")==="1";}catch(e){}
+  const act=(k,hit)=>vcGet((hit?"hit/":"get/")+VC_NS+"/"+k).catch(()=>vcGet("get/"+VC_NS+"/"+k)).catch(()=>NaN);
+  const run=async(first)=>{
+    const v=await act("megtekintes",first&&!seenS);const u=await act("latogato",first&&!seenL);
+    if(first){try{if(!seenS)sessionStorage.setItem("vcS","1");if(!seenL)localStorage.setItem("vcL","1");}catch(e){}}
+    vcShow(v,u);
+  };
+  run(true);setInterval(()=>run(false),60000);
+})();
 let _dsig="";
 function paintDecided(){
   const g=$("decided"),on=era==="live"&&(mode==="sen"||mode==="gov");
