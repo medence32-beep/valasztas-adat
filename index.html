@@ -184,10 +184,11 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #ctylabel{position:absolute;left:10px;top:92px;z-index:3;background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:10px;padding:6px 12px;font:600 13px var(--f-body);box-shadow:var(--shadow);max-width:70%}
 #ctylabel small{display:block;font-weight:500;opacity:.7}
 #geo.hascty #pdots,#geo.hascty .lb.zsel,#geo.hascty #decided{display:none}
-.cty.dim{fill-opacity:.55}
+.cty.dim{filter:saturate(.5) brightness(.8)}
 .cty.csel{stroke:var(--ink);stroke-width:2.2;filter:brightness(1.12)}
 .cty{cursor:pointer}
-.cty{fill:var(--zfill,#c8d0e0);stroke:var(--bg);stroke-width:.8;vector-effect:non-scaling-stroke;stroke-linejoin:round;animation:ctyin .5s ease both;transition:filter .12s}
+.cty{fill:transparent;stroke:var(--bg);stroke-width:.8;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:filter .12s}
+#counties.cin .cty{animation:ctyin .5s ease both}
 .cty:hover{filter:brightness(1.3);stroke:var(--ink);stroke-width:1.4}
 @keyframes ctyin{from{opacity:0}}
 
@@ -853,6 +854,8 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f159","t":"2026-11-03T20:15:00Z","tag":"Hír","title":"Szakértő: a szavazás zavartalan, de a Szenátus sorsa nem biztos, hogy este dől el","text":"David Becker választási szakértő szerint a szavazás rendben zajlik, csak kisebb gondok voltak, például egyes szavazóhelyeken Észak-Karolinában és Pennsylvaniában meghosszabbították a nyitvatartást. Arra is figyelmeztetett, hogy a Szenátus irányítása lehet, hogy nem derül ki egy éjszaka alatt.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
+{"id":"f158","t":"2026-11-03T20:10:00Z","tag":"Hír","title":"New York 17: a Lawler-versenyben hajnalig tarthat az eredményvárakozás","text":"Mike Lawler republikánus képviselő szerint a New York-i 17. körzet eredménye késni fog, mert Westchester megyében szkennerhibák lassították a szavazatfeldolgozást. A kampánya, az állami bizottság és az ellenfele előzetesen megállapodott, hogy az érintett szavazatokat a bizottság irodájában számolják meg.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f157","t":"2026-11-03T19:40:00Z","tag":"Hír","title":"Texas: hamis tűzjelzés zavarta meg a szavazást az egyetemen","text":"A Texasi Egyetem rendőrsége két hamis tűzjelzés ügyében nyomoz a Texas Union szavazóhelyén. A riasztások miatt nagyjából tíz percig állt a szavazás.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f156","t":"2026-11-03T19:30:00Z","tag":"Hír","title":"Észak-Karolina: a választási bizottság a szavazási idő meghosszabbításáról is dönthet","text":"Az NC-i választási bizottság szerint négy megyében technikai hiba miatt késhetnek az eredmények. Az állami testület ülésezik arról, hogy meghosszabbítsák-e a szavazás időtartamát.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
 {"id":"f155","t":"2026-11-03T19:15:00Z","tag":"Hír","title":"Alaszka: újraszámlálási alapot hozott létre az NRSC","text":"A republikánus szenátusi kampányszervezet (NRSC) bejegyeztette az FEC-nél az alaszkai szenátusi verseny újraszámlálási alapját. A szavazólapon két, Dan Sullivan nevű jelölt is szerepel.","src":"Washington Examiner","url":"https://www.washingtonexaminer.com/live-blog/2026-midterm-elections-live-updates/"},
@@ -1375,12 +1378,11 @@ function ctyEraSync(){
 function drawCty(st){
   const g=$("counties");g.innerHTML="";$("geo").classList.remove("hascty");
   if(!st||!CTY||!CTY[st]||!geo.els[st])return;
-  try{g.style.setProperty("--zfill",getComputedStyle(geo.els[st]).fill);}catch(e){}
-  ctyEra=era;
+  ctyEra=era;g.classList.add("cin");clearTimeout(g._cin);g._cin=setTimeout(()=>g.classList.remove("cin"),1200);
   g.innerHTML=CTY[st].map((c,i)=>'<path class="cty" data-i="'+i+'" d="'+c[1]+'" style="animation-delay:'+((i%40)*12)+'ms'+(era==="pre"&&ctyColor(c)?';fill:'+ctyColor(c):'')+'"/>').join("");
   $("geo").classList.add("hascty");ctyLabelState();
 }
-function ctyFill(){if(zoomSt&&CTY&&CTY[zoomSt]&&era!=="pre"){try{$("counties").style.setProperty("--zfill",getComputedStyle(geo.els[zoomSt]).fill);}catch(e){}}}
+function ctyFill(){}
 function zoomMark(st){
   Object.keys(geo.els).forEach(k=>{geo.els[k].classList.toggle("zsel",k===st);});
   Object.keys(geo.lbs).forEach(k=>{geo.lbs[k].classList.toggle("zsel",k===st);});
