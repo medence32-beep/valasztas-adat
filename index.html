@@ -411,7 +411,8 @@ footer{padding-block:24px 48px}
 .sm-grid rect.u-d{fill:color-mix(in srgb,var(--dem) 48%,var(--off))}.sm-grid rect.u-r{fill:color-mix(in srgb,var(--rep) 48%,var(--off))}.sm-grid rect.u-i{fill:color-mix(in srgb,var(--ind) 48%,var(--off))}
 .sm-grid rect.hot{stroke:var(--gold);stroke-width:.3}
 .sm-grid rect.flip{stroke:var(--gold);stroke-width:.34}
-.sm-grid rect.sel{stroke:var(--ink);stroke-width:.4}
+.sm-grid rect.sel{stroke:var(--gold);stroke-width:.14;paint-order:stroke}
+.sm-grid rect:hover{stroke:var(--ink2);stroke-width:.12}
 .sm-grid text{font:700 1.15px var(--f-body);fill:var(--ink2);pointer-events:none}
 .sm-info{margin-top:10px;font-size:14px;color:var(--ink2);min-height:22px}
 .sm-info b{color:var(--ink)}
@@ -1168,7 +1169,7 @@ function renderLegend(){
     else if(mode==="sen")h='<span><i class="sw d"></i>Demokrata győzelem</span><span><i class="sw r"></i>Republikánus győzelem</span><span><i class="sw"></i>Idén nincs szenátusi választás</span>';
     else if(mode==="gov")h='<span><i class="sw d"></i>Demokrata kormányzó</span><span><i class="sw r"></i>Republikánus kormányzó</span>'+(sub==="prev"?'<span>A legutóbbi kormányzóválasztás győztese.</span>':'');
     else h='<span><i class="sw d"></i>Demokrata képviselő</span><span><i class="sw r"></i>Republikánus</span><span><i class="sw i"></i>Független</span><span><i class="sw"></i>Üres hely</span><span>Egy négyzet egy körzet. Nem pontos határvonalak: a 2026-os új körzethatárok nem érhetők el megbízható térképadatként.</span>';
-  }else if(mode==="house")h='<span><i class="sw d"></i>Demokrata győzelem</span><span><i class="sw r"></i>Republikánus győzelem</span><span><i class="sw" style="background:color-mix(in srgb,var(--dem) 48%,var(--off))"></i><i class="sw" style="background:color-mix(in srgb,var(--rep) 48%,var(--off))"></i>Még nincs hívás (jelenlegi párt)</span><span><i class="sw hot"></i>Figyelt körzet</span><span>Egy négyzet egy körzet. Nem pontos határvonalak: a 2026-os új körzethatárok nem érhetők el megbízható térképadatként.</span>';
+  }else if(mode==="house")h='<span><i class="sw d"></i>Demokrata győzelem</span><span><i class="sw r"></i>Republikánus győzelem</span><span><i class="sw" style="background:var(--off)"></i>Még nincs hívás</span><span><i class="sw hot"></i>Figyelt körzet</span><span>Egy négyzet egy körzet. Nem pontos határvonalak: a 2026-os új körzethatárok nem érhetők el megbízható térképadatként.</span>';
   else if(mode==="sen")h='<span><i class="sw d"></i>Demokrata győzelem</span><span><i class="sw r"></i>Republikánus győzelem</span><span><i class="sw i"></i>Független</span><span><i class="sw p"></i>Szenátusi verseny, nyitott</span><span><i class="sw hot"></i>Szoros verseny</span><span><i class="sw"></i>Nincs szenátusi választás</span>';
   else if(mode==="gov")h='<span><i class="sw d"></i>Demokrata győzelem</span><span><i class="sw r"></i>Republikánus győzelem</span><span><i class="sw p"></i>Kormányzói verseny, nyitott</span><span><i class="sw hot"></i>Fej-fej mellett</span><span><i class="sw"></i>Nincs kormányzói választás</span>';
   else{h='<span>Korán zár</span><span class="rampbar">'+RAMP_HOURS.map((x,i)=>'<i style="background:color-mix(in srgb,var(--teal) '+(100-i*9)+'%,var(--off))" title="'+etLabel(x)+' ET"></i>').join("")+'</span><span>Későn zár</span><span><i class="sw"></i>Még nyitva</span>';}
@@ -1689,7 +1690,7 @@ function paintHGrid(){
   hrects.forEach(o=>{
     const cur=HOLD[o.st][o.i][0];let cls;
     if(era==="pre"){const v=sub==="prev"?PHOLD[o.st][o.i][0]:cur;cls="k-"+PCLS[v];}
-    else{const c=callOf(S.house[o.id]);cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):(cur==="V"?"k-v":"u-"+PCLS[cur]);if(HOT.has(o.id))cls+=" hot";}
+    else{const c=callOf(S.house[o.id]);cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):"k-v";if(HOT.has(o.id))cls+=" hot";}
     if(o.id===selD)cls+=" sel";
     if(o.el.getAttribute("class")!==cls)o.el.setAttribute("class",cls);
   });
@@ -1713,7 +1714,7 @@ function renderMapSum(){
     if(era==="pre"){const src=sub==="prev"?PHOLD:HOLD;const c={D:0,R:0,I:0,V:0};Object.keys(src).forEach(st=>src[st].forEach(x=>c[x[0]]++));
       html=sumHTML2([["var(--rep)",c.R,"republikánus"],["var(--dem)",c.D,"demokrata"]].concat(c.I?[["var(--ind)",c.I,"független"]]:[]).concat(c.V?[["var(--off)",c.V,"üres"]]:[]))+(sub==="prev"?'<span>2024-es állapot (a 119. Kongresszus induló összetétele)</span>':"");}
     else{let d=0,r=0;hrects.forEach(o=>{const c=callOf(S.house[o.id]);if(c==="D")d++;else if(c==="R")r++;});const mh=S.meta.house||{};const dd=Math.max(d,num(mh.d)),rr=Math.max(r,num(mh.r));
-      html=(dd+rr>0)?sumHTML2([["var(--dem)",dd,"demokrata"],["var(--rep)",rr,"republikánus"]])+'<span>'+(435-dd-rr)+' körzet még eldöntetlen'+(mh.asOf?' · '+esc(mh.asOf):'')+'</span>':'<span>Még nincs eredmény. A körzetek az urnazárás után színeződnek be, a halvány szín a jelenlegi képviselő pártja.</span>';}
+      html=(dd+rr>0)?sumHTML2([["var(--dem)",dd,"demokrata"],["var(--rep)",rr,"republikánus"]])+'<span>'+(435-dd-rr)+' körzet még eldöntetlen'+(mh.asOf?' · '+esc(mh.asOf):'')+'</span>':'<span>Még nincs eredmény. A körzetek az urnazárás után színeződnek be, a négyzetek addig semlegesek.</span>';}
   }
   box.innerHTML=html;
 }
@@ -1791,7 +1792,7 @@ function houseDetail(st){
     let right="";
     if(era==="live"){right=c?'<span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
     const p=pl[i];
-    return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])+(era==="live"?' <span class="muted" style="font-size:12px">jelenlegi</span>':''))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
+    return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':'Még nincs hívás')+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
   return h;
 }
 function showTipHTML(html,x,y){
@@ -1800,7 +1801,7 @@ function showTipHTML(html,x,y){
   tip.style.left=Math.max(4,Math.min(w-tw-4,x+14))+"px";tip.style.top=Math.max(4,y-th-10)+"px";
 }
 function distTip(id){const m=id.split("-"),st=m[0],i=Number(m[1])-1,cur=HOLD[st][i],p=PHOLD[st][i];
-  let t='<b>'+id+'</b>'+(cur[0]==="V"?"Üres hely":esc(cur[1])+" ("+cur[0]+")");
+  let t='<b>'+id+'</b>'+(era==="live"?"":(cur[0]==="V"?"Üres hely":esc(cur[1])+" ("+cur[0]+")"));
   if(era==="pre")t+='<br>2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem';
   if(era==="live"){const c=callOf(S.house[id]);t+=c?"<br>✓ Valószínűleg eldőlt: "+partyName(c)+" győzelem":"";if(HNOTE[id])t+="<br>"+HNOTE[id];}
   return t;}
