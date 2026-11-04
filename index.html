@@ -728,7 +728,7 @@ footer{padding-block:24px 48px}
       <div class="chips" id="sen-filter" role="group" aria-label="Szűrő">
         <button class="chip" type="button" data-f="all" aria-pressed="true">Mind (35)</button>
         <button class="chip" type="button" data-f="close" aria-pressed="false">Szoros</button>
-        <button class="chip" type="button" data-f="called" aria-pressed="false">Valószínűleg eldőlt</button>
+        <button class="chip" type="button" data-f="called" aria-pressed="false">Eldőlt</button>
       </div>
     </div>
     <ul class="races anim" id="races"></ul>
@@ -773,7 +773,7 @@ footer{padding-block:24px 48px}
       <button class="iconbtn nclose" id="news-close" type="button" aria-label="Hírek bezárása"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 5l14 14M19 5L5 19"/></svg></button></div>
     <div class="chips" id="news-filter" role="group" aria-label="Hírek szűrése">
       <button class="chip" type="button" data-nf="all" aria-pressed="true">Mind</button>
-      <button class="chip" type="button" data-nf="call" aria-pressed="false">Valószínűleg eldőlt</button>
+      <button class="chip" type="button" data-nf="call" aria-pressed="false">Eldőlt</button>
       <button class="chip" type="button" data-nf="news" aria-pressed="false">Hírek</button>
     </div>
   </div>
@@ -1250,8 +1250,8 @@ function renderLegend(){
   else if(mode==="gov")h='<span><i class="sw d"></i>Demokrata győzelem</span><span><i class="sw r"></i>Republikánus győzelem</span><span><i class="sw p"></i>Kormányzói verseny, nyitott</span><span><i class="sw hot"></i>Fej-fej mellett</span><span><i class="sw"></i>Nincs kormányzói választás</span>';
   else{h='<span>Korán zár</span><span class="rampbar">'+RAMP_HOURS.map((x,i)=>'<i style="background:color-mix(in srgb,var(--teal) '+(100-i*9)+'%,var(--off))" title="'+etLabel(x)+' ET"></i>').join("")+'</span><span>Későn zár</span><span><i class="sw"></i>Még nyitva</span>';}
   if(era==="pre")h+='<span class="muted">Részvétel: a leadott szavazatok aránya a szavazásra jogosultakhoz. Források: Wikipedia (eredmények), Ballotpedia (részvétel). A 2025-ös választásokról (NJ, VA) nincs részvételi adat.</span>';
-  if(era==="live"&&(mode==="sen"||mode==="gov"))h+='<span><i class="sw ck">✓</i>Valószínűleg eldőlt</span><span>Világosabb szín: éppen vezet, de még nem dőlt el.</span>';
-  if(era==="live"&&mode==="house")h+='<span>Teli szín: valószínűleg eldőlt.</span>';
+  if(era==="live"&&(mode==="sen"||mode==="gov"))h+='<span><i class="sw ck">✓</i>Eldőlt</span><span>Világosabb szín: éppen vezet, de még nem dőlt el.</span>';
+  if(era==="live"&&mode==="house")h+='<span>Teli szín: eldőlt.</span>';
   if($("legend").dataset.m!==mode+"|"+K){$("legend").innerHTML=h;$("legend").dataset.m=mode+"|"+K;}
 }
 
@@ -1343,7 +1343,7 @@ function raceHTML(c,st,label,names,held){
   const d=idx!=null?sn[idx].d:live,past=idx!=null;
   const call=callOf(d),counting=num(d.rep)>0||d.dv!=null;
   let badge='';
-  if(call){const flip=held&&call!==held;badge='<span class="qdone">✓ Valószínűleg eldőlt</span><span class="badge '+call.toLowerCase()+'">'+partyName(call)+' győzelem'+(flip?' · átfordult':' · megtartotta')+'</span>';}
+  if(call){const flip=held&&call!==held;badge='<span class="qdone">✓ Eldőlt</span><span class="badge '+call.toLowerCase()+'">'+partyName(call)+' győzelem'+(flip?' · átfordult':' · megtartotta')+'</span>';}
   else if(counting){badge='<span class="badge ok">Számolás folyik</span>';}
   else badge='<span class="badge">–</span>';
   if(past)badge+=' <span class="qpastnote">'+esc(loc(sn[idx].t))+' állapota</span>';
@@ -1727,13 +1727,13 @@ function renderFeed(){
   $("nl").innerHTML=items.length?items.map((i,k)=>{
     const ms=Date.parse(i.t),title=i.title||i.text,body=i.title?i.text:"",u=safeUrl(i.url),isNew=!seenIds.has(i.id),open=openIds.has(i.id);
     return '<li class="ni'+(open?' open':'')+(isNew?' new':'')+'" data-id="'+esc(i.id)+'" style="animation-delay:'+Math.min(k,8)*35+'ms">'+
-      '<button class="nhb" type="button" aria-expanded="'+open+'"><span class="nm"><span class="badge'+(i.tag==="Hívás"?' ok':'')+'">'+esc(i.tag==="Hívás"?"Valószínűleg eldőlt":i.tag)+'</span><time class="mono" data-t="'+(isFinite(ms)?ms:"")+'">'+esc(isFinite(ms)?ago(ms):"")+'</time>'+(i.src?'<span>· '+esc(i.src)+'</span>':'')+'</span>'+
+      '<button class="nhb" type="button" aria-expanded="'+open+'"><span class="nm"><span class="badge'+(i.tag==="Hívás"?' ok':'')+'">'+esc(i.tag==="Hívás"?"Eldőlt":i.tag)+'</span><time class="mono" data-t="'+(isFinite(ms)?ms:"")+'">'+esc(isFinite(ms)?ago(ms):"")+'</time>'+(i.src?'<span>· '+esc(i.src)+'</span>':'')+'</span>'+
       '<span class="nt">'+esc(title)+'</span><svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>'+
       '<div class="nb"><div>'+(body?'<p>'+esc(body)+'</p>':'')+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">Megnyitás'+(i.src?': '+esc(i.src):'')+' ↗</a>':'')+'</div></div></li>';
   }).join(""):'<li class="nempty">Ebben a szűrőben még nincs hír. Amint egy verseny valószínűleg eldől, itt jelenik meg.</li>';
   updateUnread();
   $("nft-up").textContent="Hírek frissítve: "+((S.meta.status&&S.meta.status.updated)||FEED_ASOF)+".";
-  const parts=all.slice(0,8).map(i=>'<span><b>'+esc(i.tag==='Hívás'?'Valószínűleg eldőlt':i.tag)+':</b> '+esc(i.title||i.text)+'</span>').join("");
+  const parts=all.slice(0,8).map(i=>'<span><b>'+esc(i.tag==='Hívás'?'Eldőlt':i.tag)+':</b> '+esc(i.title||i.text)+'</span>').join("");
   const tr=$("track");if(tr.dataset.sig!==parts){tr.dataset.sig=parts;tr.innerHTML=parts+parts;}
 }
 function setNews(open){
@@ -1923,7 +1923,7 @@ function houseLeadTxt(d,sep){
 function distTip(id){const m=id.split("-"),st=m[0],i=Number(m[1])-1,cur=HOLD[st][i],p=PHOLD[st][i];
   let t='<b>'+id+'</b>'+(era==="live"?"":(cur[0]==="V"?"Üres hely":esc(cur[1])+" ("+cur[0]+")"));
   if(era==="pre")t+='<br>2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem';
-  if(era==="live"){const c=callOf(S.house[id]);t+=c?"<br>✓ Valószínűleg eldőlt: "+partyName(c)+" győzelem":houseLeadTxt(S.house[id],"<br>");if(HNOTE[id])t+="<br>"+HNOTE[id];}
+  if(era==="live"){const c=callOf(S.house[id]);t+=c?"<br>✓ Eldőlt: "+partyName(c)+" győzelem":houseLeadTxt(S.house[id],"<br>");if(HNOTE[id])t+="<br>"+HNOTE[id];}
   return t;}
 function preTip(st){
   const nm='<b>'+esc(NAMES[st])+'</b>';
