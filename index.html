@@ -602,6 +602,17 @@ footer{padding-block:24px 48px}
 #viewc.on{display:inline-flex}
 #viewc b{color:var(--ink);font-weight:700}
 #link-note{display:none!important}
+#ctrl-banner{display:none;border-bottom:1px solid var(--line)}
+#ctrl-banner.on{display:block}
+#ctrl-banner .cb{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px;background:linear-gradient(90deg,color-mix(in srgb,var(--dem) 22%,var(--bg)),color-mix(in srgb,var(--dem) 6%,var(--bg)))}
+#ctrl-banner.r .cb{background:linear-gradient(90deg,color-mix(in srgb,var(--rep) 22%,var(--bg)),color-mix(in srgb,var(--rep) 6%,var(--bg)))}
+#ctrl-banner .cbi{width:38px;height:38px;border-radius:50%;background:var(--dem);color:#fff;display:grid;place-items:center;font:800 18px var(--f-body);flex:none}
+#ctrl-banner.r .cbi{background:var(--rep)}
+#ctrl-banner .cbt{min-width:0;flex:1 1 260px}
+#ctrl-banner .cbt b{display:block;font:800 clamp(17px,2.6vw,22px)/1.2 var(--f-body);color:var(--ink);text-wrap:balance}
+#ctrl-banner .cbt span{display:block;margin-top:2px;font:500 13.5px/1.4 var(--f-body);color:var(--ink2)}
+#ctrl-banner .cbn{font:800 22px var(--f-body);font-variant-numeric:tabular-nums;color:var(--ink)}
+#ctrl-banner .cbn i{font-style:normal;color:var(--dem)}#ctrl-banner .cbn u{text-decoration:none;color:var(--rep)}
 </style>
 
 <div class="top">
@@ -619,6 +630,7 @@ footer{padding-block:24px 48px}
 </div>
 <div class="ticker" aria-label="Friss hírek"><div class="tag">Élő</div><div class="track" id="track"></div></div>
 
+<div id="ctrl-banner" role="status" aria-live="polite"><div class="wrap cb"><div class="cbi" id="cb-i">D</div><div class="cbt"><b id="cb-t"></b><span id="cb-s"></span></div><div class="cbn" id="cb-n"></div></div></div>
 <div class="hero-band">
   <div class="wrap hero">
     <div>
@@ -2083,7 +2095,13 @@ setInterval(tick,1000);setInterval(()=>{renderTimeline();renderRaces(false);rend
 (async function(){
   let db=null;
   try{db=(window.claude&&window.claude.use)?await window.claude.use("db"):null;}catch(e){db=null;}
-async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=(x.meta&&x.meta.status&&x.meta.status.updated)||"";if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;const d=best;window.__SRC=(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg");["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();}catch(e){if(!ok){link="off";renderStatus();}}};await run();setInterval(run,60000);}
+function renderCtrl(){const c=S.meta&&S.meta.control&&S.meta.control.senate;const el=document.getElementById("ctrl-banner");if(!el)return;if(!c||!c.party){el.classList.remove("on","r");return;}
+const D=c.party==="D";el.classList.add("on");el.classList.toggle("r",!D);document.getElementById("cb-i").textContent=c.party;
+document.getElementById("cb-t").textContent=D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust";
+const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;
+document.getElementById("cb-s").textContent="Az AP számolása szerint "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");
+document.getElementById("cb-n").innerHTML="<i>"+c.d+"</i> – <u>"+c.r+"</u>";}
+async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=(x.meta&&x.meta.status&&x.meta.status.updated)||"";if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;const d=best;window.__SRC=(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg");["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});try{renderCtrl();}catch(e){}if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();}catch(e){if(!ok){link="off";renderStatus();}}};await run();setInterval(run,60000);}
   if(!db){pollJSON();return;}
   let got=false;const slow=setTimeout(()=>{if(!got){link="slow";renderStatus();}},10000);
   ["senate","governor","house","measures","feed","meta","events"].forEach(name=>{
