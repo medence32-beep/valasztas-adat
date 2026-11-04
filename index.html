@@ -1432,6 +1432,16 @@ function loadCty(){
 }
 function ctyRace(st){const o=CR&&CR[st];if(!o)return null;return mode==="gov"?(o.g||null):(o.s||null);}
 function ctyD(c){const r=ctyRace(zoomSt);return r&&r.v[c[3]]||null;}
+let CL=null,CLsig="";
+function clRace(st){const o=CL&&CL[st];if(!o)return null;return mode==="gov"?(o.g||null):(o.s||null);}
+function clHas(){return era==="live"&&!!zoomSt&&!!clRace(zoomSt);}
+function clD(c){const r=clRace(zoomSt);const v=r&&r.v&&r.v[c[3]];if(!v)return null;const t=v[0]+v[1];if(!t)return null;return [v[0]/t*1000,v[1]/t*1000,v[0]+v[1],v[2]];}
+async function loadCL(){
+  const j=await getJ("countylive.json");if(!j)return;
+  const sig=j.updated||"";if(sig===CLsig)return;CL=j;CLsig=sig;
+  try{if(zoomSt&&typeof ctyEraSync==="function"&&era==="live")ctyEraSync();}catch(e){}
+}
+setInterval(()=>{loadCL().catch(()=>{});},60000);setTimeout(()=>{loadCL().catch(()=>{});},1500);
 function cssRGB(v){
   let s="";try{s=getComputedStyle(document.documentElement).getPropertyValue(v).trim();}catch(e){}
   let m=/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(s);
@@ -1447,6 +1457,7 @@ function ctyMix(m){
   return "rgb("+k.map(x=>Math.round(x)).join(",")+")";
 }
 function ctyColor(c){
+  if(era==="live"){const L=clD(c);if(!L)return null;const m=(L[0]-L[1])/10;return ctyMix(Math.abs(m)<0.05?0.0001:m);}
   const d=ctyD(c);
   if(!d)return null;
   const m=(d[0]-d[1])/10;
@@ -1476,6 +1487,19 @@ function ctyInfo(c){
     }
     return '<span class="muted">Ehhez a megyéhez nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat</span>';
   }
+  if(era==="live"){
+    const d=clD(c);
+    if(d){
+      const cd=ctyCands(zoomSt)||{},D=d[0]/10,R=d[1]/10,oth=Math.max(0,100-D-R),mg=D-R;
+      const nD=cd.D?esc(cd.D):"Demokrata",nR=cd.R?esc(cd.R):"Republikánus";
+      const lead=Math.abs(mg)<0.05?"Döntetlen":(mg>0?"D":"R")+" +"+Math.abs(mg).toFixed(1).replace(".",",")+" pont";
+      const f=x=>x.toFixed(1).replace(".",",")+"%";
+      return '<div style="opacity:.75;font-weight:600">Élő eredmény · '+(mode==="gov"?"kormányzó":"szenátus")+(d[3]?' · '+d[3]+'% megszámolva':'')+'</div>'+
+        '<div style="display:flex;height:9px;border-radius:5px;overflow:hidden;margin:6px 0 5px;min-width:190px"><i style="width:'+D+'%;background:var(--dem)"></i><i style="width:'+oth+'%;background:var(--line2)"></i><i style="width:'+R+'%;background:var(--rep)"></i></div>'+
+        '<div style="display:flex;justify-content:space-between;gap:14px"><span><b style="color:var(--dem)">'+nD+'</b><br><b>'+f(D)+'</b></span><span style="text-align:right"><b style="color:var(--rep)">'+nR+'</b><br><b>'+f(R)+'</b></span></div>'+
+        '<div style="margin-top:5px;font-weight:700">'+lead+'</div><div class="muted" style="margin-top:1px">'+fmtN(d[2])+' D+R szavazat</div>';
+    }
+  }
   return '<span class="muted">Megyei eredmény: nincs adat</span>';
 }
 function ctyLegend(){
@@ -1488,6 +1512,8 @@ function ctyLabelState(){
     const r=ctyRace(zoomSt);
     L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb az előny</small>'+ctyLegend():'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(az állam alapszínét látod; a megyehatárok kattinthatók)</small>';
     L.hidden=false;}
+  else if(zoomSt&&zoomC==null&&clHas()){
+    L.innerHTML='Megyék színe: élő eredmény ('+(mode==="gov"?"kormányzó":"szenátus")+')<small>D kék · R piros · minél sötétebb, annál nagyobb az előny</small>'+ctyLegend();L.hidden=false;}
   else if(zoomC==null)L.hidden=true;
 }
 function ctyEraSync(){
@@ -1499,10 +1525,10 @@ function drawCty(st){
   const g=$("counties");g.innerHTML="";$("geo").classList.remove("hascty");
   if(!st||!CTY||!CTY[st]||!geo.els[st])return;
   ctyEra=era;g.classList.add("cin");clearTimeout(g._cin);g._cin=setTimeout(()=>g.classList.remove("cin"),1200);
-  g.innerHTML=CTY[st].map((c,i)=>'<path class="cty" data-i="'+i+'" d="'+c[1]+'" style="animation-delay:'+((i%40)*12)+'ms'+(era==="pre"&&ctyColor(c)?';fill:'+ctyColor(c):'')+'"/>').join("");
+  g.innerHTML=CTY[st].map((c,i)=>'<path class="cty" data-i="'+i+'" d="'+c[1]+'" style="animation-delay:'+((i%40)*12)+'ms'+((era==="pre"||era==="live")&&ctyColor(c)?';fill:'+ctyColor(c):'')+'"/>').join("");
   $("geo").classList.add("hascty");ctyFill();ctyLabelState();
 }
-function ctyFill(){const g=$("counties");if(!g)return;const c=zoomSt?(mode==="gov"?govCall(zoomSt):senCall(zoomSt)):null;g.classList.toggle("pend",era==="live");const ge=$("geo");if(ge)ge.classList.toggle("pendz",!!zoomSt&&era==="live");}
+function ctyFill(){const g=$("counties");if(!g)return;const c=zoomSt?(mode==="gov"?govCall(zoomSt):senCall(zoomSt)):null;g.classList.toggle("pend",era==="live"&&!clHas());const ge=$("geo");if(ge)ge.classList.toggle("pendz",!!zoomSt&&era==="live"&&!clHas());}
 function zoomMark(st){
   Object.keys(geo.els).forEach(k=>{geo.els[k].classList.toggle("zsel",k===st);});
   Object.keys(geo.lbs).forEach(k=>{geo.lbs[k].classList.toggle("zsel",k===st);});
