@@ -1476,7 +1476,7 @@ function renderDetail(){
   const dkey=st+"|"+era+"|"+mode+"|"+sub;const changed=box.dataset.st!==dkey;box.dataset.st=dkey;box.classList.toggle("anim",changed);
   if(mode==="house"||era==="pre"){const keep0=box.scrollTop;box.innerHTML=mode==="house"?houseDetail(st):preDetail(st);orderDetail(box);if(!changed)box.scrollTop=keep0;return;}
   const keep=box.scrollTop;
-  let html='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+(h!=null?esc(closeText(st)):"Nincs adat")+'</span></div></div>';
+  let html='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3>'+((sd||gd)?'<div class="meta"><span>'+(h!=null?esc(closeText(st)):"Nincs adat")+'</span></div>':'')+'</div>';
   html+=turnLiveHTML(st);
   if(sd){
     html+=raceHTML("senate",st,"Szenátus",{d:sd.d,r:sd.r,o:sd.o},sd.held);
