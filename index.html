@@ -2335,7 +2335,7 @@ async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu=
 })();
 })();
 
-(function(){[["h-time",1],["h-sen",1],["h-gov",1],["h-house",1],["h-meas",1],["h-exit",0]].forEach(([id,c0])=>{const h=document.getElementById(id);if(!h)return;const sec=h.closest("section");if(!sec)return;
+(function(){[["h-time",1],["h-sen",1],["h-gov",1],["h-house",1],["h-meas",1],["h-exit",1]].forEach(([id,c0])=>{const h=document.getElementById(id);if(!h)return;const sec=h.closest("section");if(!sec)return;
   sec.classList.add("sec-fold");if(c0)sec.classList.add("coll");
   const fb=document.createElement("div");fb.className="fb";const fi=document.createElement("div");fi.className="fbi";fb.appendChild(fi);
   [...sec.children].forEach(n=>{if(!n.classList.contains("sec-h"))fi.appendChild(n);});sec.appendChild(fb);
