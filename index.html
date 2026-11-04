@@ -1559,12 +1559,16 @@ function clD(c){const r=clRace(zoomSt);const v=r&&r.v&&r.v[c[3]];if(!v)return nu
 function clX(c){const r=clRace(zoomSt);const v=r&&r.v&&r.v[c[3]];if(!v)return null;const d=v[0]||0,rr=v[1]||0,o=v[3]||0,t=v[4]||(d+rr+o);if(!(t>0))return null;return {d:d,r:rr,o:o,t:t,p:v[2]||0};}
 const OTHN={s:{AK:"Gerald L. Heikes",CO:"Bob Chew",FL:"Neil J. Gillespie",ID:"Todd Achilles",IL:"Whitfield Harrington Jr.",IA:"Thomas Laehn",KS:"David C. Graham",KY:"Christopher Campbell",MA:"Shiva Ayyadurai",MI:"Lydia Christensen",MN:"Marisa Simonetti",MS:"Ty Pinkins",MT:"Seth Bodnar",NE:"Dan Osborn",NH:"Edmond Laplante",NJ:"Veronica Fernandez",NC:"Shannon W. Bray",OH:"William B. Redpath",OK:"Curtis Stinnett",OR:"Chris Henry",RI:"Michael Bahry",SC:"Kasie Whitener",SD:"Brian L. Bengs",TN:"Robert Jones",TX:"Ted Brown",WV:"S. Marshall Wilson"},g:{AK:"Dave Bronson",PA:"Ken Krawchuk",AZ:"Risa Lombardo",AR:"Colt Shelby",CO:"Greg Lopez",FL:"Scott E. Jewett",ID:"John R. Stegner",IL:"Collin Corbett",ME:"Rick Bennett",MD:"Andy Ellis",MA:"Andrea James",MI:"Anthony Hudson",MN:"Steven Young",NE:"Brett Lindstrom",NV:"Danielle Ford",OH:"Don Kissick",OK:"Robert E. Brooks Sr.",OR:"Brett Smith",RI:"Kenneth Block",SC:"Michael Addison",TN:"David Hatley",TX:"Pat Dixon",VT:"Brian Judd",WY:"Bernadette Bextel"}};
 function clOthName(){const n=(OTHN[mode==="gov"?"g":"s"]||{})[zoomSt];return n||"Egyéb jelölt";}
+let CLtag="";
 async function loadCL(){
-  const j=await getJ("countylive.json");if(!j)return;
+  let j=null;
+  try{const r=await fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/contents/countylive.json?ref=main",{cache:"no-cache",headers:{Accept:"application/vnd.github.raw"}});if(r.ok){const t=r.headers.get("etag")||"";if(t&&t===CLtag)return;j=await r.json();CLtag=t;}}catch(e){}
+  if(!j)j=await getJ("countylive.json");
+  if(!j)return;
   const sig=j.updated||"";if(sig===CLsig)return;CL=j;CLsig=sig;
   try{if(zoomSt&&typeof ctyEraSync==="function"&&era==="live")ctyEraSync();}catch(e){}
 }
-setInterval(()=>{loadCL().catch(()=>{});},60000);setTimeout(()=>{loadCL().catch(()=>{});},1500);
+setInterval(()=>{loadCL().catch(()=>{});},20000);setTimeout(()=>{loadCL().catch(()=>{});},1500);
 function cssRGB(v){
   let s="";try{s=getComputedStyle(document.documentElement).getPropertyValue(v).trim();}catch(e){}
   let m=/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(s);
@@ -2326,7 +2330,12 @@ function renderVotes(){
   };
   el.innerHTML=card("Szenátus",S.senate||{},"s")+card("Kormányzók",S.governor||{},"g");
 }
-async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=(x.meta&&x.meta.status&&x.meta.status.updated)||"";if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;const d=best;window.__SRC=(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg");["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});try{renderCtrl();}catch(e){}try{renderVotes();}catch(e){}if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();}catch(e){if(!ok){link="off";renderStatus();}}};await run();setInterval(run,60000);}
+async function pollJSON(){let ok=false,cur="",apiTag="";
+  const stampOf=x=>(x.meta&&x.meta.status&&x.meta.status.updated)||"";
+  const apply=(d,lab)=>{window.__SRC=lab;["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});try{renderCtrl();}catch(e){}try{renderVotes();}catch(e){}if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();};
+  const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=stampOf(x);if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;if(bs>=cur){cur=bs;apply(best,(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg"));}}catch(e){if(!ok){link="off";renderStatus();}}};
+  const api=async()=>{try{const r=await fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/contents/data.json?ref=main",{cache:"no-cache",headers:{Accept:"application/vnd.github.raw"}});if(!r.ok)return;const tag=r.headers.get("etag")||"";if(tag&&tag===apiTag)return;const x=await r.json();const s=stampOf(x);if(s<cur)return;apiTag=tag;cur=s;apply(x,"GitHub (azonnali), "+(s||"nincs időbélyeg"));}catch(e){}};
+  await run();api();setInterval(run,60000);setInterval(api,15000);}
   if(!db){pollJSON();return;}
   let got=false;const slow=setTimeout(()=>{if(!got){link="slow";renderStatus();}},10000);
   ["senate","governor","house","measures","feed","meta","events"].forEach(name=>{
@@ -2344,5 +2353,10 @@ async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu=
   h.setAttribute("role","button");h.setAttribute("tabindex","0");h.setAttribute("aria-expanded",String(!c0));
   const tg=()=>{const c=sec.classList.toggle("coll");h.setAttribute("aria-expanded",String(!c));};
   hd.addEventListener("click",e=>{if(e.target.closest(".chip,button,a"))return;tg();});h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();tg();}});});})();
+(function(){let base=null;const key=r=>(r.headers.get("etag")||r.headers.get("last-modified")||"");
+  const chk=async()=>{try{const r=await fetch(location.pathname,{method:"HEAD",cache:"no-cache"});if(!r.ok)return;const k=key(r);if(!k)return;if(base===null){base=k;return;}if(k===base)return;
+    let last=0;try{last=+sessionStorage.getItem("rl")||0;}catch(e){}if(Date.now()-last<180000){base=k;return;}
+    try{sessionStorage.setItem("rl",String(Date.now()));}catch(e){}location.reload();}catch(e){}};
+  setTimeout(chk,4000);setInterval(chk,30000);})();
 </script>
 </body></html>
