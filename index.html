@@ -1476,12 +1476,12 @@ function renderDetail(){
   const dkey=st+"|"+era+"|"+mode+"|"+sub;const changed=box.dataset.st!==dkey;box.dataset.st=dkey;box.classList.toggle("anim",changed);
   if(mode==="house"||era==="pre"){const keep0=box.scrollTop;box.innerHTML=mode==="house"?houseDetail(st):preDetail(st);orderDetail(box);if(!changed)box.scrollTop=keep0;return;}
   const keep=box.scrollTop;
-  let html='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3>'+((sd||gd)?'<div class="meta"><span>'+(h!=null?esc(closeText(st)):"Nincs adat")+'</span></div>':'')+'</div>';
+  let html='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3>'+(((mode==="gov")?gd:sd)?'<div class="meta"><span>'+(h!=null?esc(closeText(st)):"Nincs adat")+'</span></div>':'')+'</div>';
   html+=turnLiveHTML(st);
-  if(sd){
+  if(mode!=="gov"){if(sd){
     html+=raceHTML("senate",st,"Szenátus",{d:sd.d,r:sd.r,o:sd.o},sd.held);
-  }else html+='<section class="qrace"><span class="lbl">Szenátus</span><span class="muted">Ebben az államban ma nincs szenátusi választás.</span></section>';
-  if(GOV_HELD[st]){
+  }else html+='<section class="qrace"><span class="lbl">Szenátus</span><span class="muted">Ebben az államban ma nincs szenátusi választás.</span></section>';}
+  if(mode==="gov"&&GOV_HELD[st]){
     html+=gd?raceHTML("governor",st,"Kormányzó",{d:gd.d,r:gd.r,o:gd.o?gd.o:""},GOV_HELD[st])
       :'<section class="qrace"><span class="lbl">Kormányzó</span><span class="muted">Ebben az államban nincs kormányzói választás.</span></section>';
   }
