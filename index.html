@@ -1425,7 +1425,7 @@ function gapHTML(cand,anyN){
     '<div class="gv"><span class="gp" style="color:'+c(a)+'">'+(gp!=null?'+'+pct(gp)+'<small>százalékpont</small>':'–')+'</span><span class="gn" style="color:'+c(a)+'">'+(gv>0?'+':'')+fmtN(gv)+'<small>szavazat</small></span></div>'+
     '<div class="gb" aria-hidden="true"><i style="width:'+w+'%;background:'+c(a)+'"></i><i style="width:'+(100-w)+'%;background:'+c(b)+'"></i></div></div>';
 }
-function partyOf(name,cls,cat){const PN={Chew:"Forward Párt",Harrington:"American Center","Veronica Fernandez":"End the Corruption",Kuniansky:"Szocialista Munkáspárt",Tache:"Szocializmus és Felszabadítás Pártja","Marshall Wilson":"Alkotmány Párt",Laplante:"Alkotmány Párt",Hackett:"Alkotmány Párt",Marvin:"Legal Marijuana Now",Conboy:"America First Párt",Dublin:"Zöld Párt",Marsh:"Zöld Párt",Baum:"Approval Voting Párt",Osborn:"Független",Achilles:"Független",Bodnar:"Független",Pinkins:"Független",Bengs:"Független",Meinhardt:"Független",Simonetti:"Független",Withrow:"Unity Párt",Gillespie:"Független","Tim Long":"Amerikai Adófizetők Pártja","Robin Richards":"Független","Christopher Campbell":"Kentucky Párt",Heikes:"Független","Bernadette Wilson":"Független","Dave Bronson":"Független","Treg Taylor":"Független","Chris Henry":"Pacific Green Párt"};const pk=Object.keys(PN).find(q=>new RegExp("(^|[^A-Za-z])"+q+"($|[^A-Za-z])").test(name));return pk?PN[pk]:(cat==="gop"||cls==="r"?"Republikánus":(cat==="dem"||cls==="d"?"Demokrata":(cat==="lib"?"Libertárius":(cat==="ind"?"Független":"Egyéb jelölt"))));}
+function partyOf(name,cls,cat){const PN={Chew:"Forward Párt",Harrington:"American Center","Veronica Fernandez":"End the Corruption",Kuniansky:"Szocialista Munkáspárt",Tache:"Szocializmus és Felszabadítás Pártja","Marshall Wilson":"Alkotmány Párt",Laplante:"Alkotmány Párt",Hackett:"Alkotmány Párt",Marvin:"Legal Marijuana Now",Conboy:"America First Párt",Dublin:"Zöld Párt",Marsh:"Zöld Párt",Baum:"Approval Voting Párt",Osborn:"Független",Achilles:"Független",Bodnar:"Független",Pinkins:"Független",Bengs:"Független",Meinhardt:"Független",Simonetti:"Független",Withrow:"Unity Párt",Gillespie:"Független","Tim Long":"Amerikai Adófizetők Pártja","Robin Richards":"Független","Christopher Campbell":"Kentucky Párt",Heikes:"Független · republikánus párttag","Bernadette Wilson":"Független · republikánus párttag","Dave Bronson":"Független · republikánus párttag","Treg Taylor":"Független · republikánus párttag","Chris Henry":"Pacific Green Párt"};const pk=Object.keys(PN).find(q=>new RegExp("(^|[^A-Za-z])"+q+"($|[^A-Za-z])").test(name));return pk?PN[pk]:(cat==="gop"||cls==="r"?"Republikánus":(cat==="dem"||cls==="d"?"Demokrata":(cat==="lib"?"Libertárius":(cat==="ind"?"Független":"Egyéb jelölt"))));}
 function raceHTML(c,st,label,names,held){
   const live=S[c][st]||{},sn=snaps(c,st);
   let idx=HV[c][st];if(idx!=null&&(idx>=sn.length||!sn.length)){idx=null;HV[c][st]=null;}
@@ -2271,9 +2271,9 @@ function renderVotes(){
   const fm=n=>Math.round(n).toLocaleString("hu-HU").replace(/\u00a0/g," ");
   const tr=(a,b)=>b>0?(Math.floor(a/b*10000)/100).toFixed(2).replace(".",","):"0,00";
   const card=(title,src,cl)=>{
-    const P={};let n=0;const add=(p,v)=>{if(v>0)P[p]=(P[p]||0)+v;};
+    const P={};let n=0;const add=(p,v)=>{if(/republikánus párttag/.test(p))p="Republikánus";if(v>0)P[p]=(P[p]||0)+v;};
     Object.keys(src).forEach(k=>{const x=src[k]||{};const a=+x.dn||0,b=+x.rn||0,c=+x.on||0;if(!(a+b+c>0))return;n++;
-      add("Demokrata",a);add(cl==="g"&&k==="AK"?"Független":"Republikánus",b);
+      add("Demokrata",a);add("Republikánus",b);
       let on="";try{on=OTHN[cl][k]||"";}catch(e){}
       add(partyOf(on,"i",x.op),c);
       (x.more||[]).forEach(m=>add(partyOf(m[0],"i",m[1]),+m[2]||0));});
