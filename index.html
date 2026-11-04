@@ -553,7 +553,9 @@ footer{padding-block:24px 48px}
 .turnmain{font-size:14px;color:var(--ink2)}.turnmain b{font:800 26px/1 var(--f-display);color:var(--ink);margin-right:4px}
 .dchk circle{fill:var(--ink);stroke:var(--bg);stroke-width:1.6}
 .dchk path{fill:none;stroke:var(--bg);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
-.dchk{pointer-events:none;animation:pop .5s cubic-bezier(.2,.8,.2,1) both}
+.dchk{pointer-events:none;animation:none!important}
+.dchk circle,.dchk path{animation:none}
+.dchk.newc circle,.dchk.newc path{animation:pop .5s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center}
 .tile.dec::before{content:"\2713";position:absolute;top:3px;right:4px;font:700 11px/1 var(--f-body);color:var(--txt,var(--ink));opacity:.9}
 .sw.ck{display:inline-grid;place-items:center;font:700 10px/1 var(--f-body);background:var(--ink);color:var(--bg);border-color:transparent}
 .qdone{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:var(--ink);margin-right:6px}
@@ -908,6 +910,12 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f205","t":"2026-11-04T00:21:00Z","tag":"Hír","title":"Georgia: Ossoff 66,9%-kal vezet, a kormányzói versenyben Bottoms (D) áll nyerésre","text":"A szavazatok 12%-ának megszámolásakor Jon Ossoff (D) 351 631, Mike Collins (R) 173 627 szavazatot kapott. A kormányzóválasztáson Keisha Lance Bottoms (D) 62,1%-on áll Rick Jackson (R) 37,9%-a ellen. Georgia legtöbb körzetében megindult a számolás.","src":"AP","url":"https://apnews.com/projects/elections-2026/georgia-us-senate-results/"},
+{"id":"f204","t":"2026-11-04T00:18:00Z","tag":"Hívás","title":"Az AP hívott: Warner (D) megnyerte a virginiai szenátusi helyet","text":"Mark Warner negyedik ciklusát kezdi a Szenátusban. A Házban újabb körzetek dőltek el Floridában: Maxwell Frost (D, FL-10), Oliver Gilbert (D, FL-24), Jim Schwartzel (R, FL-19).","src":"AP","url":"https://apnews.com/projects/elections-2026/virginia-us-senate-results/"},
+{"id":"f203","t":"2026-11-04T00:16:00Z","tag":"Hír","title":"Georgia: Collins (R) átvette a vezetést Ossofftól a korai számolásban","text":"A szavazatok még 1% alatti részénél Mike Collins (R) 57,4%-on áll, Jon Ossoff (D) 42,6%-on (2350 a 1742 ellen). Floridában 50%-nál Nixon (D) 51,5%, Moody (R) 47,5%, kormányzó: Jolly (D) 52,6% – Donalds (R) 46,3%.","src":"AP","url":"https://apnews.com/projects/elections-2026/georgia-us-senate-results/"},
+{"id":"f202","t":"2026-11-04T00:13:00Z","tag":"Hír","title":"Kentucky szenátus: szinte holtverseny, Booker 49,3% – Barr 49,2%","text":"A szavazatok 10%-ának megszámolásakor a demokrata Charles Booker mindössze 70 szavazattal vezet Andy Barr előtt (84 979 a 84 909 ellen). Virginiában Warner (D) és Mizusawa (R) is fej-fej mellett áll 50% körül, New Hampshire-ben Pappas (D) és Warmington (D, kormányzó) vezet az első szavazatok alapján.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
+{"id":"f201","t":"2026-11-04T00:12:00Z","tag":"Hír","title":"Florida: a demokraták vezetnek a szenátusi és a kormányzói versenyben is","text":"A szavazatok 36–40%-ának megszámolásakor a szenátusi helyért Angie Nixon (D) 50,9%-on áll Ashley Moody (R) 48,1%-a ellen, a kormányzóválasztáson David Jolly (D) 52,6%-kal vezet Byron Donalds (R) 46,3%-a előtt. Az AP szerint a Ház-körzetekben két demokrata már nyert.","src":"AP","url":"https://apnews.com/projects/elections-2026/florida-results/"},
+{"id":"f200","t":"2026-11-04T00:09:00Z","tag":"Hír","title":"Indiana 2. körzet: a demokrata Decio vezet a republikánus székben","text":"A számolt szavazatok 7%-ánál Decio (D) 2,3 ponttal előzi az ellenfelét. Indianában a 3. és 5. körzetben is demokraták vezetnek (Thompson +9,1, Ford +23,7), a 6.-ban Wirth (D) szoros, +2 ponttal.","src":"AP","url":"https://apnews.com/projects/elections-2026/indiana-results/"},
 {"id":"f199","t":"2026-11-04T00:06:00Z","tag":"Hívás","title":"Az AP hívott: Rogers (R) KY-5, McGarvey (D) KY-3 megnyerte a körzetét","text":"Az első két eldőlt képviselőházi hely Kentuckyból: az 5. körzetben Hal Rogers (R), a 3.-ban Morgan McGarvey (D) marad a székében. A Házban így D 1 – R 1.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-results/"},
 {"id":"f198","t":"2026-11-04T00:02:00Z","tag":"Hír","title":"Fordulat Kentuckyban: Booker átvette a vezetést Barrtól, 51,9% a 46,7% ellen","text":"A számolt szavazatok kb. 9%-ánál a demokrata Charles Booker 76 534, a republikánus Andy Barr 68 865 szavazatot kapott. Barr korai, 60% fölötti előnye elolvadt, az eredmény még nagyon korai.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
 {"id":"f197","t":"2026-11-03T23:56:00Z","tag":"Hír","title":"Kentucky szenátus: Barr 61,8%, Booker 36,4% a szavazatok 4%-ánál","text":"Andy Barr 35 858, Charles Booker 21 112 szavazatnál tart. Az előny a korábbi 18 pont után ismét 25 pont fölé nőtt, az eredmény még nagyon korai; a kentuckyi és indianai körzetekben a számolás folyamatban van.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
@@ -1969,7 +1977,8 @@ function paintDecided(){
   if(on)Object.keys(MAP).forEach(st=>{const c=mode==="sen"?(SENMAP[st]&&senCall(st)):(GOV_HELD[st]&&govCall(st));if(c)calls.push(st);});
   Object.keys(tileEls).forEach(k=>tileEls[k].classList.toggle("dec",calls.indexOf(k)>-1));
   const sig=mode+"|"+calls.join(",");if(sig===_dsig)return;_dsig=sig;
-  g.innerHTML=calls.filter(st=>!CALLOUT[st]).map(st=>{const m=MAP[st],big=m.a>2000;return '<g class="dchk" transform="translate('+m.cx.toFixed(1)+','+(m.cy+(big?15:12)).toFixed(1)+')"><circle r="'+(big?7:6)+'"/><path d="M-3 0.2l2.2 2.4L3.4-2.4"/></g>';}).join("");
+  window._dprev=window._dprev||{};const _pv=window._dprev[mode]||{};window._dprev[mode]=calls.reduce((o,k)=>(o[k]=1,o),{});
+  g.innerHTML=calls.filter(st=>!CALLOUT[st]).map(st=>{const m=MAP[st],big=m.a>2000;return '<g class="dchk'+(_pv[st]?'':' newc')+'" transform="translate('+m.cx.toFixed(1)+','+(m.cy+(big?15:12)).toFixed(1)+')"><circle r="'+(big?7:6)+'"/><path d="M-3 0.2l2.2 2.4L3.4-2.4"/></g>';}).join("");
 }
 
 /* ---------- ticking ---------- */
