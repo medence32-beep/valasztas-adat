@@ -1638,7 +1638,7 @@ function zoomCty(i){
   vbAnim([x,y,w,h]);
 }
 function zoomTo(st){
-  if(!zoomOn||view!=="geo"||mode==="house"||!geo.els[st])return;
+  if(!zoomOn||view!=="geo"||mode==="house"||mode==="time"||!geo.els[st])return;
   const p=geo.els[st];let b;try{b=p.getBBox();}catch(e){return;}
   if(!b||!b.width)return;
   const AR=VB0[2]/VB0[3];
@@ -2092,7 +2092,7 @@ function tick(){
 
 /* ---------- events ---------- */
 function setMode(m){
-  mode=m;prevCall={};selD=null;if(m==="house")zoomReset(true);
+  mode=m;prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);{const zt=$("zoomtoggle");if(zt)zt.hidden=(m==="time");}
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
