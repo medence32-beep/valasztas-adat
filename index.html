@@ -1451,11 +1451,10 @@ function renderDetail(){
   let html='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+(h!=null?esc(closeText(st)):"Nincs adat")+'</span></div></div>';
   html+=turnLiveHTML(st);
   if(sd){
-    html+=raceHTML("senate",st,"Szenátus",{d:sd.d,r:sd.r,o:sd.o},sd.held).replace('</section>',
-      '<div class="meta" style="display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center"><span class="rate'+(sd.rate==="Toss-up"?" t":"")+'">'+esc(RATE_HU[sd.rate]||sd.rate)+'</span><span class="muted" style="font-size:13px">jelenleg: '+(sd.held==="D"?"demokrata":"republikánus")+' hely</span></div>'+(sd.note?'<span class="muted" style="font-size:13px">'+esc(sd.note)+'</span>':'')+'</section>');
+    html+=raceHTML("senate",st,"Szenátus",{d:sd.d,r:sd.r,o:sd.o},sd.held);
   }else html+='<section class="qrace"><span class="lbl">Szenátus</span><span class="muted">Ebben az államban ma nincs szenátusi választás.</span></section>';
   if(GOV_HELD[st]){
-    html+=gd?raceHTML("governor",st,"Kormányzó",{d:gd.d,r:gd.r,o:gd.o?gd.o:""},GOV_HELD[st]).replace('</section>','<div class="meta" style="display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center"><span class="rate'+(gd.rate==="Toss-up"?" t":"")+'">'+esc(gd.tag)+'</span><span class="muted" style="font-size:13px">jelenleg: '+(GOV_HELD[st]==="D"?"demokrata":"republikánus")+' kormányzó</span></div>'+(gd.note?'<span class="muted" style="font-size:13px">'+esc(gd.note)+'</span>':'')+'</section>')
+    html+=gd?raceHTML("governor",st,"Kormányzó",{d:gd.d,r:gd.r,o:gd.o?gd.o:""},GOV_HELD[st])
       :'<section class="qrace"><span class="lbl">Kormányzó</span><span class="muted">Ebben az államban nincs kormányzói választás.</span></section>';
   }
   box.innerHTML=html;orderDetail(box);
@@ -1475,7 +1474,7 @@ function tipHTML(st){
   if(era==="pre")return preTip(st);
   const sd=SENMAP[st];let s='<b>'+esc(NAMES[st])+'</b>';
   if(mode==="sen"){
-    if(sd){const c=senCall(st),dd=S.senate[st]||{};s+=c?partyName(c)+" győzelem":(RATE_HU[sd.rate]||"")+" · "+esc(sd.r.replace("*",""))+" ↔ "+esc((sd.d||sd.o).replace("*","").replace(" (független)",""));if(num(dd.rep)>0)s+=" · "+pct(dd.rep)+"% feldolgozva";}
+    if(sd){const c=senCall(st),dd=S.senate[st]||{};s+=c?partyName(c)+" győzelem":esc(sd.r.replace("*",""))+" ↔ "+esc((sd.d||sd.o).replace("*","").replace(" (független)",""));if(num(dd.rep)>0)s+=" · "+pct(dd.rep)+"% feldolgozva";}
     else s+="Nincs szenátusi választás";
     s+=turnTip(st);
   }else if(mode==="gov"){
@@ -1742,19 +1741,18 @@ function renderRaces(anim){
   el.innerHTML=rows.map((x,i)=>{
     const c=senCall(x.st),res=resultText(S.senate[x.st],x.held);
     return '<li class="race rt'+RATE_ORD[x.rate]+(c?' called-'+c.toLowerCase():'')+'" style="--i:'+i+'">'+
-      '<div class="s">'+esc(NAMES[x.st])+'<small>'+(x.held==="D"?"D":"R")+'-birtokolt hely'+(x.hot?' · szoros':'')+'</small></div>'+
-      '<div><span class="rate'+(x.rate==="Toss-up"?" t":"")+'">'+esc(RATE_HU[x.rate])+'</span></div>'+
+      '<div class="s">'+esc(NAMES[x.st])+'</div>'+
       '<div class="res">'+(res||('<small class="muted" style="font-weight:500">'+esc(closeText(x.st))+'</small>'))+'</div>'+
-      '<div class="c">'+candHTML("d",x.d)+candHTML("r",x.r)+candHTML("i",x.o)+(x.note?'<span class="muted" style="font-size:12.5px">'+esc(x.note)+'</span>':'')+'</div></li>';
+      '<div class="c">'+candHTML("d",x.d)+candHTML("r",x.r)+candHTML("i",x.o)+'</div></li>';
   }).join("");
 }
 function renderGovs(){
   const g=govTotals();
-  $("gov-sum").textContent=g.called?("Eddig eldőlt: "+g.called+" a 36-ból. D "+g.d+", R "+g.r+(g.i?", független "+g.i:"")+"."):"Ma 36 államban választanak kormányzót. Jelenleg 26 republikánus és 24 demokrata kormányzó van országosan. A lista a Cook-féle minősítés szerint rendezett.";
+  $("gov-sum").textContent=g.called?("Eddig eldőlt: "+g.called+" a 36-ból. D "+g.d+", R "+g.r+(g.i?", független "+g.i:"")+"."):"Ma 36 államban választanak kormányzót. Jelenleg 26 republikánus és 24 demokrata kormányzó van országosan.";
   $("govs").innerHTML=GOVF.map(x=>{
     const st=x[0],m=GOVMAP[st],res=resultText(S.governor[st],GOV_HELD[st]);
-    return '<div class="card gov-card"><h3><span>'+esc(NAMES[st])+'</span><span class="rate'+(x[3]==="Toss-up"?" t":"")+'">'+esc(m.tag)+'</span></h3>'+
-      candHTML("d",x[1])+candHTML("r",x[2])+candHTML("i",x[5])+(x[4]?'<span class="muted" style="font-size:13px">'+esc(x[4])+'</span>':'')+
+    return '<div class="card gov-card"><h3><span>'+esc(NAMES[st])+'</span></h3>'+
+      candHTML("d",x[1])+candHTML("r",x[2])+candHTML("i",x[5])+
       '<span class="muted" style="font-size:13px">'+esc(closeText(st))+'</span>'+(res?'<div>'+res+'</div>':'')+'</div>';
   }).join("");
 }
@@ -1946,7 +1944,7 @@ function preDetail(st){
   // senate
   const sn=SENATORS[st]||[],sm=SENMAP[st],seats=(SENRES[st]||[]).slice().sort((a,b)=>(b[8]-a[8])||(b[7]-a[7])).slice(0,1);
   let sec='<section class="qrace"><div class="qrh"><span class="lbl">Szenátus</span></div><div class="qsd" style="gap:6px">'+sn.map(x=>crow(x[1],x[0])).join("")+'</div>';
-  sec+=sm?'<div class="prevline">Idén: <b>'+esc(RATE_HU[sm.rate]||"")+'</b>. '+esc(sm.d?sm.d.replace("*",""):"–")+' (D) és '+esc(sm.r.replace("*",""))+' (R) a két fő jelölt.</div>':'<div class="prevline">Ebben az államban idén nincs szenátusi választás.</div>';
+  sec+=sm?'<div class="prevline">'+esc(sm.d?sm.d.replace("*",""):"–")+' (D) és '+esc(sm.r.replace("*",""))+' (R) a két fő jelölt.</div>':'<div class="prevline">Ebben az államban idén nincs szenátusi választás.</div>';
   sec+=seats.map(r=>resHTML(r,r[7],st,r[8]?"ez a hely idén nyitott":"")).join("");
   h+=sec+'</section>';
   // governor
