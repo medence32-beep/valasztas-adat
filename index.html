@@ -1064,7 +1064,7 @@ const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").m
 const $=id=>document.getElementById(id);
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function num(v){const n=Number(v);return isFinite(n)?n:0;}
-function pct(v){return (Math.round(num(v)*10)/10).toString().replace(".",",");}
+function pct(v){return (Math.round(num(v)*100)/100).toString().replace(".",",");}
 function utc(h){const hh=Math.floor(h),mm=Math.round((h-hh)*60);return Date.UTC(2026,10,3,hh+ET,mm);}
 const fT=new Intl.DateTimeFormat("hu-HU",{hour:"2-digit",minute:"2-digit"});
 const fD=new Intl.DateTimeFormat("hu-HU",{month:"short",day:"numeric"});
