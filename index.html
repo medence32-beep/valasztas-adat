@@ -1645,7 +1645,7 @@ function ctyLabelState(){
 }
 function ctyEraSync(){
   if(!zoomSt||!CTY)return;
-  const keep=zoomC;drawCty(zoomSt);
+  const keep=zoomC;tipPin=false;hideTip(true);drawCty(zoomSt);
   if(keep!=null)markCty(keep);else ctyLabelState();
 }
 function drawCty(st){
@@ -1968,7 +1968,7 @@ function syncUI(){
   $("h-map").textContent=era==="pre"?"Választás előtti állás":"Térkép";
 }
 function setEra(e){
-  if(era===e)return;era=e;
+  if(era===e)return;era=e;tipPin=false;hideTip(true);
   if(era==="pre"){if(mode==="time"){mode="sen";setPlaying(false);}sub="now";}
   else{sub="now";}
   {const sv=document.getElementById("sec-votes");if(sv)sv.hidden=(era==="pre");document.body.classList.toggle("pre-only",era==="pre");updZT();}
@@ -2177,7 +2177,7 @@ function tick(){
 /* ---------- events ---------- */
 function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time"||mode==="house");}
 function setMode(m){
-  mode=m;prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
+  mode=m;tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
