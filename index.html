@@ -1483,6 +1483,9 @@ let CL=null,CLsig="";
 function clRace(st){const o=CL&&CL[st];if(!o)return null;return mode==="gov"?(o.g||null):(o.s||null);}
 function clHas(){return era==="live"&&!!zoomSt&&!!clRace(zoomSt);}
 function clD(c){const r=clRace(zoomSt);const v=r&&r.v&&r.v[c[3]];if(!v)return null;const t=v[0]+v[1];if(!t)return null;return [v[0]/t*1000,v[1]/t*1000,v[0]+v[1],v[2]];}
+function clX(c){const r=clRace(zoomSt);const v=r&&r.v&&r.v[c[3]];if(!v)return null;const d=v[0]||0,rr=v[1]||0,o=v[3]||0,t=v[4]||(d+rr+o);if(!(t>0))return null;return {d:d,r:rr,o:o,t:t,p:v[2]||0};}
+const OTHN={s:{CO:"Bob Chew",FL:"Neil J. Gillespie",ID:"Todd Achilles",IL:"Whitfield Harrington Jr.",IA:"Thomas Laehn",KS:"David C. Graham",KY:"Christopher Campbell",MA:"Shiva Ayyadurai",MI:"Lydia Christensen",MN:"Marisa Simonetti",MS:"Ty Pinkins",MT:"Seth Bodnar",NE:"Dan Osborn",NH:"Edmond Laplante",NJ:"Veronica Fernandez",NC:"Shannon W. Bray",OH:"William B. Redpath",OK:"Curtis Stinnett",OR:"Chris Henry",RI:"Michael Bahry",SC:"Kasie Whitener",SD:"Brian L. Bengs",TN:"Robert Jones",TX:"Ted Brown",WV:"S. Marshall Wilson"},g:{AZ:"Risa Lombardo",AR:"Colt Shelby",CO:"Greg Lopez",FL:"Scott E. Jewett",ID:"John R. Stegner",IL:"Collin Corbett",ME:"Rick Bennett",MD:"Andy Ellis",MA:"Andrea James",MI:"Anthony Hudson",MN:"Steven Young",NE:"Brett Lindstrom",NV:"Danielle Ford",OH:"Don Kissick",OK:"Robert E. Brooks Sr.",OR:"Brett Smith",RI:"Kenneth Block",SC:"Michael Addison",TN:"David Hatley",TX:"Pat Dixon",VT:"Brian Judd",WY:"Bernadette Bextel"}};
+function clOthName(){const n=(OTHN[mode==="gov"?"g":"s"]||{})[zoomSt];return n||"Egyéb jelölt";}
 async function loadCL(){
   const j=await getJ("countylive.json");if(!j)return;
   const sig=j.updated||"";if(sig===CLsig)return;CL=j;CLsig=sig;
@@ -1495,16 +1498,16 @@ function cssRGB(v){
   if(m){let h=m[1];if(h.length===3)h=h.replace(/./g,x=>x+x);return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
   m=/rgba?\(\s*([\d.]+)[ ,]+([\d.]+)[ ,]+([\d.]+)/.exec(s);
   if(m)return [+m[1],+m[2],+m[3]];
-  return v==="--dem"?[37,99,235]:v==="--rep"?[220,38,38]:[200,208,224];
+  return v==="--dem"?[37,99,235]:v==="--rep"?[220,38,38]:v==="--ind"?[122,85,184]:[200,208,224];
 }
-function ctyMix(m){
+function ctyMix(m,ind){
   const off=cssRGB("--off"),dark=off[0]<110,neu=dark?[78,88,112]:[226,230,238];
-  const t=Math.min(1,Math.abs(m)/28),P=0.34+0.66*Math.pow(t,0.8),base=cssRGB(m>0?"--dem":"--rep");
+  const t=Math.min(1,Math.abs(m)/28),P=0.34+0.66*Math.pow(t,0.8),base=cssRGB(ind?"--ind":(m>0?"--dem":"--rep"));
   const k=base.map((x,i)=>x*P+neu[i]*(1-P));
   return "rgb("+k.map(x=>Math.round(x)).join(",")+")";
 }
 function ctyColor(c){
-  if(era==="live"){const L=clD(c);if(!L)return null;const m=(L[0]-L[1])/10;return ctyMix(Math.abs(m)<0.05?0.0001:m);}
+  if(era==="live"){const X=clX(c);if(!X)return null;if(X.o>X.d&&X.o>X.r)return ctyMix((X.o-Math.max(X.d,X.r))/X.t*100,true);const L=clD(c);if(!L)return null;const m=(L[0]-L[1])/10;return ctyMix(Math.abs(m)<0.05?0.0001:m);}
   const d=ctyD(c);
   if(!d)return null;
   const m=(d[0]-d[1])/10;
@@ -1524,7 +1527,7 @@ function ctyCandsLive(st){
     const clean=x=>String(x||"").replace(/\s*\(független\)/,"").replace("*","");
     if(mode==="gov"){const g=GOVMAP[st];if(!g)return null;return {D:clean(g.d),R:clean(g.r)};}
     const m=SENMAP[st];if(!m)return null;
-    return {D:clean(m.d)||clean(m.o),R:clean(m.r)};
+    return {D:clean(m.d),R:clean(m.r)};
   }catch(e){return null;}
 }
 function ctyInfo(c){
@@ -1543,16 +1546,23 @@ function ctyInfo(c){
     return '<span class="muted">Ehhez a megyéhez nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat</span>';
   }
   if(era==="live"){
-    const d=clD(c);
-    if(d){
-      const cd=ctyCandsLive(zoomSt)||{},D=d[0]/10,R=d[1]/10,oth=Math.max(0,100-D-R),mg=D-R;
-      const nD=cd.D?esc(cd.D):"Demokrata",nR=cd.R?esc(cd.R):"Republikánus";
-      const lead=Math.abs(mg)<0.05?"Döntetlen":(mg>0?"D":"R")+" +"+Math.abs(mg).toFixed(1).replace(".",",")+" pont";
-      const f=x=>x.toFixed(1).replace(".",",")+"%";
-      return '<div style="opacity:.75;font-weight:600">Élő eredmény · '+(mode==="gov"?"kormányzó":"szenátus")+(d[3]?' · '+d[3]+'% feldolgozva':'')+'</div>'+
-        '<div style="display:flex;height:9px;border-radius:5px;overflow:hidden;margin:6px 0 5px;min-width:190px"><i style="width:'+D+'%;background:var(--dem)"></i><i style="width:'+oth+'%;background:var(--line2)"></i><i style="width:'+R+'%;background:var(--rep)"></i></div>'+
-        '<div style="display:flex;justify-content:space-between;gap:14px"><span><b style="color:var(--dem)">'+nD+'</b><br><b>'+f(D)+'</b></span><span style="text-align:right"><b style="color:var(--rep)">'+nR+'</b><br><b>'+f(R)+'</b></span></div>'+
-        '<div style="margin-top:5px;font-weight:700">'+lead+'</div><div class="muted" style="margin-top:1px">'+fmtN(d[2])+' D+R szavazat</div>';
+    const X=clX(c);
+    if(X){
+      const cd=ctyCandsLive(zoomSt)||{};
+      const f=x=>(x/X.t*100).toFixed(2).replace(".",",")+"%";
+      const rows=[];
+      if(X.d>0||cd.D)rows.push({n:cd.D?esc(cd.D):"Demokrata",v:X.d,col:"var(--dem)"});
+      rows.push({n:cd.R?esc(cd.R):"Republikánus",v:X.r,col:"var(--rep)"});
+      if(X.o>0)rows.push({n:esc(clOthName()),v:X.o,col:"var(--ind)"});
+      rows.sort((a,b)=>b.v-a.v);
+      const bar=rows.map(r=>'<i style="width:'+(r.v/X.t*100)+'%;background:'+r.col+'"></i>').join("");
+      const rest=Math.max(0,X.t-rows.reduce((q,r)=>q+r.v,0));
+      const list=rows.map((r,k)=>'<div style="display:flex;justify-content:space-between;gap:14px;margin-top:2px"><span><b style="color:'+r.col+'">'+(k+1)+'. '+r.n+'</b></span><span><b>'+f(r.v)+'</b> <span class="muted" style="margin-left:6px">'+fmtN(r.v)+'</span></span></div>').join("");
+      const lead=rows[0],sec=rows[1]||{v:0};
+      const gap=((lead.v-sec.v)/X.t*100).toFixed(2).replace(".",",");
+      return '<div style="opacity:.75;font-weight:600">Élő eredmény · '+(mode==="gov"?"kormányzó":"szenátus")+(X.p?' · '+X.p+'% feldolgozottság':'')+'</div>'+
+        '<div style="display:flex;height:9px;border-radius:5px;overflow:hidden;margin:6px 0 5px;min-width:210px;background:var(--line2)">'+bar+'</div>'+list+
+        '<div style="margin-top:5px;font-weight:700">'+(lead.v===sec.v?"Döntetlen":lead.n+" +"+gap+" pont")+'</div><div class="muted" style="margin-top:1px">'+fmtN(X.t)+' leadott szavazat'+(rest>0?' (további jelöltek: '+fmtN(rest)+')':'')+'</div>';
     }
   }
   return '<span class="muted">Megyei eredmény: nincs adat</span>';
@@ -1568,7 +1578,7 @@ function ctyLabelState(){
     L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb az előny</small>'+ctyLegend():'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(az állam alapszínét látod; a megyehatárok kattinthatók)</small>';
     L.hidden=false;}
   else if(zoomSt&&zoomC==null&&clHas()){
-    L.innerHTML='Megyék színe: élő eredmény ('+(mode==="gov"?"kormányzó":"szenátus")+')<small>D kék · R piros · minél sötétebb, annál nagyobb az előny</small>'+ctyLegend();L.hidden=false;}
+    L.innerHTML='Megyék színe: élő eredmény ('+(mode==="gov"?"kormányzó":"szenátus")+')<small>D kék · R piros · <b style="color:var(--ind)">független lila</b> (ha ő vezet) · minél sötétebb, annál nagyobb az előny</small>'+ctyLegend();L.hidden=false;}
   else if(zoomC==null)L.hidden=true;
 }
 function ctyEraSync(){
