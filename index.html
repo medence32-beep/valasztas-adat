@@ -606,8 +606,8 @@ footer{padding-block:24px 48px}
 #ctrl-banner.on{display:block}
 #ctrl-banner .cb{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px;background:linear-gradient(90deg,color-mix(in srgb,var(--dem) 22%,var(--bg)),color-mix(in srgb,var(--dem) 6%,var(--bg)))}
 #ctrl-banner.r .cb{background:linear-gradient(90deg,color-mix(in srgb,var(--rep) 22%,var(--bg)),color-mix(in srgb,var(--rep) 6%,var(--bg)))}
-#ctrl-banner .cbi{width:38px;height:38px;border-radius:50%;background:var(--dem);color:#fff;display:grid;place-items:center;font:800 18px var(--f-body);flex:none}
-#ctrl-banner.r .cbi{background:var(--rep)}
+#ctrl-banner .cbi{width:44px;height:44px;border-radius:50%;background:#fff var(--logo-d) center/82% no-repeat;border:2px solid var(--dem);flex:none}
+#ctrl-banner.r .cbi{background:#fff var(--logo-r) center/100% no-repeat;border-color:var(--rep)}
 #ctrl-banner .cbt{min-width:0;flex:1 1 260px}
 #ctrl-banner .cbt b{display:block;font:800 clamp(17px,2.6vw,22px)/1.2 var(--f-body);color:var(--ink);text-wrap:balance}
 #ctrl-banner .cbt span{display:block;margin-top:2px;font:500 13.5px/1.4 var(--f-body);color:var(--ink2)}
@@ -630,7 +630,7 @@ footer{padding-block:24px 48px}
 </div>
 <div class="ticker" aria-label="Friss hírek"><div class="tag">Élő</div><div class="track" id="track"></div></div>
 
-<div id="ctrl-banner" role="status" aria-live="polite"><div class="wrap cb"><div class="cbi" id="cb-i">D</div><div class="cbt"><b id="cb-t"></b><span id="cb-s"></span></div><div class="cbn" id="cb-n"></div></div></div>
+<div id="ctrl-banner" role="status" aria-live="polite"><div class="wrap cb"><div class="cbi" id="cb-i" role="img" aria-label="Demokrata párt logó"></div><div class="cbt"><b id="cb-t"></b><span id="cb-s"></span></div><div class="cbn" id="cb-n"></div></div></div>
 <div class="hero-band">
   <div class="wrap hero">
     <div>
@@ -2096,7 +2096,7 @@ setInterval(tick,1000);setInterval(()=>{renderTimeline();renderRaces(false);rend
   let db=null;
   try{db=(window.claude&&window.claude.use)?await window.claude.use("db"):null;}catch(e){db=null;}
 function renderCtrl(){const c=S.meta&&S.meta.control&&S.meta.control.senate;const el=document.getElementById("ctrl-banner");if(!el)return;if(!c||!c.party){el.classList.remove("on","r");return;}
-const D=c.party==="D";el.classList.add("on");el.classList.toggle("r",!D);document.getElementById("cb-i").textContent=c.party;
+const D=c.party==="D";el.classList.add("on");el.classList.toggle("r",!D);
 document.getElementById("cb-t").textContent=D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust";
 const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;
 document.getElementById("cb-s").textContent="Az AP számolása szerint "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");
