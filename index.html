@@ -1548,7 +1548,7 @@ async function getJ(name){
 function loadCty(){
   if(ctyP)return ctyP;
   ctyP=(async()=>{
-    const [a,b]=await Promise.all([getJ("counties.json?v=3"),(window.__CR?Promise.resolve(window.__CR):getJ("countyres.json"))]);
+    const [a,b]=await Promise.all([getJ("counties.json?v=4"),(window.__CR?Promise.resolve(window.__CR):getJ("countyres.json"))]);
     CTY=a;CR=b;if(!CTY)ctyP=null;return CTY;
   })();
   return ctyP;
@@ -1708,7 +1708,7 @@ function ctyClear(){
   zoomC=null;$("zoombackstate").hidden=true;$("sharecty").hidden=true;$("ctylabel").hidden=true;
   $("counties").querySelectorAll(".cty.dim,.cty.csel").forEach(e=>e.classList.remove("dim","csel"));
 }
-function ctyName(c){return c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));}
+function ctyName(c){if(c[2]==="dist")return c[0];return c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));}
 function ctyLabelHTML(c){return esc(ctyName(c))+'<small>'+esc(NAMES[zoomSt])+'</small><div style="font-weight:500;font-size:12.5px;margin-top:3px">'+ctyInfo(c)+'</div>';}
 function ctyTipHTML(c){return '<b>'+esc(ctyName(c))+'</b><br>'+esc(NAMES[zoomSt])+'<br>'+ctyInfo(c);}
 function pinTip(i){
