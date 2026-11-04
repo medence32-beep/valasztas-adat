@@ -1370,7 +1370,7 @@ function side(cls,name,share,votes,win,called){
     '<span class="qvt">'+(votes!=null&&votes!==""?fmtN(votes)+' szavazat':(has?'':''))+'</span>'+(win?'<span class="qtick">GYŐZTES</span>':'')+'</div>';
 }
 function chartSVG(sn,idx,dName,rName){
-  const W=340,H=210,x0=34,x1=328,y0=14,y1=126,s0=150,s1=190;
+  const W=340,H=214,x0=34,x1=328,y0=14,y1=122,s0=158,s1=192;
   const pts=sn.filter(a=>a.d.dv!=null&&a.d.rv!=null);
   const t0=sn[0].t,t1=sn[sn.length-1].t,span=Math.max(t1-t0,60000);
   const X=t=>sn.length===1?(x0+x1)/2:x0+(t-t0)/span*(x1-x0);
@@ -1380,16 +1380,18 @@ function chartSVG(sn,idx,dName,rName){
   const Y=v=>y1-(num(v)-lo)/(hi-lo)*(y1-y0);
   let g='';[lo,(lo+hi)/2,hi].forEach(v=>{g+='<line class="gl" x1="'+x0+'" x2="'+x1+'" y1="'+Y(v).toFixed(1)+'" y2="'+Y(v).toFixed(1)+'"/><text class="ax" x="'+(x0-6)+'" y="'+(Y(v)+3).toFixed(1)+'" text-anchor="end">'+Math.round(v)+'%</text>';});
   const line=(k)=>pts.length>1?'<path class="ln '+k+'" pathLength="1" d="'+pts.map((a,i)=>(i?'L':'M')+X(a.t).toFixed(1)+' '+Y(a.d[k==="d"?"dv":"rv"]).toFixed(1)).join('')+'"/>':'';
-  let dots='';pts.forEach(a=>{['d','r'].forEach(k=>{dots+='<circle class="pt '+k+'" cx="'+X(a.t).toFixed(1)+'" cy="'+Y(a.d[k==="d"?"dv":"rv"]).toFixed(1)+'" r="4"><title>'+esc(loc(a.t)+' · '+(k==="d"?"D ":"R ")+pct(a.d[k==="d"?"dv":"rv"])+'%')+'</title></circle>';});});
+  let dots='';const showI=new Set([pts.length-1]);if(idx!=null){const t=sn[idx].t;pts.forEach((a,i)=>{if(a.t===t)showI.add(i);});}
+  pts.forEach((a,i)=>{if(!showI.has(i))return;['d','r'].forEach(k=>{dots+='<circle class="pt '+k+'" cx="'+X(a.t).toFixed(1)+'" cy="'+Y(a.d[k==="d"?"dv":"rv"]).toFixed(1)+'" r="4"><title>'+esc(loc(a.t)+' · '+(k==="d"?"D ":"R ")+pct(a.d[k==="d"?"dv":"rv"])+'%')+'</title></circle>';});});
   // counted strip (step area)
   let step='';const rp=sn.filter(a=>a.d.rep!=null);
   if(rp.length){let d='M'+X(rp[0].t).toFixed(1)+' '+s1;rp.forEach((a,i)=>{const yy=s1-(Math.min(100,num(a.d.rep))/100)*(s1-s0);if(i)d+='L'+X(a.t).toFixed(1)+' '+(s1-(Math.min(100,num(rp[i-1].d.rep))/100)*(s1-s0)).toFixed(1);d+='L'+X(a.t).toFixed(1)+' '+yy.toFixed(1);});
     d+='L'+x1+' '+(s1-(Math.min(100,num(rp[rp.length-1].d.rep))/100)*(s1-s0)).toFixed(1)+'L'+x1+' '+s1+'Z';step='<path class="stp" d="'+d+'"/>';}
-  const stripLab='<text class="ax" x="'+(x0-6)+'" y="'+(s0+8)+'" text-anchor="end">100%</text><text class="ax" x="'+(x0-6)+'" y="'+(s1)+'" text-anchor="end">0%</text><text class="ax" x="'+x0+'" y="'+(s0-8)+'">Feldolgozottság</text>';
+  const stripLab='<text class="ax" x="'+(x0-6)+'" y="'+(s0+8)+'" text-anchor="end">100%</text><text class="ax" x="'+(x0-6)+'" y="'+(s1)+'" text-anchor="end">0%</text><text class="ax" x="'+(x0+5)+'" y="'+(s0+10)+'">Feldolgozottság</text>';
   const hits=sn.map((a,i)=>{const cx=X(a.t),w=sn.length===1?60:Math.max(14,(x1-x0)/Math.max(1,sn.length-1));return '<rect class="hit" data-i="'+i+'" x="'+(cx-w/2).toFixed(1)+'" y="'+(y0-6)+'" width="'+w.toFixed(1)+'" height="'+(s1-y0+10)+'"><title>'+esc(loc(a.t)+(a.m?' · '+a.m:''))+'</title></rect>';}).join("");
   const cx=idx!=null?X(sn[idx].t):null;
   const cur=cx!=null?'<line class="cur" x1="'+cx.toFixed(1)+'" x2="'+cx.toFixed(1)+'" y1="'+(y0-6)+'" y2="'+s1+'"/>':'';
-  const axT='<text class="ax" x="'+x0+'" y="'+(H-2)+'">'+esc(fT.format(new Date(t0)))+'</text>'+(sn.length>1?'<text class="ax" x="'+x1+'" y="'+(H-2)+'" text-anchor="end">'+esc(fT.format(new Date(t1)))+'</text>':'');
+  const axM=sn.length>2?'<text class="ax" x="'+((x0+x1)/2)+'" y="'+(H-2)+'" text-anchor="middle">'+esc(fT.format(new Date((t0+t1)/2)))+'</text>':'';
+  const axT=axM+'<text class="ax" x="'+x0+'" y="'+(H-2)+'">'+esc(fT.format(new Date(t0)))+'</text>'+(sn.length>1?'<text class="ax" x="'+x1+'" y="'+(H-2)+'" text-anchor="end">'+esc(fT.format(new Date(t1)))+'</text>':'');
   return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(dName+' és '+rName+' szavazataránya az idő függvényében')+'">'+g+step+stripLab+line('d')+line('r')+dots+cur+axT+hits+'</svg>';
 }
 function gapHTML(cand,anyN){
