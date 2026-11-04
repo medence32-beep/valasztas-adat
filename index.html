@@ -1744,7 +1744,7 @@ document.addEventListener("keydown",e=>{if(e.key==="Escape"&&zoomSt){if(zoomC!=n
 $("counties").addEventListener("click",e=>{const t=e.target.closest(".cty");if(!t)return;e.stopPropagation();zoomCty(Number(t.dataset.i));});
 $("counties").addEventListener("pointermove",e=>{
   const t=e.target.closest(".cty");if(!t||!CTY||!CTY[zoomSt]){return;}
-  e.stopPropagation();const c=CTY[zoomSt][Number(t.dataset.i)];if(!c)return;
+  e.stopPropagation();hideTip();const c=CTY[zoomSt][Number(t.dataset.i)];if(!c)return;
   if(zoomC!=null)return;
   if(era==="pre"){const r=$("stage").getBoundingClientRect();showTipHTML(ctyTipHTML(c),e.clientX-r.left,e.clientY-r.top);}
   else{const L=$("ctylabel");L.innerHTML=ctyLabelHTML(c);L.hidden=false;}
