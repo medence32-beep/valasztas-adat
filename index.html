@@ -1871,7 +1871,7 @@ function syncUI(){
   $("geo").style.display=(!house&&view==="geo")?"":"none";
   $("tiles").hidden=house||view!=="tiles";
   $("hgwrap").style.display=house?"":"none";
-  $("h-map").textContent=era==="pre"?"Jelenlegi állás a választás előtt":"Térkép";
+  $("h-map").textContent=era==="pre"?"Választás előtti állás":"Térkép";
 }
 function setEra(e){
   if(era===e)return;era=e;
@@ -1898,7 +1898,7 @@ function resHTML(r,base,st,note){
 }
 function resShort(r){return esc(r[1])+" ("+r[2]+") "+pct(r[3])+"% · "+esc(r[4])+" ("+r[5]+") "+pct(r[6])+"%";}
 function preDetail(st){
-  let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>Jelenlegi állás a választás előtt</span></div></div>';
+  let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>Választás előtti állás</span></div></div>';
   // senate
   const sn=SENATORS[st]||[],sm=SENMAP[st],seats=(SENRES[st]||[]).slice().sort((a,b)=>(b[8]-a[8])||(b[7]-a[7])).slice(0,1);
   let sec='<section class="qrace"><div class="qrh"><span class="lbl">Szenátus</span></div><div class="qsd" style="gap:6px">'+sn.map(x=>crow(x[1],x[0])).join("")+'</div>';
@@ -1931,7 +1931,7 @@ function houseDetail(st){
     const pc={D:0,R:0,I:0};pl.forEach(x=>{if(pc[x[0]]!=null)pc[x[0]]++;});
     h+='<section class="qrace"><div class="qrh"><span class="lbl">Legutóbbi választás · 2024</span></div><div class="rs"><div class="rs-r"><span class="d">Demokrata mandátum</span><b>'+pc.D+'</b></div><div class="rs-r"><span class="r">Republikánus mandátum</span><b>'+pc.R+'</b></div>'+(pc.I?'<div class="rs-r"><span class="i">Független mandátum</span><b>'+pc.I+'</b></div>':'')+turnHTML(2024,st)+'</div></section>';
   }
-  h+='<section class="qrace"><div class="qrh"><span class="lbl">Képviselőház</span>'+(era==="pre"?'<span class="badge">Jelenlegi állás</span>':'')+'</div><div class="dlist" style="max-height:none">'+
+  h+='<section class="qrace"><div class="qrh"><span class="lbl">Képviselőház</span>'+(era==="pre"?'<span class="badge">Választás előtti állás</span>':'')+'</div><div class="dlist" style="max-height:none">'+
    hl.map((x,i)=>{const id=st+"-"+(i+1),cur=x,c=callOf(S.house[id]);
     let right="";
     if(era==="live"){right=c?'<span class="dr-r"><span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span></span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
