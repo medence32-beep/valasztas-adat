@@ -1119,7 +1119,7 @@ function loc(ms){const t=fT.format(new Date(ms));return dayKey(ms)!==dayKey(utc(
 function etLabel(h){const tot=Math.round(h*60),hh=Math.floor(tot/60),mm=tot%60,x=((hh%24)+24)%24;return (x<10?"0":"")+x+":"+(mm<10?"0":"")+mm;}
 function dur(ms){if(ms<=0)return "most";const s=Math.floor(ms/1000),h=Math.floor(s/3600),m=Math.floor((s%3600)/60),ss=s%60;const p=n=>(n<10?"0":"")+n;return (h?h+":":"")+p(m)+":"+p(ss);}
 function partyName(p){return p==="D"?"Demokrata":p==="R"?"Republikánus":p==="I"?"Független":"";}
-function candHTML(cls,txt){if(!txt)return "";const star=txt.indexOf("*")>-1,n=txt.replace("*","");return '<div class="cand"><i class="'+cls+'" title="'+partyName(cls.toUpperCase())+'" aria-label="'+partyName(cls.toUpperCase())+'">'+cls.toUpperCase()+'</i><span>'+esc(n)+(star?' <em>hivatalban</em>':'')+'</span></div>';}
+function candHTML(cls,txt){if(!txt)return "";const star=txt.indexOf("*")>-1,n=txt.replace("*","").replace(/\s*\(független\)/i,"");return '<div class="cand"><i class="'+cls+'" title="'+partyName(cls.toUpperCase())+'" aria-label="'+partyName(cls.toUpperCase())+'">'+cls.toUpperCase()+'</i><span>'+esc(n)+(star?' <em>hivatalban</em>':'')+'</span></div>';}
 function callOf(doc){const c=doc&&doc.call;return (c==="D"||c==="R"||c==="I")?c:null;}
 function senCall(st){return callOf(S.senate[st]);}
 function govCall(st){return callOf(S.governor[st]);}
@@ -1357,7 +1357,7 @@ function closeText(st){
 }
 function fmtN(v){return Math.round(num(v)).toLocaleString("hu-HU");}
 function side(cls,name,share,votes,win,called){
-  if(!name)return "";const star=name.indexOf("*")>-1,n=name.replace("*","");
+  if(!name)return "";const star=name.indexOf("*")>-1,n=name.replace("*","").replace(/\s*\((független|független jelölt)\)/i,"");
   const has=share!=null&&share!=="";
   return '<div class="qside '+cls+(win?' win':'')+'"><i>'+cls.toUpperCase()+'</i><span class="qnm">'+esc(n)+(star?' <em>hivatalban</em>':'')+'</span><span class="qpc">'+(has?pct(share)+'%':'–')+'</span>'+
     '<span class="qvt">'+(votes!=null&&votes!==""?fmtN(votes)+' szavazat':(has?'':''))+'</span>'+(win?'<span class="qtick">GYŐZTES</span>':'')+'</div>';
