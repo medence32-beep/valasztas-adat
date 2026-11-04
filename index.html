@@ -126,7 +126,10 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 .sec-fold .sec-h h2{cursor:pointer;display:flex;flex-direction:column;user-select:none}
 .sec-fold .sec-h h2 .fchev{display:inline-block;margin-left:10px;width:10px;height:10px;border-right:2.5px solid var(--gold);border-bottom:2.5px solid var(--gold);transform:rotate(45deg) translateY(-3px);transition:transform .2s;vertical-align:middle}
 .sec-fold.coll .sec-h h2 .fchev{transform:rotate(-45deg)}
-.sec-fold.coll>*:not(.sec-h){display:none!important}
+.sec-fold>.fb{display:grid;grid-template-rows:1fr;opacity:1;transition:grid-template-rows .38s cubic-bezier(.2,.8,.2,1),opacity .3s ease}
+.sec-fold>.fb>.fbi{overflow:hidden;min-height:0}
+.sec-fold.coll>.fb{grid-template-rows:0fr;opacity:0}
+@media(prefers-reduced-motion:reduce){.sec-fold>.fb{transition:none}}
 .sec-fold.coll .sec-h>*:not(h2){display:none!important}
 .sec-fold.coll .sec-h{margin-bottom:0}
 .sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin-bottom:14px}
@@ -299,7 +302,7 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 
 /* race list */
 .races{list-style:none;margin:0;padding:0;display:grid;gap:8px}
-.race{display:grid;grid-template-columns:minmax(120px,.8fr) minmax(0,.9fr) minmax(0,1.1fr) minmax(0,2fr);gap:8px 14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;border-left:5px solid var(--line2);transition:transform .2s,border-color .2s}
+.race{display:grid;grid-template-columns:minmax(120px,.9fr) minmax(0,1.4fr) minmax(0,1.7fr);gap:8px 14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;border-left:5px solid var(--line2);transition:transform .2s,border-color .2s}
 .races.anim .race{animation:fadeup .5s ease both;animation-delay:calc(var(--i) * 28ms)}
 .race:hover{transform:translateX(3px)}
 .race .s{font-family:var(--f-display);font-size:25px;font-weight:800;line-height:1;text-transform:uppercase}
@@ -2244,9 +2247,12 @@ async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu=
 })();
 })();
 
-(function(){["h-time","h-sen","h-gov","h-house","h-meas"].forEach(id=>{const h=document.getElementById(id);if(!h)return;const sec=h.closest("section");if(!sec)return;
-  sec.classList.add("sec-fold","coll");const ch=document.createElement("span");ch.className="fchev";ch.setAttribute("aria-hidden","true");h.appendChild(ch);
-  h.setAttribute("role","button");h.setAttribute("tabindex","0");h.setAttribute("aria-expanded","false");
+(function(){[["h-time",1],["h-sen",1],["h-gov",1],["h-house",1],["h-meas",1],["h-exit",0]].forEach(([id,c0])=>{const h=document.getElementById(id);if(!h)return;const sec=h.closest("section");if(!sec)return;
+  sec.classList.add("sec-fold");if(c0)sec.classList.add("coll");
+  const fb=document.createElement("div");fb.className="fb";const fi=document.createElement("div");fi.className="fbi";fb.appendChild(fi);
+  [...sec.children].forEach(n=>{if(!n.classList.contains("sec-h"))fi.appendChild(n);});sec.appendChild(fb);
+  const ch=document.createElement("span");ch.className="fchev";ch.setAttribute("aria-hidden","true");h.appendChild(ch);
+  h.setAttribute("role","button");h.setAttribute("tabindex","0");h.setAttribute("aria-expanded",String(!c0));
   const tg=()=>{const c=sec.classList.toggle("coll");h.setAttribute("aria-expanded",String(!c));};
   h.addEventListener("click",tg);h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();tg();}});});})();
 </script>
