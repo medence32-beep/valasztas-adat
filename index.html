@@ -576,8 +576,10 @@ footer{padding-block:24px 48px}
 .rs-t{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-top:1px solid var(--line);padding-top:7px;font-size:13.5px;color:var(--ink2)}
 .rs-t b{font:800 20px/1 var(--f-display);color:var(--ink)}
 .turnmain{font-size:14px;color:var(--ink2)}.turnmain b{font:800 26px/1 var(--f-display);color:var(--ink);margin-right:4px}
-.dchk circle{fill:var(--ink);stroke:var(--bg);stroke-width:1.6}
-.dchk path{fill:none;stroke:var(--bg);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
+.dchk circle{fill:#fff;stroke:rgba(255,255,255,.95);stroke-width:1}
+.dchk circle.dsh{fill:rgba(6,12,28,.45);stroke:none;filter:blur(.8px)}
+.dchk path{fill:none;stroke:var(--dc,#1a1f2e);stroke-width:2.7;stroke-linecap:round;stroke-linejoin:round}
+.dchk.d{--dc:#1d5fd6}.dchk.r{--dc:#cf3a2b}.dchk.i{--dc:#7a4bc4}
 .dchk{pointer-events:none;animation:none!important}
 .dchk circle,.dchk path{animation:none}
 .dchk.newc circle,.dchk.newc path{animation:pop .75s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--dd,0s);transform-box:fill-box;transform-origin:center}
@@ -2092,12 +2094,12 @@ function vcShow(v,u){let el=$("viewc");if(!el){el=document.createElement("div");
 let _dsig="";
 function paintDecided(){try{ctyFill();}catch(e){}
   const g=$("decided"),on=era==="live"&&(mode==="sen"||mode==="gov");
-  const calls=[];
-  if(on)Object.keys(MAP).forEach(st=>{const c=mode==="sen"?(SENMAP[st]&&senCall(st)):(GOV_HELD[st]&&govCall(st));if(c)calls.push(st);});
+  const calls=[],cm={};
+  if(on)Object.keys(MAP).forEach(st=>{const c=mode==="sen"?(SENMAP[st]&&senCall(st)):(GOV_HELD[st]&&govCall(st));if(c)calls.push(st);cm[st]=c;});
   Object.keys(tileEls).forEach(k=>tileEls[k].classList.toggle("dec",calls.indexOf(k)>-1));
-  const sig=mode+"|"+calls.join(",");if(sig===_dsig)return;_dsig=sig;
+  const sig=mode+"|"+calls.map(k=>k+cm[k]).join(",");if(sig===_dsig)return;_dsig=sig;
   window._dprev=window._dprev||{};const _pv=window._dprev[mode]||{};window._dprev[mode]=calls.reduce((o,k)=>(o[k]=1,o),{});
-  g.innerHTML=calls.filter(st=>!CALLOUT[st]).map(st=>{const m=MAP[st],big=m.a>2000;return '<g class="dchk'+((_pv[st]&&!window._dforce)?'':' newc')+'" style="--dd:'+(m.cx/975*0.7+0.2).toFixed(2)+'s" transform="translate('+m.cx.toFixed(1)+','+(m.cy+(big?15:12)).toFixed(1)+')"><circle r="'+(big?7:6)+'"/><path d="M-3 0.2l2.2 2.4L3.4-2.4"/></g>';}).join("");window._dforce=false;
+  g.innerHTML=calls.filter(st=>!CALLOUT[st]).map(st=>{const m=MAP[st],big=m.a>2000;const cc=cm[st]==="D"?"d":cm[st]==="R"?"r":"i";return '<g class="dchk '+cc+((_pv[st]&&!window._dforce)?'':' newc')+'" style="--dd:'+(m.cx/975*0.7+0.2).toFixed(2)+'s" transform="translate('+m.cx.toFixed(1)+','+(m.cy+(big?15:12)).toFixed(1)+')"><circle class="dsh" r="'+(big?8.6:7.4)+'" cy=".9"/><circle r="'+(big?7.6:6.4)+'"/><path d="M-3.2 .3l2.3 2.5L3.6-2.5"/></g>';}).join("");window._dforce=false;
 }
 
 /* ---------- ticking ---------- */
