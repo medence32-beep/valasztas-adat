@@ -369,6 +369,9 @@ footer{padding-block:24px 48px}
 .detail{max-height:calc(100vh - 84px - env(safe-area-inset-top,0px));overflow:auto;scrollbar-width:thin;padding:0}
 .detail>*{animation:none}
 .detail.anim>*{animation:fadeup .45s ease both}
+#sharecty{position:absolute;left:10px;top:88px;z-index:3;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}#sharecty[hidden]{display:none}
+.qdh{position:relative}.shbtn{position:absolute;top:14px;right:14px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 12.5px var(--f-body);cursor:pointer}.shbtn:hover,#sharecty:hover{border-color:var(--gold)}
+#toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);max-width:min(92vw,520px);background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:12px;padding:10px 16px;font:600 13.5px/1.35 var(--f-body);box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:99;overflow-wrap:anywhere;text-align:center}#toast.on{opacity:1;transform:translate(-50%,0)}
 .qdh{padding:18px 18px 14px;background:linear-gradient(160deg,color-mix(in srgb,var(--dem) 14%,transparent),transparent 55%,color-mix(in srgb,var(--rep) 14%,transparent));border-bottom:1px solid var(--line)}
 .qdh h3{font-size:48px;line-height:.9;margin:4px 0 8px}
 .qdh .meta{display:flex;flex-wrap:wrap;gap:6px 12px;align-items:center;font-size:13px;color:var(--ink2)}
@@ -776,7 +779,7 @@ footer{padding-block:24px 48px}
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
-          <button type="button" id="zoomback" hidden>← Teljes térkép</button><button type="button" id="zoombackstate" hidden>← Vissza az államra</button><div id="ctylabel" hidden></div><div class="tip" id="tip" role="tooltip"></div>
+          <button type="button" id="zoomback" hidden>← Teljes térkép</button><button type="button" id="zoombackstate" hidden>← Vissza az államra</button><button type="button" id="sharecty" data-share="cty" hidden>🔗 Megye linkje</button><div id="ctylabel" hidden></div><div class="tip" id="tip" role="tooltip"></div>
         </div>
         <div class="legend" id="legend"></div>
       </div>
@@ -1477,7 +1480,8 @@ function orderDetail(box){
     else if(mode==="sen"&&(t==="Kormányzó"||t==="Képviselőház"))s.remove();
   });
 }
-function renderDetail(){
+function renderDetail(){renderDetail0();const q=document.querySelector("#detail .qdh");if(q&&!q.querySelector(".shbtn")){const b=document.createElement("button");b.type="button";b.className="shbtn";b.dataset.share="st";b.textContent="🔗 Állam linkje";q.appendChild(b);}}
+function renderDetail0(){
   const st=sel,sd=SENMAP[st],gd=GOVMAP[st],h=CLOSE[st],box=$("detail");
   const dkey=st+"|"+era+"|"+mode+"|"+sub;const changed=box.dataset.st!==dkey;box.dataset.st=dkey;box.classList.toggle("anim",changed);
   if(mode==="house"||era==="pre"){const keep0=box.scrollTop;box.innerHTML=mode==="house"?houseDetail(st):preDetail(st);orderDetail(box);if(!changed)box.scrollTop=keep0;return;}
@@ -1525,7 +1529,7 @@ function showTip(st,x,y){
 }
 function hideTip(f){if(tipPin&&!f)return;$("tip").classList.remove("on");}
 function select(st){
-  if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);
+  if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);updHash();
 }
 const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,CR=null,ctyP=null,zoomC=null,ctyEra="";
 try{zoomOn=localStorage.getItem("zoomOn")==="1";}catch(e){}
@@ -1693,7 +1697,7 @@ function vbAnim(to,instant){
   zRaf=requestAnimationFrame(step);
 }
 function ctyClear(){
-  zoomC=null;$("zoombackstate").hidden=true;$("ctylabel").hidden=true;
+  zoomC=null;$("zoombackstate").hidden=true;$("sharecty").hidden=true;$("ctylabel").hidden=true;
   $("counties").querySelectorAll(".cty.dim,.cty.csel").forEach(e=>e.classList.remove("dim","csel"));
 }
 function ctyName(c){return c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));}
@@ -1718,7 +1722,7 @@ function markCty(i){
   g.appendChild(p);
   const c=CTY[zoomSt][i];
   if(era==="pre"){ctyLabelState();pinTip(i);}else{$("ctylabel").innerHTML=ctyLabelHTML(c);$("ctylabel").hidden=false;}
-  $("zoombackstate").hidden=false;
+  $("zoombackstate").hidden=false;$("sharecty").hidden=false;updHash();
   return p;
 }
 function zoomCty(i){
@@ -2201,7 +2205,7 @@ function setMode(m){
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
-  syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();
+  syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();updHash();
 }
 function setView(v){
   view=v;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo")zoomReset(true);
@@ -2210,6 +2214,34 @@ function setView(v){
 }
 $("seg-mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(b){window._dforce=true;_dsig="";const pd=$("pdots");if(pd)pd.dataset.sig="";setMode(b.dataset.m);}});
 $("seg-view").addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(b)setView(b.dataset.v);});
+
+/* ---------- megosztható linkek: #TX-sen, #TX-gov, #TX-house, #TX-sen-48201 (megye FIPS) ---------- */
+let hashOn=false;const BASE_T=document.title;
+function hashFor(withCty){const m=mode==="gov"?"gov":mode==="house"?"house":"sen";let h="#"+sel+"-"+m;if(withCty&&zoomC!=null&&zoomSt===sel&&CTY&&CTY[sel]&&CTY[sel][zoomC])h+="-"+CTY[sel][zoomC][3];return h;}
+function linkFor(withCty){return location.href.split("#")[0]+hashFor(withCty);}
+function updHash(){if(!hashOn)return;try{history.replaceState(null,"",hashFor(true));document.title=(NAMES[sel]||sel)+" · "+BASE_T;}catch(e){}}
+let toastT=0;function toast(t){let e=$("toast");if(!e){e=document.createElement("div");e.id="toast";e.setAttribute("role","status");document.body.appendChild(e);}e.textContent=t;e.classList.add("on");clearTimeout(toastT);toastT=setTimeout(()=>e.classList.remove("on"),2600);}
+function copyLink(url,label){
+  const done=ok=>toast(ok?label+" kimásolva":"Másold ki: "+url);
+  const fb=()=>{try{const t=document.createElement("textarea");t.value=url;t.style.cssText="position:fixed;opacity:0";document.body.appendChild(t);t.select();const ok=document.execCommand("copy");t.remove();done(ok);}catch(e){done(false);}};
+  if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(()=>done(true),fb);else fb();
+}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-share]");if(!b)return;e.stopPropagation();
+  if(b.dataset.share==="cty")copyLink(linkFor(true),"A megye linkje");else copyLink(linkFor(false),"Az állam linkje");});
+function applyHash(){
+  const m=/^#([A-Z]{2})(?:-(sen|gov|house))?(?:-(\d{5}))?$/.exec(location.hash);if(!m||!NAMES[m[1]])return false;
+  const st=m[1];hashOn=false;
+  if(m[2]&&m[2]!==mode)setMode(m[2]);
+  if(!zoomOn&&mode!=="house"){zoomOn=true;syncZT();}
+  select(st);
+  if(m[3]){loadCty().then(()=>{let n=0;const go=()=>{const arr=CTY&&CTY[st],i=arr?arr.findIndex(c=>c[3]===m[3]):-1;
+    if(i>=0&&zoomSt===st&&$("counties").querySelector('.cty[data-i="'+i+'"]')){zoomCty(i);hashOn=true;updHash();}
+    else if(++n<30)setTimeout(go,150);else{hashOn=true;updHash();}};go();});}
+  else{hashOn=true;updHash();}
+  return true;
+}
+window.addEventListener("hashchange",()=>{if(!/^#[A-Z]{2}-/.test(location.hash))return;applyHash();});
+setTimeout(()=>{if(!applyHash())hashOn=true;},700);
 $("play").addEventListener("click",()=>setPlaying(!playing));
 $("range").addEventListener("input",e=>{setPlaying(false);scrub=Number(e.target.value);timeStep();});
 $("livebtn").addEventListener("click",()=>{setPlaying(false);scrub=null;lastT=null;timeStep();});
