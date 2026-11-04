@@ -360,6 +360,15 @@ footer{padding-block:24px 48px}
 .qsplit i{display:block;height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1)}
 .qsplit i.d{background:var(--dem)}.qsplit i.r{background:var(--rep)}.qsplit i.o{background:var(--ink3)}
 .qsplit::after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;width:2px;background:var(--ink3);opacity:.7}
+.qgap{display:grid;gap:6px;margin-top:6px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:var(--off)}
+.qgap .gh{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--ink2);text-transform:uppercase;letter-spacing:.06em}
+.qgap .gn2{text-transform:none;letter-spacing:0;font-weight:600}
+.qgap .gv{display:flex;justify-content:space-between;align-items:flex-end;gap:10px;flex-wrap:wrap}
+.qgap .gp,.qgap .gn{font:800 24px/1 var(--f-display);display:flex;flex-direction:column;gap:3px}
+.qgap .gn{text-align:right;align-items:flex-end}
+.qgap small{font:600 11px/1 var(--f-body,inherit);color:var(--ink2);letter-spacing:.04em;text-transform:uppercase}
+.qgap .gb{display:flex;height:8px;border-radius:5px;overflow:hidden;gap:2px}
+.qgap .gb i{display:block;height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1)}
 .qmeter{display:grid;gap:5px}
 .qmeter .mt{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;color:var(--ink2)}
 .qmeter .mt b{font:800 26px/1 var(--f-display);color:var(--ink)}
@@ -1367,6 +1376,18 @@ function chartSVG(sn,idx,dName,rName){
   const axT='<text class="ax" x="'+x0+'" y="'+(H-2)+'">'+esc(fT.format(new Date(t0)))+'</text>'+(sn.length>1?'<text class="ax" x="'+x1+'" y="'+(H-2)+'" text-anchor="end">'+esc(fT.format(new Date(t1)))+'</text>':'');
   return '<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="'+esc(dName+' és '+rName+' szavazataránya az idő függvényében')+'">'+g+step+stripLab+line('d')+line('r')+dots+cur+axT+hits+'</svg>';
 }
+function gapHTML(cand,anyN){
+  if(!anyN||cand.length<2)return "";
+  const a=cand[0],b=cand[1],na=num(a[3]),nb=num(b[3]);
+  if(!(na>0)||!(nb>=0))return "";
+  const nm=x=>String(x[1]||"").replace("*","").split(" ").slice(-1)[0];
+  const hasP=a[2]!=null&&a[2]!==""&&b[2]!=null&&b[2]!=="";
+  const gp=hasP?Math.abs(num(a[2])-num(b[2])):null,gv=na-nb,w=Math.round(na/(na+nb)*1000)/10;
+  const c=x=>x[0]==="d"?"var(--dem)":x[0]==="r"?"var(--rep)":"var(--ind)";
+  return '<div class="qgap"><div class="gh"><span>Különbség az 1. és 2. között</span><span class="gn2">'+esc(nm(a))+' – '+esc(nm(b))+'</span></div>'+
+    '<div class="gv"><span class="gp" style="color:'+c(a)+'">'+(gp!=null?'+'+pct(gp)+'<small>százalékpont</small>':'–')+'</span><span class="gn" style="color:'+c(a)+'">'+(gv>0?'+':'')+fmtN(gv)+'<small>szavazat</small></span></div>'+
+    '<div class="gb" aria-hidden="true"><i style="width:'+w+'%;background:'+c(a)+'"></i><i style="width:'+(100-w)+'%;background:'+c(b)+'"></i></div></div>';
+}
 function raceHTML(c,st,label,names,held){
   const live=S[c][st]||{},sn=snaps(c,st);
   let idx=HV[c][st];if(idx!=null&&(idx>=sn.length||!sn.length)){idx=null;HV[c][st]=null;}
@@ -1389,7 +1410,7 @@ function raceHTML(c,st,label,names,held){
   if(d.dv!=null&&d.rv!=null){const o=Math.max(0,100-num(d.dv)-num(d.rv));split='<div class="qsplit" aria-hidden="true"><i class="d" style="width:'+num(d.dv)+'%"></i><i class="r" style="width:'+num(d.rv)+'%"></i><i class="o" style="width:'+o+'%"></i></div>';}
   const rep=num(d.rep)||(call?100:0);
   let meter='<div class="qmeter"><div class="mt"><span>Feldolgozottság</span><b>'+(counting||call?pct(rep)+'%':'–')+'</b></div><div class="mb"><i style="width:'+Math.min(100,rep)+'%"></i></div>'+
-    (!counting&&!call?'<span class="muted" style="font-size:12.5px">'+esc(closeText(st))+'. Az első számok az urnazárás után érkeznek.</span>':'')+
+    gapHTML(cand,anyN)+(!counting&&!call?'<span class="muted" style="font-size:12.5px">'+esc(closeText(st))+'. Az első számok az urnazárás után érkeznek.</span>':'')+
     (counting&&d.lead&&!call?'<span class="muted" style="font-size:12.5px">'+esc(partyName(d.lead))+' vezet'+(d.margin!=null?' '+pct(d.margin)+' ponttal':'')+'</span>':'')+'</div>';
   let chart='';
   if(sn.length){
