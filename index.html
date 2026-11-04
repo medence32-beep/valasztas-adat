@@ -1492,6 +1492,14 @@ function ctyCands(st){
     const o={};o[r[2]]=r[1];o[r[5]]=r[4];return o;
   }catch(e){return null;}
 }
+function ctyCandsLive(st){
+  try{
+    const clean=x=>String(x||"").replace(/\s*\(független\)/,"").replace("*","");
+    if(mode==="gov"){const g=GOVMAP[st];if(!g)return null;return {D:clean(g.d),R:clean(g.r)};}
+    const m=SENMAP[st];if(!m)return null;
+    return {D:clean(m.d)||clean(m.o),R:clean(m.r)};
+  }catch(e){return null;}
+}
 function ctyInfo(c){
   if(era==="pre"){
     const d=ctyD(c),r=ctyRace(zoomSt);
@@ -1510,7 +1518,7 @@ function ctyInfo(c){
   if(era==="live"){
     const d=clD(c);
     if(d){
-      const cd=ctyCands(zoomSt)||{},D=d[0]/10,R=d[1]/10,oth=Math.max(0,100-D-R),mg=D-R;
+      const cd=ctyCandsLive(zoomSt)||{},D=d[0]/10,R=d[1]/10,oth=Math.max(0,100-D-R),mg=D-R;
       const nD=cd.D?esc(cd.D):"Demokrata",nR=cd.R?esc(cd.R):"Republikánus";
       const lead=Math.abs(mg)<0.05?"Döntetlen":(mg>0?"D":"R")+" +"+Math.abs(mg).toFixed(1).replace(".",",")+" pont";
       const f=x=>x.toFixed(1).replace(".",",")+"%";
