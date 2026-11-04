@@ -449,6 +449,9 @@ footer{padding-block:24px 48px}
 .dlist .dr{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;font-size:13.5px}
 .dlist .dr.on{background:color-mix(in srgb,var(--gold) 16%,transparent);outline:1px solid var(--gold)}
 .dlist .dr b{font:800 15px var(--f-display);letter-spacing:.04em}
+.dlist .dr .dr-r{display:flex;align-items:center;gap:8px;white-space:nowrap;justify-self:end}
+.dlist .dr .dr-r .badge{font-size:13px;padding:3px 11px;line-height:1.3}
+.dlist .dr>span>.muted{font-size:14px}
 .prevline{font-size:13.5px;color:var(--ink2)}
 .prevline b{color:var(--ink)}
 @media (max-width:520px){.prebtn{padding:3px 10px;font-size:12px}}
@@ -905,6 +908,8 @@ const MGROUP={abort:"Abortusz",tax:"Adók",trans:"Transznemű jogok és házass�
 const V="https://www.votebeat.org/national/2026/11/03/election-day-2026-live-blog-midterms-trump/", CBS="https://www.cbsnews.com/live-updates/election-day-2026-midterms/", FOX="https://www.foxnews.com/live-news/2026-midterm-elections-news-analysis-races-11-3-2026";
 const FEED_ASOF="2026. nov. 3., 17:45 (Budapest)";
 const FEED0=[
+{"id":"f199","t":"2026-11-04T00:06:00Z","tag":"Hívás","title":"Az AP hívott: Rogers (R) KY-5, McGarvey (D) KY-3 megnyerte a körzetét","text":"Az első két eldőlt képviselőházi hely Kentuckyból: az 5. körzetben Hal Rogers (R), a 3.-ban Morgan McGarvey (D) marad a székében. A Házban így D 1 – R 1.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-results/"},
+{"id":"f198","t":"2026-11-04T00:02:00Z","tag":"Hír","title":"Fordulat Kentuckyban: Booker átvette a vezetést Barrtól, 51,9% a 46,7% ellen","text":"A számolt szavazatok kb. 9%-ánál a demokrata Charles Booker 76 534, a republikánus Andy Barr 68 865 szavazatot kapott. Barr korai, 60% fölötti előnye elolvadt, az eredmény még nagyon korai.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
 {"id":"f197","t":"2026-11-03T23:56:00Z","tag":"Hír","title":"Kentucky szenátus: Barr 61,8%, Booker 36,4% a szavazatok 4%-ánál","text":"Andy Barr 35 858, Charles Booker 21 112 szavazatnál tart. Az előny a korábbi 18 pont után ismét 25 pont fölé nőtt, az eredmény még nagyon korai; a kentuckyi és indianai körzetekben a számolás folyamatban van.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
 {"id":"f195","t":"2026-11-03T23:46:00Z","tag":"Hír","title":"Kentucky 1. körzet: Comer előnye 6 pontra olvadt","text":"Az AP szerint James Comer (R) előnye a 6%-nyi megszámolt szavazat után már csak 6 pont. Korábban, 1–2%-nál még 40 pont fölött járt, a különbség a nagyobb megyék számaival fogy.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-results/"},
 {"id":"f196","t":"2026-11-03T23:46:00Z","tag":"Hír","title":"Kentucky szenátus: Booker közelebb jön Barrhoz, 39,8% a 58,4% ellen","text":"A demokrata Charles Booker 15 615 szavazatnál tart, a republikánus Andy Barr 22 909-nél. A szavazatok kb. 2%-át számolták meg, Barr előnye a korai 47 pontról 18,6-ra csökkent.","src":"AP","url":"https://apnews.com/projects/elections-2026/kentucky-us-senate-results/"},
@@ -1838,7 +1843,7 @@ function houseDetail(st){
   h+='<section class="qrace"><div class="qrh"><span class="lbl">Képviselőház</span>'+(era==="pre"?'<span class="badge">Jelenlegi állás</span>':'')+'</div><div class="dlist" style="max-height:none">'+
    hl.map((x,i)=>{const id=st+"-"+(i+1),cur=x,c=callOf(S.house[id]);
     let right="";
-    if(era==="live"){right=c?'<span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
+    if(era==="live"){right=c?'<span class="dr-r"><span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span></span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
     const p=pl[i];
     return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':(houseLeadTxt(S.house[id],"")||'Még nincs eredmény'))+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
   return h;
