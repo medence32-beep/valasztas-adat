@@ -1511,12 +1511,13 @@ function tipHTML(st){
   }else s+=(CLOSE[st]!=null?("Zárás: "+etLabel(CLOSE[st])+" ET · "+loc(utc(CLOSE[st]))):"")+turnTip(st);
   return s;
 }
+let tipPin=false;
 function showTip(st,x,y){
-  const tip=$("tip"),stage=$("stage");tip.innerHTML=tipHTML(st);tip.classList.add("on");
+  if(tipPin)return;const tip=$("tip"),stage=$("stage");tip.innerHTML=tipHTML(st);tip.classList.add("on");
   const w=stage.clientWidth,tw=tip.offsetWidth,th=tip.offsetHeight;
   tip.style.left=Math.max(4,Math.min(w-tw-4,x+14))+"px";tip.style.top=Math.max(4,y-th-10)+"px";
 }
-function hideTip(){$("tip").classList.remove("on");}
+function hideTip(f){if(tipPin&&!f)return;$("tip").classList.remove("on");}
 function select(st){
   if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);
 }
@@ -1634,7 +1635,7 @@ function ctyLegend(){
 }
 function ctyLabelState(){
   const L=$("ctylabel");
-  if(zoomSt&&zoomC==null&&era==="pre"&&CR){
+  if(zoomSt&&era==="pre"&&CR){
     const r=ctyRace(zoomSt);
     L.innerHTML=r?'Megyék színe: '+ctyRaceName(zoomSt)+'<small>D kék · R piros · minél sötétebb, annál nagyobb az előny</small>'+ctyLegend():'Megyék: ehhez az államhoz nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat<small>(az állam alapszínét látod; a megyehatárok kattinthatók)</small>';
     L.hidden=false;}
@@ -1676,13 +1677,27 @@ function ctyClear(){
   $("counties").querySelectorAll(".cty.dim,.cty.csel").forEach(e=>e.classList.remove("dim","csel"));
 }
 function ctyName(c){return c[0]+(c[2]==="city"?" city":" "+(LSAD[c[2]]||c[2]||"County"));}
+function ctyLabelHTML(c){return esc(ctyName(c))+'<small>'+esc(NAMES[zoomSt])+'</small><div style="font-weight:500;font-size:12.5px;margin-top:3px">'+ctyInfo(c)+'</div>';}
+function ctyTipHTML(c){return '<b>'+esc(ctyName(c))+'</b><br>'+esc(NAMES[zoomSt])+'<br>'+ctyInfo(c);}
+function pinTip(i){
+  const c=CTY&&CTY[zoomSt]&&CTY[zoomSt][i];if(!c)return;
+  tipPin=true;let n=0;const html=ctyTipHTML(c);
+  const place=()=>{
+    if(!tipPin||zoomC!==i)return;
+    const p=$("counties").querySelector('.cty[data-i="'+i+'"]');if(!p)return;
+    const r=p.getBoundingClientRect(),sr=$("stage").getBoundingClientRect();
+    showTipHTML(html,r.left-sr.left+r.width/2-14,r.top-sr.top-4,true);
+    if(++n<20)setTimeout(place,80);
+  };
+  place();
+}
 function markCty(i){
   const g=$("counties"),p=g.querySelector('.cty[data-i="'+i+'"]');if(!p||!zoomSt||!CTY||!CTY[zoomSt])return null;
-  zoomC=i;hideTip();
+  zoomC=i;tipPin=false;hideTip(true);
   g.querySelectorAll(".cty").forEach(e=>{e.classList.toggle("dim",e!==p);e.classList.toggle("csel",e===p);});
   g.appendChild(p);
   const c=CTY[zoomSt][i];
-  $("ctylabel").innerHTML=esc(ctyName(c))+'<small>'+esc(NAMES[zoomSt])+'</small><div style="font-weight:500;font-size:12.5px;margin-top:3px">'+ctyInfo(c)+'</div>';$("ctylabel").hidden=false;
+  if(era==="pre"){ctyLabelState();pinTip(i);}else{$("ctylabel").innerHTML=ctyLabelHTML(c);$("ctylabel").hidden=false;}
   $("zoombackstate").hidden=false;
   return p;
 }
@@ -1709,13 +1724,13 @@ function zoomTo(st){
   if(w>VB0[2]){w=VB0[2];h=w/AR;}
   let x=b.x+b.width/2-w/2,y=b.y+b.height/2-h/2;
   x=Math.max(0,Math.min(x,975-w));y=Math.max(0,Math.min(y,620-h));
-  hideTip();ctyClear();if(zoomSt!==st)drawCty(null);
+  tipPin=false;hideTip(true);ctyClear();if(zoomSt!==st)drawCty(null);
   zoomSt=st;zoomMark(st);ctyFill();vbAnim([x,y,w,h]);
   loadCty().then(()=>{if(zoomSt===st&&!$("counties").firstChild)drawCty(st);});ctyLabelState();
 }
 function zoomReset(instant){
   if(!zoomSt&&!$("geo").classList.contains("zoomed"))return;
-  hideTip();ctyClear();zoomSt=null;drawCty(null);zoomMark(null);ctyFill();vbAnim(VB0,instant);
+  tipPin=false;hideTip(true);ctyClear();zoomSt=null;drawCty(null);zoomMark(null);ctyFill();vbAnim(VB0,instant);
 }
 syncZT();
 $("zoomtoggle").addEventListener("click",()=>{
@@ -1730,10 +1745,11 @@ $("counties").addEventListener("click",e=>{const t=e.target.closest(".cty");if(!
 $("counties").addEventListener("pointermove",e=>{
   const t=e.target.closest(".cty");if(!t||!CTY||!CTY[zoomSt]){return;}
   e.stopPropagation();const c=CTY[zoomSt][Number(t.dataset.i)];if(!c)return;
-  const r=$("stage").getBoundingClientRect();
-  const nm=ctyName(c);
-  showTipHTML('<b>'+esc(nm)+'</b><br>'+esc(NAMES[zoomSt])+'<br>'+ctyInfo(c),e.clientX-r.left,e.clientY-r.top);
+  if(zoomC!=null)return;
+  if(era==="pre"){const r=$("stage").getBoundingClientRect();showTipHTML(ctyTipHTML(c),e.clientX-r.left,e.clientY-r.top);}
+  else{const L=$("ctylabel");L.innerHTML=ctyLabelHTML(c);L.hidden=false;}
 });
+$("counties").addEventListener("pointerleave",()=>{if(zoomC==null&&era==="live")ctyLabelState();});
 
 /* ---------- lists ---------- */
 function renderTimeline(){
@@ -2017,8 +2033,8 @@ function houseDetail(st){
     return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':(houseLeadTxt(S.house[id],"")||'Még nincs eredmény'))+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
   return h;
 }
-function showTipHTML(html,x,y){
-  const tip=$("tip"),stage=$("stage");tip.innerHTML=html;tip.classList.add("on");
+function showTipHTML(html,x,y,force){
+  if(tipPin&&!force)return;const tip=$("tip"),stage=$("stage");tip.innerHTML=html;tip.classList.add("on");
   const w=stage.clientWidth,tw=tip.offsetWidth,th=tip.offsetHeight;
   tip.style.left=Math.max(4,Math.min(w-tw-4,x+14))+"px";tip.style.top=Math.max(4,y-th-10)+"px";
 }
