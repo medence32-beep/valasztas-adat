@@ -172,7 +172,7 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #geo .st,#geo .ring-s,#geo .ring-h,#geo .dchk circle{vector-effect:non-scaling-stroke}
 #geo.zoomed .st{opacity:.42}
 #geo.zoomed .st.zsel{opacity:1}
-#geo.zoomed .lb{opacity:.5}
+#geo.zoomed .lb{opacity:.72}
 #geo.zoomed .lb.zsel{opacity:1}
 #geo .st{transition:fill .55s ease,filter .2s,opacity .5s}
 .pdot{animation:pop .75s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center}
@@ -189,7 +189,8 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #zoombackstate{position:absolute;left:10px;top:50px;z-index:3;border:1px solid var(--gold);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
 #ctylabel{position:absolute;left:10px;top:92px;z-index:3;background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:3px 7px;font:600 10px/1.25 var(--f-body);box-shadow:var(--shadow);max-width:34%;opacity:.92}
 #ctylabel small{display:block;font-weight:500;opacity:.7;font-size:9px}#ctylabel>div{max-width:120px}
-#geo.hascty #pdots,#geo.hascty .lb.zsel,#geo.hascty #decided{display:none}
+#geo.hascty #pdots,#geo.hascty #decided{display:none}
+#geo.hascty .lb.zsel{paint-order:stroke;stroke:var(--card);stroke-width:3.2px;stroke-linejoin:round}
 .cty.dim{filter:saturate(.5) brightness(.8)}
 .cty.csel{stroke:var(--ink);stroke-width:2.2;filter:brightness(1.12)}
 .cty{cursor:pointer}
@@ -354,7 +355,7 @@ footer{padding-block:24px 48px}
 .qsd .qnm{font-weight:600;color:var(--ink);min-width:0;overflow-wrap:anywhere;line-height:1.2}
 .qsd .qnm em{font-style:normal;color:var(--ink2);font-weight:400;font-size:12px}
 .qsd .qpc{font:800 28px/1 var(--f-display);color:var(--ink);text-align:right;letter-spacing:.01em}
-.qsd .qvt{grid-column:2 / -1;font-size:12px;color:var(--ink2)}
+.qsd .qvt{grid-column:2;grid-row:2;font-size:12px;color:var(--ink2);white-space:nowrap}
 .qsd .qtick{grid-column:3;grid-row:2;text-align:right;font-size:11.5px;font-weight:700;color:currentColor}
 .qsplit{display:flex;height:10px;border-radius:6px;overflow:hidden;background:var(--off);gap:2px;position:relative}
 .qsplit i{display:block;height:100%;transition:width .8s cubic-bezier(.2,.8,.2,1)}
