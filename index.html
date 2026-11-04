@@ -212,7 +212,7 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 #zoomtoggle[aria-pressed="true"] i{background:var(--gold)}
 #zoomtoggle[aria-pressed="true"] i::after{transform:translateX(14px);background:#1a1200}
 #zoombackstate{position:absolute;left:10px;top:50px;z-index:3;border:1px solid var(--gold);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
-#ctylabel{position:absolute;left:10px;top:92px;z-index:3;background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:3px 7px;font:600 10px/1.25 var(--f-body);box-shadow:var(--shadow);width:max-content;max-width:min(240px,62%);box-sizing:border-box;opacity:.92}
+#ctylabel{position:absolute;left:8px;bottom:8px;top:auto;z-index:3;background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:3px 7px;font:600 10px/1.25 var(--f-body);box-shadow:var(--shadow);width:max-content;max-width:min(220px,58%);box-sizing:border-box;opacity:.92;font-size:9px;line-height:1.2;padding:3px 6px}#ctylabel>div{font-size:10.5px!important;margin-top:2px!important}#ctylabel small{font-size:8px}#geo.hascty~.tip{font-size:11.5px;max-width:190px;padding:5px 8px}
 #ctylabel small{display:block;font-weight:500;opacity:.7;font-size:9px}#ctylabel>div{max-width:none}
 #geo.hascty #pdots,#geo.hascty #decided{display:none}
 #geo.hascty .lb,#geo.hascty .leader{display:none!important}
@@ -1600,7 +1600,7 @@ function ctyInfo(c){
       const lead=Math.abs(mg)<0.05?"Döntetlen":(mg>0?"D":"R")+" +"+Math.abs(mg).toFixed(1).replace(".",",")+" pont";
       const f=x=>x.toFixed(1).replace(".",",")+"%";
       return '<div style="opacity:.75;font-weight:600">'+ctyRaceName(zoomSt)+'</div>'+
-        '<div style="display:flex;height:9px;border-radius:5px;overflow:hidden;margin:6px 0 5px;min-width:190px"><i style="width:'+D+'%;background:var(--dem)"></i><i style="width:'+oth+'%;background:var(--line2)"></i><i style="width:'+R+'%;background:var(--rep)"></i></div>'+
+        '<div style="display:flex;height:6px;border-radius:4px;overflow:hidden;margin:4px 0 3px;min-width:130px"><i style="width:'+D+'%;background:var(--dem)"></i><i style="width:'+oth+'%;background:var(--line2)"></i><i style="width:'+R+'%;background:var(--rep)"></i></div>'+
         '<div style="display:flex;justify-content:space-between;gap:14px"><span><b style="color:var(--dem)">'+nD+'</b><br><b>'+f(D)+'</b></span><span style="text-align:right"><b style="color:var(--rep)">'+nR+'</b><br><b>'+f(R)+'</b></span></div>'+
         '<div style="margin-top:5px;font-weight:700">'+lead+'</div><div class="muted" style="margin-top:1px">'+fmtN(d[2])+' leadott szavazat</div>';
     }
@@ -1630,7 +1630,7 @@ function ctyInfo(c){
 }
 function ctyLegend(){
   const st=[-28,-14,0,14,28].map(m=>ctyMix(m===0?0.0001:m));
-  return '<div style="margin-top:6px"><div style="height:9px;border-radius:5px;background:linear-gradient(90deg,'+st[4]+','+st[3]+','+st[2]+','+st[1]+','+st[0]+')"></div><div style="display:flex;justify-content:space-between;font-size:11px;opacity:.75;margin-top:2px"><span>D +28</span><span>döntetlen</span><span>R +28</span></div></div>';
+  return '<div style="margin-top:4px"><div style="height:6px;border-radius:5px;background:linear-gradient(90deg,'+st[4]+','+st[3]+','+st[2]+','+st[1]+','+st[0]+')"></div><div style="display:flex;justify-content:space-between;font-size:9px;opacity:.75;margin-top:1px"><span>D +28</span><span>döntetlen</span><span>R +28</span></div></div>';
 }
 function ctyLabelState(){
   const L=$("ctylabel");
