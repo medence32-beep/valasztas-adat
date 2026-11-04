@@ -1236,13 +1236,14 @@ function leadCls(doc){
   const top=v[0];if(useV?!(top[1]>0):!(top[2]>0))return null;return "L"+top[0];
 }
 let prevCall={};
+function tightLive(d){if(!d)return false;const v=[+d.dv||0,+d.rv||0,+d.ov||0].sort((a,b)=>b-a);return v[0]>0&&v[0]-v[1]<1;}
 function paintMap(spawnFlash){
   Object.keys(MAP).forEach(st=>{
     const c="c-"+stClass(st), e=geo.els[st], l=geo.lbs[st], t=tileEls[st];
     if(e&&!e.classList.contains(c)){e.setAttribute("class","st "+c);}
     if(l&&!l.classList.contains(c)){l.setAttribute("class","lb "+c);}
     if(t){const keep=(t.classList.contains("sel")?" sel":"")+(t.classList.contains("hotr")?" hotr":"");t.setAttribute("class","tile "+c+keep);}
-    const hot=era==="live"&&((mode==="sen"&&SENMAP[st]&&SENMAP[st].hot&&!senCall(st))||(mode==="gov"&&GOV_HOT[st]&&!govCall(st)));
+    const hot=era==="live"&&((mode==="sen"&&SENMAP[st]&&(SENMAP[st].hot||tightLive(S.senate[st]))&&!senCall(st))||(mode==="gov"&&(GOV_HOT[st]||tightLive(S.governor[st]))&&!govCall(st)));
     if(geo.ring[st])geo.ring[st].style.display=hot?"":"none";
     if(t){t.classList.toggle("hotr",!!hot);}
     // flash when a new call arrives
