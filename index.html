@@ -555,7 +555,7 @@ footer{padding-block:24px 48px}
 .dchk path{fill:none;stroke:var(--bg);stroke-width:2.1;stroke-linecap:round;stroke-linejoin:round}
 .dchk{pointer-events:none;animation:none!important}
 .dchk circle,.dchk path{animation:none}
-.dchk.newc circle,.dchk.newc path{animation:pop .5s cubic-bezier(.2,.8,.2,1) both;transform-box:fill-box;transform-origin:center}
+.dchk.newc circle,.dchk.newc path{animation:pop .75s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--dd,0s);transform-box:fill-box;transform-origin:center}
 .tile.dec::before{content:"\2713";position:absolute;top:3px;right:4px;font:700 11px/1 var(--f-body);color:var(--txt,var(--ink));opacity:.9}
 .sw.ck{display:inline-grid;place-items:center;font:700 10px/1 var(--f-body);background:var(--ink);color:var(--bg);border-color:transparent}
 .qdone{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;color:var(--ink);margin-right:6px}
@@ -2016,7 +2016,7 @@ function paintDecided(){try{ctyFill();}catch(e){}
   Object.keys(tileEls).forEach(k=>tileEls[k].classList.toggle("dec",calls.indexOf(k)>-1));
   const sig=mode+"|"+calls.join(",");if(sig===_dsig)return;_dsig=sig;
   window._dprev=window._dprev||{};const _pv=window._dprev[mode]||{};window._dprev[mode]=calls.reduce((o,k)=>(o[k]=1,o),{});
-  g.innerHTML=calls.filter(st=>!CALLOUT[st]).map(st=>{const m=MAP[st],big=m.a>2000;return '<g class="dchk'+(_pv[st]?'':' newc')+'" transform="translate('+m.cx.toFixed(1)+','+(m.cy+(big?15:12)).toFixed(1)+')"><circle r="'+(big?7:6)+'"/><path d="M-3 0.2l2.2 2.4L3.4-2.4"/></g>';}).join("");
+  g.innerHTML=calls.filter(st=>!CALLOUT[st]).map(st=>{const m=MAP[st],big=m.a>2000;return '<g class="dchk'+((_pv[st]&&!window._dforce)?'':' newc')+'" style="--dd:'+(m.cx/975*0.7+0.2).toFixed(2)+'s" transform="translate('+m.cx.toFixed(1)+','+(m.cy+(big?15:12)).toFixed(1)+')"><circle r="'+(big?7:6)+'"/><path d="M-3 0.2l2.2 2.4L3.4-2.4"/></g>';}).join("");window._dforce=false;
 }
 
 /* ---------- ticking ---------- */
@@ -2048,7 +2048,7 @@ function setView(v){
   document.querySelectorAll("#seg-view button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
   syncUI();hideTip();paintSel();
 }
-$("seg-mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(b)setMode(b.dataset.m);});
+$("seg-mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(b){window._dforce=true;_dsig="";const pd=$("pdots");if(pd)pd.dataset.sig="";setMode(b.dataset.m);}});
 $("seg-view").addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(b)setView(b.dataset.v);});
 $("play").addEventListener("click",()=>setPlaying(!playing));
 $("range").addEventListener("input",e=>{setPlaying(false);scrub=Number(e.target.value);timeStep();});
