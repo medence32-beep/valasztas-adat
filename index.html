@@ -369,8 +369,9 @@ footer{padding-block:24px 48px}
 .detail{max-height:calc(100vh - 84px - env(safe-area-inset-top,0px));overflow:auto;scrollbar-width:thin;padding:0}
 .detail>*{animation:none}
 .detail.anim>*{animation:fadeup .45s ease both}
-#sharecty{position:absolute;left:10px;top:88px;z-index:3;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 14px;font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}#sharecty[hidden]{display:none}
-.qdh{position:relative}.shbtn{position:absolute;top:14px;right:14px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:6px 12px;font:600 12.5px var(--f-body);cursor:pointer}.shbtn:hover,#sharecty:hover{border-color:var(--gold)}
+#zrow{position:absolute;left:10px;top:50px;z-index:3;display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 20px)}#zrow>button{position:static}#zrow>button[hidden]{display:none}
+.shbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);color:var(--ink2);border-radius:9px;padding:6px 11px 6px 9px;font:600 12.5px/1 var(--f-body);letter-spacing:.01em;cursor:pointer;box-shadow:var(--shadow);transition:color .15s,border-color .15s,background .15s}.shbtn svg{flex:none;opacity:.85}.shbtn:hover,.shbtn:focus-visible{color:var(--ink);border-color:var(--ink2);outline:none}.shbtn:active{background:var(--card2)}
+.qdh{position:relative}.qdh .shbtn{position:absolute;top:16px;right:16px;box-shadow:none;background:transparent}
 #toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);max-width:min(92vw,520px);background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:12px;padding:10px 16px;font:600 13.5px/1.35 var(--f-body);box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:99;overflow-wrap:anywhere;text-align:center}#toast.on{opacity:1;transform:translate(-50%,0)}
 .qdh{padding:18px 18px 14px;background:linear-gradient(160deg,color-mix(in srgb,var(--dem) 14%,transparent),transparent 55%,color-mix(in srgb,var(--rep) 14%,transparent));border-bottom:1px solid var(--line)}
 .qdh h3{font-size:48px;line-height:.9;margin:4px 0 8px}
@@ -779,7 +780,7 @@ footer{padding-block:24px 48px}
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
-          <button type="button" id="zoomback" hidden>← Teljes térkép</button><button type="button" id="zoombackstate" hidden>← Vissza az államra</button><button type="button" id="sharecty" data-share="cty" hidden>🔗 Megye linkje</button><div id="ctylabel" hidden></div><div class="tip" id="tip" role="tooltip"></div>
+          <button type="button" id="zoomback" hidden>← Teljes térkép</button><div id="zrow"><button type="button" id="zoombackstate" hidden>← Vissza az államra</button><button type="button" id="sharecty" class="shbtn" data-share="cty" hidden title="A megye linkjének másolása"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.7-1.7"/></svg><span>Megye linkje</span></button></div><div id="ctylabel" hidden></div><div class="tip" id="tip" role="tooltip"></div>
         </div>
         <div class="legend" id="legend"></div>
       </div>
@@ -1480,7 +1481,7 @@ function orderDetail(box){
     else if(mode==="sen"&&(t==="Kormányzó"||t==="Képviselőház"))s.remove();
   });
 }
-function renderDetail(){renderDetail0();const q=document.querySelector("#detail .qdh");if(q&&!q.querySelector(".shbtn")){const b=document.createElement("button");b.type="button";b.className="shbtn";b.dataset.share="st";b.textContent="🔗 Állam linkje";q.appendChild(b);}}
+function renderDetail(){renderDetail0();const q=document.querySelector("#detail .qdh");if(q&&!q.querySelector(".shbtn")){const b=document.createElement("button");b.type="button";b.className="shbtn";b.dataset.share="st";b.title="Az állam linkjének másolása";b.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.7-1.7"/></svg><span>Állam linkje</span>';q.appendChild(b);}}
 function renderDetail0(){
   const st=sel,sd=SENMAP[st],gd=GOVMAP[st],h=CLOSE[st],box=$("detail");
   const dkey=st+"|"+era+"|"+mode+"|"+sub;const changed=box.dataset.st!==dkey;box.dataset.st=dkey;box.classList.toggle("anim",changed);
