@@ -1181,7 +1181,7 @@ function initBoards(){
    '<p class="note" id="foot-'+key+'">'+foot+'</p></div>';
   $("boards").innerHTML=
     card("sen","Szenátus","100 hely",buildHemi("sen",100,5,92,190,51,"51"),"Demokraták","Republikánusok",
-      "")+
+      "Becslés (nem hivatalos): Demokraták 54–56, Republikánusok 44–46.")+
     card("house","Képviselőház","435 hely",buildHemi("house",435,11,70,190,218,"218"),"Demokraták","Republikánusok","");
 }
 function updateBoards(){
@@ -1193,6 +1193,9 @@ function updateBoards(){
   const lt=(n)=>n>0?"+"+n+" vezet":"";
   [["sen",LS],["house",LH]].forEach(a=>{const e1=$("ld-"+a[0]+"-d"),e2=$("ld-"+a[0]+"-r");if(e1)e1.textContent=lt(a[1].D);if(e2)e2.textContent=lt(a[1].R);});
   countTo($("n-sen-d"),t.d);countTo($("n-sen-r"),t.r);countTo($("n-sen-p"),t.pending);
+  (function(){let cD=0,cR=0,lD=0,lR=0,xD=0,xR=0,n=0;Object.keys(S.house||{}).forEach(id=>{const d=S.house[id];if(!d)return;n++;const c=callOf(d);if(c==="D")cD++;else if(c==="R")cR++;else if(d.lead==="D"){lD++;if(num(d.margin)<3)xD++;}else if(d.lead==="R"){lR++;if(num(d.margin)<3)xR++;}});
+    const k=cD+cR+lD+lR,miss=Math.max(0,435-n),pD=k?(cD+lD)/k:.5,mid=cD+lD+Math.round(miss*pD),lo=Math.max(0,mid-Math.round(xD/2)),hi=Math.min(435,mid+Math.round(xR/2));
+    const e=$("foot-house");if(e&&k>0)e.textContent="Becslés (nem hivatalos, a kapott eredmények és az éppen vezetők alapján): Demokraták "+lo+"–"+hi+", Republikánusok "+(435-hi)+"–"+(435-lo)+".";})();
   countTo($("n-house-d"),hd);countTo($("n-house-r"),hr);countTo($("n-house-p"),hp);
 }
 
