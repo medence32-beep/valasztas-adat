@@ -1502,7 +1502,7 @@ function drawCty(st){
   g.innerHTML=CTY[st].map((c,i)=>'<path class="cty" data-i="'+i+'" d="'+c[1]+'" style="animation-delay:'+((i%40)*12)+'ms'+(era==="pre"&&ctyColor(c)?';fill:'+ctyColor(c):'')+'"/>').join("");
   $("geo").classList.add("hascty");ctyFill();ctyLabelState();
 }
-function ctyFill(){const g=$("counties");if(!g)return;const c=zoomSt?(mode==="gov"?govCall(zoomSt):senCall(zoomSt)):null;g.classList.toggle("pend",era==="live"&&!c);const ge=$("geo");if(ge)ge.classList.toggle("pendz",!!zoomSt&&era==="live"&&!c);}
+function ctyFill(){const g=$("counties");if(!g)return;const c=zoomSt?(mode==="gov"?govCall(zoomSt):senCall(zoomSt)):null;g.classList.toggle("pend",era==="live");const ge=$("geo");if(ge)ge.classList.toggle("pendz",!!zoomSt&&era==="live");}
 function zoomMark(st){
   Object.keys(geo.els).forEach(k=>{geo.els[k].classList.toggle("zsel",k===st);});
   Object.keys(geo.lbs).forEach(k=>{geo.lbs[k].classList.toggle("zsel",k===st);});
@@ -1971,7 +1971,7 @@ function vcShow(v,u){let el=$("viewc");if(!el){el=document.createElement("div");
   run(true);setInterval(()=>run(false),60000);
 })();
 let _dsig="";
-function paintDecided(){
+function paintDecided(){try{ctyFill();}catch(e){}
   const g=$("decided"),on=era==="live"&&(mode==="sen"||mode==="gov");
   const calls=[];
   if(on)Object.keys(MAP).forEach(st=>{const c=mode==="sen"?(SENMAP[st]&&senCall(st)):(GOV_HELD[st]&&govCall(st));if(c)calls.push(st);});
