@@ -2289,7 +2289,7 @@ function renderVotes(){
     return '<div class="vcard"><h3>'+title+'<span class="vsub">'+n+' verseny · '+fm(t)+' szavazat</span></h3>'+
       '<div class="vbar" role="img" aria-label="'+title+' szavazatmegoszlás">'+rows.map(x=>'<i style="width:'+(x[2]/t*100)+'%;background:'+x[1]+'"></i>').join("")+'</div>'+
       rows.map(row).join("")+
-      (det.length?'<details class="vdet"><summary>Egyéb pártok részletesen</summary>'+det.map(d=>'<div class="vrow"><span class="vdot" style="background:#8793a6"></span><span class="vnm">'+esc(d[0]==="Egyéb jelölt"?"Párt nélkül megadva / ismeretlen":d[0])+'</span><span class="vnum">'+fm(d[1])+'</span><span class="vpc">'+tr(d[1],t)+'%</span></div>').join("")+'</details>':'')+'</div>';
+      '</div>';
   };
   el.innerHTML=card("Szenátus",S.senate||{},"s")+card("Kormányzók",S.governor||{},"g");
 }
