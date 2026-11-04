@@ -179,6 +179,8 @@ section{padding-block:34px 4px;scroll-margin-top:90px}
 /* map */
 .mapgrid{display:grid;grid-template-columns:minmax(0,1.75fr) minmax(0,1fr);gap:14px;align-items:start}
 .mapgrid>*{min-width:0}
+.msearch{position:relative;flex:1 1 220px;max-width:340px;min-width:180px}.msearch svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);opacity:.55;pointer-events:none}.msearch input{width:100%;box-sizing:border-box;border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:999px;padding:8px 14px 8px 35px;font:500 13.5px var(--f-body)}.msearch input::placeholder{color:var(--ink2);opacity:.8}.msearch input:focus{outline:none;border-color:var(--ink2)}
+#msr{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:30;background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:var(--shadow);padding:5px;max-height:330px;overflow:auto}#msr[hidden]{display:none}#msr .mh{padding:7px 10px 3px;font:700 10.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink2)}#msr .mi{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13.5px;color:var(--ink)}#msr .mi small{color:var(--ink2);font-size:12px;white-space:nowrap}#msr .mi[aria-selected="true"],#msr .mi:hover{background:var(--card2)}#msr .mn{padding:10px;color:var(--ink2);font-size:13px}
 .mapbar{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:space-between;align-items:center;margin-bottom:12px}
 .seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
 .seg button{border:0;background:transparent;border-radius:999px;padding:5px 14px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--ink2);transition:background .25s,color .25s}
@@ -765,6 +767,7 @@ footer{padding-block:24px 48px}
             <button type="button" data-v="geo" aria-pressed="true">Földrajzi</button>
             <button type="button" data-v="tiles" aria-pressed="false">Csempék</button>
           </div>
+          <div class="msearch" id="msearch"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><input id="msq" type="text" placeholder="Állam vagy megye keresése" autocomplete="off" autocapitalize="off" spellcheck="false" role="combobox" aria-expanded="false" aria-controls="msr" aria-label="Állam vagy megye keresése"><div id="msr" role="listbox" hidden></div></div>
         </div>
         <div class="now-sum" id="mapsum" hidden></div>
         <div class="scrub" id="scrub" hidden>
@@ -2247,6 +2250,48 @@ function applyHash(){
 }
 window.addEventListener("hashchange",()=>{if(!/^#[A-Z]{2}-/.test(location.hash))return;applyHash();});
 setTimeout(()=>{if(!applyHash())hashOn=true;},700);
+
+/* ---------- állam- és megyekereső ---------- */
+(function(){
+  const EN={AK:"Alaska",NM:"New Mexico",CA:"California",NC:"North Carolina",ND:"North Dakota",SC:"South Carolina",SD:"South Dakota",WV:"West Virginia",DC:"District of Columbia"};
+  const fold=t=>String(t).toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");
+  const inp=$("msq"),box=$("msr");if(!inp||!box)return;
+  const SX=Object.keys(NAMES).map(st=>({st,n:NAMES[st],h:fold(st+" "+NAMES[st]+" "+(EN[st]||"")),nf:fold(NAMES[st]+" "+(EN[st]||""))}));
+  let CX=null,items=[],act=-1;
+  async function idx(){if(CX)return CX;try{await loadCty();}catch(e){}if(!CTY)return null;const a=[];for(const st in CTY)CTY[st].forEach((c,i)=>{const n=ctyName(c);a.push({st,i,n,nf:fold(n),h:fold(n+" "+st+" "+(NAMES[st]||"")+" "+(EN[st]||""))});});CX=a;return a;}
+  function close(){box.hidden=true;inp.setAttribute("aria-expanded","false");act=-1;}
+  function paint(){box.querySelectorAll(".mi").forEach((e,i)=>e.setAttribute("aria-selected",String(i===act)));const a=box.querySelectorAll(".mi")[act];if(a&&a.scrollIntoView)a.scrollIntoView({block:"nearest"});}
+  async function render(){
+    const q=fold(inp.value).trim(),tk=q.split(/[\s,]+/).filter(Boolean);
+    if(!tk.length){close();return;}
+    const st=SX.filter(x=>tk.every(t=>x.h.includes(t))).sort((a,b)=>(+b.nf.startsWith(tk[0]))-(+a.nf.startsWith(tk[0]))||(+(b.st.toLowerCase()===tk[0]))-(+(a.st.toLowerCase()===tk[0]))).slice(0,5);
+    const cx=await idx();if(fold(inp.value).trim()!==q)return;
+    let ct=[];if(cx){ct=cx.filter(x=>tk.every(t=>x.h.includes(t))&&tk.some(t=>x.nf.includes(t))).sort((a,b)=>(+b.nf.startsWith(tk[0]))-(+a.nf.startsWith(tk[0]))||a.n.length-b.n.length).slice(0,8);}
+    items=[].concat(st.map(x=>({t:"s",st:x.st})),ct.map(x=>({t:"c",st:x.st,i:x.i})));
+    let h="",k=0;
+    if(st.length){h+='<div class="mh">Államok</div>'+st.map(x=>'<div class="mi" role="option" data-k="'+(k++)+'"><span>'+esc(x.n)+'</span><small>'+x.st+'</small></div>').join("");}
+    if(ct.length){h+='<div class="mh">Megyék</div>'+ct.map(x=>'<div class="mi" role="option" data-k="'+(k++)+'"><span>'+esc(x.n)+'</span><small>'+esc(NAMES[x.st]||x.st)+'</small></div>').join("");}
+    if(!items.length)h='<div class="mn">Nincs találat</div>';
+    box.innerHTML=h;box.hidden=false;inp.setAttribute("aria-expanded","true");act=items.length?0:-1;paint();
+  }
+  function go(it){
+    if(!it)return;const md=(mode==="gov"||mode==="house")?mode:"sen";
+    const c=it.t==="c"&&CTY&&CTY[it.st]&&CTY[it.st][it.i];const f=c&&md!=="house"?c[3]:null;
+    try{history.replaceState(null,"","#"+it.st+"-"+(f?(md==="house"?"sen":md):md)+(f?"-"+f:""));}catch(e){}
+    inp.value="";close();inp.blur();applyHash();
+  }
+  inp.addEventListener("input",()=>{render();});
+  inp.addEventListener("focus",()=>{idx();if(inp.value.trim())render();});
+  inp.addEventListener("keydown",e=>{
+    if(e.key==="ArrowDown"){e.preventDefault();if(!box.hidden&&items.length){act=(act+1)%items.length;paint();}}
+    else if(e.key==="ArrowUp"){e.preventDefault();if(!box.hidden&&items.length){act=(act-1+items.length)%items.length;paint();}}
+    else if(e.key==="Enter"){e.preventDefault();if(!box.hidden&&items[act])go(items[act]);}
+    else if(e.key==="Escape"){close();inp.blur();}
+  });
+  box.addEventListener("mousedown",e=>{e.preventDefault();});
+  box.addEventListener("click",e=>{const m=e.target.closest(".mi");if(m)go(items[+m.dataset.k]);});
+  document.addEventListener("click",e=>{if(!e.target.closest("#msearch"))close();});
+})();
 $("play").addEventListener("click",()=>setPlaying(!playing));
 $("range").addEventListener("input",e=>{setPlaying(false);scrub=Number(e.target.value);timeStep();});
 $("livebtn").addEventListener("click",()=>{setPlaying(false);scrub=null;lastT=null;timeStep();});
