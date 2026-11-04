@@ -602,8 +602,8 @@ footer{padding-block:24px 48px}
 #viewc.on{display:inline-flex}
 #viewc b{color:var(--ink);font-weight:700}
 #link-note{display:none!important}
-#ctrl-banner{display:none;border-bottom:1px solid var(--line)}
-#ctrl-banner.on{display:block}
+#ctrl-banner,#ctrl-banner2{display:none;border-bottom:1px solid var(--line)}
+#ctrl-banner.on,#ctrl-banner2.on{display:block}
 #ctrl-banner .cb{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px;background:linear-gradient(90deg,color-mix(in srgb,var(--dem) 22%,var(--bg)),color-mix(in srgb,var(--dem) 6%,var(--bg)))}
 #ctrl-banner.r .cb{background:linear-gradient(90deg,color-mix(in srgb,var(--rep) 22%,var(--bg)),color-mix(in srgb,var(--rep) 6%,var(--bg)))}
 #ctrl-banner .cbi{width:44px;height:44px;border-radius:50%;background:#fff var(--logo-d) center/82% no-repeat;border:2px solid var(--dem);flex:none}
@@ -613,6 +613,15 @@ footer{padding-block:24px 48px}
 #ctrl-banner .cbt span{display:block;margin-top:2px;font:500 13.5px/1.4 var(--f-body);color:var(--ink2)}
 #ctrl-banner .cbn{font:800 22px var(--f-body);font-variant-numeric:tabular-nums;color:var(--ink)}
 #ctrl-banner .cbn i{font-style:normal;color:var(--dem)}#ctrl-banner .cbn u{text-decoration:none;color:var(--rep)}
+#ctrl-banner2 .cb{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding-block:12px;background:linear-gradient(90deg,color-mix(in srgb,var(--dem) 22%,var(--bg)),color-mix(in srgb,var(--dem) 6%,var(--bg)))}
+#ctrl-banner2.r .cb{background:linear-gradient(90deg,color-mix(in srgb,var(--rep) 22%,var(--bg)),color-mix(in srgb,var(--rep) 6%,var(--bg)))}
+#ctrl-banner2 .cbi{width:44px;height:44px;border-radius:50%;background:#fff var(--logo-d) center/82% no-repeat;border:2px solid var(--dem);flex:none}
+#ctrl-banner2.r .cbi{background:#fff var(--logo-r) center/100% no-repeat;border-color:var(--rep)}
+#ctrl-banner2 .cbt{min-width:0;flex:1 1 260px}
+#ctrl-banner2 .cbt b{display:block;font:800 clamp(17px,2.6vw,22px)/1.2 var(--f-body);color:var(--ink);text-wrap:balance}
+#ctrl-banner2 .cbt span{display:block;margin-top:2px;font:500 13.5px/1.4 var(--f-body);color:var(--ink2)}
+#ctrl-banner2 .cbn{font:800 22px var(--f-body);font-variant-numeric:tabular-nums;color:var(--ink)}
+#ctrl-banner2 .cbn i{font-style:normal;color:var(--dem)}#ctrl-banner2 .cbn u{text-decoration:none;color:var(--rep)}
 </style>
 
 <div class="top">
@@ -631,6 +640,7 @@ footer{padding-block:24px 48px}
 <div class="ticker" aria-label="Friss hírek"><div class="tag">Élő</div><div class="track" id="track"></div></div>
 
 <div id="ctrl-banner" role="status" aria-live="polite"><div class="wrap cb"><div class="cbi" id="cb-i" role="img" aria-label="Demokrata párt logó"></div><div class="cbt"><b id="cb-t"></b><span id="cb-s"></span></div><div class="cbn" id="cb-n"></div></div></div>
+<div id="ctrl-banner2" class="ctrlb" role="status" aria-live="polite"><div class="wrap cb"><div class="cbi" id="cb2-i" role="img" aria-label="Párt logó"></div><div class="cbt"><b id="cb2-t"></b><span id="cb2-s"></span></div><div class="cbn" id="cb2-n"></div></div></div>
 <div class="hero-band">
   <div class="wrap hero">
     <div>
@@ -2095,12 +2105,14 @@ setInterval(tick,1000);setInterval(()=>{renderTimeline();renderRaces(false);rend
 (async function(){
   let db=null;
   try{db=(window.claude&&window.claude.use)?await window.claude.use("db"):null;}catch(e){db=null;}
-function renderCtrl(){const c=S.meta&&S.meta.control&&S.meta.control.senate;const el=document.getElementById("ctrl-banner");if(!el)return;if(!c||!c.party){el.classList.remove("on","r");return;}
+function renderCtrl(){const C=S.meta&&S.meta.control||{};
+const one=(c,sfx,ttl,txt)=>{const el=document.getElementById("ctrl-banner"+sfx);if(!el)return;if(!c||!c.party){el.classList.remove("on","r");return;}
 const D=c.party==="D";el.classList.add("on");el.classList.toggle("r",!D);
-document.getElementById("cb-t").textContent=D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust";
-const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;
-document.getElementById("cb-s").textContent="Az AP számolása szerint "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");
-document.getElementById("cb-n").innerHTML="<i>"+c.d+"</i> – <u>"+c.r+"</u>";}
+document.getElementById("cb"+(sfx?"2":"")+"-t").textContent=ttl(D);
+document.getElementById("cb"+(sfx?"2":"")+"-s").textContent=txt(c,D);
+document.getElementById("cb"+(sfx?"2":"")+"-n").innerHTML="<i>"+c.d+"</i> – <u>"+c.r+"</u>";};
+one(C.senate,"",D=>D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust",(c,D)=>{const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;return "Az AP számolása szerint "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");});
+one(C.house,"2",D=>D?"A demokraták megnyerték a Képviselőházat":"A republikánusok megtartották a Képviselőházat",(c,D)=>"Az "+(c.src||"NBC News")+" szerint "+(D?"a demokraták":"a republikánusok")+" megszerezték a többséget. Az AP számolása szerint eddig "+c.d+" demokrata és "+c.r+" republikánus körzet dőlt el (218 kell); az AP hivatalosan még nem hívta ki."+(c.t?" Frissítve: "+c.t+".":""));}
 async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=(x.meta&&x.meta.status&&x.meta.status.updated)||"";if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;const d=best;window.__SRC=(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg");["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});try{renderCtrl();}catch(e){}if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();}catch(e){if(!ok){link="off";renderStatus();}}};await run();setInterval(run,60000);}
   if(!db){pollJSON();return;}
   let got=false;const slow=setTimeout(()=>{if(!got){link="slow";renderStatus();}},10000);
