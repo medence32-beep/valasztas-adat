@@ -2164,7 +2164,7 @@ $("theme").addEventListener("click",()=>{
   const next=cur==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",next);try{localStorage.setItem("ve-theme",next);}catch(e){}
 });
 try{const t=localStorage.getItem("ve-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}
-if("ResizeObserver" in window){new ResizeObserver(en=>{$("stage").dataset.narrow=en[0].contentRect.width<560?"1":"0";}).observe($("stage"));}
+if("ResizeObserver" in window){new ResizeObserver(en=>{$("stage").dataset.narrow=en[0].contentRect.width<340?"1":"0";}).observe($("stage"));}
 
 /* ---------- boot ---------- */
 try{document.querySelector("[data-tz]").textContent=Intl.DateTimeFormat().resolvedOptions().timeZone||"";}catch(e){}
