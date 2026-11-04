@@ -1299,7 +1299,7 @@ function resultText(doc,held){
   if(c){const flip=held&&c!==held;return '<span class="badge '+c.toLowerCase()+'">'+partyName(c)+' győzelem'+(flip?' · átfordult':' · megtartotta')+'</span>';}
   if(doc&&num(doc.rep)>0){
     const lead=doc.lead==="D"||doc.lead==="R"||doc.lead==="I"?partyName(doc.lead)+" vezet":"Számolás";
-    return '<span class="res">'+lead+(doc.margin!=null?' '+pct(doc.margin)+' ponttal':'')+'<small>'+pct(doc.rep)+'% leszámolva'+(doc.dv!=null&&doc.rv!=null?' · D '+pct(doc.dv)+'% · R '+pct(doc.rv)+'%':'')+'</small></span><div class="bar"><i style="width:'+Math.min(100,num(doc.rep))+'%"></i></div>';
+    return '<span class="res">'+lead+(doc.margin!=null?' '+pct(doc.margin)+' ponttal':'')+'<small>'+pct(doc.rep)+'% feldolgozva'+(doc.dv!=null&&doc.rv!=null?' · D '+pct(doc.dv)+'% · R '+pct(doc.rv)+'%':'')+'</small></span><div class="bar"><i style="width:'+Math.min(100,num(doc.rep))+'%"></i></div>';
   }
   return "";
 }
@@ -1330,7 +1330,7 @@ function chartSVG(sn,idx,dName,rName){
   let step='';const rp=sn.filter(a=>a.d.rep!=null);
   if(rp.length){let d='M'+X(rp[0].t).toFixed(1)+' '+s1;rp.forEach((a,i)=>{const yy=s1-(Math.min(100,num(a.d.rep))/100)*(s1-s0);if(i)d+='L'+X(a.t).toFixed(1)+' '+(s1-(Math.min(100,num(rp[i-1].d.rep))/100)*(s1-s0)).toFixed(1);d+='L'+X(a.t).toFixed(1)+' '+yy.toFixed(1);});
     d+='L'+x1+' '+(s1-(Math.min(100,num(rp[rp.length-1].d.rep))/100)*(s1-s0)).toFixed(1)+'L'+x1+' '+s1+'Z';step='<path class="stp" d="'+d+'"/>';}
-  const stripLab='<text class="ax" x="'+(x0-6)+'" y="'+(s0+8)+'" text-anchor="end">100%</text><text class="ax" x="'+(x0-6)+'" y="'+(s1)+'" text-anchor="end">0%</text><text class="ax" x="'+x0+'" y="'+(s0-8)+'">Megszámolva</text>';
+  const stripLab='<text class="ax" x="'+(x0-6)+'" y="'+(s0+8)+'" text-anchor="end">100%</text><text class="ax" x="'+(x0-6)+'" y="'+(s1)+'" text-anchor="end">0%</text><text class="ax" x="'+x0+'" y="'+(s0-8)+'">Feldolgozottság</text>';
   const hits=sn.map((a,i)=>{const cx=X(a.t),w=sn.length===1?60:Math.max(14,(x1-x0)/Math.max(1,sn.length-1));return '<rect class="hit" data-i="'+i+'" x="'+(cx-w/2).toFixed(1)+'" y="'+(y0-6)+'" width="'+w.toFixed(1)+'" height="'+(s1-y0+10)+'"><title>'+esc(loc(a.t)+(a.m?' · '+a.m:''))+'</title></rect>';}).join("");
   const cx=idx!=null?X(sn[idx].t):null;
   const cur=cx!=null?'<line class="cur" x1="'+cx.toFixed(1)+'" x2="'+cx.toFixed(1)+'" y1="'+(y0-6)+'" y2="'+s1+'"/>':'';
@@ -1357,7 +1357,7 @@ function raceHTML(c,st,label,names,held){
   let split='';
   if(d.dv!=null&&d.rv!=null){const o=Math.max(0,100-num(d.dv)-num(d.rv));split='<div class="qsplit" aria-hidden="true"><i class="d" style="width:'+num(d.dv)+'%"></i><i class="r" style="width:'+num(d.rv)+'%"></i><i class="o" style="width:'+o+'%"></i></div>';}
   const rep=num(d.rep)||(call?100:0);
-  let meter='<div class="qmeter"><div class="mt"><span>Megszámolva</span><b>'+(counting||call?pct(rep)+'%':'–')+'</b></div><div class="mb"><i style="width:'+Math.min(100,rep)+'%"></i></div>'+
+  let meter='<div class="qmeter"><div class="mt"><span>Feldolgozottság</span><b>'+(counting||call?pct(rep)+'%':'–')+'</b></div><div class="mb"><i style="width:'+Math.min(100,rep)+'%"></i></div>'+
     (!counting&&!call?'<span class="muted" style="font-size:12.5px">'+esc(closeText(st))+'. Az első számok az urnazárás után érkeznek.</span>':'')+
     (counting&&d.lead&&!call?'<span class="muted" style="font-size:12.5px">'+esc(partyName(d.lead))+' vezet'+(d.margin!=null?' '+pct(d.margin)+' ponttal':'')+'</span>':'')+'</div>';
   let chart='';
@@ -1366,7 +1366,7 @@ function raceHTML(c,st,label,names,held){
     const rows=sn.map((a,i)=>'<tr'+(i===cur?' class="sel"':'')+'><td>'+esc(loc(a.t))+'</td><td>'+(a.d.rep!=null?pct(a.d.rep)+'%':'–')+'</td><td>'+(a.d.dv!=null?pct(a.d.dv)+'%':'–')+'</td><td>'+(a.d.rv!=null?pct(a.d.rv)+'%':'–')+'</td></tr>').join("");
     chart='<div class="qhc'+(past?' past':'')+'" data-c="'+c+'" data-st="'+st+'"><div class="ch"><b>Hogyan alakult</b><div class="nav"><button type="button" data-a="prev" aria-label="Előző pillanat"'+(cur<=0?' disabled':'')+'>◀</button><button type="button" data-a="next" aria-label="Következő pillanat"'+(cur>=sn.length-1&&!past?' disabled':'')+'>▶</button><button type="button" class="lv" data-a="live">Élő</button></div></div>'+
       chartSVG(sn,idx,names.d,names.r)+
-      '<div class="lg"><span><i style="background:var(--dem)"></i>Demokrata</span><span><i style="background:var(--rep)"></i>Republikánus</span><span><i style="background:var(--teal)"></i>Megszámolva</span></div>'+
+      '<div class="lg"><span><i style="background:var(--dem)"></i>Demokrata</span><span><i style="background:var(--rep)"></i>Republikánus</span><span><i style="background:var(--teal)"></i>Feldolgozottság</span></div>'+
       '<div class="rd">'+(past?'<b>'+esc(loc(sn[idx].t))+'</b>':'<b>Élő állás</b> · '+esc(loc(sn[sn.length-1].t)))+(sn[cur].m?' · '+esc(sn[cur].m):'')+' · '+(cur+1)+'/'+sn.length+'. mentett pillanat. Kattints a grafikonra, hogy az akkori állást lásd.</div>'+
       '<details><summary>Táblázat</summary><table><thead><tr><th>Idő</th><th>Számolt</th><th>D</th><th>R</th></tr></thead><tbody>'+rows+'</tbody></table></details></div>';
   }else{
@@ -1414,7 +1414,7 @@ function tipHTML(st){
   if(era==="pre")return preTip(st);
   const sd=SENMAP[st];let s='<b>'+esc(NAMES[st])+'</b>';
   if(mode==="sen"){
-    if(sd){const c=senCall(st),dd=S.senate[st]||{};s+=c?partyName(c)+" győzelem":(RATE_HU[sd.rate]||"")+" · "+esc(sd.r.replace("*",""))+" ↔ "+esc((sd.d||sd.o).replace("*","").replace(" (független)",""));if(num(dd.rep)>0)s+=" · "+pct(dd.rep)+"% megszámolva";}
+    if(sd){const c=senCall(st),dd=S.senate[st]||{};s+=c?partyName(c)+" győzelem":(RATE_HU[sd.rate]||"")+" · "+esc(sd.r.replace("*",""))+" ↔ "+esc((sd.d||sd.o).replace("*","").replace(" (független)",""));if(num(dd.rep)>0)s+=" · "+pct(dd.rep)+"% feldolgozva";}
     else s+="Nincs szenátusi választás";
     s+=turnTip(st);
   }else if(mode==="gov"){
@@ -1514,7 +1514,7 @@ function ctyInfo(c){
       const nD=cd.D?esc(cd.D):"Demokrata",nR=cd.R?esc(cd.R):"Republikánus";
       const lead=Math.abs(mg)<0.05?"Döntetlen":(mg>0?"D":"R")+" +"+Math.abs(mg).toFixed(1).replace(".",",")+" pont";
       const f=x=>x.toFixed(1).replace(".",",")+"%";
-      return '<div style="opacity:.75;font-weight:600">Élő eredmény · '+(mode==="gov"?"kormányzó":"szenátus")+(d[3]?' · '+d[3]+'% megszámolva':'')+'</div>'+
+      return '<div style="opacity:.75;font-weight:600">Élő eredmény · '+(mode==="gov"?"kormányzó":"szenátus")+(d[3]?' · '+d[3]+'% feldolgozva':'')+'</div>'+
         '<div style="display:flex;height:9px;border-radius:5px;overflow:hidden;margin:6px 0 5px;min-width:190px"><i style="width:'+D+'%;background:var(--dem)"></i><i style="width:'+oth+'%;background:var(--line2)"></i><i style="width:'+R+'%;background:var(--rep)"></i></div>'+
         '<div style="display:flex;justify-content:space-between;gap:14px"><span><b style="color:var(--dem)">'+nD+'</b><br><b>'+f(D)+'</b></span><span style="text-align:right"><b style="color:var(--rep)">'+nR+'</b><br><b>'+f(R)+'</b></span></div>'+
         '<div style="margin-top:5px;font-weight:700">'+lead+'</div><div class="muted" style="margin-top:1px">'+fmtN(d[2])+' D+R szavazat</div>';
@@ -1910,7 +1910,7 @@ function showTipHTML(html,x,y){
 }
 function houseLeadTxt(d,sep){
   if(!d||!(d.lead==="D"||d.lead==="R"||d.lead==="I")||!(num(d.rep)>0))return "";
-  return sep+esc(d.name||partyName(d.lead))+" ("+d.lead+") vezet"+(d.margin!=null?" "+pct(d.margin)+" ponttal":"")+" · "+(num(d.rep)<1?"<1":pct(d.rep))+"% megszámolva";
+  return sep+esc(d.name||partyName(d.lead))+" ("+d.lead+") vezet"+(d.margin!=null?" "+pct(d.margin)+" ponttal":"")+" · "+(num(d.rep)<1?"<1":pct(d.rep))+"% feldolgozva";
 }
 function distTip(id){const m=id.split("-"),st=m[0],i=Number(m[1])-1,cur=HOLD[st][i],p=PHOLD[st][i];
   let t='<b>'+id+'</b>'+(era==="live"?"":(cur[0]==="V"?"Üres hely":esc(cur[1])+" ("+cur[0]+")"));
