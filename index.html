@@ -123,6 +123,12 @@ button{font:inherit;color:inherit}
 .chipst span{font-size:12px;font-weight:600;padding:1px 7px;border-radius:5px;background:var(--card2);border:1px solid var(--line2)}
 
 section{padding-block:34px 4px;scroll-margin-top:90px}
+.sec-fold .sec-h h2{cursor:pointer;display:flex;flex-direction:column;user-select:none}
+.sec-fold .sec-h h2 .fchev{display:inline-block;margin-left:10px;width:10px;height:10px;border-right:2.5px solid var(--gold);border-bottom:2.5px solid var(--gold);transform:rotate(45deg) translateY(-3px);transition:transform .2s;vertical-align:middle}
+.sec-fold.coll .sec-h h2 .fchev{transform:rotate(-45deg)}
+.sec-fold.coll>*:not(.sec-h){display:none!important}
+.sec-fold.coll .sec-h>*:not(h2){display:none!important}
+.sec-fold.coll .sec-h{margin-bottom:0}
 .sec-h{display:flex;align-items:flex-end;justify-content:space-between;gap:10px 16px;flex-wrap:wrap;margin-bottom:14px}
 .sec-h p{margin:0;color:var(--ink2);font-size:14px;max-width:62ch}
 .sec-h h2::after{content:"";display:block;width:44px;height:3px;background:var(--gold);margin-top:9px;border-radius:2px}
@@ -785,7 +791,7 @@ footer{padding-block:24px 48px}
       </div>
     </div>
     <ul class="races anim" id="races"></ul>
-    <p class="note">Minősítés: Cook Political Report, a november 2-i állapot. A jelölt neve melletti „hivatalban” a most is hivatalban lévő szenátort jelöli.</p>
+    <p class="note">A jelölt neve melletti „hivatalban” a most is hivatalban lévő szenátort jelöli.</p>
   </section>
 
   <section aria-labelledby="h-gov" class="sec-anim">
@@ -2237,5 +2243,11 @@ async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu=
   });
 })();
 })();
+
+(function(){["h-time","h-sen","h-gov","h-house","h-meas"].forEach(id=>{const h=document.getElementById(id);if(!h)return;const sec=h.closest("section");if(!sec)return;
+  sec.classList.add("sec-fold","coll");const ch=document.createElement("span");ch.className="fchev";ch.setAttribute("aria-hidden","true");h.appendChild(ch);
+  h.setAttribute("role","button");h.setAttribute("tabindex","0");h.setAttribute("aria-expanded","false");
+  const tg=()=>{const c=sec.classList.toggle("coll");h.setAttribute("aria-expanded",String(!c));};
+  h.addEventListener("click",tg);h.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();tg();}});});})();
 </script>
 </body></html>
