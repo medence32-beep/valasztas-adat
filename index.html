@@ -1602,7 +1602,7 @@ function ctyInfo(c){
       const f=x=>x.toFixed(1).replace(".",",")+"%";
       return '<div style="opacity:.75;font-weight:600">'+ctyRaceName(zoomSt)+'</div>'+
         '<div style="display:flex;height:6px;border-radius:4px;overflow:hidden;margin:4px 0 3px;min-width:130px"><i style="width:'+D+'%;background:var(--dem)"></i><i style="width:'+oth+'%;background:var(--line2)"></i><i style="width:'+R+'%;background:var(--rep)"></i></div>'+
-        '<div style="display:flex;justify-content:space-between;gap:14px"><span><b style="color:var(--dem)">'+nD+'</b><br><b>'+f(D)+'</b><br>≈ '+fmtN(Math.round(d[2]*D/100))+'</span><span style="text-align:right"><b style="color:var(--rep)">'+nR+'</b><br><b>'+f(R)+'</b><br>≈ '+fmtN(Math.round(d[2]*R/100))+'</span></div>'+
+        '<div style="display:flex;justify-content:space-between;gap:14px"><span><b style="color:var(--dem)">'+nD+'</b><br><b>'+f(D)+'</b><br>'+fmtN(Math.round(d[2]*D/100))+'</span><span style="text-align:right"><b style="color:var(--rep)">'+nR+'</b><br><b>'+f(R)+'</b><br>'+fmtN(Math.round(d[2]*R/100))+'</span></div>'+
         '<div style="margin-top:5px;font-weight:700">'+lead+'</div><div class="muted" style="margin-top:1px">'+fmtN(d[2])+' leadott szavazat</div>';
     }
     return '<span class="muted">Ehhez a megyéhez nincs '+(mode==="gov"?"kormányzói":"szenátusi")+' megyei adat</span>';
