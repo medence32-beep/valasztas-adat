@@ -507,7 +507,18 @@ footer{padding-block:24px 48px}
 }
 
 @supports (animation-timeline: view()){
-  .sec-anim{animation:secin linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
+  .votesgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:14px}
+.vcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px 18px;display:grid;gap:12px;min-width:0}
+.vcard h3{margin:0;font-family:var(--f-display);font-size:16px;letter-spacing:.02em}
+.vcard .vsub{margin:0;color:var(--ink3);font-size:13px}
+.vbar{display:flex;height:14px;border-radius:7px;overflow:hidden;gap:2px;background:var(--line)}
+.vbar i{display:block;height:100%;min-width:2px}
+.vrow{display:grid;grid-template-columns:12px 1fr auto;align-items:baseline;gap:4px 10px}
+.vrow .vdot{width:10px;height:10px;border-radius:50%;align-self:center}
+.vrow .vnm{font-weight:700}
+.vrow .vpc{font-variant-numeric:tabular-nums;color:var(--ink2)}
+.vrow .vnum{grid-column:2 / 4;font-variant-numeric:tabular-nums;font-size:22px;font-weight:800;line-height:1.1}
+.sec-anim{animation:secin linear both;animation-timeline:view();animation-range:entry 0% entry 35%}
   @keyframes secin{from{opacity:.35;transform:translateY(18px)}}
 }
 @media (prefers-reduced-motion:reduce){
@@ -671,6 +682,11 @@ footer{padding-block:24px 48px}
   <section aria-labelledby="h-score" class="sec-anim">
     <div class="sec-h"><h2 id="h-score">Állás a két házban</h2><p id="link-note"></p></div>
     <div class="boards" id="boards"></div>
+  </section>
+
+  <section aria-labelledby="h-votes" class="sec-anim">
+    <div class="sec-h"><h2 id="h-votes">Összes szavazat pártonként</h2><p>Az eddig megszámolt szavazatok összege, külön a szenátusi és a kormányzói versenyekben. A feldolgozottság államonként eltér.</p></div>
+    <div id="votes" class="votesgrid"></div>
   </section>
 
   <section aria-labelledby="h-trump" class="sec-anim">
@@ -2129,7 +2145,22 @@ document.getElementById("cb"+(sfx?"2":"")+"-s").textContent=txt(c,D);
 document.getElementById("cb"+(sfx?"2":"")+"-n").innerHTML="<i>"+c.d+"</i> – <u>"+c.r+"</u>";};
 one(C.senate,"",D=>D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust",(c,D)=>{const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;return "Az AP számolása szerint "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");});
 one(C.house,"2",D=>D?"A demokraták megnyerték a Képviselőházat":"A republikánusok megtartották a Képviselőházat",(c,D)=>"Az "+(c.src||"NBC News")+" szerint "+(D?"a demokraták":"a republikánusok")+" megszerezték a többséget. Az AP számolása szerint eddig "+c.d+" demokrata és "+c.r+" republikánus körzet dőlt el (218 kell); az AP hivatalosan még nem hívta ki."+(c.t?" Frissítve: "+c.t+".":""));}
-async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=(x.meta&&x.meta.status&&x.meta.status.updated)||"";if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;const d=best;window.__SRC=(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg");["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});try{renderCtrl();}catch(e){}if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();}catch(e){if(!ok){link="off";renderStatus();}}};await run();setInterval(run,60000);}
+function renderVotes(){
+  const el=document.getElementById("votes");if(!el)return;
+  const fm=n=>Math.round(n).toLocaleString("hu-HU").replace(/\u00a0/g," ");
+  const tr=(a,b)=>b>0?(Math.floor(a/b*10000)/100).toFixed(2).replace(".",","):"0,00";
+  const card=(title,src)=>{
+    let d=0,r=0,o=0,n=0;
+    Object.keys(src).forEach(k=>{const x=src[k]||{};const a=+x.dn||0,b=+x.rn||0,c=+x.on||0;if(a+b+c>0){d+=a;r+=b;o+=c;n++;}});
+    const t=d+r+o;if(!t)return "";
+    const rows=[["Demokraták","var(--dem)",d],["Republikánusok","var(--rep)",r],["Független és egyéb","var(--ind)",o]];
+    return '<div class="vcard"><h3>'+title+'</h3><p class="vsub">'+n+' verseny · összesen '+fm(t)+' szavazat</p>'+
+      '<div class="vbar" role="img" aria-label="'+title+' szavazatmegoszlás">'+rows.map(x=>'<i style="width:'+(x[2]/t*100)+'%;background:'+x[1]+'"></i>').join("")+'</div>'+
+      rows.map(x=>'<div class="vrow"><span class="vdot" style="background:'+x[1]+'"></span><span class="vnm">'+x[0]+'</span><span class="vpc">'+tr(x[2],t)+'%</span><span class="vnum">'+fm(x[2])+'</span></div>').join("")+'</div>';
+  };
+  el.innerHTML=card("Szenátus",S.senate||{})+card("Kormányzók",S.governor||{});
+}
+async function pollJSON(){let ok=false;const run=async()=>{try{let best=null,bu="",bs="";for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)continue;const x=await r.json();const s=(x.meta&&x.meta.status&&x.meta.status.updated)||"";if(!best||s>bs){best=x;bs=s;bu=u;}}catch(e){}}if(!best)throw 0;const d=best;window.__SRC=(bu.indexOf("http")===0?"GitHub":"helyi fájl")+", "+(bs||"nincs időbélyeg");["senate","governor","house","measures","feed","meta"].forEach(n=>{S[n]=d[n]||{};});try{renderCtrl();}catch(e){}try{renderVotes();}catch(e){}if(d.events)setEvents(d.events);if(!feedLoaded){Object.keys(S.feed).forEach(k=>seenIds.add(k));feedLoaded=true;}link="live";ok=true;schedule();}catch(e){if(!ok){link="off";renderStatus();}}};await run();setInterval(run,60000);}
   if(!db){pollJSON();return;}
   let got=false;const slow=setTimeout(()=>{if(!got){link="slow";renderStatus();}},10000);
   ["senate","governor","house","measures","feed","meta","events"].forEach(name=>{
