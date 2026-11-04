@@ -1921,7 +1921,7 @@ function setEra(e){
   if(era===e)return;era=e;
   if(era==="pre"){if(mode==="time"){mode="sen";setPlaying(false);}sub="now";}
   else{sub="now";}
-  {const sv=document.getElementById("sec-votes");if(sv)sv.hidden=(era==="pre");document.body.classList.toggle("pre-only",era==="pre");}
+  {const sv=document.getElementById("sec-votes");if(sv)sv.hidden=(era==="pre");document.body.classList.toggle("pre-only",era==="pre");updZT();}
   selD=null;prevCall={};$("legend").dataset.m="";syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();
 }
 function setSub(v){sub=v;$("legend").dataset.m="";syncUI();paintMap(false);renderDetail();bump();}
@@ -2125,8 +2125,9 @@ function tick(){
 }
 
 /* ---------- events ---------- */
+function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time"||mode==="house"||era==="pre");}
 function setMode(m){
-  mode=m;prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);{const zt=$("zoomtoggle");if(zt)zt.hidden=(m==="time");}
+  mode=m;prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
