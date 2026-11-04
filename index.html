@@ -667,8 +667,6 @@ footer{padding-block:24px 48px}
 
 <div class="wrap layout">
 <main class="main">
-  <div class="watch sec-anim" id="watch"></div>
-  <div class="card turncard sec-anim" id="turncard" style="margin-top:12px"></div>
 
   <section aria-labelledby="h-score" class="sec-anim">
     <div class="sec-h"><h2 id="h-score">Állás a két házban</h2><p id="link-note"></p></div>
@@ -1735,6 +1733,7 @@ function setNews(open){
   if(open){$("nlwrap").scrollTop=0;const c=$("news-close");if(c&&window.innerWidth<1220)c.focus();}
 }
 function renderWatch(){
+  if(!$("watch"))return;
   const tossups=SEN.filter(r=>r[5]==="Toss-up").map(r=>NAMES[r[0]]).join(", ");
   $("watch").innerHTML=
    '<div class="card"><span class="tg">Szenátus</span><h3>Négy hely a fordulathoz</h3><p>A republikánusok 53–47-re vezetnek, a demokratáknak nettó négy hely kell az 51-hez. A Cook szerint fej-fej mellett áll: '+esc(tossups)+'.</p></div>'+
@@ -1743,7 +1742,7 @@ function renderWatch(){
 }
 function renderFacts(){
   const f=[[35,"szenátusi hely"],[435,"házhely"],[36,"kormányzói szék"],[145,"állami szavazási kérdés"]];
-  $("facts").innerHTML=f.map((x,i)=>'<div class="fact"><b id="fact'+i+'" data-v="0">0</b><span>'+x[1]+'</span></div>').join("")+'<div class="fact"><b id="fact-turn">–</b><span id="fact-turn-l">leadott szavazat</span></div>';
+  $("facts").innerHTML=f.map((x,i)=>'<div class="fact"><b id="fact'+i+'" data-v="0">0</b><span>'+x[1]+'</span></div>').join("");
   f.forEach((x,i)=>countTo($("fact"+i),x[0],1100));
   updateTurnFact();
 }
