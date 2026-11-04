@@ -831,8 +831,7 @@ footer{padding-block:24px 48px}
     </div>
   </div>
   <div class="nlwrap" id="nlwrap"><ul class="nl" id="nl"></ul></div>
-  <p class="nft"><b id="nft-up"></b> Források: AP, CBS News, Fox News, Votebeat. Nyisd ki a címet az összefoglalóhoz, a link a forráshoz visz.</p>
-</aside>
+  </aside>
 </div>
 <button class="newsfab" id="fab" type="button" aria-controls="news" aria-expanded="false">Hírek <b id="fab-n">0</b></button>
 <div class="nback" id="nback"></div>
@@ -1811,7 +1810,6 @@ function renderFeed(){
       '<div class="nb"><div>'+(body?'<p>'+esc(body)+'</p>':'')+(u?'<a href="'+esc(u)+'" target="_blank" rel="noopener">Megnyitás'+(i.src?': '+esc(i.src):'')+' ↗</a>':'')+'</div></div></li>';
   }).join(""):'<li class="nempty">Ebben a szűrőben még nincs hír. Amint egy verseny valószínűleg eldől, itt jelenik meg.</li>';
   updateUnread();
-  $("nft-up").textContent="Hírek frissítve: "+((S.meta.status&&S.meta.status.updated)||FEED_ASOF)+".";
   const parts=all.slice(0,8).map(i=>'<span><b>'+esc(i.tag==='Hívás'?'Eldőlt':i.tag)+':</b> '+esc(i.title||i.text)+'</span>').join("");
   const tr=$("track");if(tr.dataset.sig!==parts){tr.dataset.sig=parts;tr.innerHTML=parts+parts;}
 }
