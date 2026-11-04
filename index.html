@@ -1135,7 +1135,7 @@ const reduce=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").m
 const $=id=>document.getElementById(id);
 function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function num(v){const n=Number(v);return isFinite(n)?n:0;}
-function pct(v){return (Math.round(num(v)*100)/100).toString().replace(".",",");}
+function pct(v){return (Math.round(num(v)*100)/100).toFixed(2).replace(".",",");}
 function utc(h){const hh=Math.floor(h),mm=Math.round((h-hh)*60);return Date.UTC(2026,10,3,hh+ET,mm);}
 const fT=new Intl.DateTimeFormat("hu-HU",{hour:"2-digit",minute:"2-digit"});
 const fD=new Intl.DateTimeFormat("hu-HU",{month:"short",day:"numeric"});
@@ -1440,9 +1440,11 @@ function raceHTML(c,st,label,names,held){
   let oth="";try{oth=OTHN[c==="senate"?"s":"g"][st]||"";}catch(e){}
   const oname=names.o||(d.ov!=null?(THIRD[st]||oth):"");
   const cand=[["d",names.d,d.dv,d.dn,winD],["r",names.r,d.rv,d.rn,winR]].concat(oname?[["i",oname,d.ov,d.on,winI]]:[]).filter(x=>x[1]);
+  const MORE=(d.more||live.more||[]).map(m=>["i",m[0],m[3],m[2],false,m[1]]);
+  MORE.forEach(m=>cand.push(m));
   const anyN=cand.some(x=>x[3]!=null&&x[3]!==""&&num(x[3])>0)||cand.some(x=>x[2]!=null&&x[2]!==""&&num(x[2])>0);
   if(anyN)cand.sort((a,b)=>(num(b[3])-num(a[3]))||(num(b[2])-num(a[2])));
-  let sides=cand.map((x,k)=>{let h=side(x[0],x[1],x[2],x[3],x[4]);return anyN?h.replace('<span class="qnm">','<span class="qnm"><b class="qrk">'+(k+1)+'.</b> '):h;}).join("");
+  let sides=cand.map((x,k)=>{let h=side(x[0],x[1],x[2],x[3],x[4]);if(x[5]==="lib")h=h.replace("<i>I</i>","<i>L</i>");return anyN?h.replace('<span class="qnm">','<span class="qnm"><b class="qrk">'+(k+1)+'.</b> '):h;}).join("");
   let split='';
   if(d.dv!=null&&d.rv!=null){const o=Math.max(0,100-num(d.dv)-num(d.rv));split='<div class="qsplit" aria-hidden="true"><i class="d" style="width:'+num(d.dv)+'%"></i><i class="r" style="width:'+num(d.rv)+'%"></i><i class="o" style="width:'+o+'%"></i></div>';}
   const rep=num(d.rep)||(call?100:0);
