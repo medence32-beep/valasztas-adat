@@ -2161,7 +2161,7 @@ function dcTip(id){
 }
 function houseDetail(st){
   const hl=HOLD[st],pl=PHOLD[st];
-  const only=(view==="geo"&&!zoomOn&&selD&&selD.indexOf(st+"-")===0)?selD:null;
+  const only=((view!=="geo"||!zoomOn)&&selD&&selD.indexOf(st+"-")===0)?selD:null;
   let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+(only?only+' · '+hl.length+' körzetből':hl.length+' körzet')+'</span></div></div>';
   if(era==="live")h+=turnLiveHTML(st);
   else{
