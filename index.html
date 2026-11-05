@@ -1901,7 +1901,7 @@ function renderFacts(){
 
 function updChip(){const c=$("upd-chip"),u=S.meta&&S.meta.status&&S.meta.status.updated;if(!c)return;
   const m=u&&/(\d{1,2}):(\d{2})/.exec(u);if(!m){c.hidden=true;return;}
-  let t=Date.UTC(2026,10,4,+m[1]-1,+m[2]);if(t>Date.now()+6e4)t-=864e5;
+  const dm=/nov\.\s*(\d{1,2})/.exec(u);let t=Date.UTC(2026,10,dm?+dm[1]:4,+m[1]-1,+m[2]);if(t>Date.now()+6e4)t-=864e5;
   const mins=Math.max(0,Math.floor((Date.now()-t)/6e4));
   $("upd-t").textContent=m[1].padStart(2,"0")+":"+m[2];
   $("upd-ago").textContent="· "+(mins<1?"most":mins<60?mins+" perce":Math.floor(mins/60)+" órája");
