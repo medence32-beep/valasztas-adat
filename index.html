@@ -1795,6 +1795,7 @@ syncZT();
 $("zoomtoggle").addEventListener("click",()=>{
   zoomOn=!zoomOn;try{localStorage.setItem("zoomOn",zoomOn?"1":"0");}catch(e){}
   syncZT();
+  if(mode==="house"){if(zoomOn)hmZoom(sel);else hmReset();renderDetail();return;}
   if(zoomOn){if(MAP[sel])zoomTo(sel);}else zoomReset();
 });
 $("zoomback").addEventListener("click",e=>{e.stopPropagation();zoomReset();});
@@ -2113,7 +2114,7 @@ function hmFit(bb,minW,k){
   return [bb[0]+bb[2]/2-w/2,bb[1]+bb[3]/2-h/2,w,h];
 }
 function hmZoom(st,instant,did){
-  if(mode!=="house"||view!=="geo")return;
+  if(mode!=="house"||view!=="geo"||!zoomOn)return;
   if(!HM){hmPend=st;hmLoad();return;}
   const bb=HM.bb[st];if(!bb)return;
   if(!did&&hmZst===st&&selD&&selD.indexOf(st+"-")===0)did=selD;
@@ -2152,14 +2153,15 @@ function dcTip(id){
 }
 function houseDetail(st){
   const hl=HOLD[st],pl=PHOLD[st];
-  let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+hl.length+' körzet</span></div></div>';
+  const only=(view==="geo"&&!zoomOn&&selD&&selD.indexOf(st+"-")===0)?selD:null;
+  let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+(only?only+' · '+hl.length+' körzetből':hl.length+' körzet')+'</span></div></div>';
   if(era==="live")h+=turnLiveHTML(st);
   else{
     const pc={D:0,R:0,I:0};pl.forEach(x=>{if(pc[x[0]]!=null)pc[x[0]]++;});
     h+='<section class="qrace"><div class="qrh"><span class="lbl">Legutóbbi választás · 2024</span></div><div class="rs"><div class="rs-r"><span class="d">Demokrata mandátum</span><b>'+pc.D+'</b></div><div class="rs-r"><span class="r">Republikánus mandátum</span><b>'+pc.R+'</b></div>'+(pc.I?'<div class="rs-r"><span class="i">Független mandátum</span><b>'+pc.I+'</b></div>':'')+turnHTML(2024,st)+'</div></section>';
   }
   h+='<section class="qrace"><div class="qrh"><span class="lbl">Képviselőház</span>'+(era==="pre"?'<span class="badge">Választás előtti állás</span>':'')+'</div><div class="dlist" style="max-height:none">'+
-   hl.map((x,i)=>{const id=st+"-"+(i+1),cur=x,c=callOf(S.house[id]);
+   hl.map((x,i)=>{const id=st+"-"+(i+1),cur=x,c=callOf(S.house[id]);if(only&&id!==only)return "";
     let right="";
     if(era==="live"){right=c?'<span class="dr-r"><span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span></span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
     const p=pl[i];
@@ -2308,7 +2310,7 @@ function tick(){
 }
 
 /* ---------- events ---------- */
-function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time"||mode==="house");}
+function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time"||(mode==="house"&&view!=="geo"));}
 function setMode(m){
   try{hmReset(true);}catch(e){}mode=m;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
@@ -2319,7 +2321,7 @@ function setMode(m){
 function setView(v){
   view=v;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo"){zoomReset(true);hmReset(true);}
   document.querySelectorAll("#seg-view button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
-  syncUI();hideTip();paintSel();
+  updZT();syncUI();hideTip();paintSel();if(mode==="house")renderDetail();
 }
 $("seg-mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(b){window._dforce=true;_dsig="";const pd=$("pdots");if(pd)pd.dataset.sig="";setMode(b.dataset.m);}});
 $("seg-view").addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(b)setView(b.dataset.v);});
