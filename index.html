@@ -2209,7 +2209,7 @@ function tick(){
 /* ---------- events ---------- */
 function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time"||mode==="house");}
 function setMode(m){
-  mode=m;tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
+  mode=m;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
@@ -2261,7 +2261,24 @@ setTimeout(()=>{if(!applyHash())hashOn=true;},700);
   async function idx(){if(CX)return CX;try{await loadCty();}catch(e){}if(!CTY)return null;const a=[];for(const st in CTY)CTY[st].forEach((c,i)=>{const n=ctyName(c);a.push({st,i,n,nf:fold(n),h:fold(n+" "+st+" "+(NAMES[st]||"")+" "+(EN[st]||""))});});CX=a;return a;}
   function close(){box.hidden=true;inp.setAttribute("aria-expanded","false");act=-1;}
   function paint(){box.querySelectorAll(".mi").forEach((e,i)=>e.setAttribute("aria-selected",String(i===act)));const a=box.querySelectorAll(".mi")[act];if(a&&a.scrollIntoView)a.scrollIntoView({block:"nearest"});}
+  function phSet(){const h=mode==="house";const t=h?"Körzet vagy képviselő keresése (pl. TX-12)":"Állam vagy megye keresése";inp.placeholder=t;inp.setAttribute("aria-label",t);if(inp.value)render();}
+  window.__msPh=phSet;
+  function distIdx(){const a=[];for(const st in HOLD)HOLD[st].forEach((x,i)=>{const id=st+"-"+(i+1),hd=S.house&&S.house[id],multi=HOLD[st].length>1,lab=multi?id:st+" (egyetlen körzet)";
+    const lead=hd&&hd.name?hd.name+(hd.lead?" ("+hd.lead+")":""):"";const inc=x[0]==="V"?"":x[1]+" ("+x[0]+")";
+    a.push({id,st,i,lab,lead,inc,h:fold(id+" "+st+(multi?"":" "+st+"-1")+" "+(NAMES[st]||"")+" "+(EN[st]||"")+" "+(hd&&hd.name||"")+" "+(x[0]==="V"?"":x[1]))});});return a;}
+  async function renderH(){
+    const q=fold(inp.value).trim(),tk=q.split(/[\s,]+/).filter(Boolean);
+    if(!tk.length){close();return;}
+    const nq=q.replace(/\s+/g,"-").toUpperCase();
+    const ds=distIdx().filter(x=>tk.every(t=>x.h.includes(t))).sort((a,b)=>(+(b.id===nq))-(+(a.id===nq))||(+b.id.toLowerCase().startsWith(tk[0]))-(+a.id.toLowerCase().startsWith(tk[0]))||(+b.h.startsWith(tk[0]))-(+a.h.startsWith(tk[0]))).slice(0,10);
+    items=ds.map(x=>({t:"d",st:x.st,id:x.id}));
+    let h="";
+    if(ds.length)h='<div class="mh">Körzetek</div>'+ds.map((x,k)=>'<div class="mi" role="option" data-k="'+k+'"><span>'+esc(x.lab)+(x.lead?' · '+esc(x.lead):x.inc?' · '+esc(x.inc):'')+'</span><small>'+esc(NAMES[x.st]||x.st)+'</small></div>').join("");
+    else h='<div class="mn">Nincs találat</div>';
+    box.innerHTML=h;box.hidden=false;inp.setAttribute("aria-expanded","true");act=items.length?0:-1;paint();
+  }
   async function render(){
+    if(mode==="house")return renderH();
     const q=fold(inp.value).trim(),tk=q.split(/[\s,]+/).filter(Boolean);
     if(!tk.length){close();return;}
     const st=SX.filter(x=>tk.every(t=>x.h.includes(t))).sort((a,b)=>(+b.nf.startsWith(tk[0]))-(+a.nf.startsWith(tk[0]))||(+(b.st.toLowerCase()===tk[0]))-(+(a.st.toLowerCase()===tk[0]))).slice(0,5);
@@ -2275,7 +2292,14 @@ setTimeout(()=>{if(!applyHash())hashOn=true;},700);
     box.innerHTML=h;box.hidden=false;inp.setAttribute("aria-expanded","true");act=items.length?0:-1;paint();
   }
   function go(it){
-    if(!it)return;const md=(mode==="gov"||mode==="house")?mode:"sen";
+    if(!it)return;
+    if(it.t==="d"){inp.value="";close();inp.blur();selD=it.id;select(it.st);paintHGrid();
+      try{history.replaceState(null,"","#"+it.st+"-house");}catch(e){}
+      const o=hrects.find(r=>r.id===it.id);
+      if(o&&o.el&&o.el.getBoundingClientRect){const r=$("stage").getBoundingClientRect(),b=o.el.getBoundingClientRect();showTipHTML(distTip(it.id),b.left-r.left+b.width/2,b.top-r.top,true);}
+      setTimeout(()=>{const e=document.querySelector("#detail .dr.on, .dr.on");if(e&&e.scrollIntoView)e.scrollIntoView({block:"nearest"});},50);
+      return;}
+    const md=(mode==="gov"||mode==="house")?mode:"sen";
     const c=it.t==="c"&&CTY&&CTY[it.st]&&CTY[it.st][it.i];const f=c&&md!=="house"?c[3]:null;
     try{history.replaceState(null,"","#"+it.st+"-"+(f?(md==="house"?"sen":md):md)+(f?"-"+f:""));}catch(e){}
     inp.value="";close();inp.blur();applyHash();
