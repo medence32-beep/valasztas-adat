@@ -512,6 +512,16 @@ footer{padding-block:24px 48px}
 .pdot.c-d{fill:var(--dem)}.pdot.c-r{fill:var(--rep)}.pdot.c-i{fill:var(--ind)}
 .dlist{display:grid;gap:4px;max-height:260px;overflow:auto;scrollbar-width:thin;padding-right:4px}
 .dlist .dr{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:8px;padding:4px 8px;border-radius:8px;font-size:13.5px}
+.dcs{grid-column:1/-1;display:grid;gap:5px;margin:3px 0 5px;padding:7px 9px;border-radius:9px;background:color-mix(in srgb,var(--off) 70%,transparent)}
+.dcs .dc{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:13.5px}
+.dcs .dc .cand{font-size:13.5px;min-width:0}
+.dcs .dc.w .cand span{font-weight:700}
+.dcs .dc .dv{white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.dcs .dc .dv b{font-weight:700}
+.dcs .dc .dv small{color:var(--ink2);margin-left:8px;font-size:12.5px}
+.dcs .dpi{font-size:12px;color:var(--ink2);margin-top:1px}
+.dcs .cand i{width:20px;height:20px;font-size:10px}
+.dcs .cand i.d,.dcs .cand i.r{font-size:0}
 .dlist .dr.on{background:color-mix(in srgb,var(--gold) 16%,transparent);outline:1px solid var(--gold)}
 .dlist .dr b{font:800 15px var(--f-display);letter-spacing:.04em}
 .dlist .dr .dr-r{display:flex;align-items:center;gap:8px;white-space:nowrap;justify-self:end}
@@ -2120,6 +2130,26 @@ function hmReset(instant){
 }
 $("hmback").addEventListener("click",()=>{tipPin=false;hideTip(true);if(hmLvl===2&&hmZst){hmLvl=1;hmBackLbl();hmAnim(hmFit(HM.bb[hmZst],1300,1.18));}else hmReset();});
 $("hmap").addEventListener("pointerover",e=>{const p=e.target;if(p&&p.tagName==="path"&&p.dataset&&p.dataset.st&&p.parentNode.lastChild!==p)p.parentNode.appendChild(p);});
+const DPN={dem:"Demokrata",gop:"Republikánus",lib:"Libertárius",ind:"Független",other:"Egyéb"},DLET={lib:"L",ind:"F",other:"E"};
+function dcRows(d){
+  const c=d&&d.c;if(!c||!c.length)return null;
+  const tot=c.reduce((s,x)=>s+num(x[2]),0);
+  return {tot:tot,rows:c.map(x=>({n:x[0],p:x[1],v:num(x[2]),inc:!!x[3],pc:tot>0?num(x[2])/tot*100:0,cls:x[1]==="dem"?"d":x[1]==="gop"?"r":"i"}))};
+}
+function dcHTML(id){
+  const d=S.house&&S.house[id],r=dcRows(d);if(!r)return "";
+  const call=callOf(d);
+  let h='<div class="dcs">'+r.rows.map((x,k)=>{
+    const win=k===0&&call&&((x.p==="dem"&&call==="D")||(x.p==="gop"&&call==="R")||(x.cls==="i"&&call==="I"));
+    return '<div class="dc'+(win?' w':'')+'"><div class="cand"><i class="'+x.cls+'" title="'+esc(DPN[x.p]||x.p)+'" aria-label="'+esc(DPN[x.p]||x.p)+'">'+(DLET[x.p]||x.cls.toUpperCase())+'</i><span>'+(win?'✓ ':'')+esc(x.n)+(x.inc?' <em>hivatalban</em>':'')+'</span></div><span class="dv"><b>'+pct(x.pc)+'%</b><small>'+fmtN(x.v)+'</small></span></div>';}).join("");
+  h+='<div class="dpi">'+(d.pi!=null?'Feldolgozva: '+pct(d.pi)+'%':'')+(d.pi!=null&&r.tot>0?' · ':'')+(r.tot>0?'Összes szavazat: '+fmtN(r.tot):'')+'</div></div>';
+  return h;
+}
+function dcTip(id){
+  const d=S.house&&S.house[id],r=dcRows(d);if(!r)return "";
+  const call=callOf(d);
+  return '<br>'+(call?'✓ Eldőlt (AP): '+partyName(call)+' győzelem':'Még nincs kihirdetve')+r.rows.slice(0,6).map(x=>'<br>'+esc(x.n)+' ('+(x.p==="dem"?"D":x.p==="gop"?"R":(DLET[x.p]||"I"))+') · <span style="font-weight:700">'+pct(x.pc)+'%</span> · '+fmtN(x.v)).join("")+(r.rows.length>6?'<br><span class="muted">+'+(r.rows.length-6)+' további jelölt</span>':'')+(d.pi!=null?'<br><span class="muted">Feldolgozva: '+pct(d.pi)+'%</span>':'');
+}
 function houseDetail(st){
   const hl=HOLD[st],pl=PHOLD[st];
   let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+hl.length+' körzet</span></div></div>';
@@ -2133,7 +2163,7 @@ function houseDetail(st){
     let right="";
     if(era==="live"){right=c?'<span class="dr-r"><span class="qdone">✓</span><span class="badge '+c.toLowerCase()+'">'+partyName(c)+(cur[0]!=="V"&&c!==cur[0]?" · átfordult":"")+'</span></span>':(HNOTE[id]?'<span class="badge" style="border-color:var(--gold);color:var(--gold)">'+HNOTE[id].split(",")[0]+'</span>':'<span class="muted" style="font-size:14px">–</span>');}
     const p=pl[i];
-    return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':(houseLeadTxt(S.house[id],"")||'Még nincs eredmény'))+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+'</div>';}).join("")+'</div></section>';
+    return '<div class="dr'+(id===selD?' on':'')+'"><b>'+(hl.length>1?id:st)+'</b><span>'+(era==="live"?'<span class="muted">'+(c?'Eldőlt':(houseLeadTxt(S.house[id],"")||'Még nincs eredmény'))+'</span>':(cur[0]==="V"?'<span class="muted">üres hely</span>':crow(cur[0],cur[1])))+(era==="pre"?'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span>':'')+'</span>'+right+(era==="live"?dcHTML(id):"")+'</div>';}).join("")+'</div></section>';
   return h;
 }
 function showTipHTML(html,x,y,force){
@@ -2148,7 +2178,7 @@ function houseLeadTxt(d,sep){
 function distTip(id){const m=id.split("-"),st=m[0],i=Number(m[1])-1,cur=HOLD[st][i],p=PHOLD[st][i];
   let t='<b>'+id+'</b>'+(era==="live"?"":(cur[0]==="V"?"Üres hely":esc(cur[1])+" ("+cur[0]+")"));
   if(era==="pre")t+='<br>2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem';
-  if(era==="live"){const c=callOf(S.house[id]);t+=c?"<br>✓ Eldőlt: "+partyName(c)+" győzelem":houseLeadTxt(S.house[id],"<br>");if(HNOTE[id])t+="<br>"+HNOTE[id];}
+  if(era==="live"){const hd=S.house[id],c=callOf(hd);if(hd&&hd.c&&hd.c.length)t+=dcTip(id);else t+=c?"<br>✓ Eldőlt: "+partyName(c)+" győzelem":houseLeadTxt(hd,"<br>");if(HNOTE[id])t+="<br>"+HNOTE[id];}
   return t;}
 function preTip(st){
   const nm='<b>'+esc(NAMES[st])+'</b>';
