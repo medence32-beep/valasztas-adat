@@ -2310,7 +2310,7 @@ function tick(){
 }
 
 /* ---------- events ---------- */
-function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time");zt.style.visibility=(mode==="house"&&view!=="geo")?"hidden":"";}
+function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time");zt.style.visibility=(view!=="geo")?"hidden":"";}
 function setMode(m){
   try{hmReset(true);}catch(e){}mode=m;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
