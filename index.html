@@ -475,6 +475,22 @@ footer{padding-block:24px 48px}
 .sm-grid rect.sel{stroke:var(--gold);stroke-width:.14;paint-order:stroke}
 .sm-grid rect:hover{stroke:var(--ink2);stroke-width:.12}
 .sm-grid text{font:700 1.15px var(--f-body);fill:var(--ink2);pointer-events:none}
+.hmwrap{position:relative}
+#hmap{display:block;width:100%;height:auto}
+#hmap path{fill:var(--off);stroke:var(--card);stroke-width:.5px;vector-effect:non-scaling-stroke;stroke-linejoin:round;transition:fill .4s,opacity .35s;cursor:pointer}
+#hmap path.k-d{fill:var(--dem)}#hmap path.k-r{fill:var(--rep)}#hmap path.k-i{fill:var(--ind)}#hmap path.k-v{fill:var(--pend)}
+#hmap path.l-d{fill:color-mix(in srgb,var(--dem) 58%,var(--pend))}#hmap path.l-r{fill:color-mix(in srgb,var(--rep) 58%,var(--pend))}#hmap path.l-i{fill:color-mix(in srgb,var(--ind) 58%,var(--pend))}
+#hmap path.u-d{fill:color-mix(in srgb,var(--dem) 48%,var(--off))}#hmap path.u-r{fill:color-mix(in srgb,var(--rep) 48%,var(--off))}#hmap path.u-i{fill:color-mix(in srgb,var(--ind) 48%,var(--off))}
+#hmap path.hot{stroke:var(--gold);stroke-width:1.4px}
+#hmap path.flip{stroke:var(--gold);stroke-width:1.6px}
+#hmap path.sel{stroke:var(--ink);stroke-width:2px}
+#hmap path:hover{stroke:var(--ink);stroke-width:1.6px}
+#hmap #hmb{stroke:var(--ink2);stroke-opacity:.6;stroke-width:1.2px;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round;fill:none;pointer-events:none;cursor:default}
+#hmap.zm path:not([data-zs]){opacity:.28}
+#hmap.zm #hmb{opacity:.5}
+#hmback{position:absolute;left:8px;top:8px;z-index:3;padding:7px 12px;border-radius:999px;border:1px solid var(--line2);background:var(--card);color:var(--ink);font:600 13px var(--f-body);cursor:pointer;box-shadow:var(--shadow)}
+#hmback:hover{border-color:var(--ink2)}
+.hmload{position:absolute;inset:0;display:grid;place-items:center;color:var(--ink2);font-size:14px;pointer-events:none}
 .sm-info{margin-top:10px;font-size:14px;color:var(--ink2);min-height:22px}
 .sm-info b{color:var(--ink)}
 .sm-info .who{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:4px}
@@ -782,6 +798,7 @@ footer{padding-block:24px 48px}
             <g id="states"></g><g id="counties"></g><g id="labels"></g><g id="tlabels"></g><g id="decided"></g><g id="pdots"></g><g id="rings"></g><g id="flashes"></g><g id="pings"></g><g id="selring"></g>
           </svg>
           <div class="sm-gridwrap" id="hgwrap" style="display:none"><svg id="hgrid" class="sm-grid hg" role="group" aria-label="A Képviselőház körzetei"></svg></div>
+          <div class="hmwrap" id="hmwrap" style="display:none"><svg id="hmap" viewBox="1300 700 7400 4700" role="group" aria-label="A Képviselőház körzeteinek térképe"><g id="hmd"></g><path id="hmb" fill="none"></path></svg><button type="button" id="hmback" hidden>← Teljes térkép</button><div class="hmload" id="hmload">Körzethatárok betöltése…</div></div>
           <div class="tiles" id="tiles" hidden role="group" aria-label="Államok csempetérképe"></div>
           <button type="button" id="zoomback" hidden>← Teljes térkép</button><div id="zrow"><button type="button" id="zoombackstate" hidden>← Vissza az államra</button><button type="button" id="sharecty" class="shbtn" data-share="cty" hidden title="A megye linkjének másolása"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.7-1.7"/></svg><span>Megye linkje</span></button></div><div id="ctylabel" hidden></div><div class="tip" id="tip" role="tooltip"></div>
         </div>
@@ -1533,7 +1550,7 @@ function showTip(st,x,y){
 }
 function hideTip(f){if(tipPin&&!f)return;$("tip").classList.remove("on");}
 function select(st){
-  if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);updHash();
+  if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);if(mode==="house")hmZoom(st);updHash();
 }
 const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,CR=null,ctyP=null,zoomC=null,ctyEra="";
 try{zoomOn=localStorage.getItem("zoomOn")==="1";}catch(e){}
@@ -1943,7 +1960,7 @@ const PHOLD={"AK":[["R","Nicholas Begich"]],"ME":[["D","Chellie Pingree"],["D","
 const SENPREV={"AL":["Tommy Tuberville","R","2020"],"AK":["Dan Sullivan","R","2020"],"AR":["Tom Cotton","R","2020"],"CO":["John Hickenlooper","D","2020"],"DE":["Chris Coons","D","2020"],"FL":["Marco Rubio","R","2022"],"GA":["Jon Ossoff","D","2021 (második forduló)"],"ID":["Jim Risch","R","2020"],"IL":["Dick Durbin","D","2020"],"IA":["Joni Ernst","R","2020"],"KS":["Roger Marshall","R","2020"],"KY":["Mitch McConnell","R","2020"],"LA":["Bill Cassidy","R","2020"],"ME":["Susan Collins","R","2020"],"MA":["Ed Markey","D","2020"],"MI":["Gary Peters","D","2020"],"MN":["Tina Smith","D","2020"],"MS":["Cindy Hyde-Smith","R","2020"],"MT":["Steve Daines","R","2020"],"NE":["Pete Ricketts","R","2024 (időközi)"],"NH":["Jeanne Shaheen","D","2020"],"NJ":["Cory Booker","D","2020"],"NM":["Ben Ray Luján","D","2020"],"NC":["Thom Tillis","R","2020"],"OH":["JD Vance","R","2022"],"OK":["Markwayne Mullin","R","2022 (időközi)"],"OR":["Jeff Merkley","D","2020"],"RI":["Jack Reed","D","2020"],"SC":["Lindsey Graham","R","2020"],"SD":["Mike Rounds","R","2020"],"TN":["Bill Hagerty","R","2020"],"TX":["John Cornyn","R","2020"],"VA":["Mark Warner","D","2020"],"WV":["Shelley Moore Capito","R","2020"],"WY":["Cynthia Lummis","R","2020"]};
 const GOVD={"AL":["Kay Ivey","R",2022],"AK":["Mike Dunleavy","R",2022],"AZ":["Katie Hobbs","D",2022],"AR":["Sarah Huckabee Sanders","R",2022],"CA":["Gavin Newsom","D",2022],"CO":["Jared Polis","D",2022],"CT":["Ned Lamont","D",2022],"DE":["Matt Meyer","D",2024],"FL":["Ron DeSantis","R",2022],"GA":["Brian Kemp","R",2022],"HI":["Josh Green","D",2022],"ID":["Brad Little","R",2022],"IL":["JB Pritzker","D",2022],"IN":["Mike Braun","R",2024],"IA":["Kim Reynolds","R",2022],"KS":["Laura Kelly","D",2022],"KY":["Andy Beshear","D",2023],"LA":["Jeff Landry","R",2023],"ME":["Janet Mills","D",2022],"MD":["Wes Moore","D",2022],"MA":["Maura Healey","D",2022],"MI":["Gretchen Whitmer","D",2022],"MN":["Tim Walz","D",2022],"MS":["Tate Reeves","R",2023],"MO":["Mike Kehoe","R",2024],"MT":["Greg Gianforte","R",2024],"NE":["Jim Pillen","R",2022],"NV":["Joe Lombardo","R",2022],"NH":["Kelly Ayotte","R",2024],"NJ":["Mikie Sherrill","D",2025],"NM":["Michelle Lujan Grisham","D",2022],"NY":["Kathy Hochul","D",2022],"NC":["Josh Stein","D",2024],"ND":["Kelly Armstrong","R",2024],"OH":["Mike DeWine","R",2022],"OK":["Kevin Stitt","R",2022],"OR":["Tina Kotek","D",2022],"PA":["Josh Shapiro","D",2022],"RI":["Dan McKee","D",2022],"SC":["Henry McMaster","R",2022],"SD":["Larry Rhoden","R",2022,"Kristi Noem"],"TN":["Bill Lee","R",2022],"TX":["Greg Abbott","R",2022],"UT":["Spencer Cox","R",2024],"VT":["Phil Scott","R",2024],"VA":["Abigail Spanberger","D",2025],"WA":["Bob Ferguson","D",2024],"WV":["Patrick Morrisey","R",2024],"WI":["Tony Evers","D",2022],"WY":["Mark Gordon","R",2022]};
 const PCLS={D:"d",R:"r",I:"i",V:"v"};
-let era="live", sub="now", selD=null, hrects=[];
+let era="live", sub="now", selD=null, hrects=[], hpaths=[];
 function pdn(p){return p==="D"?"demokrata":p==="R"?"republikánus":p==="I"?"független":"üres";}
 function sumHTML2(items){return items.map(x=>'<span class="sd"><i style="background:'+x[0]+'"></i><b>'+x[1]+'</b>'+x[2]+'</span>').join("");}
 /* district grid inside the main map */
@@ -1956,7 +1973,7 @@ function sumHTML2(items){return items.map(x=>'<span class="sd"><i style="backgro
 })();
 function paintHGrid(){
   if(mode!=="house")return;
-  hrects.forEach(o=>{
+  hrects.concat(hpaths).forEach(o=>{
     const cur=HOLD[o.st][o.i][0];let cls;
     if(era==="pre"){const v=sub==="prev"?PHOLD[o.st][o.i][0]:cur;cls="k-"+PCLS[v];}
     else{const c=callOf(S.house[o.id]);const hd=S.house[o.id];const ld=(!c&&hd&&(hd.lead==="D"||hd.lead==="R"||hd.lead==="I")&&num(hd.rep)>=1)?hd.lead.toLowerCase():null;cls=c?"k-"+c.toLowerCase()+(c!==cur?" flip":""):(ld?"l-"+ld:"k-v");if(HOT.has(o.id))cls+=" hot";}
@@ -1987,16 +2004,17 @@ function renderMapSum(){
   }
   box.innerHTML=html;
 }
-function bump(){bump.k=(bump.k||0)^1;["geo","tiles","hgrid"].forEach(id=>{const e=$(id);if(!e)return;e.classList.toggle("swb",bump.k===1);e.classList.toggle("swa",bump.k===0);});}
+function bump(){bump.k=(bump.k||0)^1;["geo","tiles","hgrid","hmap"].forEach(id=>{const e=$(id);if(!e)return;e.classList.toggle("swb",bump.k===1);e.classList.toggle("swa",bump.k===0);});}
 function syncUI(){
   document.querySelectorAll("#seg-mode button").forEach(b=>{b.setAttribute("aria-pressed",String(b.dataset.m===mode));if(b.dataset.m==="time")b.hidden=era==="pre";});
   $("prebtn").setAttribute("aria-pressed",String(era==="pre"));
   $("scrub").hidden=mode!=="time";
   const house=mode==="house";
-  $("seg-view").style.visibility=(house||mode==="time")?"hidden":"visible";
+  $("seg-view").style.visibility=(mode==="time")?"hidden":"visible";
   $("geo").style.display=(!house&&view==="geo")?"":"none";
   $("tiles").hidden=house||view!=="tiles";
-  $("hgwrap").style.display=house?"":"none";
+  $("hgwrap").style.display=(house&&view==="tiles")?"":"none";
+  $("hmwrap").style.display=(house&&view==="geo")?"":"none";if(house&&view==="geo")hmLoad();
   $("h-map").firstChild.nodeValue=era==="pre"?"Választás előtti állás":"Térkép";
 }
 function setEra(e){
@@ -2049,6 +2067,59 @@ function preDetail(st){
       return '<div class="dr"><b>'+(hl.length>1?id:st+" (egész állam)")+'</b><span>'+(x[0]==="V"?'<span class="muted">üres hely</span>':crow(x[0],x[1]))+'<span class="dsub">2024-es eredmény: '+partyName(p[0]).toLowerCase()+' győzelem</span></span></div>';}).join("")+'</div></section>';
   return h;
 }
+/* House district map (AP 2026 district boundaries, Albers USA, 0.1 px units) */
+let HM=null,hmP=null,hmPend=null,hmZst=null,hmRaf=0,hmLvl=0;
+const HM_VB=[1300,700,7400,4700];
+function hmLoad(){
+  if(hmP)return hmP;
+  hmP=getJ("districts.json?v=1").then(o=>{
+    if(!o||!o.d){hmP=null;const l=$("hmload");if(l)l.textContent="A körzethatárok nem tölthetők be. Használd a csempenézetet.";return null;}
+    HM=o;const g=$("hmd");g.innerHTML="";hpaths=[];
+    Object.keys(o.d).forEach(id=>{const m=id.split("-"),st=m[0],i=Number(m[1])-1;
+      const p=mk("path",{d:o.d[id],"data-st":st,"data-i":i},g);p.setAttribute("tabindex","-1");
+      hpaths.push({el:p,st:st,i:i,id:id});});
+    $("hmb").setAttribute("d",o.b);const l=$("hmload");if(l)l.hidden=true;
+    paintHGrid();
+    if(hmPend){const s=hmPend;hmPend=null;hmZoom(s,true);}
+    return o;});
+  return hmP;
+}
+function hmSetVB(v){$("hmap").setAttribute("viewBox",v.map(n=>n.toFixed(1)).join(" "));}
+function hmAnim(to,instant){
+  const svg=$("hmap");cancelAnimationFrame(hmRaf);
+  const b=svg.viewBox.baseVal,f=[b.x,b.y,b.width,b.height];
+  if(instant||matchMedia("(prefers-reduced-motion: reduce)").matches){hmSetVB(to);return;}
+  const t0=performance.now(),D=600;
+  const step=now=>{const k=Math.min(1,(now-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;hmSetVB(f.map((a,i)=>a+(to[i]-a)*e));if(k<1)hmRaf=requestAnimationFrame(step);};
+  hmRaf=requestAnimationFrame(step);
+}
+function hmMark(st){
+  hpaths.forEach(o=>{if(st&&o.st===st)o.el.setAttribute("data-zs","1");else o.el.removeAttribute("data-zs");});
+  $("hmap").classList.toggle("zm",!!st);$("hmback").hidden=!st;
+}
+function hmFit(bb,minW,k){
+  const R=HM_VB[2]/HM_VB[3];let w=Math.max(bb[2]*k,minW),h=Math.max(bb[3]*k,w/R);
+  if(w/h<R)w=h*R;else h=w/R;
+  return [bb[0]+bb[2]/2-w/2,bb[1]+bb[3]/2-h/2,w,h];
+}
+function hmZoom(st,instant,did){
+  if(mode!=="house"||view!=="geo")return;
+  if(!HM){hmPend=st;hmLoad();return;}
+  const bb=HM.bb[st];if(!bb)return;
+  if(!did&&hmZst===st&&selD&&selD.indexOf(st+"-")===0)did=selD;
+  let to=hmFit(bb,1300,1.18);hmLvl=1;
+  if(did){const o=hpaths.find(r=>r.id===did);
+    if(o){const b=o.el.getBBox();if(b.width>0){const f=hmFit([b.x,b.y,b.width,b.height],420,2.6);
+      if(f[2]<to[2]*0.75){to=f;hmLvl=2;}}}}
+  hmZst=st;hmMark(st);hmBackLbl();hmAnim(to,instant);
+}
+function hmBackLbl(){const b=$("hmback");b.textContent=hmLvl===2?"← Vissza az államra":"← Teljes térkép";}
+function hmReset(instant){
+  hmPend=null;if(!hmZst&&!$("hmap").classList.contains("zm"))return;
+  hmZst=null;hmLvl=0;hmMark(null);hmBackLbl();hmAnim(HM_VB,instant);
+}
+$("hmback").addEventListener("click",()=>{tipPin=false;hideTip(true);if(hmLvl===2&&hmZst){hmLvl=1;hmBackLbl();hmAnim(hmFit(HM.bb[hmZst],1300,1.18));}else hmReset();});
+$("hmap").addEventListener("pointerover",e=>{const p=e.target;if(p&&p.tagName==="path"&&p.dataset&&p.dataset.st&&p.parentNode.lastChild!==p)p.parentNode.appendChild(p);});
 function houseDetail(st){
   const hl=HOLD[st],pl=PHOLD[st];
   let h='<div class="qdh"><span class="lbl">'+esc(st)+'</span><h3>'+esc(NAMES[st]||st)+'</h3><div class="meta"><span>'+hl.length+' körzet</span></div></div>';
@@ -2209,14 +2280,14 @@ function tick(){
 /* ---------- events ---------- */
 function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time"||mode==="house");}
 function setMode(m){
-  mode=m;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
+  try{hmReset(true);}catch(e){}mode=m;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
   syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();updHash();
 }
 function setView(v){
-  view=v;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo")zoomReset(true);
+  view=v;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo"){zoomReset(true);hmReset(true);}
   document.querySelectorAll("#seg-view button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
   syncUI();hideTip();paintSel();
 }
@@ -2293,10 +2364,11 @@ setTimeout(()=>{if(!applyHash())hashOn=true;},700);
   }
   function go(it){
     if(!it)return;
-    if(it.t==="d"){inp.value="";close();inp.blur();selD=it.id;select(it.st);paintHGrid();
+    if(it.t==="d"){inp.value="";close();inp.blur();selD=it.id;select(it.st);hmZoom(it.st,false,it.id);paintHGrid();
       try{history.replaceState(null,"","#"+it.st+"-house");}catch(e){}
-      const o=hrects.find(r=>r.id===it.id);
-      if(o&&o.el&&o.el.getBoundingClientRect){const r=$("stage").getBoundingClientRect(),b=o.el.getBoundingClientRect();showTipHTML(distTip(it.id),b.left-r.left+b.width/2,b.top-r.top,true);}
+      const geoV=view==="geo"&&hpaths.length;
+      setTimeout(()=>{const o=(geoV?hpaths:hrects).find(r=>r.id===it.id);
+        if(o&&o.el&&o.el.getBoundingClientRect){const r=$("stage").getBoundingClientRect(),b=o.el.getBoundingClientRect();showTipHTML(distTip(it.id),b.left-r.left+b.width/2,b.top-r.top,true);}},geoV?700:0);
       setTimeout(()=>{const e=document.querySelector("#detail .dr.on, .dr.on");if(e&&e.scrollIntoView)e.scrollIntoView({block:"nearest"});},50);
       return;}
     const md=(mode==="gov"||mode==="house")?mode:"sen";
