@@ -373,6 +373,7 @@ footer{padding-block:24px 48px}
 .detail.anim>*{animation:fadeup .45s ease both}
 #zrow{position:absolute;left:10px;top:50px;z-index:3;display:flex;flex-wrap:wrap;gap:8px;max-width:calc(100% - 20px)}#zrow>button{position:static}#zrow>button[hidden]{display:none}
 .shbtn{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);color:var(--ink2);border-radius:9px;padding:6px 11px 6px 9px;font:600 12.5px/1 var(--f-body);letter-spacing:.01em;cursor:pointer;box-shadow:var(--shadow);transition:color .15s,border-color .15s,background .15s}.shbtn svg{flex:none;opacity:.85}.shbtn:hover,.shbtn:focus-visible{color:var(--ink);border-color:var(--ink2);outline:none}.shbtn:active{background:var(--card2)}
+.ctysel{border-bottom:1px solid var(--line2)}.ctysel .qrh{display:flex;justify-content:space-between;align-items:center}.ctyx{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:50%;width:26px;height:26px;font-size:16px;line-height:1;cursor:pointer}.ctyx:hover{border-color:var(--gold)}
 .qdh{position:relative}.qdh .shbtn{position:absolute;top:16px;right:16px;box-shadow:none;background:transparent}
 #toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);max-width:min(92vw,520px);background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:12px;padding:10px 16px;font:600 13.5px/1.35 var(--f-body);box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:99;overflow-wrap:anywhere;text-align:center}#toast.on{opacity:1;transform:translate(-50%,0)}
 .qdh{padding:18px 18px 14px;background:linear-gradient(160deg,color-mix(in srgb,var(--dem) 14%,transparent),transparent 55%,color-mix(in srgb,var(--rep) 14%,transparent));border-bottom:1px solid var(--line)}
@@ -1511,7 +1512,14 @@ function orderDetail(box){
     else if(mode==="sen"&&(t==="Kormányzó"||t==="Képviselőház"))s.remove();
   });
 }
-function renderDetail(){renderDetail0();const q=document.querySelector("#detail .qdh");if(q&&!q.querySelector(".shbtn")){const b=document.createElement("button");b.type="button";b.className="shbtn";b.dataset.share="st";b.title="Az állam linkjének másolása";b.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.7-1.7"/></svg><span>Állam linkje</span>';q.appendChild(b);}}
+function ctyCardHTML(){
+  if(!selCty||view!=="tiles"||mode==="house"||mode==="time"||selCty.st!==sel||!CTY||!CTY[selCty.st])return "";
+  const c=CTY[selCty.st][selCty.i];if(!c)return "";
+  const zs=zoomSt;zoomSt=selCty.st;let info="";try{info=ctyInfo(c);}catch(e){info='<span class="muted">Megyei eredmény: nincs adat</span>';}zoomSt=zs;
+  return '<section class="qrace ctysel"><div class="qrh"><span class="lbl">Megye · '+(mode==="gov"?"Kormányzó":"Szenátus")+'</span><button type="button" class="ctyx" aria-label="Megye bezárása" title="Vissza az állam eredményéhez">×</button></div>'+
+   '<div style="font:700 20px var(--f-head,inherit);line-height:1.15">'+esc(ctyName(c))+'</div><div class="muted" style="margin:2px 0 8px">'+esc(NAMES[selCty.st]||selCty.st)+'</div><div class="ctyinfo">'+info+'</div></section>';
+}
+function renderDetail(){renderDetail0();try{const h=ctyCardHTML();if(h){const q=document.querySelector("#detail .qdh");if(q)q.insertAdjacentHTML("afterend",h);}}catch(e){}const q=document.querySelector("#detail .qdh");if(q&&!q.querySelector(".shbtn")){const b=document.createElement("button");b.type="button";b.className="shbtn";b.dataset.share="st";b.title="Az állam linkjének másolása";b.innerHTML='<svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.7-1.7"/></svg><span>Állam linkje</span>';q.appendChild(b);}}
 function renderDetail0(){
   const st=sel,sd=SENMAP[st],gd=GOVMAP[st],h=CLOSE[st],box=$("detail");
   const dkey=st+"|"+era+"|"+mode+"|"+sub;const changed=box.dataset.st!==dkey;box.dataset.st=dkey;box.classList.toggle("anim",changed);
@@ -1560,9 +1568,9 @@ function showTip(st,x,y){
 }
 function hideTip(f){if(tipPin&&!f)return;$("tip").classList.remove("on");}
 function select(st){
-  if(!NAMES[st])return;sel=st;paintSel();renderDetail();zoomTo(st);if(mode==="house")hmZoom(st);updHash();
+  if(!NAMES[st])return;selCty=null;sel=st;paintSel();renderDetail();zoomTo(st);if(mode==="house")hmZoom(st);updHash();
 }
-const VB0=[20,0,900,512];let zoomSt=null,zRaf=0,zoomOn=false,CTY=null,CR=null,ctyP=null,zoomC=null,ctyEra="";
+const VB0=[20,0,900,512];let selCty=null,zoomSt=null,zRaf=0,zoomOn=false,CTY=null,CR=null,ctyP=null,zoomC=null,ctyEra="";
 try{zoomOn=localStorage.getItem("zoomOn")==="1";}catch(e){}
 function syncZT(){$("zoomtoggle").setAttribute("aria-pressed",String(zoomOn));}
 const LSAD={CA:"Census Area","Cty&Bor":"City and Borough",Muny:"Municipality"};
@@ -2312,14 +2320,14 @@ function tick(){
 /* ---------- events ---------- */
 function updZT(){const zt=$("zoomtoggle");if(zt)zt.hidden=(mode==="time");zt.style.visibility=(view!=="geo")?"hidden":"";}
 function setMode(m){
-  try{hmReset(true);}catch(e){}mode=m;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
+  try{hmReset(true);}catch(e){}mode=m;selCty=null;try{if(window.__msPh)window.__msPh();}catch(e){}tipPin=false;hideTip(true);prevCall={};selD=null;if(m==="house"||m==="time")zoomReset(true);updZT();
   if(m!=="time")setPlaying(false);
   $("legend").dataset.m="";
   if(m==="time")rangeLabel();
   syncUI();paintMap(false);renderDetail();bump();if(typeof ctyEraSync==="function")ctyEraSync();updHash();
 }
 function setView(v){
-  view=v;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo"){zoomReset(true);hmReset(true);}
+  view=v;selCty=null;setTimeout(()=>{if(typeof paintTurn==="function")paintTurn();},0);if(v!=="geo"){zoomReset(true);hmReset(true);}
   document.querySelectorAll("#seg-view button").forEach(b=>b.setAttribute("aria-pressed",String(b.dataset.v===v)));
   updZT();syncUI();hideTip();paintSel();if(mode==="house")renderDetail();
 }
@@ -2403,6 +2411,9 @@ setTimeout(()=>{if(!applyHash())hashOn=true;},700);
         if(o&&o.el&&o.el.getBoundingClientRect){const r=$("stage").getBoundingClientRect(),b=o.el.getBoundingClientRect();showTipHTML(distTip(it.id),b.left-r.left+b.width/2,b.top-r.top,true);}},geoV?700:0);
       setTimeout(()=>{const e=document.querySelector("#detail .dr.on, .dr.on");if(e&&e.scrollIntoView)e.scrollIntoView({block:"nearest"});},50);
       return;}
+    if(it.t==="c"&&view==="tiles"&&mode!=="house"&&mode!=="time"){inp.value="";close();inp.blur();select(it.st);selCty={st:it.st,i:it.i};renderDetail();
+      try{history.replaceState(null,"","#"+it.st+"-"+(mode==="gov"?"gov":"sen"));}catch(e){}
+      setTimeout(()=>{const e=document.querySelector("#detail .ctysel");if(e&&e.scrollIntoView)e.scrollIntoView({block:"nearest"});},50);return;}
     const md=(mode==="gov"||mode==="house")?mode:"sen";
     const c=it.t==="c"&&CTY&&CTY[it.st]&&CTY[it.st][it.i];const f=c&&md!=="house"?c[3]:null;
     try{history.replaceState(null,"","#"+it.st+"-"+(f?(md==="house"?"sen":md):md)+(f?"-"+f:""));}catch(e){}
@@ -2420,6 +2431,7 @@ setTimeout(()=>{if(!applyHash())hashOn=true;},700);
   box.addEventListener("click",e=>{const m=e.target.closest(".mi");if(m)go(items[+m.dataset.k]);});
   document.addEventListener("click",e=>{if(!e.target.closest("#msearch"))close();});
 })();
+$("detail").addEventListener("click",e=>{if(e.target.closest(".ctyx")){selCty=null;renderDetail();}});
 $("play").addEventListener("click",()=>setPlaying(!playing));
 $("range").addEventListener("input",e=>{setPlaying(false);scrub=Number(e.target.value);timeStep();});
 $("livebtn").addEventListener("click",()=>{setPlaying(false);scrub=null;lastT=null;timeStep();});
