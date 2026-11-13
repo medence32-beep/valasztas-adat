@@ -1,7 +1,7 @@
 /* Választások – offline gyorsítótár.
    Oldalak és élő adatok: mindig a hálózatról, gyorsítótár csak tartaléknak (offline).
    Statikus fájlok: azonnal a gyorsítótárból, közben a háttérben frissül. */
-const V="v52x",CORE="core-"+V,RT="rt-"+V;
+const V="v53",CORE="core-"+V,RT="rt-"+V;
 const PRE=["./","index.html","eredmenyek","spanyol-valasztas","spanyol-szimulator","spanyol-valasztas.html","spanyol-szimulator.html","eredmenyek.html","magyarorszag.html","szimulator.html","orszag.html","spanyolorszag.html","nemetorszag.html","ausztria.html","szlovakia.html","romania.html","egyesult-allamok.html","valasztasi-rendszer.html","naptar.html","404.html",
   "assets/portal.css?v=15","assets/orszagok.js?v=11","assets/fastzoom.js?v=1","assets/anim.js?v=3","assets/terkep-anim.js?v=4","assets/app.js?v=9","assets/app/icon-192.png?v=3","manifest.webmanifest"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(CORE).then(c=>Promise.all(PRE.map(u=>c.add(u).catch(()=>{})))).then(()=>self.skipWaiting()));});

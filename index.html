@@ -39,7 +39,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/portal.css?v=15">
+<link rel="stylesheet" href="assets/portal.css?v=16">
 <style>
 /* ---------- hero ---------- */
 .hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
@@ -233,7 +233,7 @@ html.mob .apqr,.apqr[hidden]{display:none}
     <nav class="nav" aria-label="Fő navigáció">
       <a href="#orszagok">Országok</a>
       <a href="eredmenyek"><i class="live"></i><span>USA<span class="hide-s"> 2026</span></span></a>
-      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a><a href="zold-foki-szigetek-valasztas"><i class="live cv"></i><span>Zöld-fok<span class="hide-s"> 2026</span></span></a>
       <a href="spanyol-szimulator">Szimulátor</a>
       <a href="naptar">Naptár</a>
     </nav>
@@ -268,6 +268,15 @@ html.mob .apqr,.apqr[hidden]{display:none}
     </div>
   </div>
 </section>
+<section class="sec" id="valasztasok" aria-labelledby="h-v" style="padding-bottom:8px"><div class="wrap">
+<style>.vk{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}.vk a{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;transition:transform .2s,border-color .2s;min-width:0}.vk a:hover{transform:translateY(-2px);border-color:var(--acc)}.vk .t{display:flex;align-items:center;gap:10px}.vk img{width:40px;height:28px;border-radius:5px;object-fit:cover;box-shadow:var(--shadow)}.vk b{font:800 18px/1.15 var(--f-display);text-transform:uppercase}.vk .t>div{display:flex;flex-direction:column;min-width:0}.vk small{color:var(--ink2);font-size:13px}.vk .st{align-self:flex-start;font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor}.vk .s1{color:#e5484d}.vk .s2{color:var(--acc)}.vk .s3{color:var(--ink3)}</style>
+<h2 id="h-v">Választások</h2>
+<div class="vk">
+<a href="zold-foki-szigetek-valasztas"><div class="t"><img src="https://flagcdn.com/w80/cv.png" alt=""><div><b>Zöld-foki-szigetek</b><small>Elnökválasztás · november 15.</small></div></div><span class="st s1">Élő eredmények</span><small>Részvétel, feldolgozottság, térkép mind a 22 községgel.</small></a>
+<a href="spanyol-valasztas"><div class="t"><img src="https://flagcdn.com/w80/es.png" alt=""><div><b>Spanyolország</b><small>Általános választás · november 29.</small></div></div><span class="st s2">Hamarosan</span><small>Kutatások, mandátumbecslés, térkép mind a 8131 településsel.</small></a>
+<a href="eredmenyek"><div class="t"><img src="https://flagcdn.com/w80/us.png" alt=""><div><b>Egyesült Államok</b><small>Félidős választás · november 3.</small></div></div><span class="st s3">Lezajlott</span><small>Szenátus, Képviselőház, kormányzók – államonként és megyénként.</small></a>
+</div></div></section>
+
 
 <section class="sec reveal" aria-labelledby="h-feat">
   <div class="wrap">
