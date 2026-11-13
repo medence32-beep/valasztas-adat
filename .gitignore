@@ -6,3 +6,4 @@
 *.p12
 __pycache__/
 /es-elo.json
+/cv-elo.json

@@ -72,15 +72,15 @@ jobs:
               git commit -q -m "Közvélemény-kutatások napi frissítése"
               for t in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
             fi
-            # Spanyol választás (2026. nov. 29.): élő adatok az „elo” ágra (nem indít Pages-építést)
-            set +e; python3 tools/es_elo.py; erc=$?; set -e
-            if [ $erc -eq 0 ] && [ -f es-elo.json ]; then
-              rm -rf /tmp/elo && mkdir -p /tmp/elo && cp es-elo.json /tmp/elo/
-              ( cd /tmp/elo && git init -q && git checkout -q -b elo && git add es-elo.json \
-                && git -c user.name="eredmenyfrissito[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "spanyol élő adatok" \
+            # Élő választási adatok az „elo” ágra (nem indít Pages-építést): spanyol (nov. 29.) és zöld-foki (nov. 15.)
+            set +e; python3 tools/es_elo.py; erc=$?; python3 tools/cv_elo.py; crc=$?; set -e
+            if [ $erc -eq 0 ] || [ $crc -eq 0 ]; then
+              rm -rf /tmp/elo && mkdir -p /tmp/elo && cp es-elo.json cv-elo.json /tmp/elo/ 2>/dev/null || true
+              ( cd /tmp/elo && git init -q && git checkout -q -b elo && git add -A \
+                && git -c user.name="eredmenyfrissito[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "élő adatok" \
                 && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:elo ) || echo "élő adat feltöltése nem sikerült"
             fi
-            if python3 tools/es_elo.py --aktiv; then sleep 45; else sleep 300; fi
+            if python3 tools/es_elo.py --aktiv || python3 tools/cv_elo.py --aktiv; then sleep 45; else sleep 300; fi
           done
       - name: Következő futás indítása
         if: always()

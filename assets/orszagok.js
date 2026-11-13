@@ -19,7 +19,7 @@ var READY={
   DE:{href:"nemetorszag",title:"Németország",sub:"Bundestag-választás 2025: eredmények és mandátumok"},
   AT:{href:"ausztria",title:"Ausztria",sub:"Nemzeti tanácsi választás 2024: eredmények és mandátumok"},
   SK:{href:"szlovakia",title:"Szlovákia",sub:"Parlamenti választás 2023 – a Szövetség eredményével"},
-  ES:{href:"spanyolorszag",title:"Spanyolország",sub:"Előrehozott választás november 29-én – kutatások, esélyek, visszaszámlálás"},
+  CV:{href:"zold-foki-szigetek-valasztas",title:"Zöld-foki-szigetek",sub:"Elnökválasztás november 15-én – élő eredmények, részvétel, térkép"},ES:{href:"spanyolorszag",title:"Spanyolország",sub:"Előrehozott választás november 29-én – kutatások, esélyek, visszaszámlálás"},
   RO:{href:"romania",title:"Románia",sub:"Parlamenti választás 2024 – az RMDSZ eredményével"}
 };
 var FALLBACK={XK:"Koszovó",TW:"Tajvan",PS:"Palesztina",VA:"Vatikán",GB:"Egyesült Királyság",US:"Amerikai Egyesült Államok",HU:"Magyarország"};
