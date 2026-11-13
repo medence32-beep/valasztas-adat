@@ -55,7 +55,7 @@
 .cvn{color:var(--ink3,#888);font-size:13px;margin-top:10px}.cvi{margin-top:16px}.cvi li{margin:6px 0;color:var(--ink2)}
 .lg2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink2);margin-top:8px}.lg2 i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
 .cvt{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.cvt img{width:56px;height:38px;border-radius:6px;object-fit:cover;box-shadow:var(--shadow)}
-.live{display:inline-flex;align-items:center;gap:6px;font:700 12px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:#e5484d;border:1px solid currentColor;border-radius:999px;padding:3px 10px}.live i{width:8px;height:8px;border-radius:50%;background:currentColor;animation:lv 1.4s infinite}@keyframes lv{50%{opacity:.25}}
+.cvlive{display:inline-flex;align-items:center;gap:6px;font:700 12px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:#e5484d;border:1px solid currentColor;border-radius:999px;padding:3px 10px}.cvlive i{width:8px;height:8px;border-radius:50%;background:currentColor;animation:lv 1.4s infinite}@keyframes lv{50%{opacity:.25}}
 .note{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:13px;color:var(--ink2);margin-top:14px}
 .h2h{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.pc2{display:flex;gap:12px;align-items:center;min-width:0}.pc2.r{flex-direction:row-reverse;text-align:right}
 .av{object-fit:cover;flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:800 20px var(--f-display);color:#fff;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c)}
@@ -80,7 +80,7 @@
   </div>
 </header>
 <main class="cvw">
-<section class="cvh"><div class="cvt"><img src="https://flagcdn.com/w160/cv.png" alt="A Zöld-foki-szigetek zászlaja"><div><div class="cvk">Zöld-foki-szigetek · 2026. november 15. <span class="live" id="liv" hidden><i></i>Élő</span></div><h1>Elnökválasztás 2026</h1></div></div>
+<section class="cvh"><div class="cvt"><img src="https://flagcdn.com/w160/cv.png" alt="A Zöld-foki-szigetek zászlaja"><div><div class="cvk">Zöld-foki-szigetek · 2026. november 15. <span class="cvlive" id="liv" hidden><i></i>Élő</span></div><h1>Elnökválasztás 2026</h1></div></div>
 <p>A Zöld-foki Köztársaság elnökét öt évre választják, két fordulóban: aki az első fordulóban megszerzi az érvényes szavazatok több mint felét, az nyer; különben a két legjobb jelölt második fordulóba jut. Az urnák helyi idő szerint 18 órakor (magyar idő szerint 20 órakor) zárnak.</p><div class="note">ⓘ Az oldal magától frissül, nem kell újratölteni. <span id="nupd"></span></div></section>
 <div class="cvst"><div><b id="sFeld">–</b><span>feldolgozottság</span><div class="cvbar"><i id="bFeld"></i></div></div><div><b id="sReszv">–</b><span>részvétel</span><div class="cvbar"><i id="bReszv"></i></div></div><div><b id="sSzav">–</b><span>leadott szavazat</span></div><div><b id="sAll">Választás előtt</b><span id="sUpd">frissítés: –</span></div></div>
 <div class="cvg"><div class="cvc"><h2>Térkép · 22 község</h2><svg id="cvmap" viewBox="0 0 600 520" role="img" aria-label="A Zöld-foki-szigetek községei"></svg><div class="lg2" id="lg2"></div><p class="cvn" id="mapn">Térkép betöltése…</p></div>
