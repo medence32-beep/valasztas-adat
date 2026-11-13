@@ -1,0 +1,8 @@
+# A forráskód a privát voksmero-forras tárhelyen van (helyben szimbolikus link, a robotoknál behúzott másolat)
+/tools
+/android
+/_forras
+*.jks
+*.p12
+__pycache__/
+/es-elo.json

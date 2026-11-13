@@ -1,0 +1,79 @@
+name: Android alkalmazás (APK)
+
+# Megépíti a letölthető Android-alkalmazást, és kiteszi a GitHub „Releases” részébe.
+# Állandó letöltési link: https://github.com/medence32-beep/valasztas-adat/releases/latest/download/Voksmero.apk
+# Az alkalmazás a weboldalt jeleníti meg, így a tartalom újratelepítés nélkül is mindig friss.
+# A forráskód a privát voksmero-forras tárhelyen van; az építést kézzel (vagy a forrás frissítése után) kell indítani.
+on:
+  workflow_dispatch: {}
+  repository_dispatch:
+    types: [android]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Forráskód (privát tárhely)
+        uses: actions/checkout@v4
+        with:
+          repository: medence32-beep/voksmero-forras
+          token: ${{ secrets.FORRAS_TOKEN }}
+          path: _forras
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: "8.9"
+      - name: Aláíró kulcs
+        # Állandó kulcs a tároló titkai közül (ANDROID_KEYSTORE = a .p12 fájl base64-ben) – így az app
+        # frissítésként települ, nem kell előtte törölni. Ha a titok nincs beállítva, egyszeri kulcs készül.
+        env:
+          KS: ${{ secrets.ANDROID_KEYSTORE }}
+        run: |
+          if [ -n "$KS" ]; then
+            echo "$KS" | base64 -d > "$RUNNER_TEMP/kulcs.p12"
+            echo "KEYFILE=$RUNNER_TEMP/kulcs.p12" >> "$GITHUB_ENV"
+            echo "KEYPASS=voksmero-alairas" >> "$GITHUB_ENV"
+            echo "Állandó aláíró kulcs használatban."
+          else
+            P=$(openssl rand -hex 16)
+            echo "::add-mask::$P"
+            echo "KEYPASS=$P" >> "$GITHUB_ENV"
+            echo "KEYFILE=$RUNNER_TEMP/kulcs.jks" >> "$GITHUB_ENV"
+            keytool -genkeypair -keystore "$RUNNER_TEMP/kulcs.jks" -alias valasztasok -keyalg RSA -keysize 2048 -validity 12000 \
+              -storepass "$P" -keypass "$P" -dname "CN=Valasztasok, O=Valasztasok, C=HU"
+            echo "::warning::Nincs ANDROID_KEYSTORE titok – egyszeri kulccsal készült, a régi appot frissítés előtt törölni kell."
+          fi
+      - name: Újdonságok
+        run: |
+          {
+            echo "NOTES<<EOF_NOTES"
+            if [ -s _forras/android/ujdonsagok.txt ]; then cat _forras/android/ujdonsagok.txt; else git -C _forras log -1 --pretty=%s | sed 's/^/• /'; fi
+            echo "EOF_NOTES"
+          } >> "$GITHUB_ENV"
+      - name: Építés
+        working-directory: _forras/android
+        run: gradle assembleRelease -PvCode=${{ github.run_number }} -PkeyFile="$KEYFILE" --no-daemon --stacktrace
+      - name: Fájl előkészítése
+        run: cp _forras/android/app/build/outputs/apk/release/app-release.apk Voksmero.apk
+      - name: Kiadás
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: app-1.0.${{ github.run_number }}
+          name: "Voksmérő Android-alkalmazás 1.0.${{ github.run_number }}"
+          body: |
+            ${{ env.NOTES }}
+
+            Telepítés: töltsd le a Voksmero.apk fájlt a telefonodra, és nyisd meg. A már telepített alkalmazás magától jelzi a frissítést.
+          files: Voksmero.apk
+          make_latest: "true"

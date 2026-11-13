@@ -1,0 +1,89 @@
+name: Automatikus eredményfrissítés (AP)
+
+# Egy futás kb. 5 óra 45 percig dolgozik: 5 percenként lehozza az AP adatait,
+# és ha kell, feltölti őket. A végén elindítja a következő futást (láncolva),
+# így a frissítés nem függ a GitHub (gyakran késő) időzítőjétől.
+# A program kódja a privát voksmero-forras tárhelyen van (FORRAS_TOKEN titok, csak olvasási jog).
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: ap-frissites
+  cancel-in-progress: true
+
+jobs:
+  frissites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    steps:
+      - uses: actions/checkout@v4
+      - name: Forráskód (privát tárhely)
+        uses: actions/checkout@v4
+        with:
+          repository: medence32-beep/voksmero-forras
+          token: ${{ secrets.FORRAS_TOKEN }}
+          path: _forras
+      - name: Eszközök bekötése
+        run: ln -sfn _forras/tools tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Csomagok
+        run: pip install -q beautifulsoup4
+      - name: Frissítés 5 percenként
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "eredmenyfrissito[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          end=$(( $(date +%s) + 340*60 ))
+          while [ "$(date +%s)" -lt "$end" ]; do
+            git pull -q --rebase --autostash || true
+            git -C _forras pull -q --ff-only || true   # a privát eszközök legújabb változata
+            set +e; python3 tools/ap_update.py; rc=$?; set -e
+            if [ $rc -ne 0 ] && [ $rc -ne 3 ]; then echo "frissítési hiba ($rc), következő körben újra"; fi
+            # az „ellenőrizve” idő külön ágra megy, hogy ne indítson felesleges oldal-újraépítést
+            # (a GitHub Pages óránként csak kb. 10 építést enged)
+            if [ -f status.json ]; then
+              rm -rf /tmp/allapot && mkdir -p /tmp/allapot && cp status.json /tmp/allapot/
+              ( cd /tmp/allapot && git init -q && git checkout -q -b allapot && git add status.json \
+                && git -c user.name="eredmenyfrissito[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "ellenőrzés" \
+                && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:allapot ) || echo "állapot feltöltése nem sikerült"
+              git checkout -q -- status.json 2>/dev/null || true
+            fi
+            if [ $rc -eq 0 ]; then
+              python3 tools/us_orszag.py || true
+              git add data.json countylive.json assets/data/orszag/us.json
+              if ! git diff --cached --quiet; then
+                git commit -q -m "Automatikus AP-frissítés (új adatok)"
+                for t in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+              fi
+            else
+              git checkout -q -- data.json countylive.json 2>/dev/null || true
+            fi
+            # közvélemény-kutatások: naponta egyszer (a szkript maga figyeli, hogy ma lefutott-e már)
+            set +e; python3 tools/kutatas.py; krc=$?; python3 tools/es_osszefoglalo.py; set -e
+            git add assets/data/kutatas magyarorszag.html spanyol-valasztas.html 2>/dev/null || true
+            if ! git diff --cached --quiet; then
+              git commit -q -m "Közvélemény-kutatások napi frissítése"
+              for t in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+            fi
+            # Spanyol választás (2026. nov. 29.): élő adatok az „elo” ágra (nem indít Pages-építést)
+            set +e; python3 tools/es_elo.py; erc=$?; set -e
+            if [ $erc -eq 0 ] && [ -f es-elo.json ]; then
+              rm -rf /tmp/elo && mkdir -p /tmp/elo && cp es-elo.json /tmp/elo/
+              ( cd /tmp/elo && git init -q && git checkout -q -b elo && git add es-elo.json \
+                && git -c user.name="eredmenyfrissito[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "spanyol élő adatok" \
+                && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:elo ) || echo "élő adat feltöltése nem sikerült"
+            fi
+            if python3 tools/es_elo.py --aktiv; then sleep 45; else sleep 300; fi
+          done
+      - name: Következő futás indítása
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run ap-frissites.yml --ref main

@@ -1,0 +1,44 @@
+name: Közvélemény-kutatások (kézi / tartalék)
+
+# A napi frissítést az „Automatikus eredményfrissítés” futása végzi;
+# ez a munkafolyamat kézi indításra és tartaléknak van (napi időzítővel).
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "41 6 * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: kutatas
+  cancel-in-progress: false
+
+jobs:
+  kutatas:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Forráskód (privát tárhely)
+        uses: actions/checkout@v4
+        with:
+          repository: medence32-beep/voksmero-forras
+          token: ${{ secrets.FORRAS_TOKEN }}
+          path: _forras
+      - name: Eszközök bekötése
+        run: ln -sfn _forras/tools tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -q beautifulsoup4
+      - name: Frissítés
+        run: |
+          set +e; python3 tools/kutatas.py ${{ github.event_name == 'workflow_dispatch' && '--force' || '' }}; rc=$?; python3 tools/es_osszefoglalo.py; set -e
+          git config user.name "kutatasfrissito[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/data/kutatas magyarorszag.html spanyol-valasztas.html
+          if ! git diff --cached --quiet; then
+            git commit -q -m "Közvélemény-kutatások frissítése"
+            for t in 1 2 3; do git pull -q --rebase && git push -q && break; sleep 5; done
+          fi

@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=1";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="robots" content="noindex, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Választási naptár: mikor hol választanak a világban? | Voksmérő</title>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Voksmérő", "item": "https://voksmero.hu/"}, {"@type": "ListItem", "position": 2, "name": "Választási naptár", "item": "https://voksmero.hu/naptar"}]}</script>
+<link rel="canonical" href="https://voksmero.hu/naptar">
+<meta name="description" content="Visszaszámlálás a következő választásokig: dátumok, tétek és háttér magyarul – nézd meg, hol jön a következő nagy választás!">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Választási naptár: mikor hol választanak a világban?">
+<meta property="og:description" content="Visszaszámlálás a következő választásokig: dátumok, tétek és háttér magyarul – nézd meg, hol jön a következő nagy választás!">
+<meta property="og:url" content="https://voksmero.hu/naptar">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/naptar.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/naptar.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=15">
+<style>
+.hero{padding-block:clamp(34px,6vw,70px) clamp(20px,3vw,30px)}
+.hero h1{margin:10px 0 12px;font:900 clamp(44px,7vw,84px)/.92 var(--f-display);text-transform:uppercase;letter-spacing:.01em}
+.hero .lead{color:var(--ink2);font-size:17px;max-width:58ch;margin:0}
+.next{position:relative;overflow:hidden;display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:clamp(16px,3vw,32px);align-items:center;margin-top:28px;padding:clamp(18px,3vw,28px);border-radius:24px;background:var(--card);border:1px solid var(--line2);box-shadow:var(--shadow2)}
+.next::before{content:"";position:absolute;inset:-30%;background:var(--fbg) center/cover no-repeat;filter:blur(60px) saturate(1.3);opacity:.2;pointer-events:none}
+.next>*{position:relative}
+.next .fl{width:clamp(70px,10vw,110px);aspect-ratio:3/2;border-radius:10px;object-fit:cover;box-shadow:0 0 0 1px var(--line2),var(--shadow2)}
+.next small{font:700 12px var(--f-cond);letter-spacing:.2em;text-transform:uppercase;color:var(--acc)}
+.next h2{margin:4px 0 4px;font:900 clamp(28px,4vw,44px)/1 var(--f-display);text-transform:uppercase}
+.next p{margin:0;color:var(--ink2)}
+.cd{display:flex;gap:10px}
+.cd div{min-width:64px;text-align:center;padding:10px 8px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+.cd b{display:block;font:800 clamp(24px,3.4vw,34px)/1 var(--f-mono);font-variant-numeric:tabular-nums}
+.cd span{font:700 10.5px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:34px 0 8px}
+.seg{display:inline-flex;flex-wrap:wrap;gap:2px;padding:3px;border-radius:12px;background:var(--bg2);border:1px solid var(--line)}
+.seg button{border:0;background:transparent;color:var(--ink2);font:700 13.5px var(--f-body);padding:8px 14px;border-radius:9px;cursor:pointer}
+.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.15),inset 0 0 0 1px var(--line2)}
+.bar small{color:var(--ink3)}
+.mon{margin-top:26px}
+.mon h3{display:flex;align-items:center;gap:12px;margin:0 0 10px;font:800 13px var(--f-cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink3)}
+.mon h3::after{content:"";flex:1;height:1px;background:var(--line)}
+.ev{display:grid;grid-template-columns:62px 44px minmax(0,1fr) auto;gap:14px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--card);border:1px solid var(--line);margin-bottom:8px;text-decoration:none;color:inherit;transition:border-color .2s,transform .2s}
+a.ev:hover{border-color:var(--acc2);transform:translateY(-2px)}
+.ev.f{border-color:color-mix(in srgb,var(--acc) 40%,var(--line))}
+.dt{text-align:center;line-height:1}
+.dt b{display:block;font:900 28px var(--f-display)}
+.dt span{font:700 11px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.ev img{width:44px;height:30px;border-radius:5px;object-fit:cover;box-shadow:0 0 0 1px var(--line2)}
+.ev h4{margin:0;font:700 16.5px var(--f-body)}
+.ev p{margin:2px 0 0;color:var(--ink2);font-size:14px}
+.ev .m{display:block;margin-top:3px;color:var(--ink3);font-size:12.5px}
+.ev .r{display:flex;flex-direction:column;align-items:flex-end;gap:6px;text-align:right}
+.st{font:700 10.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;white-space:nowrap}
+.st.k{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.st.v{background:color-mix(in srgb,var(--acc) 18%,transparent);color:var(--acc)}
+.st.l{background:var(--bg2);color:var(--ink2)}
+.ev .in{font:600 12.5px var(--f-mono);color:var(--ink3);white-space:nowrap}
+.ev .go{font:700 12px var(--f-body);color:var(--acc2)}
+.src{margin:40px 0 10px;font-size:13px;color:var(--ink3)}
+.src a{color:var(--ink2)}
+.src ul{margin:6px 0 0;padding-left:18px;columns:2;column-gap:28px}
+@media (max-width:720px){.next{grid-template-columns:auto minmax(0,1fr)}.next .cd{grid-column:1/-1}.cd div{flex:1;min-width:0}
+  .ev{grid-template-columns:50px minmax(0,1fr) auto;gap:10px}.ev img{display:none}.ev .r .in{display:none}.src ul{columns:1}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      <a href="eredmenyek"><i class="live"></i><span>USA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a class="on" href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="wrap">
+  <span class="kicker">Közelgő választások</span>
+  <h1>Választási naptár</h1>
+  <p class="lead">Mikor hol választanak? A következő hónapok fontosabb országos választásai a világban – kitűzött és várható dátumokkal.</p>
+  <div class="next" id="next"></div>
+</div></section>
+<section class="wrap" style="padding-bottom:40px">
+  <div class="bar"><div class="seg" id="flt" role="group" aria-label="Szűrés"><button type="button" class="on" data-f="all">Mind</button><button type="button" data-f="eu">Európa</button><button type="button" data-f="f">Kiemelt</button></div><small id="upd"></small></div>
+  <div id="list"></div>
+  <div class="src" id="src"></div>
+</section>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script src="assets/orszagok.js?v=10"></script>
+<script>
+(function(){
+const V=window.VALASZTAS,$=id=>document.getElementById(id);V.themeBtn($("theme"));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const MH=["január","február","március","április","május","június","július","augusztus","szeptember","október","november","december"];
+const MS=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."];
+const SL={"kitűzve":["k","Kitűzve"],"várható":["v","Várható"],"legkésőbb":["l","Legkésőbb"]};
+let D=null,F="all";
+const day=s=>{const [y,m,d]=s.split("-").map(Number);return new Date(y,m-1,d);};
+const today=()=>{const n=new Date();return new Date(n.getFullYear(),n.getMonth(),n.getDate());};
+const left=d=>Math.round((d-today())/864e5);
+const cinfo=k=>V.list.find(c=>c.code===k)||{code:k,name:V.name(k),cont:""};
+function inTxt(n){return n===0?"ma":n===1?"holnap":n+" nap múlva";}
+function render(){const T=today(),L=D.v.filter(e=>day(e.d)>=T).filter(e=>F==="all"||(F==="f"?e.f:cinfo(e.k).cont===F));
+  const by={};L.forEach(e=>{const d=day(e.d),k=d.getFullYear()+"-"+d.getMonth();(by[k]||(by[k]={y:d.getFullYear(),m:d.getMonth(),L:[]})).L.push(e);});
+  $("list").innerHTML=Object.values(by).map(g=>'<div class="mon"><h3>'+g.y+'. '+MH[g.m]+'</h3>'+g.L.map(e=>{const c=cinfo(e.k),d=day(e.d),n=left(d),st=SL[e.s]||SL["várható"];
+      const href=c.ready?c.ready.href:null,tag=href?'a':'div';
+      return '<'+tag+(href?' href="'+href+'"':'')+' class="ev'+(e.f?' f':'')+'"><div class="dt">'+(e.h?'<b style="font-size:20px">'+esc(e.h.split(" ")[0])+'</b><span>'+esc(e.h.split(" ").slice(1).join(" "))+'</span>':'<b>'+d.getDate()+'</b><span>'+MS[d.getMonth()]+'</span>')+'</div>'+
+        '<img src="'+V.flag(e.k,80)+'" alt="" loading="lazy"><div><h4>'+esc(c.name)+'</h4><p>'+esc(e.t)+'</p>'+(e.m?'<span class="m">'+esc(e.m)+'</span>':'')+'</div>'+
+        '<div class="r"><span class="st '+st[0]+'">'+st[1]+'</span>'+(e.h?'':'<span class="in">'+inTxt(n)+'</span>')+(href?'<span class="go">Oldal megnyitása →</span>':'')+'</div></'+tag+'>';}).join("")+'</div>').join("")||'<p style="color:var(--ink3)">Ebben a szűrésben nincs közelgő választás.</p>';}
+function hero(){const T=today(),e=D.v.find(x=>day(x.d)>=T&&!x.h);if(!e){$("next").hidden=true;return;}const c=cinfo(e.k),d=day(e.d);
+  $("next").style.setProperty("--fbg","url("+V.flag(e.k,320)+")");
+  $("next").innerHTML='<img class="fl" src="'+V.flag(e.k,160)+'" alt=""><div><small>Következő választás</small><h2>'+esc(c.name)+'</h2><p>'+esc(e.t)+' · '+d.getFullYear()+'. '+MH[d.getMonth()]+' '+d.getDate()+'.</p></div><div class="cd" id="cd"></div>';
+  const tick=()=>{let ms=d-new Date();if(ms<0)ms=0;const dd=Math.floor(ms/864e5),hh=Math.floor(ms/36e5)%24,mm=Math.floor(ms/6e4)%60,ss=Math.floor(ms/1e3)%60;
+    $("cd").innerHTML=[[dd,"nap"],[hh,"óra"],[mm,"perc"],[ss,"mp"]].map(x=>'<div><b>'+String(x[0]).padStart(2,"0")+'</b><span>'+x[1]+'</span></div>').join("");};tick();setInterval(tick,1000);}
+$("flt").addEventListener("click",e=>{const b=e.target.closest("button[data-f]");if(!b)return;F=b.dataset.f;$("flt").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));render();});
+fetch("assets/data/naptar.json?v=1").then(r=>r.json()).then(j=>{D=j;const u=day(j.frissitve);$("upd").textContent="Utoljára ellenőrizve: "+u.getFullYear()+". "+MH[u.getMonth()]+" "+u.getDate()+".";
+  hero();render();$("src").innerHTML='<b>Források</b><ul>'+j.forrasok.map(x=>'<li><a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a></li>').join("")+'</ul><p style="margin-top:8px">A „várható” dátumok előzetesek, a „legkésőbb” jelölés az alkotmányos határidőt mutatja – előrehozott választás esetén korábban is sorra kerülhet.</p>';});
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

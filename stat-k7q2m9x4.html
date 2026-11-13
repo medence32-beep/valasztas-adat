@@ -1,0 +1,238 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=1";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="robots" content="noindex, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Voksmérő statisztika</title>
+<meta name="referrer" content="no-referrer">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap">
+<style>
+:root{--bg:#0B1222;--card:#111B31;--card2:#16223D;--line:#22304F;--ink:#EEF2FA;--ink2:#9DABC8;--ink3:#6E7C9A;--gold:#F5B83D;--blue:#4C8DF6;--teal:#2FC2A6;--red:#F0616D;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 Barlow,system-ui,sans-serif;padding:24px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.w{max-width:1040px;margin:0 auto}
+h1{font:700 30px/1.1 "Barlow Condensed",Barlow,sans-serif;letter-spacing:.01em;margin:0}
+h2{font:700 19px/1.2 "Barlow Condensed",Barlow,sans-serif;letter-spacing:.04em;text-transform:uppercase;color:var(--ink2);margin:34px 0 12px}
+.top{display:flex;flex-wrap:wrap;gap:12px 20px;align-items:center;justify-content:space-between}
+.sub{color:var(--ink3);font-size:13px;margin-top:4px}
+.ctl{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+button{font:600 14px Barlow,sans-serif;color:var(--ink);background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:7px 14px;cursor:pointer}
+button.on{background:var(--gold);color:#0B1222;border-color:var(--gold)}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.t{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}
+.t b{display:block;font:700 34px/1.1 "Barlow Condensed",Barlow,sans-serif;font-variant-numeric:tabular-nums}
+.t span{color:var(--ink2);font-size:13px}
+.t small{display:block;color:var(--ink3);font-size:12px;margin-top:4px}
+.up{color:var(--teal)}.dn{color:var(--red)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;overflow-x:auto}
+table{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+th,td{padding:7px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--ink3);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.06em}
+th:first-child,td:first-child{text-align:left}
+tr:last-child td{border-bottom:0}
+.bar{position:relative;min-width:150px}
+.bar i{position:absolute;left:10px;top:50%;height:10px;margin-top:-5px;border-radius:0 4px 4px 0;background:var(--blue)}
+.bar em{position:absolute;left:10px;top:50%;height:10px;margin-top:-5px;border-radius:0 4px 4px 0;background:var(--gold);font-style:normal}
+.lg{display:flex;gap:16px;font-size:13px;color:var(--ink2);margin-bottom:8px;flex-wrap:wrap}
+.lg i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:12px}
+.two>*{min-width:0}
+.note{color:var(--ink3);font-size:13px;max-width:70ch}
+.note a{color:var(--gold)}
+#prog{height:3px;background:var(--line);border-radius:3px;margin-top:14px;overflow:hidden}
+#prog i{display:block;height:100%;width:0;background:var(--gold);transition:width .3s}
+.me{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--ink2)}
+.me input{width:18px;height:18px;accent-color:var(--gold)}
+input[type=text],input[type=password],textarea,select{width:100%;font:500 15px Barlow,sans-serif;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+textarea{min-height:80px;resize:vertical}
+label.f{display:block;font-size:13px;color:var(--ink2);margin:12px 0 6px}
+.gate{max-width:440px;margin:12vh auto 0}
+.gate h1{margin-bottom:6px}
+.err{color:var(--red);font-size:14px;min-height:20px;margin-top:8px}
+.okm{color:var(--teal);font-size:14px;min-height:20px;margin-top:8px}
+.pv{display:flex;gap:12px;align-items:flex-start;background:#1C2338;border-radius:14px;padding:12px 14px;margin-top:14px;max-width:460px}
+.pv .ic{flex:none;width:30px;height:30px;border-radius:50%;background:var(--gold);color:#0B1222;display:grid;place-items:center;font-weight:700}
+.pv b{display:block}.pv span{color:var(--ink2);font-size:14px;white-space:pre-wrap;word-break:break-word}
+.sent td:nth-child(2){white-space:normal;text-align:left;min-width:180px}
+.del{padding:3px 10px;font-size:13px}
+button.go{background:var(--gold);color:#0B1222;border-color:var(--gold)}
+button.warn{background:var(--red);border-color:var(--red);color:#fff}
+button:disabled{opacity:.5;cursor:default}
+</style>
+</head>
+<body>
+<div class="w gate" id="gate">
+  <h1>Voksmérő – belépés</h1>
+  <p class="note">Ez az oldal csak a tulajdonosnak érhető el. Belépés a GitHub-kulccsal (a valasztas-adat tárhoz készített „fine-grained” token).</p>
+  <form id="lf"><label class="f" for="tok">GitHub-kulcs</label><input type="password" id="tok" autocomplete="current-password" placeholder="github_pat_…">
+  <div class="ctl" style="margin-top:12px"><button type="submit" class="go" id="lb">Belépés</button></div><div class="err" id="lerr"></div></form>
+  <div id="diagw"><h2>Alkalmazás-ellenőrzés</h2><div class="card" id="diag"></div></div>
+</div>
+<div class="w" id="main" hidden>
+  <div class="top">
+    <div><h1>Voksmérő statisztika</h1><div class="sub" id="upd">Betöltés…</div></div>
+    <div class="ctl"><button data-n="7" class="on">7 nap</button><button data-n="14">14 nap</button><button data-n="30">30 nap</button><button id="rf">↻ Frissítés</button><button id="lo">Kilépés</button></div>
+  </div>
+  <div id="prog"><i></i></div>
+
+  <h2>Értesítés küldése mindenkinek</h2>
+  <div class="card">
+    <form id="sf">
+      <label class="f" for="nt">Cím</label><input type="text" id="nt" maxlength="60" required placeholder="pl. Megérkeztek az első spanyol eredmények">
+      <label class="f" for="nb">Szöveg</label><textarea id="nb" maxlength="240" required placeholder="pl. A szavazatok 10%-a megszámolva: a PP vezet."></textarea>
+      <label class="f" for="nu">Koppintásra ezt nyitja meg</label>
+      <select id="nu"><option value="https://voksmero.hu/">Főoldal</option><option value="https://voksmero.hu/spanyol-valasztas">Spanyol választás 2026</option><option value="https://voksmero.hu/eredmenyek">USA 2026</option><option value="https://voksmero.hu/spanyol-szimulator">Spanyol szimulátor</option><option value="https://voksmero.hu/egyesult-allamok">Egyesült Államok</option><option value="https://voksmero.hu/magyarorszag">Magyarország</option><option value="https://voksmero.hu/naptar">Naptár</option></select>
+      <div class="pv"><div class="ic">V</div><div><b id="pvt">Cím</b><span id="pvb">Szöveg</span></div></div>
+      <div class="ctl" style="margin-top:14px"><button type="submit" class="go" id="sb">Küldés mindenkinek</button><button type="button" id="sc" hidden>Mégse</button></div>
+      <div class="okm" id="smsg"></div><div class="err" id="serr"></div>
+    </form>
+    <p class="note">Az alkalmazások megnyitáskor azonnal, a háttérben kb. félóránként néznek új értesítést (a GitHub tárhely pár perces gyorsítótára miatt néha 5 perc késéssel). A korábban kiküldött értesítést törölni csak a listából lehet: akinél már megjelent, annál megmarad.</p>
+    <h2 style="margin-top:22px">Kiküldött értesítések</h2>
+    <div style="overflow-x:auto"><table class="sent" id="slist"></table></div>
+  </div>
+
+  <h2>Ma</h2>
+  <div class="tiles" id="today"></div>
+
+  <h2>Összesen</h2>
+  <div class="tiles" id="tot"></div>
+
+  <h2>Naponta</h2>
+  <div class="card"><div class="lg"><span><i style="background:var(--blue)"></i>Oldalmegnyitások</span><span><i style="background:var(--gold)"></i>Egyedi látogatók</span></div><table id="days"></table></div>
+
+  <div class="two">
+    <div><h2>Honnan jöttek (ma)</h2><div class="card"><table id="src"></table></div></div>
+    <div><h2>Oldalak (ma)</h2><div class="card"><table id="pages"></table></div></div>
+  </div>
+
+  <h2>Android-alkalmazás letöltései (GitHub)</h2>
+  <div class="card"><table id="gh"></table></div>
+
+
+  <h2>Beállítás</h2>
+  <label class="me"><input type="checkbox" id="nost"> Ezen az eszközön (ebben a böngészőben) a saját látogatásaim ne számítsanak</label>
+  <p class="note">A számlálás 2026. november 13-án indult, a korábbi napokra nincs adat. Csak darabszámokat gyűjt, személyes adatot nem. Az „egyedi látogató” eszközönként naponta egyszer számít; az „app első indítása” nagyjából a telepítések száma. A Google-keresésből érkező kattintásokat és megjelenéseket a <a href="https://search.google.com/search-console/performance/search-analytics" target="_blank" rel="noopener">Search Console</a> mutatja részletesen. Ahol ezt az oldalt megnyitod, ott a saját látogatásaid automatikusan kimaradnak (a jelölővel visszakapcsolható); az Android-alkalmazás külön böngészőnek számít.</p>
+</div>
+<script>
+(function(){
+"use strict";
+const NS="voksmero.hu",G="https://abacus.jasoncameron.dev/get/"+NS+"/";
+const $=id=>document.getElementById(id);
+const fmt=n=>n==null?"–":String(n).replace(/\B(?=(\d{3})+(?!\d))/g," ");
+const dkey=d=>d.toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});
+const dlabel=k=>{const d=new Date(k+"T12:00:00");return d.toLocaleDateString("hu-HU",{month:"short",day:"numeric"})+", "+d.toLocaleDateString("hu-HU",{weekday:"short"});};
+/* a szolgáltatás 10 másodpercenként legfeljebb 30 kérést enged: sorban, ütemezve kérdezünk */
+const cache=new Map();let sent=[],queue=[],busy=false,done=0,total=0;
+function get(k){if(cache.has(k))return cache.get(k);total++;const p=new Promise(res=>queue.push({k,res}));cache.set(k,p);pump();return p;}
+function pump(){if(busy)return;busy=true;(function step(){
+  if(!queue.length){busy=false;return;}
+  const now=Date.now();sent=sent.filter(t=>now-t<10500);
+  if(sent.length>=26){setTimeout(step,10500-(now-sent[0])+50);return;}
+  const it=queue.shift();sent.push(now);
+  fetch(G+it.k,{credentials:"omit"}).then(r=>r.ok?r.json():{value:0}).then(j=>it.res(+j.value||0)).catch(()=>it.res(null))
+    .finally(()=>{done++;$("prog").firstElementChild.style.width=(total?done/total*100:100)+"%";});
+  setTimeout(step,120);})();}
+let N=7;
+const PAGES=[["index","Főoldal"],["spanyol-valasztas","Spanyol választás 2026"],["spanyol-szimulator","Spanyol szimulátor"],["eredmenyek","USA 2026"],["egyesult-allamok","Egyesült Államok"],["spanyolorszag","Spanyolország"],["magyarorszag","Magyarország"],["szimulator","Magyar szimulátor"],["naptar","Naptár"]];
+const SRC=[["google","Google-keresés"],["facebook","Facebook / Messenger"],["kereso","Más kereső"],["egyeb","Más oldal"],["kozvetlen","Közvetlen (beírt cím, könyvjelző)"],["app","Android-alkalmazás"]];
+function tile(el,label,v,prev,extra){const d=v!=null&&prev!=null?v-prev:null;
+  el.insertAdjacentHTML("beforeend",'<div class="t"><b>'+fmt(v)+'</b><span>'+label+'</span>'+(prev!==undefined?'<small>tegnap: '+fmt(prev)+(d?' <span class="'+(d>0?"up":"dn")+'">('+(d>0?"+":"")+d+')</span>':'')+'</small>':'')+(extra?'<small>'+extra+'</small>':'')+'</div>');}
+async function load(){
+  done=0;total=0;cache.clear();queue=[];
+  const now=new Date(),days=[];for(let i=0;i<N;i++)days.push(dkey(new Date(now.getTime()-i*864e5)));
+  const T=days[0],Y=days[1];
+  $("upd").textContent="Betöltés…";$("today").innerHTML="";$("tot").innerHTML="";
+  /* ma / tegnap */
+  const TM=[["pv","Oldalmegnyitás"],["uv","Egyedi látogató"],["app","App-megnyitás"],["appu","App-felhasználó"],["dl","APK-letöltés kattintás"],["sh","Megosztás"]];
+  const tv=await Promise.all(TM.map(([k])=>Promise.all([get(k+"-"+T),get(k+"-"+Y)])));
+  TM.forEach(([k,l],i)=>tile($("today"),l,tv[i][0],tv[i][1]));
+  /* összesítők */
+  const [uva,api]=await Promise.all([get("uv-all"),get("appi-all")]);
+  tile($("tot"),"Különböző eszköz (látogató)",uva,undefined,"a számlálás kezdete óta");
+  tile($("tot"),"App első indítása",api,undefined,"≈ telepítések a számlálás óta");
+  ghLoad();
+  /* napi bontás */
+  const rows=await Promise.all(days.map(d=>Promise.all(["pv","uv","app","dl"].map(k=>get(k+"-"+d)))));
+  const mx=Math.max(1,...rows.map(r=>r[0]||0));
+  $("days").innerHTML='<tr><th>Nap</th><th></th><th>Megnyitás</th><th>Látogató</th><th>App</th><th>Letöltés</th></tr>'+
+    days.map((d,i)=>{const r=rows[i];return '<tr><td>'+dlabel(d)+'</td><td class="bar"><i style="width:calc((100% - 20px)*'+((r[0]||0)/mx).toFixed(3)+')"></i><em style="width:calc((100% - 20px)*'+((r[1]||0)/mx).toFixed(3)+')"></em></td><td>'+fmt(r[0])+'</td><td>'+fmt(r[1])+'</td><td>'+fmt(r[2])+'</td><td>'+fmt(r[3])+'</td></tr>';}).join("");
+  /* források és oldalak (ma) */
+  const sv=await Promise.all(SRC.map(([k])=>get("src-"+k+"-"+T)));const ss=sv.reduce((a,b)=>a+(b||0),0)||1;
+  $("src").innerHTML='<tr><th>Forrás</th><th>Látogatás</th><th>Arány</th></tr>'+SRC.map((s,i)=>[s,sv[i]]).sort((a,b)=>(b[1]||0)-(a[1]||0)).map(([s,v])=>'<tr><td>'+s[1]+'</td><td>'+fmt(v)+'</td><td>'+((v||0)/ss*100).toFixed(0)+'%</td></tr>').join("");
+  const pv=await Promise.all(PAGES.map(([k])=>get("pg-"+k+"-"+T)));
+  $("pages").innerHTML='<tr><th>Oldal</th><th>Megnyitás</th></tr>'+PAGES.map((p,i)=>[p,pv[i]]).sort((a,b)=>(b[1]||0)-(a[1]||0)).map(([p,v])=>'<tr><td>'+p[1]+'</td><td>'+fmt(v)+'</td></tr>').join("");
+  $("upd").textContent="Frissítve: "+new Date().toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})+" · a napok budapesti idő szerint";
+}
+async function ghLoad(){
+  try{const r=await fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/releases?per_page=100");const js=await r.json();
+    let sum=0;const rows=js.map(x=>{const n=(x.assets||[]).reduce((a,b)=>a+b.download_count,0);sum+=n;return [x.tag_name.replace("app-",""),x.created_at,n];});
+    tile($("tot"),"APK-letöltés összesen",sum,undefined,"minden változat, a frissítésekkel együtt");
+    $("gh").innerHTML='<tr><th>Változat</th><th>Megjelent</th><th>Letöltés</th></tr>'+rows.map(r=>'<tr><td>'+r[0]+'</td><td>'+new Date(r[1]).toLocaleString("hu-HU",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})+'</td><td>'+fmt(r[2])+'</td></tr>').join("");
+  }catch(e){$("gh").innerHTML='<tr><td>A GitHub most nem válaszolt, próbáld újra később.</td></tr>';}
+}
+document.querySelectorAll("button[data-n]").forEach(b=>b.addEventListener("click",()=>{document.querySelectorAll("button[data-n]").forEach(x=>x.classList.toggle("on",x===b));N=+b.dataset.n;load();}));
+$("rf").addEventListener("click",load);
+$("nost").addEventListener("change",e=>{try{e.target.checked?localStorage.setItem("vm-nostat","1"):localStorage.removeItem("vm-nostat");}catch(_){}});
+function diag(){const B=window.AppBridge,el=$("diag");
+  if(!B){el.innerHTML='<p class="note" style="margin:0">Ez a rész csak az Android-alkalmazásban működik: nyisd meg ott ezt az oldalt .</p>';return;}
+  let v="?",e="?";try{v="1.0."+B.verzio();}catch(_){}try{e=B.ertesitesek()==="on"?'<span class="up">engedélyezve</span>':'<span class="dn">TILTVA</span>';}catch(_){}
+  el.innerHTML='<table><tr><td>Telepített változat</td><td>'+v+'</td></tr><tr><td>Értesítések</td><td>'+e+'</td></tr></table>'+
+    '<div class="ctl" style="margin-top:12px"><button id="dTest">Teszt értesítés most</button><button id="dPerm">Értesítési engedély</button><button id="dUpd">Frissítés keresése</button></div><p class="note" id="dMsg"></p>';
+  $("dTest").onclick=()=>{try{B.ertesit("teszt-"+Date.now(),"Voksmérő teszt","Ha ezt látod, az értesítések működnek.","https://voksmero.hu/");$("dMsg").textContent="Elküldve – nézd meg az értesítési sávot. Ha nem jelent meg, az értesítések tiltva vannak.";}catch(_){$("dMsg").textContent="Hiba: "+_;}};
+  $("dPerm").onclick=()=>{try{B.engedely();}catch(_){}};
+  $("dUpd").onclick=()=>{try{B.frissites();$("dMsg").textContent="Keresés… ha van újabb változat, pár másodpercen belül feljön az ablak.";}catch(_){}};}
+document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")diag();});
+if(window.AppBridge)diag();else $("diagw").hidden=true;
+/* ---- belépés: GitHub-kulcs, amelynek gazdája a tár tulajdonosa ---- */
+const OWN="medence32-beep",REPO="medence32-beep/valasztas-adat",API="https://api.github.com/repos/"+REPO+"/contents/ertesitesek.json";
+let TOK=null;
+const hdr=()=>({Authorization:"Bearer "+TOK,Accept:"application/vnd.github+json","X-GitHub-Api-Version":"2022-11-28"});
+async function check(t){try{const r=await fetch("https://api.github.com/user",{headers:{Authorization:"Bearer "+t,Accept:"application/vnd.github+json"},cache:"no-store"});if(!r.ok)return false;const j=await r.json();return !!j.login&&j.login.toLowerCase()===OWN;}catch(e){return null;}}
+function enter(){$("gate").hidden=true;$("main").hidden=false;$("main").appendChild($("diagw"));$("diagw").hidden=false;
+  try{if(!localStorage.getItem("vm-nostat-k")){localStorage.setItem("vm-nostat-k","1");localStorage.setItem("vm-nostat","1");}$("nost").checked=!!localStorage.getItem("vm-nostat");}catch(e){}
+  diag();load();sList();}
+$("lf").addEventListener("submit",async e=>{e.preventDefault();const t=$("tok").value.trim();if(!t)return;$("lb").disabled=true;$("lerr").textContent="Ellenőrzés…";
+  const ok=await check(t);$("lb").disabled=false;
+  if(ok){TOK=t;try{localStorage.setItem("vm-gh",t);}catch(_){}$("lerr").textContent="";$("tok").value="";enter();}
+  else $("lerr").textContent=ok===null?"Nincs kapcsolat a GitHubbal, próbáld újra.":"Ez a kulcs nem érvényes, vagy nem a tulajdonosé.";});
+$("lo").addEventListener("click",()=>{try{localStorage.removeItem("vm-gh");}catch(_){}location.reload();});
+/* ---- értesítés küldése: az ertesitesek.json frissítése a GitHubon ---- */
+const b64e=s=>{const b=new TextEncoder().encode(s);let x="";for(let i=0;i<b.length;i+=32768)x+=String.fromCharCode.apply(null,b.subarray(i,i+32768));return btoa(x);};
+const b64d=s=>new TextDecoder().decode(Uint8Array.from(atob(s.replace(/\s/g,"")),c=>c.charCodeAt(0)));
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+async function rd(){const r=await fetch(API+"?ref=main&t="+Date.now(),{headers:hdr(),cache:"no-store"});if(!r.ok)throw new Error("olvasás: "+r.status);const j=await r.json();return {sha:j.sha,d:JSON.parse(b64d(j.content))};}
+async function wr(fn,msg){for(let k=0;k<3;k++){const {sha,d}=await rd();fn(d);
+  const r=await fetch(API,{method:"PUT",headers:hdr(),body:JSON.stringify({message:msg,content:b64e(JSON.stringify(d,null,1)+"\n"),sha:sha,branch:"main"})});
+  if(r.ok)return d;if(r.status!==409&&r.status!==422)throw new Error(r.status===403||r.status===401?"a kulcsnak nincs írási joga (Contents: Read and write kell)":"mentés: "+r.status);}
+  throw new Error("ütközés, próbáld újra");}
+function sRender(d){const it=(d.items||[]);$("slist").innerHTML=it.length?'<tr><th>Mikor</th><th>Értesítés</th><th></th></tr>'+it.map(x=>'<tr><td>'+(x.ts?new Date(x.ts).toLocaleString("hu-HU",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"}):"–")+'</td><td><b>'+esc(x.title||"")+'</b><br><span style="color:var(--ink2)">'+esc(x.body||"")+'</span></td><td><button class="del" data-id="'+esc(x.id)+'">Törlés</button></td></tr>').join(""):'<tr><td>Még nincs kiküldött értesítés.</td></tr>';}
+async function sList(){try{sRender((await rd()).d);}catch(e){$("slist").innerHTML='<tr><td>Nem sikerült betölteni: '+esc(e.message)+'</td></tr>';}}
+const pv=()=>{$("pvt").textContent=$("nt").value||"Cím";$("pvb").textContent=$("nb").value||"Szöveg";};
+$("nt").addEventListener("input",pv);$("nb").addEventListener("input",pv);
+let arm=false;const disarm=()=>{arm=false;$("sb").textContent="Küldés mindenkinek";$("sb").classList.remove("warn");$("sb").classList.add("go");$("sc").hidden=true;};
+$("sc").addEventListener("click",disarm);
+$("sf").addEventListener("submit",async e=>{e.preventDefault();$("serr").textContent="";$("smsg").textContent="";
+  const t=$("nt").value.trim(),b=$("nb").value.trim(),u=$("nu").value;if(!t||!b)return;
+  if(!arm){arm=true;$("sb").textContent="Biztosan elküldöd mindenkinek?";$("sb").classList.remove("go");$("sb").classList.add("warn");$("sc").hidden=false;return;}
+  $("sb").disabled=true;$("smsg").textContent="Küldés…";
+  try{const now=Date.now();const d=await wr(d=>{d.items=[{id:"k-"+now,title:t,body:b,url:u,ts:now}].concat(d.items||[]).slice(0,40);},"Értesítés: "+t);
+    sRender(d);$("nt").value="";$("nb").value="";pv();$("smsg").textContent="Elküldve ("+new Date().toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})+"). Az appok pár percen belül megkapják.";}
+  catch(err){$("smsg").textContent="";$("serr").textContent="Nem sikerült: "+err.message;}
+  $("sb").disabled=false;disarm();});
+$("slist").addEventListener("click",async e=>{const bt=e.target.closest("button.del");if(!bt)return;
+  if(bt.dataset.arm!=="1"){bt.dataset.arm="1";bt.textContent="Biztosan?";bt.classList.add("warn");return;}
+  bt.disabled=true;try{const id=bt.dataset.id;sRender(await wr(d=>{d.items=(d.items||[]).filter(x=>x.id!==id);},"Értesítés törlése a listából"));}catch(err){$("serr").textContent="Törlés: "+err.message;bt.disabled=false;}});
+(async()=>{let t=null;try{t=localStorage.getItem("vm-gh");}catch(_){}
+  if(!t){$("tok").focus();return;}
+  $("lerr").textContent="Belépés…";const ok=await check(t);
+  if(ok){TOK=t;$("lerr").textContent="";enter();}
+  else if(ok===null){$("lerr").textContent="Nincs kapcsolat a GitHubbal – frissítsd az oldalt.";}
+  else{try{localStorage.removeItem("vm-gh");}catch(_){}$("lerr").textContent="A mentett kulcs lejárt vagy érvénytelen, add meg újra.";}})();
+})();
+</script>
+</body>
+</html>

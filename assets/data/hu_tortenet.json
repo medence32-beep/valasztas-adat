@@ -1,0 +1,25 @@
+{
+ "forras": [["Wikipedia – a magyar országgyűlési választások cikkei (1990–2026)","https://en.wikipedia.org/wiki/Elections_in_Hungary"],["Nemzeti Választási Iroda","https://www.valasztas.hu/"]],
+ "e": [
+  {"y":1990,"n":386,"t":65.11,"note":"Az első szabad választás – két fordulóban. Az MDF vezette koalíció alakított kormányt (Antall József).",
+   "p":[["MDF","#1F8A70",24.73,164],["SZDSZ","#2E6EB5",21.40,92],["FKGP","#8A8F2A",11.73,44],["MSZP","#D7263D",10.89,33],["Fidesz","#EE8410",8.95,21],["KDNP","#9C6B30",6.46,21],["Egyéb, független","#8C94A6",null,11]]},
+  {"y":1994,"n":386,"t":68.92,"note":"Az MSZP abszolút többséget szerzett, mégis koalícióra lépett az SZDSZ-szel (Horn Gyula).",
+   "p":[["MSZP","#D7263D",32.99,209],["SZDSZ","#2E6EB5",19.74,69],["MDF","#1F8A70",11.74,38],["FKGP","#8A8F2A",8.82,26],["KDNP","#9C6B30",7.03,22],["Fidesz","#EE8410",7.02,20],["Egyéb, független","#8C94A6",null,2]]},
+  {"y":1998,"n":386,"t":56.21,"note":"A Fidesz vezette koalíció (Fidesz, FKGP, MDF) került kormányra (Orbán Viktor).",
+   "p":[["Fidesz","#EE8410",29.48,148],["MSZP","#D7263D",32.92,134],["FKGP","#8A8F2A",13.15,48],["SZDSZ","#2E6EB5",7.57,24],["MDF","#1F8A70",2.80,17],["MIÉP","#6B4E2E",5.47,14],["Egyéb, független","#8C94A6",null,1]]},
+  {"y":2002,"n":386,"t":70.53,"note":"Szoros verseny után MSZP–SZDSZ-kormány alakult (Medgyessy Péter).",
+   "p":[["Fidesz–MDF","#EE8410",41.07,188],["MSZP","#D7263D",42.05,178],["SZDSZ","#2E6EB5",5.57,19],["Közös jelölt","#8C94A6",null,1]]},
+  {"y":2006,"n":386,"t":67.80,"note":"Először nyert újra kormányzó párt a rendszerváltás óta (Gyurcsány Ferenc).",
+   "p":[["MSZP","#D7263D",43.21,186],["Fidesz–KDNP","#EE8410",42.03,164],["SZDSZ","#2E6EB5",6.50,18],["MDF","#1F8A70",5.04,11],["Közös jelölt, független","#8C94A6",null,7]]},
+  {"y":2010,"n":386,"t":64.38,"note":"A Fidesz–KDNP kétharmados többséget szerzett; a Jobbik és az LMP először jutott be.",
+   "p":[["Fidesz–KDNP","#EE8410",52.73,263],["MSZP","#D7263D",19.30,59],["Jobbik","#3E7F3E",16.67,47],["LMP","#7EC242",7.48,16],["Független","#8C94A6",null,1]]},
+  {"y":2014,"n":199,"t":61.73,"note":"Az első választás az új, 199 fős Országgyűlésre és egyfordulós rendszerben. A Fidesz–KDNP ismét kétharmadot szerzett.",
+   "p":[["Fidesz–KDNP","#EE8410",44.87,133],["Összefogás","#C9302C",25.57,38],["Jobbik","#3E7F3E",20.22,23],["LMP","#7EC242",5.34,5]]},
+  {"y":2018,"n":199,"t":69.73,"note":"Harmadszor is kétharmad a Fidesz–KDNP-nek; a Jobbik lett a második.",
+   "p":[["Fidesz–KDNP","#EE8410",49.27,133],["Jobbik","#3E7F3E",19.06,26],["MSZP–Párbeszéd","#D7263D",11.91,20],["DK","#13A7BF",5.38,9],["LMP","#7EC242",7.06,8],["Együtt","#9B59B6",0.66,1],["Német nemzetiség","#A0A7B4",0.46,1],["Független","#8C94A6",null,1]]},
+  {"y":2022,"n":199,"t":69.59,"note":"A közös ellenzéki lista ellenére negyedszer is kétharmad a Fidesz–KDNP-nek.",
+   "p":[["Fidesz–KDNP","#EE8410",54.13,135],["Egységben Magyarországért","#C9302C",34.44,57],["Mi Hazánk","#5E8F22",5.88,6],["Német nemzetiség","#A0A7B4",0.44,1],["MKKP","#97A0AF",3.27,0]]},
+  {"y":2026,"n":199,"t":79.69,"note":"Rekordrészvétel mellett a Tisza kétharmados többséget szerzett.",
+   "p":[["Tisza","#2F6FE4",53.18,141],["Fidesz–KDNP","#EE8410",38.61,52],["Mi Hazánk","#5E8F22",5.63,6]]}
+ ]
+}

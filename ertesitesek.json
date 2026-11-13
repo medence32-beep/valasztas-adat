@@ -1,0 +1,4 @@
+{
+ "megjegyzes": "Az Android-alkalmazás megnyitáskor és félóránként ellenőrzi; minden új (még nem látott id-jű) tétel értesítést küld. Mezők: id, title, body, url, ts. Küldés: a tulajdonosi oldalról.",
+ "items": []
+}

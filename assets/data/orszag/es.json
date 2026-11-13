@@ -1,0 +1,109 @@
+{
+  "k": "ES",
+  "cim": "Általános választás 2023 – Képviselőház",
+  "test": "Képviselőház (Congreso)",
+  "d": "2023-07-23",
+  "t": 66.59,
+  "n": 350,
+  "kuszob": 3,
+  "elozo": "A 2023-as előrehozott választáson a Néppárt (PP) lett az első, de Alberto Núñez Feijóo nem kapott bizalmat a Képviselőháztól. Pedro Sánchez a katalán és baszk pártok támogatásával – a vitatott amnesztiatörvény árán – maradt miniszterelnök.",
+  "kormany": "PSOE–Sumar koalíció; miniszterelnök: Pedro Sánchez (PSOE, 2018 óta).",
+  "kov": "2026. november 29.: előrehozott általános választás (Képviselőház és Szenátus). Pedro Sánchez 2026. október 5-én oszlatta fel a parlamentet, miután a Képviselőház leszavazta a kormány két lakhatási rendeletét.",
+  "m": "A 3%-os küszöb választókerületenként (tartományonként) értendő; a kis tartományokban ennél jóval több szavazat kell egy mandátumhoz.",
+  "kovd": "2026-11-29T20:00:00+01:00",
+  "kovcim": "Előrehozott általános választás",
+  "kovtudni": [
+    [
+      "Kik a jelöltek?",
+      "A két miniszterelnök-jelölt Pedro Sánchez (PSOE) és Alberto Núñez Feijóo (PP). A Vox listáját Santiago Abascal, a baloldali Frente Amplio-ét (Sumar, IU, Más Madrid, Comuns) Emilio Delgado, a külön induló Podemosét Irene Montero vezeti."
+    ],
+    [
+      "Mi kell a kormányalakításhoz?",
+      "A 350 fős Képviselőházban 176 mandátum az abszolút többség. A miniszterelnököt az első szavazáson abszolút, a másodikon egyszerű többséggel választják meg – ezért döntő, ki tud koalíciós partnereket találni."
+    ],
+    [
+      "Mikor jönnek az eredmények?",
+      "A szavazás vasárnap 9 és 20 óra között tart – ez magyar idő szerint is 20 óra, csak a Kanári-szigeteken zárnak egy órával később. 20 órakor jönnek az első exit pollok, a hivatalos részeredmények pedig este 9 óra körül kezdenek érkezni."
+    ]
+  ],
+  "p": [
+    [
+      "PP",
+      "#1D84CE",
+      33.06,
+      137
+    ],
+    [
+      "PSOE",
+      "#E30613",
+      31.68,
+      121
+    ],
+    [
+      "Vox",
+      "#63BE21",
+      12.38,
+      33
+    ],
+    [
+      "Sumar",
+      "#E51C55",
+      12.33,
+      31,
+      "2023-ban a Podemosszal együtt"
+    ],
+    [
+      "ERC",
+      "#FFB232",
+      1.89,
+      7
+    ],
+    [
+      "Junts",
+      "#00C3B2",
+      1.6,
+      7
+    ],
+    [
+      "EH Bildu",
+      "#B5CF18",
+      1.36,
+      6
+    ],
+    [
+      "PNV",
+      "#4AAE4A",
+      1.12,
+      5
+    ],
+    [
+      "BNG",
+      "#76B3DD",
+      0.62,
+      1
+    ],
+    [
+      "CC",
+      "#FFD700",
+      0.47,
+      1
+    ],
+    [
+      "UPN",
+      "#2A52BE",
+      0.21,
+      1
+    ]
+  ],
+  "forras": [
+    [
+      "Wikipedia – 2023 Spanish general election",
+      "https://en.wikipedia.org/wiki/2023_Spanish_general_election"
+    ],
+    [
+      "La Moncloa – a választás kiírása",
+      "https://www.lamoncloa.gob.es/presidente/actividades/Paginas/2026/051026-sanchez-convocatoria-elecciones.aspx"
+    ]
+  ],
+  "kovlink":"spanyol-valasztas"
+}

@@ -1,0 +1,534 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=1";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Voksmérő – Választási térkép, eredmények és szimulátor">
+<meta property="og:description" content="Választási térkép, élő eredmények és szimulátor magyarul: így szavazott minden magyar település, friss közvélemény-kutatások, amerikai, német, osztrák, szlovák és román választások.">
+<meta property="og:url" content="https://voksmero.hu/">
+<meta property="og:locale" content="hu_HU">
+<title>Voksmérő – Választási térkép, eredmények és szimulátor</title>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebSite", "name": "Voksmérő", "alternateName": ["voksmero.hu", "Voksmero", "Voks mérő", "Voksmérő.hu"], "url": "https://voksmero.hu/", "inLanguage": "hu", "description": "Választási térkép, élő eredmények és szimulátor magyarul: így szavazott minden magyar település, friss közvélemény-kutatások, amerikai, német, osztrák, szlovák és román választások.", "publisher": {"@type": "Organization", "name": "Voksmérő", "url": "https://voksmero.hu/", "logo": "https://voksmero.hu/assets/app/icon-512.png"}}</script>
+<link rel="canonical" href="https://voksmero.hu/">
+<meta name="description" content="Választási térkép, élő eredmények és szimulátor magyarul: így szavazott minden magyar település, friss közvélemény-kutatások, amerikai, német, osztrák, szlovák és román választások.">
+<script>
+/* régi megosztott linkek (#TX-sen, #stat …) → amerikai eredményoldal */
+(function(){var h=location.hash;if(/^#([A-Z]{2}(-|$)|(no)?stat$)/.test(h))location.replace("eredmenyek"+h);})();
+</script>
+<meta property="og:image" content="https://voksmero.hu/assets/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/index.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=15">
+<style>
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(900px 520px at 85% 30%,var(--glow),transparent 65%),
+  radial-gradient(700px 420px at 0% 0%,color-mix(in srgb,var(--acc) 10%,transparent),transparent 70%)}
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);background-size:56px 56px;
+  mask-image:radial-gradient(ellipse at 30% 40%,#000 0%,transparent 70%);-webkit-mask-image:radial-gradient(ellipse at 30% 40%,#000 0%,transparent 70%)}
+.hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:clamp(20px,4vw,60px);align-items:center;padding-block:clamp(40px,7vw,96px) clamp(40px,6vw,80px)}
+.hero h1{margin:16px 0 0;font:900 clamp(44px,5.6vw,80px)/.9 var(--f-display);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,var(--acc2),#9B7BFF 55%,var(--acc));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .lead{margin:20px 0 0;font-size:clamp(17px,1.7vw,20px);color:var(--ink2);max-width:52ch;text-wrap:pretty}
+.qs{position:relative;margin-top:28px;max-width:560px}
+.qs .box{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:6px 6px 6px 18px;box-shadow:var(--shadow2);transition:border-color .2s,box-shadow .2s}
+.qs .box:focus-within{border-color:var(--acc2);box-shadow:0 0 0 4px var(--glow)}
+.qs svg.lup{width:20px;height:20px;color:var(--ink3);flex:none}
+.qs input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:500 17px var(--f-body);padding:10px 0}
+.qs input::placeholder{color:var(--ink3)}
+.qs .go{flex:none}
+.sug{position:absolute;left:0;right:0;top:calc(100% + 8px);background:var(--card);border:1px solid var(--line2);border-radius:14px;box-shadow:var(--shadow);overflow:hidden;z-index:20;max-height:360px;overflow-y:auto}
+.sug a{display:flex;align-items:center;gap:12px;padding:10px 14px;text-decoration:none;border-bottom:1px solid var(--line)}
+.sug a:last-child{border-bottom:0}
+.sug a.act,.sug a:hover{background:var(--bg2)}
+.sug img{width:30px;height:20px;border-radius:3px;object-fit:cover;box-shadow:0 0 0 1px var(--line)}
+.sug b{flex:1;font-weight:600}
+.sug .em{padding:14px;color:var(--ink3)}
+.stats{display:grid;grid-template-columns:repeat(4,max-content);gap:12px 34px;margin-top:26px}
+.stats div{min-width:0}
+.stats div b{display:block;font:900 30px/1 var(--f-display)}
+.stats div span{font-size:13px;color:var(--ink3);text-transform:uppercase;letter-spacing:.1em;font-weight:600}
+.globe{position:relative;width:100%;max-width:520px;justify-self:center;aspect-ratio:1}
+.globe svg{width:100%;height:100%;overflow:visible}
+.globe .sph{fill:url(#gfill);stroke:var(--line2);stroke-width:1.2}
+.globe .gl{fill:none;stroke:color-mix(in srgb,var(--acc2) 40%,transparent);stroke-width:.9}
+.globe .halo{fill:none;stroke:var(--acc2);stroke-opacity:.18;stroke-width:18;filter:blur(8px)}
+.globe .land{fill:color-mix(in srgb,var(--acc2) 30%,var(--card2));stroke:color-mix(in srgb,var(--acc2) 45%,var(--bg));stroke-width:.5;cursor:pointer;transition:fill .2s}
+.globe .land:hover{fill:color-mix(in srgb,var(--acc2) 45%,var(--card2))}
+.globe .land.us{fill:#E2564B}.globe .land.us:hover{fill:#F06E62}
+.globe .land.rd{fill:#2FB59A;stroke:color-mix(in srgb,#2FB59A 55%,#fff);stroke-width:.9}.globe .land.rd:hover{fill:#4FD3B6}
+.globe .land.hu{fill:var(--acc);stroke:color-mix(in srgb,var(--acc) 60%,#fff);stroke-width:1.2}.globe .land.us{stroke:color-mix(in srgb,#E2564B 60%,#fff);stroke-width:.9}.globe .land.hu:hover{fill:color-mix(in srgb,var(--acc) 80%,#fff)}
+.globe .grat{fill:none;stroke:color-mix(in srgb,var(--acc2) 22%,transparent);stroke-width:.6;pointer-events:none}
+.globe.real svg{cursor:grab;touch-action:pan-y}.globe.real.drag svg{cursor:grabbing}
+.gtip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:9px;padding:6px 10px;font:600 13px/1.3 var(--f-body);white-space:nowrap;opacity:0;transform:translate(-50%,-130%);transition:opacity .12s;z-index:3}
+.gtip small{display:block;font-weight:500;opacity:.75;font-size:11.5px}.gtip.on{opacity:1}
+.ghint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font:600 11.5px var(--f-body);color:var(--ink3);white-space:nowrap;opacity:0;transition:opacity .4s}.globe.real .ghint{opacity:1}
+.mk{cursor:pointer}.mk text,.mk circle.p{pointer-events:none}
+.mk circle.p{fill:var(--acc);animation:mkp 2.4s ease-out infinite;transform-box:fill-box;transform-origin:center}
+.mk circle.d{fill:var(--acc);stroke:var(--bg);stroke-width:2}
+.mk.us circle.d,.mk.us circle.p{fill:#FF5C50}.mk.hu circle.d{fill:none;stroke:var(--acc);stroke-width:2;r:7px}.mk.hu circle.p{fill:none;stroke:var(--acc);stroke-width:1.5;r:7px}
+@keyframes mkp{from{opacity:.55;transform:scale(1)}to{opacity:0;transform:scale(3)}}
+.mk text{font:700 13px var(--f-body);fill:var(--ink);paint-order:stroke;stroke:var(--bg);stroke-width:4px}
+.mk text tspan.s{font:600 10.5px var(--f-body);fill:var(--ink2)}
+
+/* ---------- kiemelt ---------- */
+.feat{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.fc{position:relative;overflow:hidden;border-radius:22px;min-height:340px;padding:26px;text-decoration:none;color:#fff;display:flex;flex-direction:column;isolation:isolate;transition:transform .3s,box-shadow .3s}
+.fc:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.fc .tag{display:flex;align-items:center;gap:10px}
+.fc .tag img{width:40px;height:27px;border-radius:4px;object-fit:cover;box-shadow:0 2px 8px rgba(0,0,0,.35)}
+.fc h3{margin:18px 0 6px;font:900 clamp(30px,3.4vw,44px)/.95 var(--f-display);text-transform:uppercase;letter-spacing:.02em;max-width:14ch}
+.fc p{margin:0;opacity:.85;max-width:38ch}
+.fc .cta{margin-top:auto;padding-top:22px;display:flex;align-items:center;justify-content:space-between;gap:12px;font:700 15px var(--f-body)}
+.fc .cta i{font-style:normal;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:rgba(255,255,255,.14);transition:transform .3s,background .3s}
+.fc:hover .cta i{transform:translateX(4px);background:rgba(255,255,255,.24)}
+.fc.us{background:linear-gradient(140deg,#0B1B45 0%,#13285C 55%,#3A1020 100%)}
+.fc.us::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.16;background-image:radial-gradient(circle,#fff 1.2px,transparent 1.6px);background-size:22px 22px;mask-image:linear-gradient(120deg,#000 0 35%,transparent 70%);-webkit-mask-image:linear-gradient(120deg,#000 0 35%,transparent 70%)}
+.fc.us::after{content:"";position:absolute;right:-60px;bottom:-40px;width:340px;height:220px;z-index:-1;opacity:.22;background:repeating-linear-gradient(180deg,#E03A3E 0 18px,transparent 18px 36px);transform:rotate(-12deg)}
+.fc.hu{background:linear-gradient(150deg,#16231C 0%,#1D3326 50%,#3B1416 100%)}
+.fc.hu .band{position:absolute;left:0;top:0;bottom:0;width:8px;background:linear-gradient(#D2232C 0 33.3%,#fff 33.3% 66.6%,#2E8B57 66.6%)}
+.fc .nums{display:flex;gap:18px;margin-top:22px;flex-wrap:wrap}
+.fc .nums div{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:12px 16px;min-width:130px;backdrop-filter:blur(4px)}
+.fc .nums small{display:block;font:700 11px var(--f-body);letter-spacing:.14em;text-transform:uppercase;opacity:.7}
+.fc .nums b{font:900 34px/1.05 var(--f-display);font-variant-numeric:tabular-nums}
+.fc .nums b .d{color:#7FB0FF}.fc .nums b .r{color:#FF8A80}
+.fc .upd{font-size:12.5px;opacity:.65;margin-top:10px}
+.fc .mini{position:absolute;right:-10px;bottom:20px;width:62%;max-width:420px;z-index:-1;opacity:.95;filter:drop-shadow(0 12px 30px rgba(0,0,0,.45))}
+.fc .mini path{stroke:rgba(255,255,255,.55);stroke-width:.5}
+.fc.es{grid-column:1/-1;min-height:0;background:linear-gradient(120deg,#4A0B10 0%,#9E141A 50%,#C78B00 100%)}.fc.es h3{max-width:none}
+.fc.cal{grid-column:1/-1;min-height:0;background:linear-gradient(120deg,#0E3B4A 0%,#11605E 50%,#1C8A6E 100%)}
+.fc.cal h3{max-width:none}
+.calx{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 4px}
+.calx div{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.1);min-width:0}
+.calx img{width:34px;height:23px;border-radius:4px;object-fit:cover;flex:none}
+.calx b{display:block;font:700 14px var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calx small{display:block;font:600 12px var(--f-body);opacity:.8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.calx span{min-width:0}
+@media (max-width:720px){.calx{grid-template-columns:minmax(0,1fr)}}
+.fc.sim{grid-column:1/-1;min-height:280px;background:linear-gradient(120deg,#1B1F5E 0%,#3A2A8C 45%,#7B3FA0 100%)}
+.fc.sim::before{content:"";position:absolute;inset:0;z-index:-1;opacity:.5;background:radial-gradient(600px 300px at 85% 110%,rgba(255,255,255,.22),transparent 70%)}
+.fc.sim h3{max-width:none}.fc.sim p{max-width:52ch}
+.fc .hemi{position:absolute;right:26px;bottom:26px;width:min(42%,440px);z-index:-1;filter:drop-shadow(0 10px 26px rgba(0,0,0,.35))}
+
+/* ---------- országok ---------- */
+.ctl{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-bottom:18px}
+.fbox{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line2);border-radius:999px;padding:4px 16px;min-width:min(100%,300px);flex:1 1 280px;max-width:420px}
+.fbox:focus-within{border-color:var(--acc2);box-shadow:0 0 0 4px var(--glow)}
+.fbox svg{width:17px;height:17px;color:var(--ink3);flex:none}
+.fbox input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:500 15.5px var(--f-body);padding:9px 0}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips button{border:1px solid var(--line2);background:transparent;color:var(--ink2);border-radius:999px;padding:7px 14px;font:600 13.5px var(--f-body);cursor:pointer;transition:all .2s}
+.chips button:hover{color:var(--ink);border-color:var(--ink3)}
+.chips button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips button small{opacity:.6;margin-left:4px;font-weight:500}
+.cnt{font-size:14px;color:var(--ink3);margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,210px),1fr));gap:12px}
+.cc{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;background:var(--card);border:1px solid var(--line);text-decoration:none;transition:transform .2s,border-color .2s,box-shadow .2s;animation:ccin .45s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s);min-width:0}
+.cc:hover{transform:translateY(-2px);border-color:var(--line2);box-shadow:var(--shadow2)}
+.cc img{width:40px;height:28px;border-radius:5px;object-fit:cover;flex:none;box-shadow:0 0 0 1px var(--line),0 3px 8px rgba(0,0,0,.18);background:var(--bg2)}
+.cc span{min-width:0;flex:1}
+.cc b{display:block;font-weight:700;font-size:15px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cc small{display:block;font-size:12px;color:var(--ink3);margin-top:3px}
+.cc small.ok{color:var(--good);font-weight:700}
+.cc.ready{border-color:color-mix(in srgb,var(--good) 45%,var(--line));background:linear-gradient(135deg,color-mix(in srgb,var(--good) 8%,var(--card)),var(--card))}
+@keyframes ccin{from{opacity:0;transform:translateY(8px)}}
+.empty{padding:40px 10px;text-align:center;color:var(--ink3)}
+.cgroup{margin-top:26px}
+.cgroup h3{margin:0 0 12px;font:800 15px var(--f-cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);display:flex;align-items:center;gap:10px}
+.cgroup h3::after{content:"";flex:1;height:1px;background:var(--line)}
+
+/* ---------- hogyan ---------- */
+.how{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.how .card{padding:22px}
+.how .ic{width:46px;height:46px;border-radius:12px;display:grid;place-items:center;background:var(--bg2);color:var(--acc);margin-bottom:14px}
+.how .ic svg{width:24px;height:24px}
+.how h3{margin:0 0 6px;font:800 22px var(--f-display);text-transform:uppercase;letter-spacing:.03em}
+.how p{margin:0;color:var(--ink2);font-size:15px}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:minmax(0,1fr)}
+  .globe{max-width:380px;order:-1;margin-bottom:-10px}
+  .feat{grid-template-columns:minmax(0,1fr)}
+  .how{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:640px){
+  .globe{max-width:210px;margin:-10px auto -20px}
+  .fc{min-height:300px;padding:22px}
+  .fc .mini{width:70%;opacity:.55}
+  .fc .hemi{width:74%;right:-8%;bottom:64px;opacity:.4}
+  .fc .nums{gap:8px}.fc .nums div{min-width:0;padding:10px 12px}.fc .nums b{font-size:26px}
+  .how{grid-template-columns:minmax(0,1fr)}
+  .stats div b{font-size:26px}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px}
+  .grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .cc{padding:10px;gap:9px}.cc img{width:32px;height:22px}.cc b{font-size:14px}
+}
+
+/* ---------- alkalmazás ---------- */
+.appsec{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:clamp(20px,4vw,48px);align-items:center;padding:clamp(22px,4vw,44px);border-radius:26px;overflow:hidden;
+  background:radial-gradient(120% 140% at 100% 0%,color-mix(in srgb,#7B5CFF 30%,transparent),transparent 55%),radial-gradient(90% 120% at 0% 100%,color-mix(in srgb,#5FA8FF 22%,transparent),transparent 60%),var(--card);border:1px solid var(--line2)}
+.appsec h2{margin:8px 0 10px;font:900 clamp(30px,4.4vw,52px)/.95 var(--f-display);text-transform:uppercase;letter-spacing:.02em;text-wrap:balance}
+.appsec .lead2{color:var(--ink2);font-size:16.5px;line-height:1.55;margin:0 0 18px;max-width:52ch}
+.apfe{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 22px;padding:0;list-style:none}
+.apfe li{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;background:color-mix(in srgb,var(--ink) 7%,transparent);font:600 13px var(--f-body);color:var(--ink)}
+.apfe li svg{width:15px;height:15px;color:#7FB6FF}
+.apbt{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.apdl{display:inline-flex;align-items:center;gap:12px;padding:13px 20px 13px 16px;border-radius:16px;text-decoration:none;color:#fff;background:linear-gradient(135deg,#5FA8FF,#7B5CFF);box-shadow:0 14px 34px -14px #7B5CFF;transition:transform .2s,box-shadow .2s}
+.apdl:hover{transform:translateY(-2px);box-shadow:0 18px 40px -14px #7B5CFF}
+.apdl svg{width:28px;height:28px;flex:none}
+.apdl span{display:flex;flex-direction:column;line-height:1.1}.apdl small{font:600 11.5px var(--f-body);opacity:.85;letter-spacing:.04em;text-transform:uppercase}.apdl b{font:800 18px var(--f-body)}
+.apio{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:16px;border:1px solid var(--line2);background:transparent;color:var(--ink);font:700 14.5px var(--f-body);cursor:pointer}
+.apio svg{width:22px;height:22px}
+.apmeta{margin-top:12px;font-size:12.5px;color:var(--ink3)}
+.apsteps{margin:18px 0 0;padding:14px 16px;border-radius:14px;background:color-mix(in srgb,var(--ink) 5%,transparent);font-size:13.5px;color:var(--ink2);line-height:1.6}
+.apsteps b{color:var(--ink)}.apsteps ol{margin:6px 0 0;padding-left:20px}
+.apvis{position:relative;display:grid;place-items:center;min-height:360px}
+.phone{position:relative;width:min(220px,62vw);aspect-ratio:9/19;border-radius:34px;padding:10px;background:linear-gradient(160deg,#2A3554,#0B1122);box-shadow:0 30px 60px -20px rgba(0,0,0,.6),inset 0 0 0 1.5px rgba(255,255,255,.12);transform:rotate(-6deg)}
+.phone .scr{position:relative;height:100%;border-radius:26px;overflow:hidden;background:#070C18;display:flex;flex-direction:column;gap:8px;padding:30px 12px 12px}
+.phone .scr::before{content:"";position:absolute;top:8px;left:50%;width:56px;height:14px;border-radius:9px;background:#000;transform:translateX(-50%)}
+.phone .hd{display:flex;align-items:center;gap:7px;color:#EEF2FA;font:800 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase}
+.phone .hd img{width:20px;height:20px;border-radius:6px}
+.phone .bx{border-radius:12px;background:#111A2E;padding:9px;display:grid;gap:6px}
+.phone .bx i{display:block;height:7px;border-radius:4px;background:#24304A}
+.phone .bx .r{display:flex;height:9px;border-radius:5px;overflow:hidden}.phone .bx .r em{display:block;height:100%}
+.phone .hm{display:flex;gap:3px;flex-wrap:wrap;justify-content:center;padding:4px 0}
+.phone .hm u{width:7px;height:7px;border-radius:50%;display:block}
+.apico{position:absolute;right:6%;top:8%;width:84px;height:84px;border-radius:22px;box-shadow:0 18px 40px -14px rgba(0,0,0,.55);transform:rotate(8deg)}
+.apqr{position:absolute;left:2%;bottom:4%;display:flex;align-items:center;gap:10px;padding:10px;border-radius:16px;background:var(--card2);border:1px solid var(--line2);box-shadow:var(--shadow2,0 10px 30px -12px rgba(0,0,0,.4));transform:rotate(-3deg)}
+.apqr canvas,.apqr svg{width:84px;height:84px;background:#fff;border-radius:8px;padding:5px;display:block}
+.apqr small{font:600 12px/1.35 var(--f-body);color:var(--ink2);max-width:11ch}
+html.mob .apqr,.apqr[hidden]{display:none}
+@media (max-width:860px){.appsec{grid-template-columns:minmax(0,1fr)}.apvis{min-height:300px;order:-1}.phone{width:min(170px,46vw)}.apico{width:64px;height:64px;right:8%}}
+.ghint{white-space:normal!important;line-height:1.6;top:100%;bottom:auto;margin-top:2px;width:max-content;max-width:min(92vw,520px);text-align:center}
+@media (max-width:860px){.globe{margin-bottom:46px!important}.ghint{font-size:11px}.mk tspan.s{display:none}}.ghint .gk{display:inline-block;width:9px;height:9px;border-radius:2px;margin:0 3px 0 8px;vertical-align:0}.gk.us{background:#E2564B}.gk.hu{background:var(--acc)}.gk.rd{background:#2FB59A}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="#orszagok">Országok</a>
+      <a href="eredmenyek"><i class="live"></i><span>USA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="kicker">Választási adatok · magyarul</span>
+      <h1>A világ <em>választásai</em> egy helyen</h1>
+      <p class="lead">Térképek, élő eredmények és háttéranyagok országonként. Keresd meg az országot, amelyik érdekel – az oldalak folyamatosan bővülnek.</p>
+      <form class="qs" id="qs" role="search" autocomplete="off">
+        <div class="box"><svg class="lup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="q" type="search" placeholder="Ország keresése, pl. Németország" aria-label="Ország keresése" role="combobox" aria-expanded="false" aria-controls="sug" aria-autocomplete="list">
+          <button class="btn go" type="submit">Keresés</button></div>
+        <div class="sug" id="sug" role="listbox" hidden></div>
+      </form>
+    </div>
+    <div class="globe" id="globe">
+      <svg viewBox="0 0 500 500">
+        <defs><radialGradient id="gfill" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="var(--card2)"/><stop offset="1" stop-color="var(--bg)"/></radialGradient></defs>
+        <circle class="halo" cx="250" cy="250" r="212"/>
+        <circle class="sph" cx="250" cy="250" r="210"/>
+        <g id="glines"></g>
+        <a href="egyesult-allamok" class="mk us" transform="translate(152 210)"><circle class="p" r="4.5"/><circle class="d" r="4.5"/><text x="11" y="-6">Egyesült Államok<tspan class="s" x="11" dy="15">választási eredmények</tspan></text></a>
+        <a href="magyarorszag" class="mk hu" transform="translate(338 168)"><circle class="p" r="4.5" style="animation-delay:1.2s"/><circle class="d" r="4.5"/><text x="11" y="-22">Magyarország<tspan class="s" x="11" dy="15">kutatások · térkép · szimulátor</tspan></text></a>
+      </svg>
+      <div class="gtip" id="gtip"></div><div class="ghint">Forgasd meg, és kattints egy országra<br><span class="gk us" style="margin-left:0"></span>USA <span class="gk hu"></span>Magyarország <span class="gk rd"></span>további országok</div>
+    </div>
+  </div>
+</section>
+
+<section class="sec reveal" aria-labelledby="h-feat">
+  <div class="wrap">
+    <div id="favpanel"></div>
+    <div class="sh"><div><span class="kicker">Kiemelt</span><h2 id="h-feat">Elkészült oldalak</h2></div></div>
+    <div class="feat">
+      <a class="fc es" href="spanyol-valasztas">
+        <div class="tag"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">November 29.</span></div>
+        <h3>Spanyol választás 2026</h3>
+        <p>Előrehozott választás Spanyolországban: Sánchez vagy Feijóo? Friss közvélemény-kutatások, esélyek, visszaszámlálás és a 2023-as eredmények.</p>
+        <div class="nums"><div><small>Még</small><b id="esd">–</b></div><div><small>Képviselő</small><b>350</b></div><div><small>Többséghez</small><b>176</b></div></div>
+        <div class="cta"><span>Részvétel, térkép, eredmények</span><i>→</i></div>
+      </a>
+      <a class="fc us" href="eredmenyek">
+        <div class="tag"><img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" alt=""><span class="pill live"><i></i>Élő</span></div>
+        <h3>Amerikai félidős választás 2026</h3>
+        <p>Szenátus, Képviselőház és kormányzók – államonként, megyénként és körzetenként.</p>
+        <div class="nums" id="usnums"><div><small>Szenátus</small><b>–</b></div><div><small>Képviselőház</small><b>–</b></div></div>
+        <div class="upd" id="usupd"></div>
+        <div class="cta"><span>Eredmények megnyitása</span><i>→</i></div>
+      </a>
+      <a class="fc hu" href="magyarorszag">
+        <span class="band"></span>
+        <div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""><span class="pill ok" style="background:rgba(67,207,140,.18);color:#7BE3B0">Új</span></div>
+        <h3>Magyarország</h3>
+        <p>Friss közvélemény-kutatások, a 106 egyéni körzet és mind a 3177 település 2026-os eredménye térképen.</p>
+        <div class="nums"><div><small>Egyéni körzet</small><b>106</b></div><div><small>Település</small><b>3177</b></div></div>
+        <svg class="mini" id="humini" viewBox="0 0 1000 618"></svg>
+        <div class="cta"><span>Kutatások és térkép</span><i>→</i></div>
+      </a>
+      <a class="fc sim" href="szimulator">
+        <div class="tag"><span class="pill" style="background:rgba(255,255,255,.16);color:#fff">Új</span><span class="pill" style="background:rgba(0,0,0,.25);color:#fff">Magyarország</span></div>
+        <h3>Választási szimulátor</h3>
+        <p>Add meg a pártok eredményét – akár saját, kitalált pártokkal –, és nézd végig a választási éjszakát szavazókörről szavazókörre, pontos mandátumszámítással.</p>
+        <div class="nums"><div><small>Mandátum</small><b>199</b></div><div><small>Szavazókör</small><b>11 542</b></div><div><small>Település</small><b>3177</b></div></div>
+        <svg class="hemi" id="simhemi" viewBox="0 0 400 214" aria-hidden="true"></svg>
+        <div class="cta"><span>Szimulátor indítása</span><i>→</i></div>
+      </a>
+      <a class="fc cal" href="naptar">
+        <div class="tag"><span class="pill" style="background:rgba(255,255,255,.16);color:#fff">Új</span></div>
+        <h3>Választási naptár</h3>
+        <p>Mikor hol választanak? Közelgő választások a világban, visszaszámlálással.</p>
+        <div class="calx" id="calx"></div>
+        <div class="cta"><span>Naptár megnyitása</span><i>→</i></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="sec reveal" id="alkalmazas" aria-labelledby="h-app" style="padding-top:0">
+  <div class="wrap">
+    <div class="appsec">
+      <div>
+        <span class="kicker">Telefonos alkalmazás</span>
+        <h2 id="h-app">A Voksmérő a zsebedben</h2>
+        <p class="lead2">Telepítsd a Voksmérő alkalmazást: élő eredmények, térképek és a választási szimulátor egy koppintásra, teljes képernyőn.</p>
+        <ul class="apfe">
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Ingyenes</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Mindig friss adatok</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span id="apsz">Kis méret, gyors letöltés</span></li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Nincs reklám, nincs regisztráció</li>
+        </ul>
+        <div class="apbt">
+          <a class="apdl" id="apdl" href="https://github.com/medence32-beep/valasztas-adat/releases/latest/download/Voksmero.apk">
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.6 9.48l1.84-3.18a.38.38 0 0 0-.66-.38l-1.86 3.22a11.4 11.4 0 0 0-9.84 0L5.22 5.92a.38.38 0 0 0-.66.38L6.4 9.48A10.8 10.8 0 0 0 1 18h22a10.8 10.8 0 0 0-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/></svg>
+            <span><small>Letöltés Androidra</small><b>Voksmero.apk</b></span></a>
+          <button class="apio" type="button" id="apio"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.73-1.35-.14-2.64.8-3.32.8-.69 0-1.74-.78-2.86-.76A4.23 4.23 0 0 0 5.3 9.77c-1.53 2.65-.39 6.57 1.1 8.72.73 1.05 1.6 2.23 2.73 2.19 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.86.69 1.18-.02 1.93-1.07 2.65-2.13a9.4 9.4 0 0 0 1.2-2.47 3.83 3.83 0 0 1-2.31-3.46zM14.2 6.13A3.82 3.82 0 0 0 15.1 3.4a3.9 3.9 0 0 0-2.52 1.3 3.64 3.64 0 0 0-.92 2.64 3.22 3.22 0 0 0 2.54-1.21z"/></svg>iPhone-ra</button>
+        </div>
+        <div class="apmeta" id="apmeta">Android 7.0 vagy újabb · a tartalom az alkalmazás frissítése nélkül is mindig naprakész</div>
+        <div class="apsteps" id="apsteps"><b>Telepítés Androidon:</b>
+          <ol><li>Töltsd le a <b>Voksmero.apk</b> fájlt, és nyisd meg.</li><li>Ha a telefon kéri, engedélyezd az <b>ismeretlen forrásból</b> való telepítést.</li><li>Kész – a <b>Voksmérő</b> ikon megjelenik a kezdőképernyőn.</li></ol></div>
+        <div class="apsteps" id="apiossteps" hidden><b>iPhone-on (Safariban):</b>
+          <ol><li>Koppints alul a <b>Megosztás</b> gombra (négyzet felfelé nyíllal).</li><li>Válaszd a <b>Főképernyőhöz adás</b> lehetőséget.</li><li>Kész – a <b>Voksmérő</b> ikon megjelenik a kezdőképernyőn.</li></ol></div>
+      </div>
+      <div class="apvis" aria-hidden="true">
+        <div class="phone"><div class="scr">
+          <div class="hd"><img src="assets/app/icon-192.png?v=3" alt="">Voksmérő</div>
+          <div class="bx"><i style="width:55%"></i><div class="r"><em style="width:56%;background:#2F6FE4"></em><em style="width:36%;background:#EE8410"></em><em style="width:8%;background:#5E8F22"></em></div><i style="width:80%"></i></div>
+          <div class="bx"><div class="hm" id="aphm"></div></div>
+          <div class="bx"><i style="width:70%"></i><i style="width:45%"></i><i style="width:60%"></i></div>
+        </div></div>
+        <img class="apico" src="assets/app/icon-192.png?v=3" alt="">
+        <div class="apqr" id="apqr" hidden><div id="apqrc"></div><small>Olvasd be a telefonoddal a letöltéshez</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="sec reveal" id="orszagok" aria-labelledby="h-c" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">Böngéssz</span><h2 id="h-c">Országok</h2><p>Kattints egy országra. Ahol még nincs kész az oldal, ott ezt jelezzük.</p></div></div>
+    <div class="ctl">
+      <label class="fbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Szűrés név szerint</span><input id="f" type="search" placeholder="Szűrés név szerint" autocomplete="off"></label>
+      <div class="chips" id="chips" role="group" aria-label="Földrész szerinti szűrés"></div>
+    </div>
+    <p class="cnt" id="cnt"></p>
+    <div id="clist"></div>
+  </div>
+</section>
+
+<section class="sec reveal" aria-labelledby="h-how" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">Rólunk</span><h2 id="h-how">Mit találsz itt?</h2></div></div>
+    <div class="how">
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></div><h3>Interaktív térképek</h3><p>Nagyítható, mozgatható térképek választókerületekkel, megyékkel és államokkal – gépen és telefonon is.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3>Élő eredmények</h3><p>Választás éjszakáján percre frissülő számok, feldolgozottság és hírek megbízható forrásokból.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div><h3>Magyarul</h3><p>Minden adat és magyarázat magyar nyelven, az országok választási rendszerének rövid bemutatásával.</p></div>
+      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20a8 8 0 0 1 16 0"/><path d="M12 12V6M12 12l4-3"/><circle cx="12" cy="20" r="1.2"/></svg></div><h3>Szimulátor</h3><p>Játszd le a saját választási éjszakádat: egyedi pártok, valósághű számlálás és hivatalos mandátumkiosztás.</p></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az eredményeket az AP, az NBC News és a hivatalos választási irodák adatai alapján közöljük; a győztest mindig a hivatalos forrás hirdeti ki.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Források</h4><ul><li><a href="https://apnews.com/projects/elections-2026/" target="_blank" rel="noopener">AP Elections</a></li><li><a href="https://www.valasztas.hu/" target="_blank" rel="noopener">valasztas.hu (NVI)</a></li><li><a href="https://flagpedia.net" target="_blank" rel="noopener">Zászlók: flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+
+<script src="assets/orszagok.js?v=10"></script>
+<script>
+(function(){
+"use strict";
+const V=window.VALASZTAS,$=id=>document.getElementById(id);
+document.addEventListener("error",e=>{if(e.target&&e.target.tagName==="IMG")e.target.style.visibility="hidden";},true);
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+V.themeBtn($("theme"));V.reveal();
+
+
+/* földgömb: hosszúsági körök forognak */
+(function(){const g=$("glines");if(!g)return;const ns="http://www.w3.org/2000/svg";let h="";
+  [-60,-30,0,30,60].forEach(la=>{const y=250-210*Math.sin(la*Math.PI/180),rx=210*Math.cos(la*Math.PI/180);h+='<ellipse class="gl" cx="250" cy="'+y.toFixed(1)+'" rx="'+rx.toFixed(1)+'" ry="'+(rx*0.16).toFixed(1)+'"/>';});
+  g.innerHTML=h;const mer=[];for(let i=0;i<6;i++){const e=document.createElementNS(ns,"ellipse");e.setAttribute("class","gl");e.setAttribute("cx","250");e.setAttribute("cy","250");e.setAttribute("ry","210");g.appendChild(e);mer.push(e);}
+  const red=matchMedia("(prefers-reduced-motion: reduce)").matches;let t0=performance.now();
+  const step=now=>{const a=((now-t0)/26000)*Math.PI;mer.forEach((e,i)=>{const ph=a+i*Math.PI/6;e.setAttribute("rx",(Math.abs(Math.cos(ph))*210).toFixed(1));});if(!red&&g.isConnected)requestAnimationFrame(step);};requestAnimationFrame(step);})();
+
+
+/* valódi földgömb: országhatárok, forgatható, kattintható országok (helyi d3-geo + Natural Earth 1:110m) */
+(function(){const box=$("globe");if(!box)return;const svg=box.querySelector("svg");
+  const ld=src=>new Promise((ok,no)=>{const s=document.createElement("script");s.src=src;s.onload=ok;s.onerror=no;document.head.appendChild(s);});
+  const ALIAS={"United States of America":"US","Bosnia and Herz.":"BA","Central African Rep.":"CF","Congo":"CG","Dem. Rep. Congo":"CD","Dominican Rep.":"DO","Eq. Guinea":"GQ","Falkland Is.":"FK","Fr. S. Antarctic Lands":"TF","Kosovo":"XK","Macedonia":"MK","Myanmar":"MM","N. Cyprus":"CY","Palestine":"PS","S. Sudan":"SS","Solomon Is.":"SB","Somaliland":"SO","Timor-Leste":"TL","W. Sahara":"EH","eSwatini":"SZ","Turkey":"TR","Russia":"RU","South Korea":"KR","North Korea":"KP","Laos":"LA","Syria":"SY","Iran":"IR","Vietnam":"VN","Bolivia":"BO","Venezuela":"VE","Tanzania":"TZ","Moldova":"MD","Brunei":"BN","Taiwan":"TW","Gambia":"GM","Bahamas":"BS","Greenland":"GL","New Caledonia":"NC","Puerto Rico":"PR","Czechia":"CZ","Côte d'Ivoire":"CI","Antarctica":""};
+  Promise.all([ld("assets/vendor/geo.min.js?v=1"),fetch("assets/world-110m.json").then(r=>r.json())]).then(([_,w])=>{
+    if(!window.d3||!window.topojson)return;
+    const byEn={};V.list.forEach(c=>{if(c.en)byEn[V.norm(c.en)]=c;});const byCode={};V.list.forEach(c=>byCode[c.code]=c);
+    const feats=topojson.feature(w,w.objects.countries).features.filter(f=>f.properties.name!=="Antarctica");
+    feats.forEach(f=>{const n=f.properties.name;const a=ALIAS[n];f.c=a!=null?(a?byCode[a]||{code:a,name:V.name(a),ready:null}:null):(byEn[V.norm(n)]||null);});
+    const proj=d3.geoOrthographic().scale(208).translate([250,250]).clipAngle(90).precision(.4),path=d3.geoPath(proj),grat=d3.geoGraticule10();
+    const ns="http://www.w3.org/2000/svg";
+    /* régi drótváz helyett */
+    const gl=$("glines");if(gl)gl.remove();
+    const gG=document.createElementNS(ns,"path");gG.setAttribute("class","grat");
+    const gC=document.createElementNS(ns,"g");const mk=[...svg.querySelectorAll(".mk")];
+    svg.insertBefore(gG,mk[0]);svg.insertBefore(gC,mk[0]);
+    const P=feats.map(f=>{const p=document.createElementNS(ns,"path");p.setAttribute("class","land"+(f.c&&f.c.code==="US"?" us":f.c&&f.c.code==="HU"?" hu":f.c&&f.c.ready?" rd":""));gC.appendChild(p);p.__f=f;return p;});P.filter(p=>/ rd$/.test(p.getAttribute("class"))).forEach(p=>gC.appendChild(p));P.filter(p=>/ (us|hu)$/.test(p.getAttribute("class"))).forEach(p=>gC.appendChild(p));
+    const PTS=[[-98,39],[19.3,47.2]];
+    let rot=[18,-38,0],drag=null,idle=0,t0=performance.now();
+    const red=matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function draw(){proj.rotate(rot);gG.setAttribute("d",path(grat)||"");P.forEach(p=>p.setAttribute("d",path(p.__f)||""));
+      mk.forEach((m,i)=>{const ll=PTS[i],v=d3.geoDistance(ll,[-rot[0],-rot[1]])<1.42,xy=proj(ll);m.style.display=v?"":"none";if(xy){m.setAttribute("transform","translate("+xy[0].toFixed(1)+" "+xy[1].toFixed(1)+")");const L=xy[0]>300,tx=m.querySelector("text");if(tx){tx.setAttribute("text-anchor",L?"end":"start");tx.setAttribute("x",L?-11:11);tx.querySelectorAll("tspan").forEach(s=>s.setAttribute("x",L?-11:11));}}});}
+    /* lassú ingázás az USA és Európa között, amíg senki nem forgatja */
+    let gVis=true,gLast=0,gRaf=0;const gGo=()=>{if(!gRaf&&!red&&gVis&&!document.hidden)gRaf=requestAnimationFrame(tick);};
+    try{new IntersectionObserver(es=>{gVis=es[0].isIntersecting;gGo();}).observe(box);}catch(e){}
+    document.addEventListener("visibilitychange",gGo);
+    /* telefonon nincs automatikus forgás (húzással továbbra is forgatható) – a folyamatos újrarajzolás lassította a görgetést */
+    const LITE=document.documentElement.classList.contains("lite");
+    function tick(now){gRaf=0;if(LITE&&!drag)return;if(now-gLast<(LITE?60:33)){gGo();return;}gLast=now;if(!drag&&now>idle){const k=(now-t0)/1000;const tg=[18+Math.sin(k/7)*34,-38+Math.sin(k/11)*5];rot=[rot[0]+(tg[0]-rot[0])*.04,rot[1]+(tg[1]-rot[1])*.04,0];draw();}gGo();}
+    draw();gGo();
+    box.classList.add("real");box.setAttribute("aria-label","Földgömb – kattints egy országra");
+    /* húzás */
+    svg.addEventListener("pointerdown",e=>{if(e.target.closest(".mk"))return;drag={x:e.clientX,y:e.clientY,r:rot.slice(),mv:false};box.classList.add("drag");try{svg.setPointerCapture(e.pointerId);}catch(_){}});
+    svg.addEventListener("pointermove",e=>{if(drag){const dx=e.clientX-drag.x,dy=e.clientY-drag.y;if(Math.abs(dx)+Math.abs(dy)>4)drag.mv=true;const k=0.35*500/svg.getBoundingClientRect().width;rot=[drag.r[0]+dx*k,Math.max(-80,Math.min(80,drag.r[1]-dy*k)),0];draw();tipOff();return;}
+      const p=e.target.closest(".land");if(!p||!p.__f.c){tipOff();return;}const c=p.__f.c,t=$("gtip"),r=box.getBoundingClientRect();
+      t.innerHTML=esc(c.name)+'<small>'+(c.ready?'Megnyitás →':'Fejlesztés alatt')+'</small>';t.style.left=(e.clientX-r.left)+"px";t.style.top=(e.clientY-r.top)+"px";t.classList.add("on");idle=performance.now()+2500;});
+    const end=e=>{if(!drag)return;const mv=drag.mv;drag=null;box.classList.remove("drag");idle=performance.now()+4000;
+      if(!mv){const el=document.elementFromPoint(e.clientX,e.clientY),p=el&&el.closest&&el.closest(".land");if(p&&p.__f.c)location.href=V.href(p.__f.c);}};
+    svg.addEventListener("pointerup",end);svg.addEventListener("pointercancel",()=>{drag=null;box.classList.remove("drag");});
+    svg.addEventListener("pointerleave",tipOff);
+    function tipOff(){const t=$("gtip");if(t)t.classList.remove("on");}
+  }).catch(()=>{});
+})();
+/* kereső legördülő */
+const q=$("q"),sug=$("sug");let act=-1,cur=[];
+function item(c){return '<a href="'+V.href(c)+'" role="option"><img src="'+V.flag(c.code,40)+'" alt="" loading="lazy"><b>'+esc(c.name)+'</b>'+(c.ready?'<span class="pill ok">Elérhető</span>':'<span class="pill dev">Fejlesztés alatt</span>')+'</a>';}
+function show(){const v=q.value.trim();if(!v){sug.hidden=true;q.setAttribute("aria-expanded","false");return;}
+  cur=V.search(v).slice(0,8);act=cur.length?0:-1;
+  sug.innerHTML=cur.length?cur.map(item).join(""):'<div class="em">Nincs ilyen ország a listában.</div>';
+  paint();sug.hidden=false;q.setAttribute("aria-expanded","true");}
+function paint(){sug.querySelectorAll("a").forEach((a,i)=>{a.classList.toggle("act",i===act);a.setAttribute("aria-selected",String(i===act));});}
+q.addEventListener("input",show);q.addEventListener("focus",show);
+q.addEventListener("keydown",e=>{if(sug.hidden)return;if(e.key==="ArrowDown"){act=Math.min(cur.length-1,act+1);paint();e.preventDefault();}else if(e.key==="ArrowUp"){act=Math.max(0,act-1);paint();e.preventDefault();}else if(e.key==="Escape"){sug.hidden=true;}});
+$("qs").addEventListener("submit",e=>{e.preventDefault();const c=cur[act>=0?act:0]||V.search(q.value)[0];if(c)location.href=V.href(c);});
+document.addEventListener("click",e=>{if(!e.target.closest("#qs"))sug.hidden=true;});
+
+/* országlista */
+let cont="all";const f=$("f");
+function counts(){const n={all:V.list.length};V.list.forEach(c=>{n[c.cont]=(n[c.cont]||0)+1;});return n;}
+const N=counts();
+$("chips").innerHTML=[["all","Mind"]].concat(Object.keys(V.CONT).map(k=>[k,V.CONT[k]])).map(([k,l])=>'<button type="button" data-c="'+k+'" aria-pressed="'+(k==="all")+'">'+esc(l)+'<small>'+N[k]+'</small></button>').join("");
+$("chips").addEventListener("click",e=>{const b=e.target.closest("button[data-c]");if(!b)return;cont=b.dataset.c;$("chips").querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render();});
+f.addEventListener("input",render);
+function card(c,i){return '<a class="cc'+(c.ready?" ready":"")+'" href="'+V.href(c)+'" style="--d:'+Math.min(i*0.012,0.5).toFixed(3)+'s"><img src="'+V.flag(c.code,80)+'" srcset="'+V.flagSrcset(c.code)+'" alt="" loading="lazy" width="40" height="28"><span><b>'+esc(c.name)+'</b>'+(c.ready?'<small class="ok">● Elérhető</small>':'<small>Fejlesztés alatt</small>')+'</span></a>';}
+function render(){
+  const v=f.value.trim();let L=v?V.search(v):V.list.slice();if(cont!=="all")L=L.filter(c=>c.cont===cont);
+  $("cnt").textContent=L.length+" ország"+(v?" a(z) „"+v+"” keresésre":"");
+  if(!L.length){$("clist").innerHTML='<div class="empty">Nincs találat. Próbáld másképp írni, pl. „Brazília” vagy „Brazil”.</div>';return;}
+  if(cont==="all"&&!v){const ready=L.filter(c=>c.ready);let h='<div class="grid">'+ready.map(card).join("")+'</div>';
+    Object.keys(V.CONT).forEach(k=>{const g=L.filter(c=>c.cont===k);h+='<div class="cgroup"><h3>'+esc(V.CONT[k])+'</h3><div class="grid">'+g.map(card).join("")+'</div></div>';});$("clist").innerHTML=h;}
+  else $("clist").innerHTML='<div class="grid">'+L.map(card).join("")+'</div>';
+}
+render();
+
+/* USA élő számok */
+(async function(){try{let d=null;for(const u of ["data.json","https://raw.githubusercontent.com/medence32-beep/valasztas-adat/main/data.json"]){try{const r=await fetch(u+"?_="+Date.now(),{cache:"no-store"});if(r.ok){d=await r.json();break;}}catch(e){}}
+  if(!d)return;const C=(d.meta&&d.meta.control)||{},s=C.senate||{},h=C.house||{};
+  $("usnums").innerHTML='<div><small>Szenátus</small><b><span class="d">'+(s.d||0)+'</span>–<span class="r">'+(s.r||0)+'</span></b></div><div><small>Képviselőház</small><b><span class="d">'+(h.d||0)+'</span>–<span class="r">'+(h.r||0)+'</span></b></div>';
+  const u=d.meta&&d.meta.status&&d.meta.status.updated;if(u)$("usupd").textContent="Frissítve: "+u;}catch(e){}})();
+
+/* magyar OEVK mini térkép */
+(async function(){try{const r=await fetch("assets/humini.json?v=1");if(!r.ok)return;const J=await r.json();
+  $("humini").setAttribute("viewBox","0 0 "+J.W+" "+J.H);
+  let RS={};try{const q=await fetch("assets/oevk_2026.json");if(q.ok)RS=await q.json();}catch(e){}
+  const col=o=>{const r=RS[o.id];if(!r)return "#5B6B8C";const mg=Math.abs(r.t-r.f),k=mg<5?52:mg<15?68:mg<30?84:100;return "color-mix(in oklab,"+(r.p==="F"?"#F28C1A":"#3B82F6")+" "+k+"%,#DCE3F2)";};
+  $("humini").innerHTML=J.o.map(o=>'<path d="'+o.d+'" fill="'+col(o)+'"/>').join("")+'<path d="'+J.ob+'" fill="none" stroke="#fff" stroke-width="2.2" stroke-opacity=".8"/>';}catch(e){}})();
+/* szimulátor-kártya: a 2026-os parlament patkója */
+(function(){const el=$("simhemi");if(!el)return;const rows=9,R0=88,R1=196,cx=200,cy=204,S=[],rad=[];let tl=0;for(let r=0;r<rows;r++){rad.push(R0+(R1-R0)*r/(rows-1));tl+=rad[r];}
+  let left=199;const cnt=rad.map((r,i)=>{const n=i===rows-1?left:Math.round(199*r/tl);left-=n;return n;});
+  rad.forEach((r,i)=>{for(let k=0;k<cnt[i];k++){const a=Math.PI-(Math.PI*(k+.5)/cnt[i]);S.push([cx+r*Math.cos(a),cy-r*Math.sin(a),a]);}});S.sort((p,q)=>q[2]-p[2]);
+  const C=[];[["#6FA5FF",141],["#FFA53D",52],["#8FCB4B",6]].forEach(x=>{for(let i=0;i<x[1];i++)C.push(x[0]);});
+  el.innerHTML=S.map((s,i)=>'<circle cx="'+s[0].toFixed(1)+'" cy="'+s[1].toFixed(1)+'" r="5.2" fill="'+C[i]+'"/>').join("");})();
+})();
+</script>
+<script src="assets/kedvencek.js?v=3"></script>
+<script>(function(){var e=document.getElementById("esd");if(!e)return;var t=new Date("2026-11-29T20:00:00+01:00")-new Date();if(t<=0){e.textContent="Lezajlott";return;}var d=Math.floor(t/864e5);e.textContent=d>0?d+" nap":Math.max(1,Math.ceil(t/36e5))+" óra";})();</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script>
+/* ---------- naptár kártya ---------- */
+(function(){const el=document.getElementById("calx");if(!el)return;const V=window.VALASZTAS,MS=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."];
+  const n=new Date(),T=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  fetch("assets/data/naptar.json?v=1").then(r=>r.json()).then(j=>{const L=j.v.filter(e=>{const [y,m,d]=e.d.split("-").map(Number);e._d=new Date(y,m-1,d);return e._d>=T&&!e.h;}).slice(0,3);
+    el.innerHTML=L.map(e=>{const k=Math.round((e._d-T)/864e5);return '<div><img src="'+V.flag(e.k,80)+'" alt=""><span><b>'+V.name(e.k)+'</b><small>'+MS[e._d.getMonth()]+' '+e._d.getDate()+'. · '+(k===0?"ma":k===1?"holnap":k+" nap múlva")+'</small></span></div>';}).join("");}).catch(()=>{});
+})();
+/* ---------- alkalmazás szekció ---------- */
+(function(){const ua=navigator.userAgent||"",sec=document.getElementById("alkalmazas");if(!sec)return;
+  if(/ValasztasokApp/.test(ua)){sec.remove();return;}
+  const ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1),android=/Android/i.test(ua);
+  if(ios||android)document.documentElement.classList.add("mob");
+  const io=document.getElementById("apio"),st=document.getElementById("apsteps"),si=document.getElementById("apiossteps");
+  if(ios){st.hidden=true;si.hidden=false;document.getElementById("apdl").style.order=2;}
+  io.addEventListener("click",()=>{si.hidden=false;if(!ios)st.hidden=true;si.scrollIntoView({behavior:"smooth",block:"nearest"});});
+  /* mini „patkó” a telefonképen */
+  const hm=document.getElementById("aphm");hm.innerHTML=Array.from({length:40},(_,i)=>'<u style="background:'+(i<26?"#2F6FE4":i<38?"#EE8410":"#5E8F22")+'"></u>').join("");
+  /* QR-kód asztali gépen */
+  if(!ios&&!android){const sc=document.createElement("script");sc.src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js";
+    sc.onload=()=>{try{const q=qrcode(0,"M");q.addData(document.getElementById("apdl").href);q.make();document.getElementById("apqrc").innerHTML=q.createSvgTag({cellSize:3,margin:0,scalable:true});document.getElementById("apqr").hidden=false;}catch(e){}};document.head.appendChild(sc);}
+  /* aktuális verzió */
+  fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/releases/latest").then(r=>r.ok?r.json():null).then(j=>{if(!j)return;const a=(j.assets||[]).find(x=>/\.apk$/.test(x.name));
+    const d=new Date(j.published_at);if(a){const z=document.getElementById("apsz");if(z)z.textContent="Csak "+Math.round(a.size/1024)+" KB";}document.getElementById("apmeta").textContent="Verzió "+String(j.tag_name||"").replace(/^app-/,"")+(a?" · "+Math.round(a.size/1024)+" KB":"")+" · "+d.toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"})+" · Android 7.0 vagy újabb";}).catch(()=>{});
+})();
+</script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

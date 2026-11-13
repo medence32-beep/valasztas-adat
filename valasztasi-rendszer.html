@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=1";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="robots" content="noindex, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Így működik a magyar választási rendszer – egyszerűen | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/valasztasi-rendszer">
+<meta name="description" content="Mi az a töredékszavazat, hány százalék kell a bejutáshoz, és hány mandátum a kétharmad? A magyar választási rendszer érthetően, példákkal – próbáld ki a szimulátorban!">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Így működik a magyar választási rendszer – egyszerűen">
+<meta property="og:description" content="Mi az a töredékszavazat, hány százalék kell a bejutáshoz, és hány mandátum a kétharmad? A magyar választási rendszer érthetően, példákkal – próbáld ki a szimulátorban!">
+<meta property="og:url" content="https://voksmero.hu/valasztasi-rendszer">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/szimulator.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/szimulator.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=15">
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Voksmérő", "item": "https://voksmero.hu/"}, {"@type": "ListItem", "position": 2, "name": "Magyarország", "item": "https://voksmero.hu/magyarorszag"}, {"@type": "ListItem", "position": 3, "name": "A választási rendszer", "item": "https://voksmero.hu/valasztasi-rendszer"}]}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Hány képviselő van az Országgyűlésben?", "acceptedAnswer": {"@type": "Answer", "text": "199. Közülük 106-ot az egyéni választókerületekben (OEVK), 93-at az országos pártlistákról választanak."}}, {"@type": "Question", "name": "Hány százalék kell a parlamentbe jutáshoz?", "acceptedAnswer": {"@type": "Answer", "text": "Egy önállóan induló pártnak a listás szavazatok 5%-a, két párt közös listájának 10%, három vagy több párt közös listájának 15%."}}, {"@type": "Question", "name": "Hány mandátum kell a többséghez és a kétharmadhoz?", "acceptedAnswer": {"@type": "Answer", "text": "Az egyszerű többséghez 100, a kétharmados (alkotmányozó) többséghez 133 mandátum kell a 199-ből."}}, {"@type": "Question", "name": "Mi az a töredékszavazat?", "acceptedAnswer": {"@type": "Answer", "text": "Az egyéni körzetekben „el nem használt” szavazatok: a vesztes jelöltekre leadott összes szavazat, és a győztesnél az a többlet, ami a második helyezett legyőzéséhez már nem kellett. Ezeket hozzáadják a pártok listás szavazataihoz."}}, {"@type": "Question", "name": "Hogyan osztják el a listás mandátumokat?", "acceptedAnswer": {"@type": "Answer", "text": "A 93 listás helyet a pártlistákra leadott szavazatok és a töredékszavazatok összege alapján, a D'Hondt-módszerrel osztják el a küszöböt átlépő listák között."}}, {"@type": "Question", "name": "Mi az OEVK?", "acceptedAnswer": {"@type": "Answer", "text": "Az országgyűlési egyéni választókerület. 106 ilyen körzet van; mindegyikben az a jelölt nyer, aki a legtöbb szavazatot kapja, egyetlen fordulóban."}}, {"@type": "Question", "name": "Hogyan szavazhatnak a határon túli magyarok?", "acceptedAnswer": {"@type": "Answer", "text": "Akinek nincs magyarországi lakcíme, levélben szavazhat, de csak pártlistára (vagy nemzetiségi listára), egyéni jelöltre nem."}}, {"@type": "Question", "name": "Mikor lesz a következő országgyűlési választás?", "acceptedAnswer": {"@type": "Answer", "text": "Az Országgyűlést négy évre választják; a 2026-os választás után a következő rendes választás 2030 tavaszán esedékes."}}]}</script>
+<style>
+.hero{padding-block:clamp(34px,6vw,70px) clamp(16px,3vw,26px)}
+.crumbs{font-size:13px;color:var(--ink3);margin-bottom:14px}.crumbs a{color:var(--ink2);text-decoration:none}
+.hero h1{margin:10px 0 14px;font:900 clamp(40px,6.6vw,80px)/.92 var(--f-display);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance;max-width:16ch}
+.hero .lead{color:var(--ink2);font-size:18px;line-height:1.55;max-width:62ch;margin:0}
+.kf{list-style:none;margin:26px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.kf li{padding:14px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line)}
+.kf b{display:block;font:800 clamp(26px,3.4vw,36px)/1 var(--f-mono)}.kf span{font-size:13px;color:var(--ink3)}
+.doc{display:grid;grid-template-columns:minmax(0,1fr) 280px;gap:clamp(20px,3vw,40px);align-items:start;padding-block:20px 30px}
+.toc{position:sticky;top:calc(64px + env(safe-area-inset-top,0px));padding:18px}
+.toc h2{margin:0 0 10px;font:800 12px var(--f-cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.toc ol{margin:0;padding-left:18px;display:grid;gap:7px;font-size:14.5px}.toc a{color:var(--ink2);text-decoration:none}.toc a:hover{color:var(--acc)}
+.toc .btn{margin-top:16px;width:100%;justify-content:center}
+.art{min-width:0}
+.art section{scroll-margin-top:80px;margin-bottom:34px}
+.art h2{margin:0 0 12px;font:900 clamp(26px,3.4vw,38px)/1.02 var(--f-display);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance}
+.art p,.art li{color:var(--ink2);line-height:1.7;font-size:16.5px}
+.art p{margin:0 0 12px;max-width:70ch}.art ul{margin:0 0 12px;padding-left:20px;max-width:68ch}
+.art b{color:var(--ink)}
+.note{padding:16px 18px;border-radius:16px;background:color-mix(in srgb,var(--acc) 9%,var(--card));border:1px solid color-mix(in srgb,var(--acc) 35%,var(--line));margin:6px 0 14px}
+.note p{margin:0;color:var(--ink)}
+.calc{padding:clamp(16px,2.6vw,24px);margin:10px 0 16px}
+.calc h3{margin:0 0 4px;font:800 13px var(--f-cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.cg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:12px}
+.cg label{display:grid;gap:6px;font-size:13px;color:var(--ink3);font-weight:600}
+.cg input{width:100%;box-sizing:border-box;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--bg2);color:var(--ink);font:700 16px var(--f-mono)}
+.cr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:12px}
+.cr div{padding:12px 14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+.cr b{display:block;font:800 24px/1 var(--f-mono);color:var(--ink)}.cr span{font-size:12.5px;color:var(--ink3)}
+.seat{margin:12px 0 16px}
+.seat .bar{position:relative;height:16px;border-radius:8px;background:linear-gradient(90deg,color-mix(in srgb,var(--ink3) 22%,var(--bg2)) 0 50.25%,color-mix(in srgb,var(--acc) 45%,var(--bg2)) 50.25% 66.83%,var(--acc) 66.83% 100%);overflow:visible}
+.seat .mk{position:absolute;top:-6px;bottom:-6px;width:2px;background:var(--ink)}
+.seat .lb{position:relative;height:38px;font-size:12.5px;color:var(--ink3)}
+.seat .lb span{position:absolute;top:8px;transform:translateX(-50%);white-space:nowrap}.seat .lb b{color:var(--ink)}
+.faq details{border-top:1px solid var(--line);padding:12px 0}.faq details:last-child{border-bottom:1px solid var(--line)}
+.faq summary{cursor:pointer;font-weight:700;font-size:16.5px;color:var(--ink);list-style:none;display:flex;justify-content:space-between;gap:12px}
+.faq summary::after{content:"+";color:var(--acc);font-weight:800}.faq details[open] summary::after{content:"–"}
+.faq summary::-webkit-details-marker{display:none}
+.faq p{margin:10px 0 0}
+.cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
+@media (max-width:900px){.doc{grid-template-columns:minmax(0,1fr)}.toc{position:static;order:-1}.kf{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.cg,.cr{grid-template-columns:minmax(0,1fr)}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      <a href="eredmenyek"><i class="live"></i><span>USA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main>
+<section class="hero"><div class="wrap">
+  <div class="crumbs"><a href="./">Kezdőlap</a> › <a href="magyarorszag">Magyarország</a> › A választási rendszer</div>
+  <span class="kicker">Magyarázó</span>
+  <h1>Így működik a magyar választási rendszer</h1>
+  <p class="lead">Két szavazat, 199 mandátum, egy forduló – és egy furcsa szó, a töredékszavazat, amin néha egy kétharmad múlik. Mindent elmagyarázunk, példákkal, öt perc alatt.</p>
+  <ul class="kf"><li><b>199</b><span>képviselő az Országgyűlésben</span></li><li><b>106</b><span>egyéni választókerület</span></li><li><b>93</b><span>országos listás hely</span></li><li><b>133</b><span>mandátum a kétharmadhoz</span></li></ul>
+</div></section>
+<div class="wrap doc">
+<article class="art">
+<section id="ket-szavazat">
+  <h2>Két szavazat, egy forduló</h2>
+  <p>Az országgyűlési választáson minden magyarországi lakcímmel rendelkező választó <b>két szavazatot</b> ad le, egyetlen fordulóban:</p>
+  <ul><li><b>egyet egy jelöltre</b> a saját egyéni választókerületében (OEVK),</li><li><b>egyet egy pártlistára</b> – vagy, aki nemzetiségi választóként regisztrált, a nemzetisége listájára.</li></ul>
+  <p>A két szavazat független egymástól: lehet egy párt jelöltjére és egy másik párt listájára is szavazni.</p>
+</section>
+<section id="oevk">
+  <h2>106 egyéni körzet: aki a legtöbbet kapja, nyer</h2>
+  <p>Az ország <b>106 országgyűlési egyéni választókerületre</b> oszlik. Mindegyikben az a jelölt jut be, aki a legtöbb szavazatot kapja – nem kell 50%, és nincs második forduló. Ezért számít annyira, hány ellenzéki vagy kormánypárti jelölt indul ugyanabban a körzetben.</p>
+  <p>A körzethatárokat törvény rögzíti. A 2024 decemberében elfogadott módosítás óta Budapesten 16 (korábban 18), Pest vármegyében 14 (korábban 12) egyéni választókerület van – ez először a 2026-os választáson volt érvényben.</p>
+  <div class="cta"><a class="btn alt" href="magyarorszag">Nézd meg mind a 106 körzetet a térképen →</a></div>
+</section>
+<section id="kuszob">
+  <h2>A bejutási küszöb: 5, 10, 15%</h2>
+  <p>A listás mandátumok elosztásában csak azok a listák vesznek részt, amelyek átlépik a küszöböt a pártlistákra leadott szavazatokból:</p>
+  <ul><li><b>5%</b> egy önállóan induló pártnak,</li><li><b>10%</b> két párt közös listájának,</li><li><b>15%</b> három vagy több párt közös listájának.</li></ul>
+  <p>Aki a küszöb alatt marad, listáról nem szerez mandátumot – de egyéni körzetet attól még nyerhet.</p>
+</section>
+<section id="toredek">
+  <h2>A töredékszavazat – a rendszer titkos fegyvere</h2>
+  <p>Az egyéni körzetekben sok szavazat „elveszne”: a vesztes jelöltekre leadott voksok, és a győztesnek azok a szavazatai, amelyekre a győzelemhez már nem volt szükség. Ezek a <b>töredékszavazatok</b>, és hozzáadják őket a jelöltet állító párt listás szavazataihoz.</p>
+  <div class="note"><p><b>A szabály:</b> a vesztes jelölt <b>minden</b> szavazata töredékszavazat. A győztesnél a többlet számít: a győztes szavazatai mínusz (a második helyezett szavazatai + 1).</p></div>
+  <div class="card calc" id="calc">
+    <h3>Számold ki egy körzetre</h3>
+    <div class="cg">
+      <label>Győztes jelölt szavazatai<input type="number" min="0" step="1" id="cw" value="24000" inputmode="numeric"></label>
+      <label>Második helyezett szavazatai<input type="number" min="0" step="1" id="c2" value="18500" inputmode="numeric"></label>
+      <label>Többi vesztes jelölt összesen<input type="number" min="0" step="1" id="co" value="4200" inputmode="numeric"></label>
+    </div>
+    <div class="cr"><div><b id="rw">5 499</b><span>töredékszavazat a győztes pártjának</span></div><div><b id="rl">22 700</b><span>töredékszavazat a vesztes jelöltek pártjainak</span></div></div>
+  </div>
+  <p>Mivel a győztes is kap töredékszavazatot, a nagy különbséggel nyerő párt listán is erősödik. Ez a „győzteskompenzáció” – emiatt lehet kétharmados többséget szerezni 50% körüli eredménnyel is.</p>
+</section>
+<section id="dhondt">
+  <h2>A 93 listás hely és a D'Hondt-módszer</h2>
+  <p>A listás helyeket a küszöböt átlépő listák között osztják el, a <b>listás szavazatok + töredékszavazatok</b> összege alapján. A módszer a <b>D'Hondt</b>: minden lista szavazatszámát elosztják 1-gyel, 2-vel, 3-mal…, és a 93 legnagyobb hányados kap mandátumot. A módszer kissé a nagyobb listáknak kedvez.</p>
+  <p>Ha egy nemzetiségi lista kedvezményes mandátumot szerez, a 93-ból ennyivel kevesebb jut a pártlistáknak.</p>
+</section>
+<section id="nemzetisegek">
+  <h2>Nemzetiségi listák és határon túliak</h2>
+  <p>A 13 elismert hazai nemzetiség önkormányzatai nemzetiségi listát állíthatnak. Ha egy ilyen lista eléri a mandátumhoz szükséges szavazatszám <b>negyedét</b>, kedvezményes mandátumot kap. Ha nem, a lista első helyezettje nemzetiségi szószólóként – szavazati jog nélkül – vehet részt az Országgyűlés munkájában.</p>
+  <p>Akinek <b>nincs magyarországi lakcíme</b>, levélben szavazhat, de csak pártlistára vagy nemzetiségi listára – egyéni jelöltre nem. A külföldön tartózkodó, de magyarországi lakcímmel rendelkező választók a külképviseleteken adhatják le mindkét szavazatukat.</p>
+</section>
+<section id="tobbseg">
+  <h2>Többség és kétharmad</h2>
+  <p>A kormányalakításhoz <b>100 mandátum</b> (egyszerű többség) kell. Az Alaptörvény módosításához és a sarkalatos törvényekhez a képviselők <b>kétharmada, azaz 133 mandátum</b> szükséges.</p>
+  <div class="seat" aria-hidden="true"><div class="bar"><i class="mk" style="left:50.25%"></i><i class="mk" style="left:66.83%"></i></div><div class="lb"><span style="left:50.25%"><b>100</b> többség</span><span style="left:66.83%"><b>133</b> kétharmad</span></div></div>
+  <p>Hogy egy adott szavazatarányból hány mandátum lesz, azt a fenti szabályok együtt döntik el – ezt a legkönnyebb kipróbálni.</p>
+  <div class="cta"><a class="btn" href="szimulator">Próbáld ki a választási szimulátort →</a><a class="btn alt" href="magyarorszag">Friss közvélemény-kutatások</a></div>
+</section>
+<section id="gyik" class="faq">
+  <h2>Gyakori kérdések</h2>
+  <details><summary>Hány képviselő van az Országgyűlésben?</summary><p>199. Közülük 106-ot az egyéni választókerületekben (OEVK), 93-at az országos pártlistákról választanak.</p></details><details><summary>Hány százalék kell a parlamentbe jutáshoz?</summary><p>Egy önállóan induló pártnak a listás szavazatok 5%-a, két párt közös listájának 10%, három vagy több párt közös listájának 15%.</p></details><details><summary>Hány mandátum kell a többséghez és a kétharmadhoz?</summary><p>Az egyszerű többséghez 100, a kétharmados (alkotmányozó) többséghez 133 mandátum kell a 199-ből.</p></details><details><summary>Mi az a töredékszavazat?</summary><p>Az egyéni körzetekben „el nem használt” szavazatok: a vesztes jelöltekre leadott összes szavazat, és a győztesnél az a többlet, ami a második helyezett legyőzéséhez már nem kellett. Ezeket hozzáadják a pártok listás szavazataihoz.</p></details><details><summary>Hogyan osztják el a listás mandátumokat?</summary><p>A 93 listás helyet a pártlistákra leadott szavazatok és a töredékszavazatok összege alapján, a D'Hondt-módszerrel osztják el a küszöböt átlépő listák között.</p></details><details><summary>Mi az OEVK?</summary><p>Az országgyűlési egyéni választókerület. 106 ilyen körzet van; mindegyikben az a jelölt nyer, aki a legtöbb szavazatot kapja, egyetlen fordulóban.</p></details><details><summary>Hogyan szavazhatnak a határon túli magyarok?</summary><p>Akinek nincs magyarországi lakcíme, levélben szavazhat, de csak pártlistára (vagy nemzetiségi listára), egyéni jelöltre nem.</p></details><details><summary>Mikor lesz a következő országgyűlési választás?</summary><p>Az Országgyűlést négy évre választják; a 2026-os választás után a következő rendes választás 2030 tavaszán esedékes.</p></details>
+</section>
+<p style="font-size:13.5px;color:var(--ink3)">Forrás: 2011. évi CCIII. törvény az országgyűlési képviselők választásáról és annak módosításai; Nemzeti Választási Iroda (valasztas.hu). Ez az oldal közérthető összefoglaló, nem jogi tanácsadás.</p>
+</article>
+<aside class="card toc" aria-label="Tartalom">
+  <h2>Tartalom</h2>
+  <ol><li><a href="#ket-szavazat">Két szavazat, egy forduló</a></li><li><a href="#oevk">106 egyéni körzet</a></li><li><a href="#kuszob">A bejutási küszöb</a></li><li><a href="#toredek">A töredékszavazat</a></li><li><a href="#dhondt">D'Hondt-módszer</a></li><li><a href="#nemzetisegek">Nemzetiségek, határon túliak</a></li><li><a href="#tobbseg">Többség és kétharmad</a></li><li><a href="#gyik">Gyakori kérdések</a></li></ol>
+  <a class="btn" href="szimulator">Szimulátor</a>
+</aside>
+</div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script src="assets/orszagok.js?v=10"></script>
+<script>
+(function(){
+const V=window.VALASZTAS,$=id=>document.getElementById(id);V.themeBtn($("theme"));
+const f=n=>Math.max(0,Math.round(n)).toString().replace(/\B(?=(\d{3})+(?!\d))/g," ");
+const num=id=>Math.max(0,parseInt($(id).value,10)||0);
+function upd(){const w=num("cw"),s=num("c2"),o=num("co");
+  if(w<=s){$("rw").textContent="–";$("rl").textContent="–";$("rw").nextElementSibling.textContent="a győztesnek több szavazata kell legyen, mint a másodiknak";return;}
+  $("rw").nextElementSibling.textContent="töredékszavazat a győztes pártjának";
+  $("rw").textContent=f(w-(s+1));$("rl").textContent=f(s+o);}
+["cw","c2","co"].forEach(id=>$(id).addEventListener("input",upd));upd();
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

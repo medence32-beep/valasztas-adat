@@ -1,0 +1,148 @@
+/* Választások – közös portál-stílus (főoldal, országoldalak) */
+:root{
+  --bg:#070C18; --bg2:#0C1428; --card:#0F1A31; --card2:#14213D; --ink:#EEF2FA; --ink2:#A3B2CC; --ink3:#66789A;
+  --line:#1C2A47; --line2:#2A3B5E; --acc:#F2B84B; --acc2:#5FA8FF; --good:#43CF8C; --warn:#F2B84B; --bad:#FF6B5E;
+  --hu-r:#D2232C; --hu-g:#2E8B57; --glow:rgba(95,168,255,.18);
+  --shadow:0 18px 50px rgba(0,0,0,.42); --shadow2:0 6px 18px rgba(0,0,0,.28);
+  --f-display:"Big Shoulders Display","Arial Narrow",Impact,sans-serif;
+  --f-body:"Barlow",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-cond:"Barlow Condensed","Arial Narrow",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:18px; color-scheme:dark;
+}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
+  --bg:#F4F6FB; --bg2:#E9EEF7; --card:#FFFFFF; --card2:#F6F8FC; --ink:#0B1430; --ink2:#4B5A78; --ink3:#8592AD;
+  --line:#DFE5EF; --line2:#C9D3E3; --acc:#B67A00; --acc2:#1D5FD6; --good:#1E8A55; --bad:#C8352B;
+  --glow:rgba(29,95,214,.12); --shadow:0 18px 50px rgba(20,35,70,.12); --shadow2:0 6px 18px rgba(20,35,70,.08); color-scheme:light;}}
+:root[data-theme="light"]{
+  --bg:#F4F6FB; --bg2:#E9EEF7; --card:#FFFFFF; --card2:#F6F8FC; --ink:#0B1430; --ink2:#4B5A78; --ink3:#8592AD;
+  --line:#DFE5EF; --line2:#C9D3E3; --acc:#B67A00; --acc2:#1D5FD6; --good:#1E8A55; --bad:#C8352B;
+  --glow:rgba(29,95,214,.12); --shadow:0 18px 50px rgba(20,35,70,.12); --shadow2:0 6px 18px rgba(20,35,70,.08); color-scheme:light;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--acc2);outline-offset:2px;border-radius:6px}
+::selection{background:color-mix(in srgb,var(--acc2) 35%,transparent)}
+img{max-width:100%}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(18px,env(safe-area-inset-left,0px));padding-right:max(18px,env(safe-area-inset-right,0px))}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* fejléc */
+.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid var(--line);padding-top:env(safe-area-inset-top,0px)}
+.top .wrap{display:flex;align-items:center;gap:18px;min-height:64px}
+.brand{display:flex;align-items:center;gap:11px;text-decoration:none;flex:none}
+.brand .mark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--acc2),#7B5CFF);box-shadow:0 6px 18px var(--glow)}
+.brand .mark svg{width:20px;height:20px;color:#fff}
+.brand b{display:block;font:900 22px/1 var(--f-display);letter-spacing:.06em;text-transform:uppercase}
+.brand small{display:block;font:600 10.5px/1 var(--f-body);letter-spacing:.22em;text-transform:uppercase;color:var(--ink3);margin-top:4px}
+.nav{display:flex;align-items:center;gap:2px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{display:inline-flex;align-items:center;gap:7px;padding:8px 13px;border-radius:999px;text-decoration:none;font:600 14.5px var(--f-body);color:var(--ink2);white-space:nowrap;letter-spacing:.04em;transition:background .2s,color .2s}
+.nav a:hover{color:var(--ink);background:var(--bg2)}
+.nav a.on{color:var(--ink);background:var(--card2);box-shadow:inset 0 0 0 1px var(--line2)}
+.nav .live{width:7px;height:7px;border-radius:50%;background:var(--bad);box-shadow:0 0 0 0 var(--bad);animation:lv 1.8s infinite;position:static;border:0;backdrop-filter:none;-webkit-backdrop-filter:none;flex:none}
+@keyframes lv{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--bad) 60%,transparent)}100%{box-shadow:0 0 0 9px transparent}}
+.ibtn{padding:0;line-height:0;width:36px;height:36px;border-radius:50%;border:1px solid var(--line2);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;flex:none}
+.ibtn:hover{border-color:var(--acc)}
+.ibtn svg{display:block;flex:none}
+
+/* gombok, címkék */
+.btn{display:inline-flex;align-items:center;gap:9px;border-radius:999px;padding:11px 20px;font:700 15px var(--f-body);text-decoration:none;border:0;cursor:pointer;background:var(--ink);color:var(--bg);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-1px);box-shadow:var(--shadow2)}
+.btn.alt{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1px var(--line2)}
+.btn svg{width:17px;height:17px}
+.pill{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:3px 10px;font:700 11.5px var(--f-body);letter-spacing:.06em;text-transform:uppercase}
+.pill.ok{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--good)}
+.pill.dev{background:var(--bg2);color:var(--ink3)}
+.pill.live{background:var(--bad);color:#fff}
+.pill.live i{width:6px;height:6px;border-radius:50%;background:#fff;animation:bl 1.5s infinite}
+@keyframes bl{50%{opacity:.3}}
+.kicker{display:inline-flex;align-items:center;gap:10px;font:700 13px/1 var(--f-cond);letter-spacing:.22em;text-transform:uppercase;color:var(--acc)}
+.kicker::before{content:"";width:28px;height:2px;background:currentColor}
+
+/* szekciók */
+.sec{padding-block:clamp(36px,5vw,64px)}
+.sh{display:flex;align-items:end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.sh h2{margin:6px 0 0;font:900 clamp(30px,4vw,46px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.sh p{margin:8px 0 0;color:var(--ink2);max-width:62ch}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r)}
+
+/* lábléc */
+.foot{border-top:1px solid var(--line);margin-top:30px;background:var(--bg2)}
+.foot .wrap{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(3,minmax(0,1fr));gap:28px;padding-block:34px calc(34px + env(safe-area-inset-bottom,0px))}
+.foot h4{margin:0 0 10px;font:800 13px var(--f-cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.foot p{margin:0;color:var(--ink2);font-size:14px;max-width:52ch}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:7px;font-size:14.5px}
+.foot a{color:var(--ink2);text-decoration:none}.foot a:hover{color:var(--acc)}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media (max-width:860px){
+  .foot .wrap{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .top .wrap{gap:4px 10px;min-height:54px;flex-wrap:wrap;padding-top:6px}
+  .top .ibtn{order:2;margin-left:auto;width:34px;height:34px}
+  .nav{order:3;flex:1 1 100%;margin:0 -6px 4px;padding-bottom:2px}
+  .brand small{display:none}
+  .brand b{font-size:19px}
+  .brand .mark{width:32px;height:32px}
+  .nav a{padding:7px 10px;font-size:13.5px}
+  .nav a.hm{display:none}
+  .nav{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 18px),transparent);padding-right:14px}
+  .nav a .hide-s{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+}
+.noimg{display:none!important}
+
+/* ---------- egységes felső sáv (az USA-oldal stílusában) ---------- */
+.top{background:#0B1630;border-bottom:1px solid rgba(255,255,255,.08);backdrop-filter:none;-webkit-backdrop-filter:none;color:#DCE6FA}
+.top::before{content:"";position:absolute;inset:0;opacity:.16;background-image:radial-gradient(circle,#fff 1px,transparent 1.4px);background-size:18px 18px;pointer-events:none}
+.top .wrap{position:relative;min-height:33px;gap:10px}
+.top .brand{gap:8px;margin-right:6px;color:#fff}
+.top .brand .mark{width:auto;height:auto;border-radius:0;box-shadow:none;background:none}
+.top .brand .mark svg{width:19px;height:19px;color:#fff}
+.top .brand{gap:7px}
+.top .brand b{font:800 18px/1 var(--f-body);letter-spacing:-.02em;text-transform:lowercase;color:#fff}
+.top .brand b::after{content:".";color:#F5B83D}
+.top .brand small{display:none}
+.top .nav{margin-left:0;flex:1;min-width:0}
+.top .nav a{padding:4px 9px;font:600 12.5px/1 system-ui,"Segoe UI",Roboto,Arial,sans-serif;letter-spacing:.01em;color:#C9D5EE}
+.top .nav a:hover{color:#fff;background:rgba(255,255,255,.1)}
+.top .nav a.on{color:#fff;font-weight:600;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.top .nav .live{background:#FF5C50;box-shadow:0 0 0 3px rgba(255,92,80,.25);animation:none;width:6px;height:6px}
+.top .nav .live.es{background:#F5B83D;box-shadow:0 0 0 3px rgba(245,184,61,.25)}
+.top .tclk{font:500 11.5px var(--f-mono);color:#DCE6FA;opacity:.9;white-space:nowrap;flex:none}
+.top .tclk span{font-family:var(--f-body);font-weight:600;margin-left:6px;letter-spacing:.04em}
+.top .ibtn{width:26px;height:26px;border-color:rgba(255,255,255,.25);color:#fff}
+.top .ibtn:hover{border-color:#fff}
+@media (max-width:900px){.top .tclk{display:none}}
+@media (max-width:640px){
+  .top .wrap{flex-wrap:nowrap;min-height:34px;padding-top:0;gap:6px}
+  .top .brand b{display:none}
+  .top .nav{order:0;flex:1 1 auto;margin:0;padding-bottom:0}
+  .top .ibtn{order:0;margin-left:0;width:26px;height:26px}
+  .top .nav a{padding:4px 8px;font-size:12.5px}
+}
+
+/* pontos egyezés az USA-oldal felső sávjával */
+.top .wrap{max-width:1280px;gap:10px}
+.top .brand{gap:6px;margin-right:0}
+.top .brand b{font-weight:900}
+.top .nav{gap:10px}
+.top .nav a{gap:6px}
+.top .nav .live{width:6px;height:6px;margin:0}
+.top .tclk{font:600 11.5px/1 var(--f-mono);letter-spacing:0}
+.top .tclk span{font:inherit;margin-left:0;letter-spacing:0}
+.top{border-bottom:0}
+.top .wrap{min-height:34px}
+.top .tclk{margin-right:4px}
+@media (max-width:640px){.top .brand>span:not(.mark){display:none}}
+
+/* témaváltó: a kör és a nap egyetlen SVG-ben, így mindig pontosan egy középpontjuk van */
+#theme{border:0!important;padding:0;background:transparent}#theme .thi{display:block;width:100%;height:100%;overflow:visible}#theme .ring{stroke:rgba(255,255,255,.25);transition:stroke .2s}#theme:hover .ring{stroke:#fff}

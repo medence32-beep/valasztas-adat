@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=1";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="robots" content="noindex, follow">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Választási térkép 2026: így szavazott mind a 3177 település">
+<meta property="og:description" content="Nézd meg, ki nyert a te településeden és körzetedben! Interaktív térkép mind a 106 választókerületről, friss közvélemény-kutatások és választási eredmények 1990-től.">
+<meta property="og:url" content="https://voksmero.hu/magyarorszag">
+<meta property="og:locale" content="hu_HU">
+<title>Választási térkép 2026: így szavazott mind a 3177 település | Voksmérő</title>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Voksmérő", "item": "https://voksmero.hu/"}, {"@type": "ListItem", "position": 2, "name": "Magyarország", "item": "https://voksmero.hu/magyarorszag"}]}</script>
+<link rel="canonical" href="https://voksmero.hu/magyarorszag">
+<meta name="description" content="Nézd meg, ki nyert a te településeden és körzetedben! Interaktív térkép mind a 106 választókerületről, friss közvélemény-kutatások és választási eredmények 1990-től.">
+<meta property="og:image" content="https://voksmero.hu/assets/og/magyarorszag.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/magyarorszag.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=15">
+<script src="assets/terkep-anim.js?v=4"></script>
+<style>
+:root{--mf:#1B2846;--mfh:#25385F;--mcb:#7E8FB2;--mob:#B9C6E0;--msel:#D2232C;
+  --p-tisza:#3B82F6;--p-fidesz:#F28C1A;--p-mh:#6B9A2E;--p-dk:#22B8CF;--p-mkkp:#A0A9B8;--p-oth:#7C8798;--p-ind:#A78BFA;--sbc:rgba(185,198,224,.30)}
+@media (prefers-color-scheme: light){:root:not([data-theme="dark"]){--mf:#DDE4EF;--mfh:#C8D3E4;--mcb:#7F8EAA;--mob:#56647F;--msel:#C8202A;--p-tisza:#2160D8;--p-fidesz:#E07800;--p-mh:#4F7F18;--p-dk:#0A93A8;--p-mkkp:#8A93A3;--p-ind:#7C3AED;--sbc:rgba(70,84,112,.30)}}
+:root[data-theme="light"]{--mf:#DDE4EF;--mfh:#C8D3E4;--mcb:#7F8EAA;--mob:#56647F;--msel:#C8202A;--p-tisza:#2160D8;--p-fidesz:#E07800;--p-mh:#4F7F18;--p-dk:#0A93A8;--p-mkkp:#8A93A3;--p-ind:#7C3AED;--sbc:rgba(70,84,112,.30)}
+.tri{height:6px;background:linear-gradient(90deg,var(--hu-r) 0 33.33%,#fff 33.33% 66.66%,var(--hu-g) 66.66%)}
+.hero{position:relative;overflow:hidden;border-bottom:1px solid var(--line)}
+.hero::before{content:"";position:absolute;inset:0;pointer-events:none;background:
+  radial-gradient(700px 380px at 0% 0%,color-mix(in srgb,var(--hu-r) 16%,transparent),transparent 70%),
+  radial-gradient(800px 420px at 100% 100%,color-mix(in srgb,var(--hu-g) 18%,transparent),transparent 70%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1fr);gap:clamp(20px,3vw,32px);padding-block:clamp(32px,5vw,60px)}
+.crumbs{font-size:13.5px;color:var(--ink3);margin-bottom:14px}.crumbs a{color:var(--ink2);text-decoration:none}.crumbs a:hover{color:var(--acc)}
+.hero h1{margin:12px 0 0;font:900 clamp(48px,7.5vw,100px)/.88 var(--f-display);text-transform:uppercase;letter-spacing:.01em;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.hero h1 img{width:clamp(50px,6vw,76px);border-radius:8px;box-shadow:var(--shadow2),0 0 0 1px var(--line)}
+.hero .lead{margin:18px 0 0;color:var(--ink2);font-size:clamp(16px,1.6vw,19px);max-width:62ch;text-wrap:pretty}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;max-width:780px}
+.fact{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px}
+.fact b{display:block;font:900 clamp(32px,4vw,46px)/1 var(--f-display);font-variant-numeric:tabular-nums}
+.fact span{display:block;margin-top:6px;font-size:13.5px;color:var(--ink2);line-height:1.35}
+.subnav{display:flex;gap:8px;flex-wrap:wrap}
+.subnav a{border:1px solid var(--line2);border-radius:999px;padding:8px 16px;text-decoration:none;font:600 14px var(--f-body);color:var(--ink2);background:var(--card)}
+.subnav a:hover{color:var(--ink);border-color:var(--acc)}
+
+/* ---------- közvélemény-kutatások ---------- */
+.avg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.pc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 18px 16px;position:relative;overflow:hidden}
+.pc::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:var(--c)}
+.pc .pn{display:flex;align-items:center;gap:9px;font:800 15px var(--f-body)}
+.pc .pn i{width:12px;height:12px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
+.pc .pv{font:900 clamp(46px,5.4vw,66px)/1 var(--f-display);margin-top:12px;font-variant-numeric:tabular-nums;color:var(--c)}
+.pc .pv small{font-size:.45em;margin-left:2px;color:var(--ink2)}
+.pc .pb{height:8px;border-radius:4px;background:var(--bg2);margin-top:12px;overflow:hidden}
+.pc .pb span{display:block;height:100%;width:0;background:var(--c);border-radius:4px;transition:width 1.3s cubic-bezier(.2,.8,.2,1)}
+.pc .pd{margin-top:10px;font-size:13px;color:var(--ink3)}
+.pc .pd b{font-weight:700}.pc .pd .up{color:var(--good)}.pc .pd .dn{color:var(--bad)}
+.avgnote{margin:12px 2px 0;font-size:13.5px;color:var(--ink3)}
+.chartcard{margin-top:18px;padding:18px 18px 12px}
+.chh{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:6px}
+.chh h3{margin:0;font:900 24px var(--f-display);text-transform:uppercase;letter-spacing:.03em}
+.lg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13.5px;color:var(--ink2)}
+.lg span{display:inline-flex;align-items:center;gap:7px}.lg i{width:18px;height:4px;border-radius:2px;background:var(--c)}
+.lg .el i{width:10px;height:10px;transform:rotate(45deg);border-radius:1px;background:var(--ink2)}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart .gr line{stroke:var(--line);stroke-width:1}
+.chart .gr text,.chart .ax text{font:500 11.5px var(--f-mono);fill:var(--ink3)}
+.chart .tr{fill:none;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.chart .dot{stroke:var(--card);stroke-width:1.5;opacity:.85}
+.chart .dot:hover{opacity:1}
+.chart .elx line{stroke:var(--ink3);stroke-dasharray:4 4}.chart .elx text{font:700 11px var(--f-body);fill:var(--ink2)}
+.chart .hl line{stroke:var(--ink2);stroke-width:1}
+.chart .hit{fill:transparent}
+.ctip{position:absolute;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:10px;padding:8px 11px;font:600 13px/1.45 var(--f-body);box-shadow:var(--shadow2);opacity:0;transition:opacity .12s;white-space:nowrap;z-index:5}
+.ctip.on{opacity:1}
+.chart svg{touch-action:pan-y}
+.cnav{display:flex;align-items:center;gap:10px;margin-top:10px}
+.cnav button{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--line2);background:var(--card2,var(--bg2));color:var(--ink);font:700 22px/1 var(--f-body);cursor:pointer;display:grid;place-items:center;padding:0 0 3px}
+.cnav button:disabled{opacity:.35;cursor:default}
+.cni{flex:1;min-width:0;text-align:center;font-size:13.5px;color:var(--ink2);line-height:1.45}.cni b{color:var(--ink);font-weight:800}.cni span{display:inline-flex;align-items:center;gap:5px;margin:0 6px;white-space:nowrap}.cni i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.ctip b{display:block;font-weight:800}
+.ctip i{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px}
+.tbl{margin-top:18px;overflow-x:auto;padding:6px 8px}
+.pt{width:100%;border-collapse:collapse;font-size:14.5px;min-width:720px}
+.pt th{text-align:right;font:700 11.5px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);padding:9px 10px;border-bottom:2px solid var(--line2);white-space:nowrap}
+.pt th:nth-child(-n+3){text-align:left}
+.pt th:nth-child(n+4),.pt td:nth-child(n+4){text-align:center}.pt th:last-child,.pt td:last-child{text-align:right}
+.pt td .w{text-align:center;box-sizing:border-box}
+.pt td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pt td:nth-child(-n+3){text-align:left}
+.pt td.n{font-weight:700}.pt .dm{display:none}
+.pt td.lead{font-weight:800}
+.pt tr.el td{background:var(--bg2);font-weight:700}
+.pt td .w{display:inline-block;min-width:34px;padding:2px 6px;border-radius:6px}
+.pt td .w.wt{background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--ink);font-weight:800}
+.pt tbody tr:hover td{background:var(--card2)}
+.more{margin-top:10px;text-align:center}
+.src{margin:14px 2px 0;font-size:13px;color:var(--ink3);line-height:1.6}.src a{color:var(--ink2)}
+
+/* ---------- térkép ---------- */
+.mapgrid{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(0,1fr);gap:18px;align-items:start}
+.mapcard{padding:14px;position:relative}
+.bar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:12px}
+.srch{position:relative;flex:1 1 260px;max-width:440px}
+.srch .in{display:flex;align-items:center;gap:9px;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px 14px}
+.srch .in:focus-within{border-color:var(--acc2);box-shadow:0 0 0 4px var(--glow)}
+.srch svg{width:16px;height:16px;color:var(--ink3);flex:none}
+.srch input{flex:1;min-width:0;border:0;outline:0;background:transparent;color:var(--ink);font:500 15px var(--f-body);padding:8px 0}
+.srch .dd{position:absolute;left:0;right:0;top:calc(100% + 6px);background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:var(--shadow);z-index:30;max-height:320px;overflow:auto}
+.srch .dd button{display:flex;width:100%;align-items:center;gap:10px;border:0;background:transparent;color:var(--ink);text-align:left;padding:9px 12px;font:600 14.5px var(--f-body);cursor:pointer;border-bottom:1px solid var(--line)}
+.srch .dd button:last-child{border-bottom:0}
+.srch .dd button.act,.srch .dd button:hover{background:var(--bg2)}
+.srch .dd .ty{font:700 10.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);background:var(--bg2);border-radius:5px;padding:2px 6px;flex:none}
+.srch .dd small{margin-left:auto;color:var(--ink3);font-weight:500;white-space:nowrap}
+.qbtn{border:1px solid var(--line2);background:transparent;color:var(--ink);border-radius:999px;padding:8px 14px;font:600 13.5px var(--f-body);cursor:pointer;display:inline-flex;gap:7px;align-items:center}
+.qbtn:hover{border-color:var(--acc)}
+.stage{position:relative;border-radius:14px;overflow:hidden;display:flex;flex-direction:column;background:var(--bg2);border:1px solid var(--line)}
+#map{display:block;width:100%;height:auto;touch-action:pan-y;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+#map.zk{touch-action:none;cursor:grab}
+.stage.drag #map{cursor:grabbing}
+#map .o{fill:var(--mf);stroke:var(--card);stroke-width:.7px;vector-effect:non-scaling-stroke;stroke-linejoin:round;cursor:pointer;transition:fill .55s ease,filter .2s;animation:oin .75s cubic-bezier(.2,.8,.2,1) both;animation-delay:var(--d,0s);transform-box:fill-box;transform-origin:center}
+#map .o:hover{filter:brightness(1.12)}
+@keyframes oin{from{opacity:0;transform:scale(.9)}}
+#map.ready .o{animation:none}
+#map .o:hover{fill:var(--mfh)}
+#map .o.inm{fill:color-mix(in srgb,var(--msel) 14%,var(--mf))}
+#map .o.inm:hover{fill:color-mix(in srgb,var(--msel) 24%,var(--mf))}
+#map .o.sel{fill:color-mix(in srgb,var(--msel) 72%,var(--mf))}
+#map #cb{fill:none;stroke:var(--mcb);stroke-width:1.2px;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+#map #ob{fill:none;stroke:var(--mob);stroke-width:1.8px;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+#map #hl{fill:none;stroke:var(--msel);stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none;filter:drop-shadow(0 0 5px var(--gold,#F5B83D));animation:ma-selp 1.6s ease-in-out infinite}
+#map #hov{fill:none;stroke:var(--ink);stroke-width:1.6px;vector-effect:non-scaling-stroke;pointer-events:none}
+#map #cities{pointer-events:none}
+#map #cities circle{fill:var(--ink);stroke:var(--card)}
+#map #cities text{fill:var(--ink);paint-order:stroke;stroke:var(--bg2);stroke-linejoin:round;font-family:var(--f-body);font-weight:600;dominant-baseline:central}
+#map #cities .t0 text{font-weight:800}
+#map #cities .tb text{font-family:var(--f-display);font-weight:900;letter-spacing:.06em;text-transform:uppercase;fill:var(--ink2)}
+#map #cities .t3 text{font-weight:700;fill:var(--ink2)}
+.ctl{position:absolute;right:10px;top:10px;z-index:5;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:var(--card);border:1px solid var(--line2);box-shadow:var(--shadow2)}
+.ctl button{width:38px;height:38px;border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);display:grid;place-items:center;cursor:pointer;padding:0}
+.ctl button:last-child{border-bottom:0}
+.ctl button:hover:not(:disabled){background:var(--bg2);color:var(--acc)}
+.ctl button:disabled{opacity:.35;cursor:default}
+.ctl svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.ctl .fs{background:var(--ink);color:var(--bg)}
+.tip{position:absolute;z-index:6;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:10px;padding:7px 11px;font:600 13px/1.3 var(--f-body);box-shadow:var(--shadow2);opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;white-space:nowrap}
+.tip.on{opacity:1;transform:none}
+.tip small{display:block;font-weight:500;opacity:.75}
+.zl{position:absolute;left:10px;bottom:10px;z-index:5;background:var(--card);border:1px solid var(--line2);border-radius:999px;padding:3px 10px;font:700 12px var(--f-mono);color:var(--ink2);opacity:0;transition:opacity .3s}
+.zl.on{opacity:1}
+.hint{margin:10px 2px 0;font-size:12.5px;color:var(--ink3)}.hint .h-t{display:none}
+@media (hover:none){.hint .h-t{display:inline}.hint .h-d{display:none}}
+.hintov{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transition:opacity .25s;z-index:7}
+.hintov span{background:color-mix(in srgb,var(--ink) 88%,transparent);color:var(--bg);padding:10px 16px;border-radius:12px;font:600 14px var(--f-body);max-width:80%;text-align:center}
+.hintov.on{opacity:1}
+body.fs-on{overflow:hidden}
+.mapcard.fs{position:fixed;inset:0;z-index:300;border-radius:0;margin:0;display:flex;flex-direction:column;padding:calc(10px + env(safe-area-inset-top,0px)) 10px calc(10px + env(safe-area-inset-bottom,0px));background:var(--bg)}
+.mapcard.fs .stage{flex:1;min-height:0}
+.mapcard.fs #map{width:100%;height:100%;flex:1;touch-action:none}
+.mapcard.fs .hint{display:none}
+.panel{padding:20px;position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto}
+.panel .ph{font:700 12px var(--f-cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink3)}
+.panel h3{margin:6px 0 2px;font:900 clamp(30px,3.2vw,40px)/1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.panel .sub{color:var(--ink2);font-size:15px}
+.kv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:16px 0 6px}
+.kv div{background:var(--bg2);border-radius:12px;padding:10px 12px}
+.kv b{display:block;font:900 24px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.kv span{font-size:12px;color:var(--ink3)}
+.panel h4{margin:16px 0 8px;font:700 12px var(--f-cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.tl{list-style:none;margin:0;padding:0;display:grid;gap:2px}
+.tl li{display:flex;align-items:baseline;gap:8px;padding:6px 8px;border-radius:8px;background:var(--bg2)}
+.tl li b{font-weight:700}
+.tl li em{font-style:normal;font:700 10.5px var(--f-body);letter-spacing:.06em;text-transform:uppercase;color:var(--acc);border:1px solid currentColor;border-radius:999px;padding:0 6px}
+.tl li span{margin-left:auto;font:500 12.5px var(--f-mono);color:var(--ink3);white-space:nowrap}
+.vl{font-size:14px;color:var(--ink2);line-height:1.6}
+.vl button{border:0;background:none;color:var(--acc);font:700 13px var(--f-body);cursor:pointer;padding:0;margin-left:4px}
+.chipz{display:flex;flex-wrap:wrap;gap:6px}
+.chipz button{border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 11px;font:600 13px var(--f-body);cursor:pointer}
+.chipz button:hover{border-color:var(--acc)}
+.chipz button.cur{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.plist{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:3px}
+.plist button{width:100%;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;border:0;background:transparent;color:var(--ink);padding:8px 9px;border-radius:9px;cursor:pointer;font:600 14.5px var(--f-body);text-align:left}
+.plist button:hover{background:var(--bg2)}
+.plist .bw{display:flex;align-items:center;gap:8px}
+.plist .bw span{width:80px;height:6px;border-radius:3px;background:var(--bg2);overflow:hidden}
+.plist .bw span em{display:block;height:100%;border-radius:3px;background:var(--ink3)}
+.plist .bw b{font:800 16px var(--f-display);min-width:20px;text-align:right}
+.plist.two{grid-template-columns:repeat(2,minmax(0,1fr));column-gap:8px}
+.plist.two button{font-size:13.5px;line-height:1.2;padding:7px 8px;background:var(--bg2)}
+.plist.two button:hover{background:var(--card2);box-shadow:inset 0 0 0 1px var(--line2)}
+.plist.two .bw span{display:none}
+.back{margin-top:16px}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,232px),1fr));gap:12px}
+.mc{display:flex;gap:14px;align-items:center;padding:14px;border-radius:16px;background:var(--card);border:1px solid var(--line);cursor:pointer;text-align:left;color:var(--ink);font:inherit;transition:transform .2s,box-shadow .2s,border-color .2s}
+.mc:hover{transform:translateY(-2px);box-shadow:var(--shadow2);border-color:var(--line2)}
+.mc svg{width:56px;height:46px;flex:none}
+.mc>span:not(.n){min-width:0;flex:1}
+.mc svg path{fill:var(--mf);stroke:var(--card)}
+.mc:hover svg path{fill:color-mix(in srgb,var(--msel) 60%,var(--mf))}
+.mc b{display:block;font:800 16.5px/1.12 var(--f-display);text-transform:uppercase;letter-spacing:.02em;overflow-wrap:anywhere}
+.mc small{display:block;color:var(--ink3);font-size:13px;margin-top:3px}
+.mc .n{flex:none;min-width:30px;text-align:right;font:900 28px/1 var(--f-display);color:var(--ink2)}
+.note{margin-top:22px;font-size:13.5px;color:var(--ink3)}.note a{color:var(--ink2)}
+
+/* ---------- térkép: rétegek, módok ---------- */
+#map #sb{display:none;pointer-events:none}
+#map #sb.on{display:inline;animation:sbin .35s ease}
+@keyframes sbin{from{opacity:0}}
+#map #sb path{fill:none;stroke:var(--sbc);stroke-width:.7px;vector-effect:non-scaling-stroke;stroke-linejoin:round;stroke-linecap:round}
+#map.cm #sb path{stroke:color-mix(in srgb,var(--card) 50%,transparent)}
+#map #vil{pointer-events:none}
+#map #vil circle{fill:var(--ink2)}
+#map #vil text{fill:var(--ink2);paint-order:stroke;stroke:var(--bg2);stroke-linejoin:round;font-family:var(--f-body);font-weight:500;dominant-baseline:central}
+#map #cities,#map #vil{transition:opacity .18s}
+#map.lh #cities,#map.lh #vil{opacity:0}
+#map.cm .o{fill:var(--fc,var(--mf))}
+#map.cm .o:hover,#map.cm .o.inm:hover{fill:color-mix(in srgb,var(--fc,var(--mf)) 78%,var(--ink))}
+#map.cm .o.inm,#map.cm .o.sel{fill:var(--fc,var(--mf))}
+#map.cm #hl{stroke:var(--ink);stroke-width:3px}
+#map.cm #cities text,#map.cm #vil text{stroke:color-mix(in srgb,var(--bg2) 85%,transparent)}
+.seg{display:inline-flex;border:1px solid var(--line2);border-radius:999px;padding:3px;gap:2px;background:var(--bg2)}
+.seg button{border:0;background:transparent;color:var(--ink2);border-radius:999px;padding:6px 12px;font:700 13px var(--f-body);cursor:pointer;white-space:nowrap}
+.seg button:hover{color:var(--ink)}
+.seg button.on{background:var(--ink);color:var(--bg)}
+.mlg{display:flex;flex-wrap:wrap;gap:6px 18px;align-items:center;margin:10px 2px 0;font-size:12.5px;color:var(--ink3)}
+.mlg[hidden]{display:none}
+.mlg .sw{display:inline-flex;align-items:center;gap:6px;font-weight:600;color:var(--ink2)}
+.mlg .sw span{display:inline-flex;gap:2px}
+.mlg .sw i{width:16px;height:10px;border-radius:2px;display:block}
+.mlg .ax{font:500 11.5px var(--f-mono)}
+/* ---------- panel: eredmények ---------- */
+.win{display:flex;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:var(--bg2)}
+.win i{width:12px;height:12px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 22%,transparent)}
+.win b{display:block;font-weight:800;font-size:15.5px}
+.win small{display:block;color:var(--ink3);font-size:12.5px}
+.rbs{display:grid;gap:7px;margin-top:10px}
+.rb{display:grid;grid-template-columns:minmax(0,8.6em) minmax(0,1fr) 4.2em;gap:10px;align-items:center;font-size:13.5px}
+.rb .nm{display:flex;align-items:center;gap:7px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rb .nm i{width:9px;height:9px;border-radius:2px;background:var(--c);flex:none}
+.rb .tr{height:9px;border-radius:5px;background:var(--bg2);overflow:hidden}
+.rb .tr em{display:block;height:100%;border-radius:5px;background:var(--c);transition:width .5s cubic-bezier(.2,.8,.2,1)}
+.rb b{text-align:right;font:600 13px var(--f-mono);font-variant-numeric:tabular-nums}
+.verd{display:inline-flex;align-items:center;gap:7px;margin-top:10px;padding:5px 11px;border-radius:999px;font:700 12.5px var(--f-body);background:color-mix(in srgb,var(--c) 16%,transparent);color:var(--ink);border:1px solid color-mix(in srgb,var(--c) 45%,transparent)}
+.verd i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.pnote{margin:8px 0 0;font-size:12px;color:var(--ink3)}
+.ovs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0 4px}
+.ovs div{background:var(--bg2);border-radius:12px;padding:10px 12px}
+.ovs small{display:block;font:700 11px var(--f-cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.ovs b{font:900 22px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.ovs b .t{color:var(--p-tisza)}.ovs b .f{color:var(--p-fidesz)}
+/* ---------- körzetek most ---------- */
+.seats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.sc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px 20px;min-width:0}
+.sc.now{border-color:color-mix(in srgb,var(--p-tisza) 40%,var(--line))}
+.sc .ph{font:700 12px var(--f-cond);letter-spacing:.2em;text-transform:uppercase;color:var(--ink3)}
+.sc .big{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 22px;margin-top:10px}
+.sc .big span{display:inline-flex;align-items:baseline;gap:8px;font:900 clamp(44px,5.6vw,68px)/1 var(--f-display);font-variant-numeric:tabular-nums;color:var(--c)}
+.sc .big small{font:700 14px var(--f-body);color:var(--ink2)}
+.sbar{position:relative;display:grid;grid-template-rows:repeat(2,1fr);grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:2px;margin-top:16px;height:30px}
+.sbar i{border-radius:2px;background:var(--c,var(--bg2));transition:background-color .45s ease}
+.sbar::after{content:"";position:absolute;left:calc(27 / 53 * 100%);top:-5px;bottom:-5px;width:2px;margin-left:-1px;background:var(--ink);border-radius:1px}
+.sc .sl{display:flex;justify-content:space-between;margin-top:8px;font-size:12px;color:var(--ink3)}
+.sc .chg{margin-top:10px;font-size:14px;color:var(--ink2)}
+.sc .chg b{color:var(--ink)}
+.scnc{margin-top:14px;padding:18px 20px}
+.scnh{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;justify-content:space-between}
+.scnc h3{margin:0;font:800 20px var(--f-display);text-transform:uppercase;letter-spacing:.04em}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips button{border:1px solid var(--line2);background:var(--card);color:var(--ink2);border-radius:999px;padding:6px 12px;font:600 13px var(--f-body);cursor:pointer}
+.chips button small{color:var(--ink3);font-weight:500;margin-left:4px}
+.chips button:hover{border-color:var(--acc);color:var(--ink)}
+.chips button.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.chips button.on small{color:inherit;opacity:.7}
+.swv{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.swv span{display:inline-flex;align-items:center;gap:8px;padding:7px 12px;border-radius:12px;background:var(--bg2);font-size:13.5px;color:var(--ink2)}
+.swv span i{width:9px;height:9px;border-radius:2px;background:var(--c)}
+.swv b{font:700 13.5px var(--f-mono);color:var(--ink)}
+.swv .up{color:var(--good)}.swv .dn{color:var(--bad)}
+.mg{justify-self:end;display:inline-flex;align-items:center;gap:5px;padding:3px 8px;border-radius:999px;font:700 12.5px var(--f-mono);white-space:nowrap;background:color-mix(in srgb,var(--c) 18%,transparent);color:var(--ink)}
+.mg i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+/* ---------- közelkép ---------- */
+.kzb{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 14px 7px 8px;font:700 13.5px var(--f-body);cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.kzb i{position:relative;width:30px;height:18px;border-radius:9px;background:var(--bg2);border:1px solid var(--line2);flex:none;transition:background .2s}
+.kzb i::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:var(--ink3);transition:transform .2s,background .2s}
+.kzb small{font-weight:500;color:var(--ink3);font-size:12px}
+.kzb:hover{border-color:var(--acc)}
+.kzb[aria-pressed="true"]{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--card))}
+.kzb[aria-pressed="true"] i{background:var(--acc);border-color:var(--acc)}
+.kzb[aria-pressed="true"] i::after{transform:translateX(12px);background:#fff}
+#map #kg .s{fill:var(--fc);stroke:var(--card);stroke-width:.6px;vector-effect:non-scaling-stroke;stroke-linejoin:round;cursor:pointer;animation:sin .4s ease}
+@keyframes sin{from{opacity:0}}
+#map #kg .s:hover{fill:color-mix(in srgb,var(--fc) 75%,var(--ink))}
+#map.kon .o:not(.sel){fill-opacity:.42}
+#map.kon .o.sel{fill:var(--mf)}
+#map.kon #hl{stroke:var(--ink);stroke-width:2.4px}
+#map.kon #sb path{stroke:color-mix(in srgb,var(--card) 45%,transparent)}
+#map #ksel{fill:none;stroke:var(--ink);stroke-width:2.6px;vector-effect:non-scaling-stroke;stroke-linejoin:round;pointer-events:none}
+.sdet{margin-top:12px;padding:14px;border-radius:14px;background:var(--bg2);border:1px solid var(--line)}
+.sdet .hd{display:flex;align-items:flex-start;gap:10px}
+.sdet .hd b{font:800 20px/1.1 var(--f-display);text-transform:uppercase;letter-spacing:.02em}
+.sdet .hd small{display:block;color:var(--ink3);font-size:12.5px;margin-top:3px}
+.sdet .hd button{margin-left:auto;border:0;background:none;color:var(--ink3);font:700 18px/1 var(--f-body);cursor:pointer;padding:0 2px}
+.sdet .mini{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px}
+.sdet .mini div{background:var(--card);border-radius:10px;padding:7px 9px}
+.sdet .mini b{display:block;font:800 16px/1.1 var(--f-display);font-variant-numeric:tabular-nums}
+.sdet .mini span{font-size:11.5px;color:var(--ink3)}
+.sdet h5{margin:12px 0 0;font:700 11px var(--f-cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink3)}
+.sdet .rb .tr{background:var(--card)}
+.stbl{margin-top:8px;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.stbl .th,.stbl button{display:grid;grid-template-columns:minmax(0,1fr) 5.4em 5.4em;gap:8px;align-items:center;padding:7px 10px}
+.stbl .th{font:700 10.5px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);background:var(--bg2)}
+.stbl .th span:not(:first-child),.stbl button span:not(:first-child){text-align:right;justify-self:end}
+.stbl .sc2{max-height:340px;overflow:auto}
+.stbl button{width:100%;border:0;border-top:1px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;text-align:left;font:600 13.5px var(--f-body)}
+.stbl button:hover,.stbl button.on{background:var(--bg2)}
+.stbl button .n{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.stbl button .n small{color:var(--ink3);font-weight:500;margin-left:4px}
+.stbl button .to{font:500 12.5px var(--f-mono);color:var(--ink2)}
+.kzsum{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:6px}
+.kzsum span{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:999px;background:var(--bg2);font:600 12.5px var(--f-body);color:var(--ink2)}
+.kzsum i{width:8px;height:8px;border-radius:50%;background:var(--c)}
+.kzsum b{color:var(--ink)}
+.mg.mx{background:var(--bg2);gap:4px}.mg.mx i:not(:first-child){margin-left:4px}
+.kact{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:16px}
+@media (max-width:980px){.seats{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:640px){
+  .sc{padding:14px 16px}.scnc{padding:14px 16px}
+  .seg button{padding:6px 10px;font-size:12.5px}
+  .mg{font-size:11.5px;padding:3px 6px}
+  .rb{grid-template-columns:minmax(0,7.6em) minmax(0,1fr) 4em}
+}
+
+@media (max-width:980px){
+  .avg{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .mapgrid{grid-template-columns:minmax(0,1fr)}
+  .panel{position:static;max-height:none}
+}
+@media (max-width:640px){
+  .hero h1{font-size:clamp(34px,10vw,56px);gap:12px}.hero h1 img{width:44px}
+  .pt{min-width:0;font-size:13.5px}.pt th,.pt td{padding:8px 5px}
+  .pt th:nth-child(2),.pt td:nth-child(2),.pt th:nth-child(3),.pt td:nth-child(3),.pt th:nth-child(7),.pt td:nth-child(7),.pt th:nth-child(8),.pt td:nth-child(8),.pt th:nth-child(9),.pt td:nth-child(9){display:none}
+  .pt td.n{white-space:normal}.pt .dm{display:block;font-weight:500;font-size:11.5px;color:var(--ink3);margin-top:1px}
+  .pt td .w{min-width:28px;padding:2px 4px}
+  .chart .tr{stroke-width:2.4}.chart .gr text,.chart .ax text{font-size:10.5px}
+  .mgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.mc{padding:10px;gap:8px}.mc svg{width:38px;height:32px}.mc b{font-size:14px}.mc small{font-size:11.5px}.mc .n{font-size:22px;min-width:22px}
+  .facts{gap:8px}.fact{padding:12px}.fact span{font-size:12px}
+  .avg{gap:10px}.pc{padding:14px}.pc .pn{font-size:13.5px}
+  .mapcard{padding:10px}
+  .ctl{flex-direction:row;position:static;width:max-content;margin:0 8px 8px auto}
+  .ctl button{border-bottom:0;border-right:1px solid var(--line);width:38px;height:36px}
+  .ctl button:last-child{border-right:0}
+  .mapcard.fs .ctl{position:absolute;bottom:8px;right:8px;margin:0}
+  .zl{bottom:auto;top:8px}
+  .kv b{font-size:20px}
+}
+
+/* ---------- korábbi választások ---------- */
+.hy{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px}
+.hy button{border:1px solid var(--line2);background:var(--card);color:var(--ink2);font:800 15px var(--f-mono);padding:8px 13px;border-radius:12px;cursor:pointer;position:relative;overflow:hidden}
+.hy button i{position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--c)}
+.hy button.on{color:var(--ink);border-color:var(--c);box-shadow:0 0 0 1px var(--c)}
+.hgrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px}
+.hcard{padding:22px}
+.hcard h3{margin:0;font:900 clamp(26px,3.4vw,38px)/1 var(--f-display);text-transform:uppercase}
+.hcard .hs{color:var(--ink2);margin:8px 0 0;line-height:1.5}
+.hmeta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hmeta span{padding:6px 11px;border-radius:999px;background:var(--bg2);font:600 13px var(--f-body);color:var(--ink2)}.hmeta b{color:var(--ink)}
+#hhemi{width:100%;height:auto;display:block;margin-top:8px}
+.hrow{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,2fr) 5.2em 3.6em;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:14px}
+.hrow.h{border-top:0;font:700 10.5px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.hrow .pn{display:flex;align-items:center;gap:8px;font-weight:700;min-width:0}.hrow .pn i{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}.hrow .pn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.hrow .tr{height:10px;border-radius:5px;background:var(--bg2);overflow:hidden}.hrow .tr em{display:block;height:100%;background:var(--c);border-radius:5px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.hrow .v,.hrow .s{text-align:right;font:700 13px var(--f-mono)}.hrow .s{font-size:14.5px}
+.hall{margin-top:20px;padding:20px 22px}
+.hall h4{margin:0 0 12px;font:800 13px var(--f-cond);letter-spacing:.18em;text-transform:uppercase;color:var(--ink3)}
+.hl{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:10px;align-items:center;margin:6px 0;cursor:pointer;border-radius:8px;padding:2px 4px}
+.hl:hover,.hl.on{background:var(--bg2)}
+.hl b{font:800 14px var(--f-mono)}
+.hl .sb{position:relative;display:flex;height:16px;border-radius:5px;overflow:hidden;background:var(--bg2)}
+.hl .sb i{display:block;height:100%;border-right:1.5px solid var(--card)}
+.hl .sb::after{content:"";position:absolute;top:-3px;bottom:-3px;left:66.67%;width:2px;background:var(--ink);opacity:.55}
+.hl .sb::before{content:"";position:absolute;top:-3px;bottom:-3px;left:50%;width:2px;background:var(--ink);opacity:.35;z-index:1}
+.hleg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--ink3)}
+@media (max-width:860px){.hgrid{grid-template-columns:minmax(0,1fr)}.hrow{grid-template-columns:minmax(0,1.2fr) minmax(0,1.2fr) 4.2em 3em;gap:8px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      <a href="eredmenyek"><i class="live"></i><span>USA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a>
+        <a href="spanyol-szimulator">Szimulátor</a>
+        <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<div class="tri" aria-hidden="true"></div>
+
+<main>
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="crumbs"><a class="hm" href="./">Kezdőlap</a> › <a href="./#orszagok">Országok</a> › Magyarország</div>
+      <span class="kicker">Országgyűlési választás</span>
+      <h1><img src="https://flagcdn.com/w160/hu.png" srcset="https://flagcdn.com/w320/hu.png 2x" alt="">Magyarország</h1>
+      <p class="lead">A legutóbbi országgyűlési választás 2026. április 12-én volt, a következő várhatóan 2030 tavaszán lesz. Addig a pártok erőviszonyait a közvélemény-kutatások mutatják – lent a friss mérések átlaga és alakulása, alatta a 106 egyéni választókerület térképe a településekkel.</p>
+    </div>
+    <div class="facts">
+      <div class="fact"><b id="f-avg">–</b><span id="f-avg-s">a Tisza előnye a mérések átlagában</span></div>
+      <div class="fact"><b>199</b><span>képviselő: 106 egyéni körzetből és 93 listáról</span></div>
+      <div class="fact"><b>2030</b><span>a következő választás várható éve</span></div>
+    </div>
+    <div class="subnav"><a href="#kutatasok">Közvélemény-kutatások</a><a href="#korzetek">Körzetek most</a><a href="#terkep">OEVK-térkép</a><a href="#varmegyek">Vármegyék</a><a href="#tortenet">Korábbi választások</a><a href="szimulator">Választási szimulátor →</a></div>
+  </div>
+</section>
+
+<section class="sec" id="kutatasok" aria-labelledby="h-p">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">Pártpreferencia</span><h2 id="h-p">Közvélemény-kutatások</h2><p>A biztos pártválasztók körében mért támogatottság. A kártyák az elmúlt 35 nap méréseinek átlagát mutatják (intézetenként a legfrissebb mérés).</p></div></div>
+    <div class="avg" id="avg"></div>
+    <p class="avgnote" id="avgnote"></p>
+    <div class="card chartcard">
+      <div class="chh"><h3>Hogyan alakult?</h3><div class="lg" id="lg"></div></div>
+      <div class="chart" id="chart"><div class="ctip" id="ctip"></div></div><div class="cnav" id="cnav"><button type="button" data-d="-1" aria-label="Előző kutatás">‹</button><div class="cni" id="cni" aria-live="polite"></div><button type="button" data-d="1" aria-label="Következő kutatás">›</button></div>
+    </div>
+    <div class="card tbl"><table class="pt"><thead><tr><th>Intézet</th><th>Terepmunka</th><th>Minta</th><th>Tisza</th><th>Fidesz–KDNP</th><th>Mi Hazánk</th><th>DK</th><th>MKKP</th><th>Egyéb</th><th>Előny</th></tr></thead><tbody id="ptb"></tbody></table>
+      <div class="more"><button class="qbtn" type="button" id="morebtn">Összes mérés mutatása</button></div></div>
+    <p class="src">Források: <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2030_Hungarian_parliamentary_election" target="_blank" rel="noopener">Wikipedia – közvélemény-kutatások</a>, <a href="https://www.origo.hu/belpol/2026/11/median-fidesz-tamogatottsag-tisza-part-nemeth-balazs" target="_blank" rel="noopener">Medián (Origo)</a>, <a href="https://ugytudjuk.hu/cikk/2026-11-06_republikon-oktober-32-szazalekponttal-vezet-a-tisza-a-fidesz-tovabbra-sem-tud-kozelebb-kerulni" target="_blank" rel="noopener">Republikon (Ügytudjuk)</a>, <a href="https://publicus.hu/blog/partok-tamogatottsaga-2026-oktober/" target="_blank" rel="noopener">Publicus</a>, <a href="https://politpro.eu/en/hungary/election/parliament/2030" target="_blank" rel="noopener">PolitPro</a>. A *-gal jelölt dátumok a közlés napját mutatják. A „–” azt jelenti, hogy az intézet nem közölt külön számot. A 2026-os választás sora a listás eredmény.</p>
+  </div>
+</section>
+
+<section class="sec reveal" id="korzetek" aria-labelledby="h-k" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">106 egyéni körzet</span><h2 id="h-k">Hogyan állnak most a körzetek?</h2><p>A 2026-os egyéni eredményekre vetítettük a mai kutatásokat: minden körzetben annyit mozdul a pártok aránya, amennyit országosan a választás óta.</p></div></div>
+    <div class="seats">
+      <div class="sc"><div class="ph">2026. április 12. · tényleges eredmény</div><div class="big" id="s26"></div><div class="sbar" id="sb26" aria-hidden="true"></div><div class="sl"><span>106 körzet</span><span>54 kell a többséghez</span></div></div>
+      <div class="sc now"><div class="ph" id="snowh">Ma · becslés a kutatások alapján</div><div class="big" id="snow"></div><div class="sbar" id="sbnow" aria-hidden="true"></div><div class="chg" id="schg"></div></div>
+    </div>
+    <div class="card scnc">
+      <div class="scnh"><h3>Melyik mérés alapján?</h3><div class="chips" id="scn" role="group" aria-label="Kutatás kiválasztása"></div></div>
+      <div class="swv" id="swv"></div>
+    </div>
+    <div class="kact"><button class="btn" type="button" id="kmap">Megnézem a térképen</button><a class="btn alt" href="szimulator">Saját forgatókönyv a szimulátorban →</a></div>
+    <p class="note">Módszer: egységes elmozdulás. Minden körzetben a 2026-os egyéni jelöltek eredményéhez hozzáadjuk a párt országos változását (a kiválasztott mérés mínusz a 2026-os listás eredmény). A független Hadházy Ákos (Budapest 06) 2026-os eredményét változatlannak vesszük. Ez durva közelítés: nem számol a jelöltek személyével, a helyi sajátosságokkal és a kutatások hibahatárával, és nem előrejelzés. Az egyéni és a települési eredmények forrása a Nemzeti Választási Iroda végleges, 100%-os feldolgozottságú adatai (<a href="https://vtr.valasztas.hu/ogy2026" target="_blank" rel="noopener">vtr.valasztas.hu</a>).</p>
+  </div>
+</section>
+
+<section class="sec" id="terkep" aria-labelledby="h-map" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">Interaktív</span><h2 id="h-map">OEVK-térkép</h2><p>Kattints egy körzetre, vagy keress rá egy településre. Kapcsold be a <b>Közelképet</b>, és a körzet minden településének 2026-os eredményét látod.</p></div></div>
+    <div class="mapgrid">
+      <div class="card mapcard" id="mapcard">
+        <div class="bar">
+          <div class="srch" id="srch"><div class="in"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input id="sq" type="search" placeholder="Település, körzet vagy vármegye, pl. Gödöllő" autocomplete="off" aria-label="Település, körzet vagy vármegye keresése" role="combobox" aria-expanded="false" aria-controls="dd"></div>
+            <div class="dd" id="dd" role="listbox" hidden></div></div>
+          <button class="qbtn" type="button" id="bp">Budapest</button>
+          <button class="qbtn" type="button" id="all">Teljes ország</button>
+          <div class="seg" id="mmode" role="group" aria-label="Térkép színezése"><button type="button" data-mm="0" class="on" aria-pressed="true">Semleges</button><button type="button" data-mm="1" aria-pressed="false">2026</button><button type="button" data-mm="2" aria-pressed="false">Ma</button></div>
+          <button type="button" class="kzb" id="kz" aria-pressed="false" title="Bekapcsolva egy körzetre kattintva ráközelít, és megmutatja a települések eredményeit"><i></i><span>Közelkép</span><small>települések</small></button>
+        </div>
+        <div class="stage" id="stage">
+          <svg id="map" viewBox="0 0 1000 618" role="group" aria-label="Magyarország egyéni választókerületei"><defs><clipPath id="kclip"><path id="kcp"/></clipPath></defs><g id="og"></g><g id="mafl"></g><g id="kg" clip-path="url(#kclip)"></g><g id="sb"></g><path id="cb"/><path id="ob"/><path id="hov" d=""/><path id="hl" d=""/><path id="ksel" d="" clip-path="url(#kclip)"/><g id="vil"></g><g id="cities"></g></svg>
+          <div class="ctl" id="ctl" role="group" aria-label="Nagyítás">
+            <button type="button" class="fs" data-z="fs" aria-label="Teljes képernyő" title="Teljes képernyő"><svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg></button>
+            <button type="button" data-z="in" aria-label="Nagyítás" title="Nagyítás"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></button>
+            <button type="button" data-z="out" aria-label="Kicsinyítés" title="Kicsinyítés"><svg viewBox="0 0 24 24"><path d="M5 12h14"/></svg></button>
+            <button type="button" data-z="home" aria-label="Teljes térkép" title="Teljes térkép"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/><circle cx="12" cy="12" r="2.2"/></svg></button>
+          </div>
+          <div class="tip" id="tip"></div><div class="zl" id="zl"></div><div class="hintov" id="hintov"><span></span></div>
+        </div>
+        <div class="mlg" id="mlg" hidden></div>
+        <p class="hint"><span class="h-d">Görgetés közben Ctrl (Macen ⌘) lenyomásával nagyíthatsz, egérrel húzhatod, dupla kattintással ráközelítesz. Nagyításkor megjelennek a településhatárok és egyre több település neve.</span><span class="h-t">Két ujjal nagyíthatsz és mozgathatod a térképet, vagy nyisd meg teljes képernyőn.</span></p>
+      </div>
+      <aside class="card panel" id="panel" aria-live="polite"></aside>
+    </div>
+  </div>
+</section>
+
+<section class="sec reveal" id="varmegyek" aria-labelledby="h-m" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">Területi egységek</span><h2 id="h-m">Vármegyék és Budapest</h2><p>Kattints egy vármegyére: a térkép ráközelít, és felsorolja a körzeteit.</p></div></div>
+    <div class="mgrid" id="mgrid"></div>
+    <p class="note">Körzethatárok: a Nemzeti Választási Iroda (<a href="https://www.valasztas.hu/" target="_blank" rel="noopener">valasztas.hu</a>) adatai alapján az <a href="https://github.com/gergely-elias/oevk_maps" target="_blank" rel="noopener">oevk_maps</a> gyűjtemény (CC BY-NC-SA 4.0). Települések: <a href="https://www.ksh.hu/apps/hntr.main" target="_blank" rel="noopener">KSH Helységnévtár</a> (2022. jan. 1., lakónépesség) és OpenStreetMap közigazgatási határok (© OpenStreetMap közreműködők, ODbL); a települések körzethez rendelése a határvonalak térbeli összevetésével készült. A több körzetbe eső településeket „részben” jelöli.</p>
+  </div>
+</section>
+<section class="sec reveal" id="tortenet" aria-labelledby="h-t" style="padding-top:0">
+  <div class="wrap">
+    <div class="sh"><div><span class="kicker">1990–2026</span><h2 id="h-t">Korábbi választások</h2><p>Az összes országgyűlési választás a rendszerváltás óta: listás eredmények, mandátumok és részvétel.</p></div></div>
+    <div class="hy" id="hy" role="tablist" aria-label="Választási év"></div>
+    <div class="hgrid">
+      <div class="card hcard"><h3 id="hyt"></h3><p class="hs" id="hyn"></p><div class="hmeta" id="hym"></div><svg id="hhemi" viewBox="0 0 400 214" role="img" aria-label="Mandátumok"></svg></div>
+      <div class="card hcard"><div class="hrow h"><span>Párt</span><span>Listás eredmény</span><span style="text-align:right">Lista %</span><span style="text-align:right">Hely</span></div><div id="hrows"></div>
+        <p class="note" id="hnote" style="margin-top:10px"></p></div>
+    </div>
+    <div class="card hall"><h4>Mandátumarányok választásonként</h4><div id="hall"></div><div class="hleg"><span>Függőleges vonalak: fele (50%) és kétharmada (66,7%) a helyeknek</span></div></div>
+    <p class="note" id="hsrc"></p>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. A kutatási számok az intézetek által közölt eredmények; a pontosságukért az adott intézet felel.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Források</h4><ul><li><a href="https://www.valasztas.hu/" target="_blank" rel="noopener">valasztas.hu (NVI)</a></li><li><a href="https://www.ksh.hu/" target="_blank" rel="noopener">KSH</a></li><li><a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></li></ul></div>
+  </div>
+</footer>
+
+<script src="assets/orszagok.js?v=10"></script>
+<script src="assets/fastzoom.js?v=1"></script>
+<script>
+(function(){
+"use strict";
+const V=window.VALASZTAS,$=id=>document.getElementById(id);V.themeBtn($("theme"));V.reveal();
+const esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const fm=n=>Math.round(n).toLocaleString("hu-HU").replace(/ /g," ");
+const f1=n=>(Math.round(n*10)/10).toFixed(1).replace(".",",");
+const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* =================== KÖZVÉLEMÉNY-KUTATÁSOK =================== */
+/* [intézet, terepmunka, dátum (vége), minta, Tisza, Fidesz–KDNP, Mi Hazánk, DK, MKKP, egyéb] – biztos pártválasztók, % */
+const POLLS=[
+["Medián","okt. 29. – nov. 4.","2026-11-04",1000,68,20,11,null,null,1],
+["Republikon","okt. 28. – nov. 2.","2026-11-02",1000,64,26,8,null,null,null],
+["Závecz Research","okt. 18.*","2026-10-18",null,66,23,9,null,null,2],
+["Publicus","okt. 8–16.","2026-10-16",1006,63,25,7,1,2,2],
+["Nézőpont","okt. 16.*","2026-10-16",null,58,27,11,null,null,4],
+["Europion","okt. 15.*","2026-10-15",null,61,26,9,null,null,4],
+["21 Kutatóközpont","szept. 30.*","2026-09-30",null,62,26,10,null,null,2],
+["Republikon","szept. 28.*","2026-09-28",null,64,25,7,null,null,4],
+["Medián","szept. 14–18.","2026-09-18",1000,64,27,8,null,null,1],
+["Europion","szept. 7–8.","2026-09-08",2100,59,27,10,null,null,5],
+["Republikon","aug. 26. – szept. 1.","2026-09-01",1000,68,22,7,1,1,null],
+["Publicus","aug. 18–25.","2026-08-25",1006,65,24,7,2,2,1],
+["Europion","aug. 11.","2026-08-11",1700,61,25,10,null,null,4],
+["Republikon","júl. 22–27.","2026-07-27",1000,69,23,6,1,1,null],
+["Medián","júl. 22–24.","2026-07-24",1000,68,23,7,null,1,1],
+["Publicus","júl. 16–21.","2026-07-21",1002,68,23,6,2,1,0],
+["Závecz Research","júl. 13–20.","2026-07-20",1000,74,19,6,1,0,null],
+["Europion","júl. 10–12.","2026-07-12",2400,64,25,8,null,null,3],
+["Republikon","jún. 26. – júl. 1.","2026-07-01",1000,68,24,6,1,1,null],
+["21 Kutatóközpont","jún. 23. – júl. 1.","2026-07-01",1500,67,23,7,null,null,3],
+["Medián","jún. 22–29.","2026-06-29",1000,73,21,4,1,null,1],
+["IDEA","jún. 12–17.","2026-06-17",1000,68,24,5,2,null,1],
+["Europion","jún. 6–8.","2026-06-08",2200,63,28,6,null,null,2],
+["Závecz Research","máj. 27. – jún. 3.","2026-06-03",1000,73,20,5,1,1,null],
+["Publicus","máj. 5–14.","2026-05-14",1001,73,20,5,1,1,null],
+["21 Kutatóközpont","máj. 9–13.","2026-05-13",1000,71,21,6,1,1,null],
+["Republikon","máj. 8–13.","2026-05-13",1000,66,26,6,1,1,null],
+["IDEA","máj. 8–11.","2026-05-11",1000,68,25,5,1,null,1],
+["Europion","máj. 8–9.","2026-05-09",2000,64,27,7,null,null,3],
+["Medián","ápr. 27. – máj. 2.","2026-05-02",1000,70,23,6,1,null,0],
+["Medián","ápr. 15–20.","2026-04-20",1000,66,25,6,2,1,0]];
+const ELECTION=["Választás (listás eredmény)","2026. ápr. 12.","2026-04-12",null,55.76,36.33,5.90,1.16,0.85,0];
+const PARTIES=[{k:4,n:"Tisza",c:"var(--p-tisza)"},{k:5,n:"Fidesz–KDNP",c:"var(--p-fidesz)"},{k:6,n:"Mi Hazánk",c:"var(--p-mh)"}];
+const dt=s=>new Date(s+"T12:00:00Z").getTime(),DAY=864e5;
+const last=POLLS.reduce((m,p)=>Math.max(m,dt(p[2])),0);
+function avgNow(){const seen={},rows=[];POLLS.slice().sort((a,b)=>dt(b[2])-dt(a[2])).forEach(p=>{if(seen[p[0]]||dt(p[2])<last-35*DAY)return;seen[p[0]]=1;rows.push(p);});
+  const A=k=>rows.reduce((s,p)=>s+(p[k]||0),0)/rows.length;return {rows:rows,v:[A(4),A(5),A(6)]};}
+(function renderPolls(){
+  const a=avgNow();const oth=100-a.v[0]-a.v[1]-a.v[2];
+  const cards=PARTIES.map((p,i)=>({n:p.n,c:p.c,v:a.v[i],e:ELECTION[p.k]})).concat([{n:"Egyéb pártok",c:"var(--p-oth)",v:oth,e:100-ELECTION[4]-ELECTION[5]-ELECTION[6]}]);
+  $("avg").innerHTML=cards.map(c=>{const d=c.v-c.e;return '<div class="pc" style="--c:'+c.c+'"><div class="pn"><i></i>'+esc(c.n)+'</div><div class="pv">'+f1(c.v)+'<small>%</small></div><div class="pb"><span data-w="'+c.v+'%"></span></div><div class="pd">A 2026-os választáson: '+f1(c.e)+'% · <b class="'+(d>=0?"up":"dn")+'">'+(d>=0?"+":"−")+f1(Math.abs(d))+' pont</b></div></div>';}).join("");
+  requestAnimationFrame(()=>requestAnimationFrame(()=>document.querySelectorAll("#avg [data-w]").forEach(e=>e.style.width=e.dataset.w)));
+  const lead=a.v[0]-a.v[1];$("f-avg").textContent="+"+f1(lead);$("f-avg-s").textContent="pont a Tisza előnye a mérések átlagában";
+  $("avgnote").textContent=a.rows.length+" intézet legfrissebb mérése alapján ("+a.rows.map(r=>r[0]).join(", ")+"). Utolsó mérés: "+new Date(last).toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"});
+  $("lg").innerHTML=PARTIES.map(p=>'<span style="--c:'+p.c+'"><i></i>'+esc(p.n)+'</span>').join("")+'<span class="el"><i></i>2026-os választás</span>';
+  /* táblázat */
+  let all=false;
+  const row=(p,el)=>{const v=[p[4],p[5],p[6]];const mx=Math.max(...v);const cell=(x,k,c)=>'<td>'+(x==null?'<span style="color:var(--ink3)">–</span>':'<span class="w'+(x===mx&&k<7?' wt':'')+'" style="--c:'+(c||"transparent")+'">'+(Number.isInteger(x)?x:f1(x))+'</span>')+'</td>';
+    return '<tr'+(el?' class="el"':'')+'><td class="n">'+esc(p[0])+'<small class="dm">'+esc(p[1])+'</small></td><td>'+esc(p[1])+'</td><td>'+(p[3]?fm(p[3]):"–")+'</td>'+cell(p[4],4,"var(--p-tisza)")+cell(p[5],5,"var(--p-fidesz)")+cell(p[6],6)+cell(p[7],7)+cell(p[8],8)+cell(p[9],9)+'<td class="lead" style="color:var(--p-tisza)">+'+(Number.isInteger(p[4]-p[5])?p[4]-p[5]:f1(p[4]-p[5]))+'</td></tr>';};
+  const tb=()=>{const L=all?POLLS:POLLS.slice(0,10);$("ptb").innerHTML=L.map(p=>row(p)).join("")+(all?row(ELECTION,true):"");$("morebtn").textContent=all?"Kevesebb mutatása":"Összes mérés mutatása ("+(POLLS.length+1)+")";};
+  $("morebtn").addEventListener("click",()=>{all=!all;tb();});tb();
+  /* grafikon */
+  const ch=$("chart"),tip=$("ctip"),x0=dt("2026-04-05"),x1=last+6*DAY,ymax=80,pts=POLLS.concat([ELECTION]);let W=1000,X=null;
+  function draw(){const old=ch.querySelector("svg");if(old)old.remove();const cw=ch.clientWidth||1000,nar=cw<620;W=nar?Math.max(300,cw):1000;
+  const H=nar?290:360,L=nar?34:46,R=nar?6:16,T=16,Bm=nar?28:34;
+  X=t=>L+(t-x0)/(x1-x0)*(W-L-R);const Y=v=>T+(1-v/ymax)*(H-T-Bm);
+  let g='<svg viewBox="0 0 '+W+' '+H+'" role="img" aria-label="A pártok támogatottságának alakulása a 2026-os választás óta"><g class="gr">';
+  for(let v=0;v<=ymax;v+=20)g+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+Y(v)+'" y2="'+Y(v)+'"/><text x="'+(L-8)+'" y="'+(Y(v)+4)+'" text-anchor="end">'+v+'%</text>';
+  g+='</g><g class="ax">';const MH=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."];
+  for(let m=4;m<=11;m++){const t=dt("2026-"+String(m).padStart(2,"0")+"-01");if(t<x0)continue;g+='<text x="'+X(t)+'" y="'+(H-10)+'" text-anchor="middle">'+MH[m-1]+'</text>';}
+  g+='</g><g class="elx"><line x1="'+X(dt(ELECTION[2]))+'" x2="'+X(dt(ELECTION[2]))+'" y1="'+T+'" y2="'+(H-Bm)+'"/><text x="'+(X(dt(ELECTION[2]))+6)+'" y="'+(T+10)+'">Választás</text></g>';
+  PARTIES.forEach(p=>{
+    /* trend: háromszög-kernel, ±24 nap */
+    let d="";for(let t=dt("2026-04-12");t<=last;t+=2*DAY){let sw=0,sv=0;pts.forEach(q=>{const w=Math.max(0,1-Math.abs(dt(q[2])-t)/(24*DAY))*(q===ELECTION?2:1);if(w>0){sw+=w;sv+=w*q[p.k];}});if(sw>0)d+=(d?"L":"M")+X(t).toFixed(1)+" "+Y(sv/sw).toFixed(1);}
+    g+='<path class="tr" d="'+d+'" style="stroke:'+p.c+'"/>';
+    POLLS.forEach((q,i)=>{g+='<circle class="dot" cx="'+X(dt(q[2])).toFixed(1)+'" cy="'+Y(q[p.k]).toFixed(1)+'" r="'+(nar?2.8:4.2)+'" style="fill:'+p.c+'"/>';});
+    const ex=X(dt(ELECTION[2])),ey=Y(ELECTION[p.k]);g+='<rect x="'+(ex-5)+'" y="'+(ey-5)+'" width="10" height="10" transform="rotate(45 '+ex+' '+ey+')" style="fill:'+p.c+';stroke:var(--card);stroke-width:1.5"/>';});
+  g+='<g class="hl" id="hlg" style="display:none"><line id="hll" y1="'+T+'" y2="'+(H-Bm)+'"/></g>';
+  pts.forEach((q,i)=>{const x=X(dt(q[2]));g+='<rect class="hit" data-i="'+i+'" x="'+(x-7)+'" y="'+T+'" width="14" height="'+(H-T-Bm)+'"/>';});
+  g+='</svg>';ch.insertAdjacentHTML("afterbegin",g);}
+  draw();let rz=0,lw=ch.clientWidth;addEventListener("resize",()=>{clearTimeout(rz);rz=setTimeout(()=>{if(Math.abs(ch.clientWidth-lw)>30){lw=ch.clientWidth;draw();if(typeof nav==="function")nav(CUR);}},200);});
+  /* kutatások közti váltás: egérrel, ujjal húzva/koppintva (a legközelebbi mérés), vagy a ‹ › gombokkal */
+  const ORD=pts.map((q,i)=>i).sort((a,b)=>dt(pts[a][2])-dt(pts[b][2]));let CUR=ORD[ORD.length-1];
+  const nav=i=>{CUR=i;const q=pts[i],k=ORD.indexOf(i);$("cni").innerHTML='<b>'+esc(q[0])+'</b> · '+esc(q[1])+'<br>'+PARTIES.map(p=>'<span><i style="background:'+p.c+'"></i>'+esc(p.n)+' '+(Number.isInteger(q[p.k])?q[p.k]:f1(q[p.k]))+'%</span>').join("");
+    const bs=$("cnav").querySelectorAll("button");bs[0].disabled=k<=0;bs[1].disabled=k>=ORD.length-1;
+    const x=X(dt(q[2]));$("hlg").style.display="";$("hll").setAttribute("x1",x);$("hll").setAttribute("x2",x);};
+  const near=cx=>{const sv=ch.querySelector("svg");if(!sv)return -1;const r=sv.getBoundingClientRect(),px=(cx-r.left)/r.width*W;let bi=-1,bd=1e9;pts.forEach((q,i)=>{const d=Math.abs(X(dt(q[2]))-px);if(d<bd){bd=d;bi=i;}});return bi;};
+  const show=(i,cx)=>{nav(i);const q=pts[i];const x=X(dt(q[2]));$("hlg").style.display="";$("hll").setAttribute("x1",x);$("hll").setAttribute("x2",x);
+    tip.innerHTML='<b>'+esc(q[0])+'</b>'+esc(q[1])+'<br>'+PARTIES.map(p=>'<i style="background:'+p.c+'"></i>'+esc(p.n)+': '+(Number.isInteger(q[p.k])?q[p.k]:f1(q[p.k]))+'%').join("<br>");
+    tip.classList.add("on");const r=ch.getBoundingClientRect(),sx=x/W*r.width;let lx=sx+14;if(lx+tip.offsetWidth>r.width)lx=sx-tip.offsetWidth-14;tip.style.left=Math.max(0,lx)+"px";tip.style.top="10px";};
+  const pick=e=>{const i=near(e.clientX);if(i<0)return;if(e.pointerType==="mouse")show(i);else{nav(i);tip.classList.remove("on");}};
+  ch.addEventListener("pointermove",pick);ch.addEventListener("pointerdown",pick);
+  ch.addEventListener("pointerleave",e=>{if(e.pointerType!=="mouse")return;tip.classList.remove("on");nav(CUR);});
+  $("cnav").addEventListener("click",e=>{const b=e.target.closest("button[data-d]");if(!b)return;const k=ORD.indexOf(CUR)+(+b.dataset.d);if(k>=0&&k<ORD.length)nav(ORD[k]);});
+  nav(CUR);
+})();
+
+/* =================== OEVK-TÉRKÉP =================== */
+const svg=$("map"),stage=$("stage");let J=null,TEL=null,B=[0,0,1000,618],sel=null,selM=null;const EL={},BY={};
+const label=o=>o.m+" "+String(o.n).padStart(2,"0");
+const full=o=>(o.m==="Budapest"?"Budapest":o.m+" vármegye")+" "+String(o.n).padStart(2,"0")+". számú OEVK";
+const mname=m=>m==="Budapest"?"Budapest":m+" vármegye";
+const slug=o=>V.norm(o.id).replace(/ /g,"-");
+const JN={m:"megyei jogú város",v:"város",n:"nagyközség",k:"község",b:"kerület"};
+
+/* ---------- nagyítás / húzás ---------- */
+const FZ=window.FastZoom?FastZoom(svg):null;
+const getV=()=>{if(FZ)return FZ.get();const b=svg.viewBox.baseVal;return [b.x,b.y,b.width,b.height];};
+const setV=v=>{if(FZ)FZ.set(v);else svg.setAttribute("viewBox",v.map(n=>n.toFixed(2)).join(" "));};
+const LIM=40;let raf=0,fs=false;
+function clampV(v){const R=B[2]/B[3];let w=Math.min(B[2],Math.max(B[2]/LIM,v[2])),h=w/R;let cx=v[0]+v[2]/2,cy=v[1]+v[3]/2;const hx=(B[2]-w)/2,hy=(B[3]-h)/2,bx=B[0]+B[2]/2,by=B[1]+B[3]/2;
+  cx=Math.min(bx+hx,Math.max(bx-hx,cx));cy=Math.min(by+hy,Math.max(by-hy,cy));return [cx-w/2,cy-h/2,w,h];}
+const Z=v=>B[2]/(v||getV())[2];
+function toSvg(x,y){const m=svg.getScreenCTM();if(!m)return null;const p=new DOMPoint(x,y).matrixTransform(m.inverse());return [p.x,p.y];}
+function zoomedV(v,P,f){const nw=Math.min(B[2],Math.max(B[2]/LIM,v[2]*f));f=nw/v[2];return clampV([P[0]-(P[0]-v[0])*f,P[1]-(P[1]-v[1])*f,v[2]*f,v[3]*f]);}
+function anim(to){cancelAnimationFrame(raf);const f=getV();if(reduce){setV(to);return;}const t0=performance.now(),D=650;
+  const st=n=>{const k=Math.min(1,(n-t0)/D),e=k<.5?4*k*k*k:1-Math.pow(-2*k+2,3)/2;setV(f.map((a,i)=>a+(to[i]-a)*e));if(k<1)raf=requestAnimationFrame(st);};raf=requestAnimationFrame(st);}
+function fit(b,pad,minW){const R=B[2]/B[3];let w=Math.max(b[2]*(pad||1.5),minW||60),h=Math.max(b[3]*(pad||1.5),w/R);if(w/h<R)w=h*R;else h=w/R;return clampV([b[0]+b[2]/2-w/2,b[1]+b[3]/2-h/2,w,h]);}
+function zoomAt(x,y,f){const P=toSvg(x,y);if(P)setV(zoomedV(getV(),P,f));}
+function panBy(dx,dy){const m=svg.getScreenCTM();if(!m||!m.a)return;const v=getV();setV(clampV([v[0]-dx/m.a,v[1]-dy/m.d,v[2],v[3]]));}
+let supp=false;function suppress(){supp=true;setTimeout(()=>supp=false,380);}
+stage.addEventListener("click",e=>{if(supp&&!e.target.closest(".ctl")){e.stopPropagation();e.preventDefault();supp=false;}},true);
+let hT=0;function hint(t){const h=$("hintov");h.firstChild.textContent=t;h.classList.add("on");clearTimeout(hT);hT=setTimeout(()=>h.classList.remove("on"),1300);}
+const isMac=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent);
+stage.addEventListener("wheel",e=>{if(!e.target.closest("#map"))return;if(!(fs||e.ctrlKey||e.metaKey||Z()>1.02)){hint("Nagyításhoz tartsd lenyomva a "+(isMac?"⌘":"Ctrl")+" billentyűt görgetés közben");return;}
+  e.preventDefault();cancelAnimationFrame(raf);let d=e.deltaY;if(e.deltaMode===1)d*=16;else if(e.deltaMode===2)d*=400;
+  zoomAt(e.clientX,e.clientY,Math.exp(Math.max(-1,Math.min(1,d*(e.ctrlKey&&!e.metaKey&&Math.abs(d)<50?0.012:0.0022)))));},{passive:false});
+let M=null;
+stage.addEventListener("pointerdown",e=>{if(e.pointerType==="touch"||e.button!==0||!e.target.closest("#map"))return;M={x:e.clientX,y:e.clientY,x0:e.clientX,y0:e.clientY,mv:false};});
+addEventListener("pointermove",e=>{if(!M||e.pointerType==="touch")return;if(!M.mv){if(Math.hypot(e.clientX-M.x0,e.clientY-M.y0)<5)return;if(Z()<=1.02&&!fs){M=null;return;}M.mv=true;cancelAnimationFrame(raf);stage.classList.add("drag");tipOff();}
+  panBy(e.clientX-M.x,e.clientY-M.y);M.x=e.clientX;M.y=e.clientY;});
+addEventListener("pointerup",()=>{if(M){if(M.mv)suppress();M=null;stage.classList.remove("drag");}});
+stage.addEventListener("dblclick",e=>{if(!e.target.closest("#map"))return;e.preventDefault();const P=toSvg(e.clientX,e.clientY);if(P)anim(zoomedV(getV(),P,0.5));});
+let T=null;const tm=t=>[(t[0].clientX+t[1].clientX)/2,(t[0].clientY+t[1].clientY)/2],td=t=>Math.hypot(t[0].clientX-t[1].clientX,t[0].clientY-t[1].clientY)||1;
+stage.addEventListener("touchstart",e=>{if(!e.target.closest("#map"))return;if(e.touches.length>=2){e.preventDefault();cancelAnimationFrame(raf);T={p:1,d:td(e.touches),c:tm(e.touches),mv:true};tipOff();}
+  else if(e.touches.length===1){const t=e.touches[0];T={p:0,x:t.clientX,y:t.clientY,x0:t.clientX,y0:t.clientY,mv:false};}},{passive:false});
+stage.addEventListener("touchmove",e=>{if(!T)return;if(T.p&&e.touches.length>=2){e.preventDefault();const d=td(e.touches),c=tm(e.touches);zoomAt(T.c[0],T.c[1],T.d/d);panBy(c[0]-T.c[0],c[1]-T.c[1]);T.d=d;T.c=c;return;}
+  if(!T.p&&e.touches.length===1){const t=e.touches[0];if(!(fs||Z()>1.02))return;e.preventDefault();if(!T.mv){if(Math.hypot(t.clientX-T.x0,t.clientY-T.y0)<7)return;T.mv=true;tipOff();}panBy(t.clientX-T.x,t.clientY-T.y);T.x=t.clientX;T.y=t.clientY;}},{passive:false});
+const tend=e=>{if(!T)return;if(e.touches.length===1&&T.p){const t=e.touches[0];T={p:0,x:t.clientX,y:t.clientY,x0:t.clientX,y0:t.clientY,mv:true};suppress();return;}if(!e.touches.length){if(T.mv)suppress();T=null;}};
+stage.addEventListener("touchend",tend);stage.addEventListener("touchcancel",tend);
+document.addEventListener("gesturestart",e=>{if(e.target.closest&&e.target.closest("#stage"))e.preventDefault();});
+const ph=document.createComment("mc");
+function setFs(on){const c=$("mapcard");if(on&&!fs){c.parentNode.insertBefore(ph,c);document.body.appendChild(c);}else if(!on&&fs&&ph.parentNode){ph.parentNode.insertBefore(c,ph);ph.remove();}
+  fs=!!on;c.classList.toggle("fs",fs);document.body.classList.toggle("fs-on",fs);
+  const b=$("ctl").querySelector('[data-z="fs"]');b.innerHTML=fs?'<svg viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></svg>':'<svg viewBox="0 0 24 24"><path d="M9 4H4v5M15 4h5v5M9 20H4v-5M15 20h5v-5"/></svg>';b.setAttribute("aria-label",fs?"Bezárás":"Teljes képernyő");sched();}
+$("ctl").addEventListener("click",e=>{const b=e.target.closest("button[data-z]");if(!b)return;e.stopPropagation();const k=b.dataset.z,v=clampV(getV()),c=[v[0]+v[2]/2,v[1]+v[3]/2];
+  if(k==="in")anim(zoomedV(v,c,0.55));else if(k==="out")anim(zoomedV(v,c,1/0.55));else if(k==="home")anim(B);else if(k==="fs")setFs(!fs);});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&fs)setFs(false);});
+
+
+
+/* ---------- településnevek, határok, állapot ---------- */
+let sr=0,zlT=0,idT=0,LZ=1;function sched(){if(!sr)sr=requestAnimationFrame(upd);}
+function upd(){sr=0;if(!J)return;const z=Z();svg.classList.toggle("zk",z>1.02);
+  const ctl=$("ctl");ctl.querySelector('[data-z="in"]').disabled=z>=LIM-0.01;ctl.querySelector('[data-z="out"]').disabled=z<=1.01;ctl.querySelector('[data-z="home"]').disabled=z<=1.01;
+  const zl=$("zl");if(z>1.05){zl.textContent=(z<10?z.toFixed(1):Math.round(z))+"×";zl.classList.add("on");clearTimeout(zlT);zlT=setTimeout(()=>zl.classList.remove("on"),1300);}else zl.classList.remove("on");
+  const q=z/LZ;if(q>1.25||q<0.8)svg.classList.add("lh");
+  clearTimeout(idT);idT=setTimeout(idle,120);}
+function idle(){idT=0;if(!J)return;const z=Z();let pxu=1;try{pxu=svg.getScreenCTM().a||1;}catch(e){}LZ=z;
+  const boxes=[];cityLabels(z,pxu,boxes);settle(z,pxu,boxes);svg.classList.remove("lh");}
+new MutationObserver(sched).observe(svg,{attributes:true,attributeFilter:["viewBox"]});
+if("ResizeObserver" in window)new ResizeObserver(sched).observe(stage);
+let CL=[];
+function buildCities(){if(!TEL)return;const g=$("cities");const ns="http://www.w3.org/2000/svg";g.innerHTML="";
+  CL=TEL.lb.slice().sort((a,b)=>a[3]-b[3]||b[4]-a[4]).map(l=>{const e=document.createElementNS(ns,"g");e.setAttribute("class",l[3]===-1?"tb":"t"+l[3]);
+    const c=document.createElementNS(ns,"circle");c.setAttribute("cx",l[1]);c.setAttribute("cy",l[2]);if(l[3]===-1)c.style.display="none";
+    const t=document.createElementNS(ns,"text");t.textContent=l[0];e.appendChild(c);e.appendChild(t);e.style.display="none";g.appendChild(e);return {l:l,e:e,c:c,t:t,on:false,k:""};});sched();}
+function cityLabels(z,pxu,boxes){if(!CL.length)return;const v=getV();const mw=B[2]*pxu/z;const base=Math.max(.82,Math.min(1.1,mw/800));
+  const minT=z>=7?3:z>=3.2?2:z>=1.8?1:0;
+  CL.forEach(o=>{const l=o.l,tier=l[3];let on;
+    if(tier===-1)on=z<4.5;else on=tier<=minT&&!(tier===3&&z<7);
+    if(on&&(l[1]<v[0]||l[1]>v[0]+v[2]||l[2]<v[1]||l[2]>v[1]+v[3]))on=false;
+    if(on){const fs=(tier===-1?15:tier===0?13:tier===1?12:11.5)*base,w=(l[0].length*fs*0.56+8)/pxu,h=fs*1.25/pxu;
+      const x=tier===-1?l[1]-w/2:l[1]+5/pxu,y=l[2]-h/2;
+      for(const b of boxes){if(x<b[2]&&x+w>b[0]&&y<b[3]&&y+h>b[1]){on=false;break;}}
+      if(on){boxes.push([x-3/pxu,y,x+w,y+h]);const k=pxu.toFixed(4)+"|"+base.toFixed(3);
+        if(o.k!==k){o.k=k;o.t.setAttribute("x",tier===-1?l[1]:l[1]+6/pxu);o.t.setAttribute("y",l[2]);o.t.setAttribute("font-size",(fs/pxu).toFixed(3));o.t.setAttribute("stroke-width",(3/pxu).toFixed(3));
+          if(tier===-1)o.t.setAttribute("text-anchor","middle");o.c.setAttribute("r",((tier===0?3:2.4)/pxu).toFixed(3));o.c.setAttribute("stroke-width",(1.2/pxu).toFixed(3));}}}
+    if(on!==o.on){o.on=on;o.e.style.display=on?"":"none";}});}
+/* településhatárok (cellákra bontva, csak a látható rész) és községnevek */
+let SB=null,SBE=[],VIL=[],sbL=0;
+function loadSB(){if(sbL)return;sbL=1;fetch("assets/telhatar.json").then(r=>r.json()).then(t=>{SB=t;const ns="http://www.w3.org/2000/svg",g=$("sb");
+  SBE=t.c.map(c=>{const p=document.createElementNS(ns,"path");p.style.display="none";g.appendChild(p);return {x:c[0],y:c[1],s:c[2],p:p,d:0,on:false};});
+  VIL=t.v.filter(x=>x[4]==="v").sort((a,b)=>b[3]-a[3]);if(Z()>1.6)idle();}).catch(()=>{sbL=0;});}
+const SBZ=2.4,VZ=5.5;
+function settle(z,pxu,boxes){if(!SB){if(z>1.5)loadSB();return;}const v=getV(),g=$("sb"),on=z>=SBZ;g.classList.toggle("on",on);
+  if(on){const C=SB.cell,mx=v[2]*.3,my=v[3]*.3;SBE.forEach(e=>{const vis=e.x+C>v[0]-mx&&e.x<v[0]+v[2]+mx&&e.y+C>v[1]-my&&e.y<v[1]+v[3]+my;
+    if(vis&&!e.d){e.p.setAttribute("d",e.s);e.d=1;}if(vis!==e.on){e.on=vis;e.p.style.display=vis?"":"none";}});}
+  const vg=$("vil"),KL=(typeof KZ!=="undefined"&&KZ.cur&&KZ.list)?KZ.list.map(x=>[x.s.n.replace(/^Budapest /,""),x.s.c[0],x.s.c[1],x.r?x.r.vp:0]).sort((a,b)=>b[3]-a[3]):null;
+  if(!KL&&(z<VZ||!VIL.length)){if(vg.firstChild)vg.innerHTML="";return;}
+  const base=Math.max(.85,Math.min(1.05,B[2]*pxu/z/800)),fs=10.5*base,h=fs*1.2/pxu,r=(1.7/pxu).toFixed(3),sw=(2.6/pxu).toFixed(3),fz=(fs/pxu).toFixed(3);
+  let out="",n=0;const x0=v[0],y0=v[1],x1=v[0]+v[2],y1=v[1]+v[3];
+  for(const l of (KL||VIL)){if(l[1]<x0||l[1]>x1||l[2]<y0||l[2]>y1)continue;const w=(l[0].length*fs*0.55+6)/pxu,x=l[1]+4/pxu,y=l[2]-h/2;let ok=true;
+    for(const b of boxes){if(x<b[2]&&x+w>b[0]&&y<b[3]&&y+h>b[1]){ok=false;break;}}if(!ok)continue;boxes.push([x-3/pxu,y,x+w,y+h]);
+    out+='<circle cx="'+l[1]+'" cy="'+l[2]+'" r="'+r+'"/><text x="'+(l[1]+5/pxu).toFixed(2)+'" y="'+l[2]+'" font-size="'+fz+'" stroke-width="'+sw+'">'+esc(l[0])+'</text>';if(++n>=260)break;}
+  vg.innerHTML=out;}
+
+/* ---------- tooltip ---------- */
+let hovId=null;
+function tipOn(o,x,y){const t=$("tip"),r=stage.getBoundingClientRect();
+  if(hovId!==o.id){hovId=o.id;const T=TEL&&TEL.o[o.id];const big=T&&T[0]?T[0][0]+(T[0][3]?" (részben)":""):"";
+    t.innerHTML=esc(label(o))+'<small>'+esc(mname(o.m))+(big?' · '+esc(big)+(T.length>1?' és még '+(T.length-1)+' település':''):'')+'</small>'+tipRes(o);$("hov").setAttribute("d",o.d);}
+  t.classList.add("on");const tw=t.offsetWidth,th=t.offsetHeight;let lx=x-r.left+14,ly=y-r.top-th-10;if(lx+tw>r.width-6)lx=x-r.left-tw-14;lx=Math.max(6,Math.min(lx,r.width-tw-6));if(ly<6)ly=y-r.top+16;t.style.left=lx+"px";t.style.top=ly+"px";}
+function tipOff(){if(hovId===null&&!$("tip").classList.contains("on"))return;hovId=null;$("tip").classList.remove("on");$("hov").setAttribute("d","");}
+svg.addEventListener("pointermove",e=>{if(stage.classList.contains("drag")||e.pointerType==="touch")return;const s=e.target.closest(".s");if(s&&KZ.list){tipS(+s.dataset.i,e.clientX,e.clientY);return;}const p=e.target.closest(".o");if(!p){tipOff();return;}tipOn(BY[p.dataset.id],e.clientX,e.clientY);});
+svg.addEventListener("pointerleave",tipOff);
+svg.addEventListener("click",e=>{const s=e.target.closest(".s");if(s&&KZ.list){kzPick(+s.dataset.i,false);if(matchMedia("(hover: none)").matches)tipS(+s.dataset.i,e.clientX,e.clientY);return;}
+  const p=e.target.closest(".o");if(!p)return;const o=BY[p.dataset.id];select(o,KZ.on);if(matchMedia("(hover: none)").matches)tipOn(o,e.clientX,e.clientY);});
+
+/* ---------- kiválasztás és panel ---------- */
+function mark(){Object.values(EL).forEach(p=>{const o=BY[p.dataset.id];p.classList.toggle("inm",!!selM&&o.m===selM&&o!==sel);p.classList.toggle("sel",o===sel);});}
+function select(o,zoom){sel=o;selM=o.m;$("hl").setAttribute("d",o.d);mark();
+  if(zoom)anim(fit(o.b,KZ.on?1.35:2.6,o.m==="Budapest"?(KZ.on?30:55):(KZ.on?50:110)));if(KZ.cur!==o){KZ.ss=null;$("ksel").setAttribute("d","");}panel();kzShow();if(window.MapAnim)MapAnim.panel($("panel"));}
+function mBox(m){const os=J.o.filter(o=>o.m===m);const x0=Math.min(...os.map(o=>o.b[0])),y0=Math.min(...os.map(o=>o.b[1])),x1=Math.max(...os.map(o=>o.b[0]+o.b[2])),y1=Math.max(...os.map(o=>o.b[1]+o.b[3]));return [x0,y0,x1-x0,y1-y0];}
+function selectM(m){sel=null;selM=m;$("hl").setAttribute("d","");mark();anim(fit(mBox(m),1.25,m==="Budapest"?40:80));kzShow();panel();if(window.MapAnim)MapAnim.panel($("panel"));}
+function clearSel(){sel=null;selM=null;$("hl").setAttribute("d","");mark();kzShow();panel();}
+let MS=null;function mStats(){const S={};J.o.forEach(o=>{const s=S[o.m]||(S[o.m]={n:0,km:0});s.n++;s.km+=o.km;});return S;}
+let villAll=false;
+function panel(){const P=$("panel");
+  if(sel&&KZ.on&&KZ.cur===sel&&KZ.list&&KZ.ss!=null&&KZ.list[KZ.ss]){P.innerHTML=kzSet(sel);return;}
+  if(sel){const o=sel,T=(TEL&&TEL.o[o.id])||[],sib=J.o.filter(x=>x.m===o.m).sort((a,b)=>a.n-b.n);
+    const towns=T.filter(t=>"mvb".includes(t[1])),vills=T.filter(t=>!"mvb".includes(t[1]));const isBp=o.m==="Budapest";
+    const VL=villAll?vills:vills.slice(0,40);
+    P.innerHTML='<div class="ph">'+esc(mname(o.m))+'</div><h3>'+esc(label(o))+'</h3><div class="sub">'+esc(full(o))+'</div>'+
+      '<div class="kv"><div><b>'+(TEL?T.length:"…")+'</b><span>'+(isBp?"kerület":"település")+'</span></div><div><b>'+(TEL?(isBp?T.filter(t=>!t[3]).length:towns.length):"…")+'</b><span>'+(isBp?"teljes kerület":"város")+'</span></div><div><b>~'+fm(o.km)+'</b><span>km²</span></div></div>'+
+      panelRes(o)+kzPanel(o)+
+      (KZ.cur===o&&KZ.list?'':(towns.length?'<h4>'+(isBp?"Kerületek":"Városok")+'</h4><ul class="tl">'+towns.map(t=>'<li><b>'+esc(t[0])+'</b>'+(t[3]?'<em>részben</em>':'')+'<span>'+(t[2]?fm(t[2])+' fő':'')+'</span></li>').join("")+'</ul>':'')+
+      (vills.length?'<h4>Községek, nagyközségek ('+vills.length+')</h4><div class="vl">'+VL.map(t=>esc(t[0])+(t[3]?' (részben)':'')).join(", ")+(vills.length>40?'<button type="button" data-act="vill">'+(villAll?"kevesebb":"+ még "+(vills.length-40))+'</button>':'')+'</div>':''))+
+      '<h4>Szomszédos körzetek</h4><div class="chipz">'+o.nb.map(id=>'<button type="button" data-id="'+esc(id)+'">'+esc(label(BY[id]))+'</button>').join("")+'</div>'+
+      '<h4>'+esc(mname(o.m))+' körzetei</h4><div class="chipz">'+sib.map(x=>'<button type="button" data-id="'+esc(x.id)+'"'+(x===o?' class="cur"':'')+'>'+String(x.n).padStart(2,"0")+'</button>').join("")+'</div>'+
+      '<div class="back"><button class="qbtn" type="button" data-act="clear">← Áttekintés</button></div>';return;}
+  if(selM){const m=selM,os=J.o.filter(x=>x.m===m).sort((a,b)=>a.n-b.n);
+    P.innerHTML='<div class="ph">Területi egység</div><h3>'+esc(m)+'</h3><div class="sub">'+(m==="Budapest"?"főváros":"vármegye")+'</div>'+
+      '<div class="kv"><div><b>'+os.length+'</b><span>egyéni körzet</span></div><div><b>~'+fm(MS[m].km)+'</b><span>km²</span></div><div><b>'+(TEL?new Set(os.flatMap(o=>(TEL.o[o.id]||[]).map(t=>t[0]))).size:"…")+'</b><span>'+(m==="Budapest"?"kerület":"település")+'</span></div></div>'+ovRes(m)+
+      '<h4>Körzetek</h4><ul class="plist">'+os.map(x=>{const T=TEL&&TEL.o[x.id];return '<li><button type="button" data-id="'+esc(x.id)+'"><span>'+esc(label(x))+(T&&T[0]?' <small style="color:var(--ink3);font-weight:500">· '+esc(T[0][0])+'</small>':'')+'</span><span class="bw"><b>'+(T?T.length:"")+'</b></span></button></li>';}).join("")+'</ul>'+
+      '<div class="back"><button class="qbtn" type="button" data-act="clear">← Áttekintés</button></div>';return;}
+  const L=Object.keys(MS).sort((a,b)=>MS[b].n-MS[a].n||a.localeCompare(b,"hu"));const mx=MS[L[0]].n;
+  P.innerHTML='<div class="ph">Áttekintés</div><h3>106 körzet</h3><div class="sub">Körzetek száma területi egységenként</div>'+ovRes()+'<ul class="plist two">'+
+    L.map(m=>'<li><button type="button" data-m="'+esc(m)+'"><span>'+esc(m)+'</span><span class="bw"><span><em style="width:'+(MS[m].n/mx*100)+'%"></em></span><b>'+MS[m].n+'</b></span></button></li>').join("")+'</ul>';}
+$("panel").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;if(b.dataset.id){villAll=false;select(BY[b.dataset.id],true);}else if(b.dataset.m)selectM(b.dataset.m);else if(b.dataset.act==="clear"){clearSel();anim(B);}else if(b.dataset.act==="vill"){villAll=!villAll;panel();}else if(b.dataset.s!=null)kzPick(+b.dataset.s,true);else if(b.dataset.act==="sx"){KZ.ss=null;$("ksel").setAttribute("d","");document.querySelectorAll("#kg .s.on").forEach(x=>x.classList.remove("on"));panel();}});
+$("bp").addEventListener("click",()=>selectM("Budapest"));
+$("all").addEventListener("click",()=>{clearSel();anim(B);});
+
+/* ---------- kereső: település, körzet, vármegye ---------- */
+const sq=$("sq"),dd=$("dd");let items=[],ai=0,TIDX=[];
+function srch(){const raw=sq.value.trim();if(!raw){dd.hidden=true;sq.setAttribute("aria-expanded","false");return;}
+  const q=V.norm(raw).replace(/\b0+(\d)/g,"$1");const mm=/^(.*?)\s*(\d+)?$/.exec(q)||[];const tp=(mm[1]||"").trim(),num=mm[2]?+mm[2]:null;const out=[];
+  const rank=s=>{const a=V.norm(s);return a===tp?0:a.indexOf(tp)===0?1:a.indexOf(" "+tp)>=0?2:a.indexOf(tp)>=0?3:-1;};
+  if(num==null){Object.keys(MS).forEach(m=>{const r=rank(m);if(r>=0&&r<3)out.push({t:"m",m:m,r:r});});
+    TIDX.forEach(x=>{const r=rank(x.n);if(r>=0&&r<3)out.push({t:"t",x:x,r:r+0.5});});}
+  J.o.forEach(o=>{const r=tp?rank(o.m):0;if(r<0||r>2)return;if(num!=null&&o.n!==num)return;if(num==null&&!tp)return;out.push({t:"o",o:o,r:r+(num==null?4:0)});});
+  out.sort((a,b)=>a.r-b.r||((b.x?b.x.p:0)-(a.x?a.x.p:0)));items=out.slice(0,12);ai=0;
+  dd.innerHTML=items.length?items.map((it,i)=>it.t==="m"?'<button type="button" data-i="'+i+'"><span class="ty">Vármegye</span>'+esc(it.m)+'<small>'+MS[it.m].n+' körzet</small></button>':
+    it.t==="t"?'<button type="button" data-i="'+i+'"><span class="ty">'+esc(JN[it.x.j]||"település")+'</span>'+esc(it.x.n)+'<small>'+esc(it.x.os.map(o=>label(BY[o])).join(", "))+'</small></button>':
+    '<button type="button" data-i="'+i+'"><span class="ty">OEVK</span>'+esc(label(it.o))+'<small>'+esc(((TEL&&TEL.o[it.o.id])||[[""]])[0][0])+'</small></button>').join(""):'<button type="button" disabled>Nincs találat</button>';
+  dd.hidden=false;sq.setAttribute("aria-expanded","true");paintDD();}
+function paintDD(){dd.querySelectorAll("button[data-i]").forEach((b,i)=>b.classList.toggle("act",i===ai));}
+function pick(i){const it=items[i];if(!it)return;dd.hidden=true;sq.value="";sq.blur();villAll=false;
+  if(it.t==="m")selectM(it.m);else if(it.t==="o")select(it.o,true);else{KZ.want=it.x.n;if(!KZ.on){KZ.on=true;try{localStorage.setItem("hu_kz","1");}catch(e){}$("kz").setAttribute("aria-pressed","true");}select(BY[it.x.os[0]],true);}
+  stage.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"});}
+sq.addEventListener("input",srch);
+sq.addEventListener("keydown",e=>{if(dd.hidden)return;if(e.key==="ArrowDown"){ai=Math.min(items.length-1,ai+1);paintDD();e.preventDefault();}else if(e.key==="ArrowUp"){ai=Math.max(0,ai-1);paintDD();e.preventDefault();}else if(e.key==="Enter"){pick(ai);e.preventDefault();}else if(e.key==="Escape")dd.hidden=true;});
+dd.addEventListener("click",e=>{const b=e.target.closest("button[data-i]");if(b)pick(+b.dataset.i);});
+document.addEventListener("click",e=>{if(!e.target.closest("#srch"))dd.hidden=true;});
+
+/* ---------- 2026-os eredmények és mai becslés ---------- */
+let RS=null,MMODE=0;const SCN={k:"avg",s:0};
+const PM={T:{n:"Tisza",c:"var(--p-tisza)"},F:{n:"Fidesz–KDNP",c:"var(--p-fidesz)"},M:{n:"Mi Hazánk",c:"var(--p-mh)"},X:{n:"független",c:"var(--p-ind)"},D:{n:"DK",c:"var(--p-dk)"},K:{n:"MKKP",c:"var(--p-mkkp)"}};
+const AV=avgNow();
+const f2=n=>n.toFixed(2).replace(".",",");
+const sg=n=>(n>=0?"+":"−")+f1(Math.abs(n));
+function base(){if(SCN.k==="avg")return AV.v;const p=AV.rows.find(r=>r[0]===SCN.k);return [p[4],p[5],p[6]];}
+function swingAt(s){const v=base();return [v[0]-s-ELECTION[4],v[1]+s-ELECTION[5],v[2]-ELECTION[6]];}
+function res(r,sw){const x=r.x?r.x[2]:null;if(!sw)return {t:r.t,f:r.f,m:r.m,x:x};
+  return {t:Math.max(0,r.t+sw[0]),f:Math.max(0,r.f+sw[1]),m:r.m==null?null:Math.max(0,r.m+sw[2]),x:x};}
+function lead(q){const a=[["T",q.t],["F",q.f]];if(q.m!=null)a.push(["M",q.m]);if(q.x!=null)a.push(["X",q.x]);a.sort((u,w)=>w[1]-u[1]);return {p:a[0][0],mg:a[0][1]-a[1][1],q:q};}
+function cnt(sw,m){const c={T:0,F:0,M:0,X:0};Object.keys(RS).forEach(id=>{if(m&&BY[id]&&BY[id].m!==m)return;c[lead(res(RS[id],sw)).p]++;});return c;}
+function shade(p,mg){const k=mg<5?34:mg<10?50:mg<20?66:mg<30?82:100;return "color-mix(in oklab,"+PM[p].c+" "+k+"%,var(--mf))";}
+const BINS=[[0,"<5"],[5,"5–10"],[10,"10–20"],[20,"20–30"],[30,"30+"]];
+function paintMode(){svg.classList.toggle("cm",MMODE>0&&!!RS);hovId=null;
+  document.querySelectorAll("#mmode button").forEach(b=>{const on=+b.dataset.mm===MMODE;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on);});
+  kzRecolor();const lg=$("mlg");if(!RS||(!MMODE&&!KZ.cur)){lg.hidden=true;return;}const sw=MMODE===2?swingAt(SCN.s):null;
+  if(MMODE){const fk=MMODE+":"+(MMODE===2?"s":"");J.o.forEach(o=>{const r=RS[o.id];if(!r)return;const L=lead(res(r,sw)),e=EL[o.id],c=shade(L.p,L.mg);if(window.MapAnim&&e.dataset.fk===fk&&e.dataset.w&&e.dataset.w!==L.p)MapAnim.flash(e,c,$("mafl"));e.dataset.w=L.p;e.dataset.fk=fk;e.style.setProperty("--fc",c);});}
+  const parts=MMODE===2?["T","F"]:["T","F"];
+  lg.innerHTML='<b style="color:var(--ink2)">'+(KZ.cur?(MMODE===2?"Települések · ma (becslés)":"Települések · 2026, egyéni"):MMODE===2?"Ma (becslés"+(SCN.k!=="avg"?", "+esc(SCN.k):"")+")":"2026. április")+'</b>'+parts.map(p=>'<span class="sw">'+PM[p].n+'<span>'+BINS.map(b=>'<i style="background:'+shade(p,b[0]+0.1)+'"></i>').join("")+'</span></span>').join("")+'<span class="ax">előny, pont: '+BINS.map(b=>b[1]).join(" · ")+'</span>';lg.hidden=false;}
+function tipRes(o){if(!RS||!MMODE||!RS[o.id])return "";const L=lead(res(RS[o.id],MMODE===2?swingAt(SCN.s):null));
+  return '<small>'+(MMODE===2?"Ma":"2026")+': '+esc(L.p==="X"?RS[o.id].x[0]:PM[L.p].n)+' +'+(MMODE===2?f1(L.mg):f2(L.mg))+' pont</small>';}
+function bars(r,q,dec){const L=[["T",q.t],["F",q.f]];if(q.m!=null)L.push(["M",q.m]);if(q.x!=null)L.push(["X",q.x]);L.sort((a,b)=>b[1]-a[1]);
+  const oth=Math.max(0,100-L.reduce((s,a)=>s+a[1],0)),fx=dec?f2:f1;
+  return '<div class="rbs">'+L.map(a=>'<div class="rb" style="--c:'+PM[a[0]].c+'"><span class="nm"><i></i>'+esc(a[0]==="X"?r.x[0]:PM[a[0]].n)+'</span><span class="tr"><em style="width:'+a[1].toFixed(2)+'%"></em></span><b>'+fx(a[1])+'%</b></div>').join("")+
+    (oth>=0.05?'<div class="rb" style="--c:var(--p-oth)"><span class="nm"><i></i>Egyéb</span><span class="tr"><em style="width:'+oth.toFixed(2)+'%"></em></span><b>'+fx(oth)+'%</b></div>':'')+'</div>';}
+function panelRes(o){const r=RS&&RS[o.id];if(!r)return "";const a=lead(res(r)),sw=swingAt(SCN.s),b=lead(res(r,sw));const flip=a.p!==b.p;
+  return '<h4>2026. április 12. – egyéni eredmény</h4><div class="win" style="--c:'+PM[r.p==="T"?"T":"F"].c+'"><i></i><div><b>'+esc(r.w)+'</b><small>'+PM[r.p==="T"?"T":"F"].n+' · nyert, '+f2(a.mg)+' pont előnnyel</small></div></div>'+bars(r,res(r),true)+
+    '<h4>Ma – becslés</h4>'+bars(r,res(r,sw),false)+'<div class="verd" style="--c:'+PM[b.p].c+'"><i></i>'+(flip?'Átbillenne: '+esc(b.p==="X"?r.x[0]:PM[b.p].n):esc(b.p==="X"?r.x[0]:PM[b.p].n)+' tartaná')+' · +'+f1(b.mg)+' pont</div>'+
+    '<p class="pnote">'+(SCN.k==="avg"?"Kutatási átlag":esc(SCN.k))+' alapján, egységes elmozdulással. <a href="#korzetek">Részletek</a></p>';}
+function ovRes(m){if(!RS)return "";const a=cnt(null,m),b=cnt(swingAt(SCN.s),m);
+  return '<div class="ovs"><div><small>2026</small><b><span class="t">'+a.T+'</span> – <span class="f">'+a.F+'</span></b></div><div><small>Ma (becslés)</small><b><span class="t">'+b.T+'</span> – <span class="f">'+b.F+'</span></b></div></div>';}
+function sbar(el,c){const order=["T","X","M","F"];const L=[];order.forEach(p=>{for(let i=0;i<c[p];i++)L.push(p);});
+  if(!el.children.length)el.innerHTML='<i></i>'.repeat(106);[...el.children].forEach((e,i)=>{e.style.setProperty("--c",L[i]?PM[L[i]].c:"var(--bg2)");e.style.transitionDelay=(i*4)+"ms";});}
+function big(el,c){el.innerHTML=["T","F"].concat(c.X?["X"]:[]).concat(c.M?["M"]:[]).map(p=>'<span style="--c:'+PM[p].c+'">'+c[p]+'<small>'+PM[p].n+'</small></span>').join("");}
+function mgCell(p,mg,dec){return '<span class="mg" style="--c:'+PM[p].c+'"><i></i>'+(p==="T"?"T":p==="F"?"F":p)+' +'+(dec?f1(mg):f1(mg))+'</span>';}
+function kRow(id,sw){const r=RS[id],o=BY[id],a=lead(res(r)),b=lead(res(r,sw)),T=TEL&&TEL.o[id];
+  return '<li><button type="button" data-k="'+esc(id)+'"><span class="n">'+esc(label(o))+'<small>'+esc((T&&T[0]?T[0][0]+" · ":"")+r.w)+'</small></span>'+mgCell(a.p,a.mg)+mgCell(b.p,b.mg)+'</button></li>';}
+function renderK(){if(!RS||!J)return;const sw=swingAt(SCN.s),a=cnt(null),b=cnt(sw);
+  big($("s26"),a);big($("snow"),b);sbar($("sb26"),a);sbar($("sbnow"),b);
+  const fl=Object.keys(RS).filter(id=>{const x=lead(res(RS[id])).p,y=lead(res(RS[id],sw)).p;return x!==y;});
+  const tf=fl.filter(id=>lead(res(RS[id],sw)).p==="T").length,ff=fl.filter(id=>lead(res(RS[id],sw)).p==="F").length;
+  $("schg").innerHTML=fl.length?'<b>'+fl.length+'</b> körzet billenne át'+(tf?' – <b>'+tf+'</b> a Tiszához':'')+(ff?(tf?', ':' – ')+'<b>'+ff+'</b> a Fideszhez':'')+'.':'Egyetlen körzet sem billenne át.';
+  const v=base(),nv=[v[0]-SCN.s,v[1]+SCN.s,v[2]];
+  $("snowh").textContent="Ma · "+(SCN.k==="avg"?"kutatási átlag":SCN.k);
+  $("swv").innerHTML=[["T",0],["F",1],["M",2]].map(x=>{const d=nv[x[1]]-ELECTION[4+x[1]];return '<span style="--c:'+PM[x[0]].c+'"><i></i>'+PM[x[0]].n+' <b>'+f1(nv[x[1]])+'%</b><b class="'+(d>=0?"up":"dn")+'">'+sg(d)+'</b></span>';}).join("")+'<span>Tisza-előny: <b>'+f1(nv[0]-nv[1])+' pont</b> (2026: '+f1(ELECTION[4]-ELECTION[5])+')</span>';
+  $("scn").querySelectorAll("button").forEach(b=>{const on=b.dataset.k===SCN.k;b.classList.toggle("on",on);b.setAttribute("aria-pressed",on);});
+  if(MMODE===2)paintMode();panel();}
+function initK(){
+  $("scn").innerHTML='<button type="button" data-k="avg">Átlag<small>'+AV.rows.length+' intézet</small></button>'+AV.rows.map(r=>'<button type="button" data-k="'+esc(r[0])+'">'+esc(r[0])+'<small>'+esc(r[1])+'</small></button>').join("");
+  $("scn").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");if(!b)return;SCN.k=b.dataset.k;renderK();});
+  $("kmap").addEventListener("click",()=>{MMODE=2;paintMode();$("terkep").scrollIntoView({behavior:reduce?"auto":"smooth",block:"start"});});
+  $("mmode").addEventListener("click",e=>{const b=e.target.closest("button[data-mm]");if(!b)return;MMODE=+b.dataset.mm;paintMode();panel();});
+  renderK();paintMode();}
+
+/* ---------- Közelkép: települési eredmények ---------- */
+const KZ={on:false,ld:{},cur:null,list:null,ss:null,want:null,tok:0};
+const MAZ={"Budapest":"01","Baranya":"02","Bács-Kiskun":"03","Békés":"04","Borsod-Abaúj-Zemplén":"05","Csongrád-Csanád":"06","Fejér":"07","Győr-Moson-Sopron":"08","Hajdú-Bihar":"09","Heves":"10","Jász-Nagykun-Szolnok":"11","Komárom-Esztergom":"12","Nógrád":"13","Pest":"14","Somogy":"15","Szabolcs-Szatmár-Bereg":"16","Tolna":"17","Vas":"18","Veszprém":"19","Zala":"20"};
+try{KZ.on=localStorage.getItem("hu_kz")==="1";}catch(e){}
+function kzLoad(m){const z=MAZ[m];if(!KZ.ld[z])KZ.ld[z]=fetch("assets/tel/"+z+".json").then(r=>{if(!r.ok)throw 0;return r.json();}).catch(()=>{delete KZ.ld[z];return null;});return KZ.ld[z];}
+/* e: [választópolgár, szavazott, érvényes, Tisza, Fidesz, Mi Hazánk, DK, MKKP, egyéb, (legerősebb egyéb jelölt neve, jelölője, szavazata)] */
+function sRes(e,sw){const v=e[2]||1,q={T:e[3]/v*100,F:e[4]/v*100,M:e[5]/v*100,D:e[6]/v*100,K:e[7]/v*100};
+  const o=e.length>9&&e[11]>0?{n:e[9],j:e[10],v:e[11]/v*100}:null;
+  if(sw){q.T=Math.max(0,q.T+sw[0]);q.F=Math.max(0,q.F+sw[1]);q.M=Math.max(0,q.M+sw[2]);}
+  const a=Object.entries(q);if(o)a.push(["X",o.v]);a.sort((x,y)=>y[1]-x[1]);
+  return {q:q,o:o,p:a[0][0],mg:a[0][1]-a[1][1],to:e[0]?e[1]/e[0]*100:0,v:e[2],vp:e[0],sz:e[1]};}
+const cap=s=>String(s).toLowerCase().replace(/(^|[\s-])(\p{L})/gu,(m,a,b)=>a+b.toUpperCase());
+const pn=(r,p)=>p==="X"&&r.o?cap(r.o.n):PM[p].n;
+function kzSw(){return MMODE===2?swingAt(SCN.s):null;}
+function kzShow(){const g=$("kg"),t=++KZ.tok;
+  if(!KZ.on||!sel){if(KZ.cur||g.firstChild){g.innerHTML="";KZ.cur=null;KZ.list=null;KZ.ss=null;$("ksel").setAttribute("d","");svg.classList.remove("kon");paintMode();idle();}return;}
+  const o=sel;if(KZ.cur===o&&KZ.list){kzWant();return;}
+  kzLoad(o.m).then(j=>{if(t!==KZ.tok||!j||sel!==o||!KZ.on)return;const evk=String(o.n).padStart(2,"0");
+    $("kcp").setAttribute("d",o.d);svg.classList.add("kon");KZ.cur=o;KZ.evk=evk;
+    KZ.list=j.s.filter(s=>s.e[evk]).map(s=>({s:s,part:Object.keys(s.e).length>1}));
+    KZ.nog=(j.x||[]).filter(s=>s.e[evk]);
+    g.innerHTML=KZ.list.map((x,i)=>'<path class="s" data-i="'+i+'" d="'+x.s.d+'"/>').join("");
+    paintMode();panel();kzWant();idle();});}
+function kzRecolor(){if(!KZ.list)return;const ps=$("kg").children,sw=swingAt(SCN.s);
+  KZ.list.forEach((x,i)=>{const e=x.s.e[KZ.evk];x.r26=sRes(e,null);x.rma=sRes(e,sw);x.r=MMODE===2?x.rma:x.r26;if(ps[i])ps[i].style.setProperty("--fc",shade(x.r.p,Math.min(x.r.mg,99)));});}
+const ROM={i:1,ii:2,iii:3,iv:4,v:5,vi:6,vii:7,viii:8,ix:9,x:10,xi:11,xii:12,xiii:13,xiv:14,xv:15,xvi:16,xvii:17,xviii:18,xix:19,xx:20,xxi:21,xxii:22,xxiii:23};
+function kzKey(n){n=V.norm(n).replace(/^budapest /,"");const m=/^([ivx]+)\.? ?ker(ulet)?\.?$/.exec(n);if(m&&ROM[m[1]])return "bp"+ROM[m[1]];const d=/^0?(\d+)\.? ?ker(ulet)?\.?$/.exec(n);if(d)return "bp"+(+d[1]);return n;}
+function kzWant(){if(!KZ.want||!KZ.list)return;const k=kzKey(KZ.want),i=KZ.list.findIndex(x=>kzKey(x.s.n)===k);
+  if(i>=0){KZ.want=null;kzPick(i,true);return;}
+  /* a település egy másik körzetben van a hivatalos adatok szerint */
+  const o=KZ.cur;kzLoad(o.m).then(j=>{if(!j||!KZ.want)return;const s=j.s.find(x=>kzKey(x.n)===k);if(!s){KZ.want=null;return;}
+    const ev=Object.keys(s.e).sort((a,b)=>s.e[b][2]-s.e[a][2])[0],t=BY[o.m+" "+ev];if(t&&t!==o)select(t,true);else KZ.want=null;});}
+function kzPick(i,zoom){const x=KZ.list&&KZ.list[i];if(!x)return;KZ.ss=i;$("ksel").setAttribute("d",x.s.d);
+  if(zoom){const b=x.s.b;anim(fit(b,3,Math.max(14,(KZ.cur.b[2])*0.35)));}
+  panel();$("panel").scrollTop=0;}
+function tipS(i,x,y){const s=KZ.list[i];if(!s||!s.r26)return;const t=$("tip"),rc=stage.getBoundingClientRect();
+  if(hovId!=="s"+i){hovId="s"+i;$("hov").setAttribute("d","");const a=s.r26,b=s.rma;
+    const ln=(lab,r)=>'<small><span style="color:'+PM[r.p].c+'">●</span> '+lab+': '+esc(pn(r,r.p))+' +'+f1(r.mg)+' pont · Tisza '+f1(r.q.T)+'%, Fidesz '+f1(r.q.F)+'%</small>';
+    t.innerHTML=esc(s.s.n)+(s.part?' <span style="opacity:.7;font-weight:500">(körzetbe eső rész)</span>':'')+ln("2026",a)+ln("Ma",b)+'<small>Részvétel 2026: '+f1(a.to)+'% · '+fm(a.vp)+' választópolgár</small>';}
+  t.classList.add("on");const tw=t.offsetWidth,th=t.offsetHeight;let lx=x-rc.left+14,ly=y-rc.top-th-10;if(lx+tw>rc.width-6)lx=x-rc.left-tw-14;lx=Math.max(6,Math.min(lx,rc.width-tw-6));if(ly<6)ly=y-rc.top+16;t.style.left=lx+"px";t.style.top=ly+"px";}
+function sBars(r){const q=r.q,L=[["T",q.T],["F",q.F],["M",q.M],["D",q.D],["K",q.K]];if(r.o)L.push(["X",r.o.v]);L.sort((a,b)=>b[1]-a[1]);
+  const oth=Math.max(0,100-L.reduce((s,a)=>s+a[1],0));
+  const fx=r.est?f1:f2;
+  return '<div class="rbs">'+L.filter(a=>a[1]>=0.05||a[0]==="T"||a[0]==="F").map(a=>'<div class="rb" style="--c:'+PM[a[0]].c+'"><span class="nm"><i></i>'+esc(pn(r,a[0]))+'</span><span class="tr"><em style="width:'+a[1].toFixed(2)+'%"></em></span><b>'+fx(a[1])+'%</b></div>').join("")+
+    (oth>=0.05?'<div class="rb" style="--c:var(--p-oth)"><span class="nm"><i></i>Egyéb</span><span class="tr"><em style="width:'+oth.toFixed(2)+'%"></em></span><b>'+fx(oth)+'%</b></div>':'')+'</div>';}
+function lBars(l){if(!l||!l[2])return "";const v=l[2],q={T:l[3]/v*100,F:l[4]/v*100,M:l[5]/v*100,D:l[6]/v*100,K:l[7]/v*100};return sBars({q:q,o:null});}
+function kzSet(o){/* a kiválasztott település saját panelje – a körzet eredménye nélkül */
+  const x=KZ.list[KZ.ss],a=x.r26,b=x.rma,flip=a.p!==b.p;
+  return '<div class="ph">Település · '+esc(label(o))+'</div><h3>'+esc(x.s.n.replace(/^Budapest (\d+)\. kerület$/,"Budapest $1. ker."))+'</h3><div class="sub">'+(x.part?'A település '+esc(label(o))+' körzetbe eső része':esc(mname(o.m)))+'</div>'+
+    '<div class="kv"><div><b>'+fm(a.vp)+'</b><span>választópolgár</span></div><div><b>'+f1(a.to)+'%</b><span>részvétel</span></div><div><b>'+fm(a.v)+'</b><span>érvényes szavazat</span></div></div>'+
+    '<h4>2026. április 12. – egyéni szavazatok</h4><div class="win" style="--c:'+PM[a.p].c+'"><i></i><div><b>'+esc(pn(a,a.p))+'</b><small>nyert a településen, '+f2(a.mg)+' pont előnnyel</small></div></div>'+sBars(a)+
+    '<h4>Ma – becslés</h4>'+sBars(Object.assign({est:1},b))+'<div class="verd" style="--c:'+PM[b.p].c+'"><i></i>'+(flip?'Átbillenne: '+esc(pn(b,b.p)):esc(pn(b,b.p))+' tartaná')+' · +'+f1(b.mg)+' pont</div>'+
+    '<p class="pnote">'+(SCN.k==="avg"?"Kutatási átlag":esc(SCN.k))+' alapján, egységes elmozdulással. <a href="#korzetek">Részletek</a></p>'+
+    (x.s.l?'<h4>Pártlisták – 2026'+(x.part?' (az egész településen)':'')+'</h4>'+lBars(x.s.l):'')+
+    '<div class="back"><button class="qbtn" type="button" data-act="sx">← '+esc(label(o))+' körzet</button></div>'+kzTable();}
+function kzTable(){const L=KZ.list.slice().sort((a,b)=>b.r26.v-a.r26.v);
+  const pill=r=>'<span class="mg" style="--c:'+PM[r.p].c+'"><i></i>'+(r.p==="X"?"F.":r.p)+' +'+f1(r.mg)+'</span>';
+  return '<div class="stbl"><div class="th"><span>Település ('+L.length+')</span><span>2026</span><span>Ma</span></div><div class="sc2">'+
+    L.map(x=>{const i=KZ.list.indexOf(x);return '<button type="button" data-s="'+i+'"'+(i===KZ.ss?' class="on"':'')+'><span class="n">'+esc(x.s.n)+(x.part?'<small>részben</small>':'')+'</span>'+pill(x.r26)+pill(x.rma)+'</button>';}).join("")+'</div></div>';}
+function kzPanel(o){if(!KZ.on)return "";if(KZ.cur!==o||!KZ.list)return '<h4>Települések</h4><div class="sub" style="font-size:14px">Települési eredmények betöltése…</div>';
+  const c={},d={};KZ.list.forEach(x=>{c[x.r26.p]=(c[x.r26.p]||0)+1;d[x.rma.p]=(d[x.rma.p]||0)+1;});
+  const sum=(lab,c)=>'<div class="kzsum"><span style="background:none;padding-left:0;font-weight:700">'+lab+'</span>'+Object.keys(c).sort((a,b)=>c[b]-c[a]).map(p=>'<span style="--c:'+PM[p].c+'"><i></i>'+esc(PM[p].n)+': <b>'+c[p]+'</b></span>').join("")+'</div>';
+  return '<h4>Települések – ki nyert hol?</h4>'+sum("2026",c)+sum("Ma",d)+kzTable();}
+function kzToggle(on){KZ.on=on;try{localStorage.setItem("hu_kz",on?"1":"0");}catch(e){}$("kz").setAttribute("aria-pressed",String(on));
+  if(on){if(sel){select(sel,true);}else hint("Kattints egy körzetre: ráközelít, és megmutatja a települések eredményeit");}else{kzShow();panel();anim(B);}}
+$("kz").addEventListener("click",()=>kzToggle(!KZ.on));$("kz").setAttribute("aria-pressed",String(KZ.on));
+
+/* ---------- betöltés ---------- */
+try{const h=location.hash.slice(1);if(h&&!["kutatasok","korzetek","terkep","varmegyek"].includes(h))history.replaceState(null,"",location.pathname+location.search);}catch(e){}
+fetch("assets/oevk.json").then(r=>r.json()).then(j=>{J=j;B=[0,0,j.W,j.H];svg.setAttribute("viewBox",B.join(" "));MS=mStats();const ns="http://www.w3.org/2000/svg";
+  const g=$("og");J.o.forEach(o=>{BY[o.id]=o;const p=document.createElementNS(ns,"path");p.setAttribute("d",o.d);p.setAttribute("class","o");p.dataset.id=o.id;
+    p.style.setProperty("--d",reduce?"0s":((o.c[0]/j.W)*0.7+(o.c[1]/j.H)*0.15).toFixed(2)+"s");p.setAttribute("aria-label",full(o));g.appendChild(p);EL[o.id]=p;});
+  $("cb").setAttribute("d",j.cb);$("ob").setAttribute("d",j.ob);
+  $("mgrid").innerHTML=Object.keys(MS).sort((a,b)=>a.localeCompare(b,"hu")).map(m=>{const os=J.o.filter(o=>o.m===m);const b=mBox(m);
+    return '<button class="mc" type="button" data-m="'+esc(m)+'"><svg viewBox="'+[b[0]-2,b[1]-2,b[2]+4,b[3]+4].map(n=>n.toFixed(1)).join(" ")+'" aria-hidden="true">'+os.map(o=>'<path d="'+o.d+'" stroke-width="'+(b[2]/90).toFixed(2)+'"/>').join("")+'</svg><span><b>'+esc(m)+'</b><small>~'+fm(MS[m].km)+' km²</small></span><span class="n">'+MS[m].n+'</span></button>';}).join("");
+  $("mgrid").addEventListener("click",e=>{const b=e.target.closest(".mc");if(!b)return;selectM(b.dataset.m);stage.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"});});
+  panel();sched();setTimeout(loadSB,2500);setTimeout(()=>svg.classList.add("ready"),reduce?0:1900);
+  fetch("assets/oevk_2026.json").then(r=>r.json()).then(r=>{RS=r;initK();}).catch(()=>{});
+  return fetch("assets/oevk_tel.json").then(r=>r.json()).then(t=>{TEL=t;const idx={};
+    Object.keys(t.o).forEach(id=>t.o[id].forEach(s=>{const k=s[0]+"|"+s[1];const x=idx[k]||(idx[k]={n:s[1]==="b"?"Budapest "+s[0]:s[0],j:s[1],p:s[2],os:[]});x.os.push(id);}));
+    TIDX=Object.values(idx);buildCities();panel();if(RS)renderK();});
+})
+.catch(()=>{$("panel").innerHTML='<div class="sub">A térkép nem tölthető be. Próbáld újra később.</div>';});
+})();
+
+/* ---------- korábbi választások ---------- */
+(function(){const $=id=>document.getElementById(id);if(!$("hy"))return;const esc=x=>String(x).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const f2=x=>x.toFixed(2).replace(".",",");let H=null,Y=null;
+  function hemi(e){const n=e.n,rows=n>300?12:9,R0=n>300?78:88,R1=196,cx=200,cy=204,rad=[];let tl=0;for(let r=0;r<rows;r++){rad.push(R0+(R1-R0)*r/(rows-1));tl+=rad[r];}
+    let left=n;const cnt=rad.map((r,i)=>{const k=i===rows-1?left:Math.round(n*r/tl);left-=k;return k;});const seats=[];
+    rad.forEach((r,i)=>{const k=cnt[i];for(let j=0;j<k;j++){const a=Math.PI*(1-(k>1?j/(k-1):.5));seats.push({x:cx+r*Math.cos(a),y:cy-r*Math.sin(a),a:a});}});
+    seats.sort((p,q)=>q.a-p.a);const col=[];e.p.forEach(p=>{for(let i=0;i<p[3];i++)col.push(p[1]);});const rr=Math.min(5.4,(R1-R0)/rows*0.42+0.3);
+    $("hhemi").innerHTML=seats.map((s,i)=>'<circle cx="'+s.x.toFixed(1)+'" cy="'+s.y.toFixed(1)+'" r="'+rr.toFixed(2)+'" fill="'+(col[i]||"var(--bg2)")+'"/>').join("")+
+      '<text x="200" y="196" text-anchor="middle" style="font:900 34px var(--f-display);fill:var(--ink)">'+n+'</text><text x="200" y="212" text-anchor="middle" style="font:700 10px var(--f-cond);letter-spacing:.14em;fill:var(--ink3)">MANDÁTUM</text>';if(window.MapAnim)MapAnim.seats($("hhemi"));}
+  function show(y){Y=y;const e=H.e.find(x=>x.y===y);if(!e)return;const w=e.p.slice().sort((a,b)=>b[3]-a[3])[0];
+    $("hy").querySelectorAll("button").forEach(b=>{const on=+b.dataset.y===y;b.classList.toggle("on",on);b.setAttribute("aria-selected",on);});
+    $("hyt").textContent=e.y+" – "+w[0];$("hyn").textContent=e.note;
+    const maj=Math.floor(e.n/2)+1,two=Math.ceil(e.n*2/3);
+    $("hym").innerHTML='<span>Részvétel: <b>'+f2(e.t)+'%</b></span><span>Többség: <b>'+maj+'</b></span><span>Kétharmad: <b>'+two+'</b></span><span>'+(e.y<2014?'Két forduló, 386 hely':'Egy forduló, 199 hely')+'</span>';
+    hemi(e);const mx=Math.max(...e.p.map(p=>p[2]||0));
+    $("hrows").innerHTML=e.p.map(p=>'<div class="hrow" style="--c:'+p[1]+'"><span class="pn"><i></i><span title="'+esc(p[0])+'">'+esc(p[0])+'</span></span><span class="tr"><em style="width:'+(p[2]?p[2]/Math.max(mx,1)*100:0)+'%"></em></span><span class="v">'+(p[2]!=null?f2(p[2])+'%':'–')+'</span><span class="s">'+p[3]+'</span></div>').join("");
+    $("hnote").textContent=e.y<2014?"1990 és 2010 között a lista % a területi (megyei) listák első fordulós eredménye.":"2014 óta a lista % az országos listás eredmény (levélszavazatokkal együtt).";
+    $("hall").querySelectorAll(".hl").forEach(r=>r.classList.toggle("on",+r.dataset.y===y));}
+  fetch("assets/data/hu_tortenet.json?v=1").then(r=>r.json()).then(j=>{H=j;
+    $("hy").innerHTML=j.e.map(e=>{const w=e.p.slice().sort((a,b)=>b[3]-a[3])[0];return '<button type="button" role="tab" data-y="'+e.y+'" style="--c:'+w[1]+'">'+e.y+'<i></i></button>';}).join("");
+    $("hall").innerHTML=j.e.map(e=>'<div class="hl" data-y="'+e.y+'"><b>'+e.y+'</b><div class="sb">'+e.p.filter(p=>p[3]>0).map(p=>'<i title="'+esc(p[0])+': '+p[3]+'" style="width:'+(p[3]/e.n*100)+'%;background:'+p[1]+'"></i>').join("")+'</div></div>').join("");
+    $("hsrc").innerHTML="Források: "+j.forras.map(x=>'<a href="'+x[1]+'" target="_blank" rel="noopener">'+esc(x[0])+'</a>').join(" · ");
+    $("hy").addEventListener("click",ev=>{const b=ev.target.closest("button[data-y]");if(b)show(+b.dataset.y);});
+    $("hall").addEventListener("click",ev=>{const r=ev.target.closest(".hl");if(r)show(+r.dataset.y);});
+    show(j.e[j.e.length-1].y);}).catch(()=>{});
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

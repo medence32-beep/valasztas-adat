@@ -1,0 +1,41 @@
+{
+  "frissitve": "2026-11-11",
+  "forrasok": [
+    ["2026-os országos választási naptár (Wikipedia)", "https://en.wikipedia.org/wiki/2026_national_electoral_calendar"],
+    ["2027-es országos választási naptár (Wikipedia)", "https://en.wikipedia.org/wiki/2027_national_electoral_calendar"],
+    ["IFES ElectionGuide – közelgő választások", "https://www.electionguide.org/elections/type/upcoming/"],
+    ["Spanyol előrehozott választás (Wikipedia)", "https://en.wikipedia.org/wiki/2026_Spanish_general_election"],
+    ["Észt választási bizottság – Riigikogu 2027", "https://www.valimised.ee/en/riigikogu-elections-2027"],
+    ["Bundestag – a Szövetségi Gyűlés 2027. január 30-án ülésezik", "https://www.bundestag.de/presse/pressemitteilungen/2026/pm-260226-bundesversammlung-1150358"],
+    ["Francia elnökválasztás 2027 (Wikipedia)", "https://en.wikipedia.org/wiki/2027_French_presidential_election"],
+    ["Következő lengyel parlamenti választás (Wikipedia)", "https://en.wikipedia.org/wiki/Next_Polish_parliamentary_election"],
+    ["Következő olasz választás (Wikipedia)", "https://en.wikipedia.org/wiki/Next_Italian_general_election"],
+    ["Következő szlovák parlamenti választás (Wikipedia)", "https://en.wikipedia.org/wiki/Next_Slovak_parliamentary_election"]
+  ],
+  "v": [
+    {"d":"2026-11-15","k":"CV","t":"Elnökválasztás","s":"kitűzve"},
+    {"d":"2026-11-29","k":"ES","t":"Előrehozott parlamenti választás (Képviselőház és Szenátus)","s":"kitűzve","f":1,"m":"Pedro Sánchez októberben feloszlatta a parlamentet."},
+    {"d":"2026-11-29","k":"CH","t":"Országos népszavazások","s":"kitűzve"},
+    {"d":"2026-12-05","k":"GM","t":"Elnökválasztás","s":"kitűzve"},
+    {"d":"2026-12-22","k":"SS","t":"Általános választás (elnök és parlament)","s":"várható","m":"Többször elhalasztották – a dátum bizonytalan."},
+    {"d":"2026-12-27","k":"RS","t":"Elnökválasztás","s":"várható","m":"Előzetes dátum."},
+    {"d":"2027-01-16","k":"NG","t":"Elnök- és parlamenti választás","s":"kitűzve"},
+    {"d":"2027-01-27","k":"KG","t":"Elnökválasztás","s":"várható"},
+    {"d":"2027-01-30","k":"DE","t":"Szövetségi elnök választása (Szövetségi Gyűlés)","s":"kitűzve","f":1,"m":"Frank-Walter Steinmeier utódját választják – közvetett választás."},
+    {"d":"2027-02-28","k":"SV","t":"Elnök- és parlamenti választás","s":"várható"},
+    {"d":"2027-03-07","k":"EE","t":"Parlamenti választás (Riigikogu)","s":"kitűzve"},
+    {"d":"2027-04-18","k":"FR","t":"Elnökválasztás – 1. forduló","s":"kitűzve","f":1,"m":"A 2. forduló 2027. május 2-án lesz, ha senki sem szerez abszolút többséget."},
+    {"d":"2027-04-18","k":"FI","t":"Parlamenti választás","s":"várható"},
+    {"d":"2027-05-02","k":"FR","t":"Elnökválasztás – 2. forduló","s":"kitűzve"},
+    {"d":"2027-06-06","k":"MX","t":"Képviselőházi választás","s":"várható"},
+    {"d":"2027-06-27","k":"GT","t":"Elnök- és kongresszusi választás","s":"várható"},
+    {"d":"2027-08-10","k":"KE","t":"Általános választás","s":"kitűzve"},
+    {"d":"2027-08-24","k":"AO","t":"Parlamenti választás","s":"várható"},
+    {"d":"2027-09-28","k":"SK","t":"Parlamenti választás","s":"legkésőbb","f":1,"m":"Legkésőbb ekkor – előrehozott választás is szóba került."},
+    {"d":"2027-10-24","k":"AR","t":"Általános választás","s":"várható"},
+    {"d":"2027-11-11","k":"PL","t":"Parlamenti választás (Szejm és Szenátus)","s":"legkésőbb","f":1},
+    {"d":"2027-12-22","k":"IT","t":"Parlamenti választás","s":"legkésőbb","f":1},
+    {"d":"2028-11-07","k":"US","t":"Elnökválasztás","s":"kitűzve","f":1},
+    {"d":"2030-04-15","k":"HU","t":"Országgyűlési választás","s":"várható","f":1,"m":"Négyévente, tavasszal (április vagy május) – a pontos napot a köztársasági elnök tűzi ki.","h":"2030 tavasza"}
+  ]
+}

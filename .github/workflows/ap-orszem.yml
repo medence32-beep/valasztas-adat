@@ -1,0 +1,22 @@
+name: Frissítő őrszem
+
+# Óránként ellenőrzi, hogy fut-e az automatikus frissítés; ha nem, elindítja.
+on:
+  schedule:
+    - cron: "17 * * * *"
+  workflow_dispatch: {}
+
+permissions:
+  actions: write
+
+jobs:
+  orszem:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ellenőrzés és indítás
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          n=$(gh run list --workflow ap-frissites.yml --json status --jq '[.[] | select(.status=="in_progress" or .status=="queued")] | length')
+          if [ "$n" = "0" ]; then gh workflow run ap-frissites.yml --ref main; echo "elindítva"; else echo "fut ($n)"; fi
