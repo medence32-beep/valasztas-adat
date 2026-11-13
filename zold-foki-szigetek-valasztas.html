@@ -54,6 +54,15 @@
 #mp h3{margin:0 0 4px;font:800 18px var(--f-display)}#mp .muted{color:var(--ink2);font-size:13px}
 .cvn{color:var(--ink3,#888);font-size:13px;margin-top:10px}.cvi{margin-top:16px}.cvi li{margin:6px 0;color:var(--ink2)}
 .lg2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink2);margin-top:8px}.lg2 i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.cvt{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.cvt img{width:56px;height:38px;border-radius:6px;object-fit:cover;box-shadow:var(--shadow)}
+.live{display:inline-flex;align-items:center;gap:6px;font:700 12px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:#e5484d;border:1px solid currentColor;border-radius:999px;padding:3px 10px}.live i{width:8px;height:8px;border-radius:50%;background:currentColor;animation:lv 1.4s infinite}@keyframes lv{50%{opacity:.25}}
+.note{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:13px;color:var(--ink2);margin-top:14px}
+.h2h{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.pc2{display:flex;gap:12px;align-items:center;min-width:0}.pc2.r{flex-direction:row-reverse;text-align:right}
+.av{flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:800 20px var(--f-display);color:#fff;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c)}
+.pc2 b{display:block;font-size:15px}.pc2 small{color:var(--ink2);font-size:12px}.pc2 .pp{font:900 30px/1 var(--f-display);color:var(--c)}
+.split{display:flex;height:16px;border-radius:9px;overflow:hidden;background:var(--line);position:relative}.split i{display:block;height:100%;transition:width .7s}.split:after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:2px dashed var(--ink)}
+.pc2>div:last-child{min-width:0;overflow-wrap:anywhere}@media(max-width:560px){.av{width:42px;height:42px;font-size:15px}.pc2{gap:8px;align-items:flex-start}.pc2 b{font-size:13px}.pc2 small{display:none}.pc2 .pp{font-size:22px;margin-top:2px}}
+.splitn{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--ink2);margin:4px 0 6px}
 </style>
 </head>
 <body>
@@ -71,11 +80,11 @@
   </div>
 </header>
 <main class="cvw">
-<section class="cvh"><div class="cvk">Zöld-foki-szigetek · 2026. november 15.</div><h1>Elnökválasztás 2026</h1>
-<p>A Zöld-foki Köztársaság elnökét öt évre választják, két fordulóban: aki az első fordulóban megszerzi az érvényes szavazatok több mint felét, az nyer; különben a két legjobb jelölt második fordulóba jut. Az urnák helyi idő szerint 18 órakor (magyar idő szerint 20 órakor) zárnak.</p></section>
+<section class="cvh"><div class="cvt"><img src="https://flagcdn.com/w160/cv.png" alt="A Zöld-foki-szigetek zászlaja"><div><div class="cvk">Zöld-foki-szigetek · 2026. november 15. <span class="live" id="liv" hidden><i></i>Élő</span></div><h1>Elnökválasztás 2026</h1></div></div>
+<p>A Zöld-foki Köztársaság elnökét öt évre választják, két fordulóban: aki az első fordulóban megszerzi az érvényes szavazatok több mint felét, az nyer; különben a két legjobb jelölt második fordulóba jut. Az urnák helyi idő szerint 18 órakor (magyar idő szerint 20 órakor) zárnak.</p><div class="note">ⓘ Az oldal magától frissül, nem kell újratölteni. <span id="nupd"></span></div></section>
 <div class="cvst"><div><b id="sFeld">–</b><span>feldolgozottság</span><div class="cvbar"><i id="bFeld"></i></div></div><div><b id="sReszv">–</b><span>részvétel</span><div class="cvbar"><i id="bReszv"></i></div></div><div><b id="sSzav">–</b><span>leadott szavazat</span></div><div><b id="sAll">Választás előtt</b><span id="sUpd">frissítés: –</span></div></div>
 <div class="cvg"><div class="cvc"><h2>Térkép · 22 község</h2><svg id="cvmap" viewBox="0 0 600 520" role="img" aria-label="A Zöld-foki-szigetek községei"></svg><div class="lg2" id="lg2"></div><p class="cvn" id="mapn">Térkép betöltése…</p></div>
-<div><div class="cvc"><h2>Országos eredmény</h2><div id="nat"></div><p class="cvn" id="natn"></p></div>
+<div><div class="cvc"><h2>Országos eredmény</h2><div id="h2h"></div><div id="nat"></div><p class="cvn" id="natn"></p></div>
 <div class="cvc" style="margin-top:16px" id="mp"><h3>Válassz egy községet</h3><p class="muted">Koppints a térképen egy községre a helyi eredményért és részvételért.</p></div></div></div>
 <div class="cvc cvi"><h2>Tudnivalók</h2><ul>
 <li><b>Jelöltek:</b> José Maria Neves (PAICV, a hivatalban lévő elnök) és Joana Rosa (MpD, volt igazságügy-miniszter). A végleges jelöltlistát az élő adatok mutatják.</li>
@@ -98,6 +107,7 @@
 (function(){"use strict";
 const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const nf=n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf=x=>x==null?"–":x.toFixed(2).replace(".",",")+"%";
+const PART={"José Maria Neves":"PAICV · hivatalban lévő elnök","Joana Rosa":"MpD · volt igazságügy-miniszter"};const ini=n=>n.split(/\s+/).filter(w=>w.length>2).map(w=>w[0]).slice(0,2).join("").toUpperCase();
 const COL={"José Maria Neves":"#E8B400","Joana Rosa":"#2E9E57"},PAL=["#E8B400","#2E9E57","#4C8DF6","#C0504D","#8E6BD8","#3FB6B2"];
 const col=(n,i)=>COL[n]||PAL[i%PAL.length];
 const EL="https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json";
@@ -113,7 +123,10 @@ function stat(){const d=D||{};const f=d.feld,t=d.reszv;
   $("sSzav").textContent=d.szav==null?"–":nf(d.szav);
   $("sAll").textContent=d.allapot||(f>=100?"Előzetes végeredmény":f>0?"Számlálás folyik":"Választás előtt");
   $("sUpd").textContent="frissítés: "+(d.upd?new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"–");
-  $("nat").innerHTML=bars(d.nat&&d.nat.c);
+  $("nat").innerHTML=bars(d.nat&&d.nat.c);$("liv").hidden=!(f>0&&f<100);$("nupd").textContent=d.upd?"Utolsó adat: "+new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"";
+  {const r2=rows(d.nat&&d.nat.c);const A=r2.find(x=>x.n===ORD[0])||{n:ORD[0],p:null,v:0},B=r2.find(x=>x.n===ORD[1])||{n:ORD[1],p:null,v:0};
+   const card=(x,i,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n,i)+'"><div class="av" style="background:'+col(x.n,i)+'">'+ini(x.n)+'</div><div><b>'+esc(x.n)+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+(x.p==null?"–":pf(x.p))+'</div></div></div>';
+   $("h2h").innerHTML='<div class="h2h">'+card(A,0)+card(B,1,1)+'</div><div class="split"><i style="width:'+(A.p||0)+'%;background:'+col(A.n,0)+'"></i><i style="flex:1"></i><i style="width:'+(B.p||0)+'%;background:'+col(B.n,1)+'"></i></div><div class="splitn"><span>'+nf(A.v)+' szavazat</span><span>50% kell a győzelemhez</span><span>'+nf(B.v)+' szavazat</span></div>';}
   const r=rows(d.nat&&d.nat.c);$("natn").textContent=r.length&&r[0].v?(r[0].p>50?r[0].n+" az érvényes szavazatok több mint felénél jár"+(f>=100?".":" (a számlálás még tart)."):"Jelenleg senki sincs 50% felett – ezen az állás szerint második forduló következne."):"";}
 function mun(m){if(!D||!D.mun)return null;return D.mun[m.k]||null;}
 function fill(){if(!G)return;const sv=document.querySelectorAll("#cvmap path");sv.forEach(p=>{const m=G[p.dataset.i],x=mun(m),r=rows(x&&x.c);
