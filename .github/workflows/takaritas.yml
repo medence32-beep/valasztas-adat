@@ -1,0 +1,22 @@
+name: Régi kiadások törlése (egyszeri)
+
+# A szétválasztás előtti app-kiadások és címkék törlése (ezek a régi, teljes forráskódra mutattak).
+on:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  torles:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Törlés
+        env:
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          for i in $(seq 1 16); do
+            gh release delete "app-1.0.$i" --cleanup-tag -y && echo "törölve: app-1.0.$i" || true
+            gh api -X DELETE "repos/$GH_REPO/git/refs/tags/app-1.0.$i" 2>/dev/null || true
+          done
