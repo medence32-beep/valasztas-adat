@@ -1,12 +1,4 @@
 {
  "megjegyzes": "Az Android-alkalmazás megnyitáskor és félóránként ellenőrzi; minden új (még nem látott id-jű) tétel értesítést küld. Mezők: id, title, body, url, ts. Küldés: a tulajdonosi oldalról.",
- "items": [
-  {
-   "id": "k-1794534617333",
-   "title": "asd",
-   "body": "ferjoejrtejre",
-   "url": "https://voksmero.hu/",
-   "ts": 1794534617333
-  }
- ]
+ "items": []
 }
