@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=2";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=3";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="robots" content="noindex, follow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Voksmérő statisztika</title>
@@ -172,6 +172,9 @@ async function load(){
 }
 
 /* ---- telefonok: az app eszközönként egyszer bejegyzi a típust (dvn = darab, dvs-N-k = kódolt szöveg) ---- */
+const EKEZ={GYOR:"Győr",PECS:"Pécs",SZEKESFEHERVAR:"Székesfehérvár",NYIREGYHAZA:"Nyíregyháza",KECSKEMET:"Kecskemét",TATABANYA:"Tatabánya",KAPOSVAR:"Kaposvár",BEKESCSABA:"Békéscsaba",VESZPREM:"Veszprém",ERD:"Érd",DUNAUJVAROS:"Dunaújváros",HODMEZOVASARHELY:"Hódmezővásárhely",GODOLLO:"Gödöllő",SZEKSZARD:"Szekszárd",SALGOTARJAN:"Salgótarján",NAGYKANIZSA:"Nagykanizsa",CEGLED:"Cegléd",BAJA:"Baja",VAC:"Vác",GYONGYOS:"Gyöngyös",PAPA:"Pápa",SZENTENDRE:"Szentendre",DUNAKESZI:"Dunakeszi",BUDAORS:"Budaörs",FOT:"Fót",GOD:"Göd",SIOFOK:"Siófok",ESZTERGOM:"Esztergom",KISKUNFELEGYHAZA:"Kiskunfélegyháza",OZD:"Ózd",MOSONMAGYAROVAR:"Mosonmagyaróvár",KOMLO:"Komló",AJKA:"Ajka",JASZBERENY:"Jászberény",OROSHAZA:"Orosháza",TOROKSZENTMIKLOS:"Törökszentmiklós",SZIGETSZENTMIKLOS:"Szigetszentmiklós"};
+let RN=null;try{RN=new Intl.DisplayNames(["hu"],{type:"region"});}catch(_){}
+const varos=(c,cc)=>{if(!c&&!cc)return "–";const v=c?(EKEZ[c.replace(/ /g,"")]||c.toLowerCase().replace(/(^|[ -])\p{L}/gu,x=>x.toUpperCase())):"";const o=cc?(RN?RN.of(cc):cc):"";return v&&o?(cc==="HU"?v:v+", "+o):(v||o);};
 const DA="~ 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.|*/";
 const dec=v=>{let o="";while(v>0){o+=DA[v%DA.length];v=Math.floor(v/DA.length);}return o;};
 function brand(m){const u=m.toUpperCase();
@@ -186,15 +189,15 @@ function nev(m){const u=m.toUpperCase();let x;
   if((x=u.match(/^SM-F7(\d)\d/)))return "Galaxy Z Flip"+(+x[1]+2);if((x=u.match(/^SM-G99(\d)/)))return "Galaxy S"+(21+ +x[1]);
   if(/^PIXEL/.test(u))return m.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/^Pixel /,"Pixel ");return "";}
 async function devLoad(){
-  const n=await get("dvn",1);const el=$("devs");
+  const n=await get("dvn2",1);const el=$("devs");
   if(!n){el.innerHTML='<tr><td>Még egy telefon sem jelentkezett. Az app a következő megnyitáskor jegyzi be magát.</td></tr>';return;}
   const rows=[];
-  for(let i=1;i<=n;i++){let str="";for(let k=0;k<5;k++){const v=await get("dvs-"+i+"-"+k,1);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}
-    if(!str)continue;const [mod,av,d,own]=str.split("|");rows.push({i,mod,av,d,own:own==="*"});}
+  for(let i=1;i<=n;i++){let str="";for(let k=0;k<8;k++){const v=await get("dw-"+i+"-"+k,1);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}
+    if(!str)continue;const [mod,av,d,city,cc,own]=str.split("|");rows.push({i,mod,av,d,city,cc,own:own==="*"});}
   const by={};rows.forEach(r=>{const b=brand(r.mod)||"Egyéb";by[b]=(by[b]||0)+1;});
-  el.innerHTML='<tr><th>#</th><th>Telefon</th><th>Típuskód</th><th>Android</th><th>Első jelentkezés</th></tr>'+rows.map(r=>{const b=brand(r.mod),nm=nev(r.mod);
-    return '<tr><td>'+r.i+'</td><td>'+(b?b+' ':'')+(nm||'')+(r.own?' <span style="color:var(--gold)">(saját)</span>':'')+'</td><td>'+r.mod+'</td><td>'+(r.av||'–')+'</td><td>'+(r.d?'20'+r.d.slice(0,2)+'. '+r.d.slice(2,4)+'. '+r.d.slice(4,6)+'.':'–')+'</td></tr>';}).join("");
-  $("devn").textContent=rows.length+" telefon"+(Object.keys(by).length?" · "+Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([b,c])=>b+": "+c).join(", "):"")+". A típuskódot a telefon adja meg (pl. SM-A546B = Samsung Galaxy A54). A november 13. előtt telepített appok a következő megnyitáskor jelentkeznek be.";}
+  el.innerHTML='<tr><th>#</th><th>Telefon</th><th>Város</th><th>Típuskód</th><th>Android</th><th>Első jelentkezés</th></tr>'+rows.map(r=>{const b=brand(r.mod),nm=nev(r.mod);
+    return '<tr><td>'+r.i+'</td><td>'+(b?b+' ':'')+(nm||'')+(r.own?' <span style="color:var(--gold)">(saját)</span>':'')+'</td><td>'+varos(r.city,r.cc)+'</td><td>'+r.mod+'</td><td>'+(r.av||'–')+'</td><td>'+(r.d?'20'+r.d.slice(0,2)+'. '+r.d.slice(2,4)+'. '+r.d.slice(4,6)+'.':'–')+'</td></tr>';}).join("");
+  $("devn").textContent=rows.length+" telefon"+(Object.keys(by).length?" · "+Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([b,c])=>b+": "+c).join(", "):"")+". A típuskódot a telefon adja meg (pl. SM-A546B = Samsung Galaxy A54). A várost az internetkapcsolat alapján becsüljük (mobilneten gyakran a szolgáltató központja, pl. Budapest látszik); IP-címet nem tárolunk. A korábban telepített appok a következő megnyitáskor jelentkeznek be.";}
 async function ghLoad(){
   try{const r=await fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/releases?per_page=100");const js=await r.json();
     let sum=0;const rows=js.map(x=>{const n=(x.assets||[]).reduce((a,b)=>a+b.download_count,0);sum+=n;return [x.tag_name.replace("app-",""),x.created_at,n];});

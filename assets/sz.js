@@ -9,18 +9,23 @@
 try{
   if(navigator.webdriver)return;
   var ls=window.localStorage,ss=window.sessionStorage;
-  /* az alkalmazás telepítései: eszközönként egyszer bejegyzi a telefon típusát, az Android-verziót és a dátumot
-     (sorszám: dvn; szöveg: dvs-N-0, dvs-N-1, … számmá kódolva, 9 karakterenként) – személyes adat nélkül */
-  if(/ValasztasokApp/.test(navigator.userAgent)&&!ls.getItem("vm-dev"))(function(){
+  /* az alkalmazás telepítései: eszközönként egyszer bejegyzi a telefon típusát, az Android-verziót, a dátumot és a várost
+     (a várost egy IP-alapú helymeghatározó adja; maga az IP-cím sehol nincs eltárolva).
+     Sorszám: dvn2; szöveg: dw-N-0, dw-N-1, … számmá kódolva, 9 karakterenként */
+  if(/ValasztasokApp/.test(navigator.userAgent)&&!ls.getItem("vm-dev2"))(function(){
     var u=navigator.userAgent,m=u.match(/Android ([\d.]+); ([^;)]+?)(?: Build\/[^;)]*)?[;)]/);
     var d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}).slice(2).replace(/-/g,"");
     var A="~ 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.|*/";
-    var s=((m?m[2]:"ISMERETLEN")+"|"+(m?m[1]:"")+"|"+d+(ls.getItem("vm-nostat")?"|*":"")).toUpperCase().split("").filter(function(c){return A.indexOf(c)>0;}).join("").slice(0,45);
+    var tisz=function(x){return String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().split("").filter(function(c){return A.indexOf(c)>0&&c!=="|";}).join("");};
     var H="https://abacus.jasoncameron.dev/";
-    fetch(H+"hit/voksmero.hu/dvn",{credentials:"omit"}).then(function(r){return r.json();}).then(function(j){var n=j.value;if(!n)return;
-      var ps=[];for(var k=0;k*9<s.length;k++){var c=s.substr(k*9,9),v=0;for(var i=c.length-1;i>=0;i--)v=v*A.length+A.indexOf(c[i]);
-        ps.push(fetch(H+"create/voksmero.hu/dvs-"+n+"-"+k+"?initializer="+v,{credentials:"omit"}));}
-      return Promise.all(ps).then(function(){ls.setItem("vm-dev",String(n));});}).catch(function(){});
+    var hely=new Promise(function(res){var t=setTimeout(function(){res(null);},5000);
+      fetch("https://get.geojs.io/v1/ip/geo.json",{credentials:"omit"}).then(function(r){return r.json();}).then(function(g){clearTimeout(t);res(g);}).catch(function(){clearTimeout(t);res(null);});});
+    hely.then(function(g){
+      var s=[tisz(m?m[2]:"ISMERETLEN").slice(0,24),tisz(m?m[1]:""),d,tisz(g&&g.city).slice(0,22),tisz(g&&g.country_code).slice(0,2),ls.getItem("vm-nostat")?"*":""].join("|").replace(/\|+$/,"");
+      return fetch(H+"hit/voksmero.hu/dvn2",{credentials:"omit"}).then(function(r){return r.json();}).then(function(j){var n=j.value;if(!n)return;
+        var ps=[];for(var k=0;k*9<s.length;k++){var c=s.substr(k*9,9),v=0;for(var i=c.length-1;i>=0;i--)v=v*A.length+A.indexOf(c[i]);
+          ps.push(fetch(H+"create/voksmero.hu/dw-"+n+"-"+k+"?initializer="+v,{credentials:"omit"}));}
+        return Promise.all(ps).then(function(){ls.setItem("vm-dev2",String(n));});});}).catch(function(){});
   })();
   if(ls.getItem("vm-nostat"))return;               /* a tulajdonos saját eszköze nem számít */
   var pg=(location.pathname.replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index").replace(/[^A-Za-z0-9_-]/g,"");
