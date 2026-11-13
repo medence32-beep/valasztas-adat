@@ -9,6 +9,19 @@
 try{
   if(navigator.webdriver)return;
   var ls=window.localStorage,ss=window.sessionStorage;
+  /* az alkalmazás telepítései: eszközönként egyszer bejegyzi a telefon típusát, az Android-verziót és a dátumot
+     (sorszám: dvn; szöveg: dvs-N-0, dvs-N-1, … számmá kódolva, 9 karakterenként) – személyes adat nélkül */
+  if(/ValasztasokApp/.test(navigator.userAgent)&&!ls.getItem("vm-dev"))(function(){
+    var u=navigator.userAgent,m=u.match(/Android ([\d.]+); ([^;)]+?)(?: Build\/[^;)]*)?[;)]/);
+    var d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}).slice(2).replace(/-/g,"");
+    var A="~ 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.|*/";
+    var s=((m?m[2]:"ISMERETLEN")+"|"+(m?m[1]:"")+"|"+d+(ls.getItem("vm-nostat")?"|*":"")).toUpperCase().split("").filter(function(c){return A.indexOf(c)>0;}).join("").slice(0,45);
+    var H="https://abacus.jasoncameron.dev/";
+    fetch(H+"hit/voksmero.hu/dvn",{credentials:"omit"}).then(function(r){return r.json();}).then(function(j){var n=j.value;if(!n)return;
+      var ps=[];for(var k=0;k*9<s.length;k++){var c=s.substr(k*9,9),v=0;for(var i=c.length-1;i>=0;i--)v=v*A.length+A.indexOf(c[i]);
+        ps.push(fetch(H+"create/voksmero.hu/dvs-"+n+"-"+k+"?initializer="+v,{credentials:"omit"}));}
+      return Promise.all(ps).then(function(){ls.setItem("vm-dev",String(n));});}).catch(function(){});
+  })();
   if(ls.getItem("vm-nostat"))return;               /* a tulajdonos saját eszköze nem számít */
   var pg=(location.pathname.replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index").replace(/[^A-Za-z0-9_-]/g,"");
   if(/^stat-/.test(pg)||pg==="404")return;

@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=1";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?v=2";document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?v=2";s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="robots" content="noindex, follow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Voksmérő statisztika</title>
@@ -109,6 +109,9 @@ button:disabled{opacity:.5;cursor:default}
     <div><h2>Oldalak (ma)</h2><div class="card"><table id="pages"></table></div></div>
   </div>
 
+  <h2>Telefonok, amelyeken az app fut</h2>
+  <div class="card"><table id="devs"></table><p class="note" id="devn" style="margin-bottom:0"></p></div>
+
   <h2>Android-alkalmazás letöltései (GitHub)</h2>
   <div class="card"><table id="gh"></table></div>
 
@@ -127,7 +130,7 @@ const dkey=d=>d.toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});
 const dlabel=k=>{const d=new Date(k+"T12:00:00");return d.toLocaleDateString("hu-HU",{month:"short",day:"numeric"})+", "+d.toLocaleDateString("hu-HU",{weekday:"short"});};
 /* a szolgáltatás 10 másodpercenként legfeljebb 30 kérést enged: sorban, ütemezve kérdezünk */
 const cache=new Map();let sent=[],queue=[],busy=false,done=0,total=0;
-function get(k){if(cache.has(k))return cache.get(k);total++;const p=new Promise(res=>queue.push({k,res}));cache.set(k,p);pump();return p;}
+function get(k,elore){if(cache.has(k))return cache.get(k);total++;const p=new Promise(res=>elore?queue.unshift({k,res}):queue.push({k,res}));cache.set(k,p);pump();return p;}
 function pump(){if(busy)return;busy=true;(function step(){
   if(!queue.length){busy=false;return;}
   const now=Date.now();sent=sent.filter(t=>now-t<10500);
@@ -154,7 +157,7 @@ async function load(){
   const [uva,api]=await Promise.all([get("uv-all"),get("appi-all")]);
   tile($("tot"),"Különböző eszköz (látogató)",uva,undefined,"a számlálás kezdete óta");
   tile($("tot"),"App első indítása",api,undefined,"≈ telepítések a számlálás óta");
-  ghLoad();
+  ghLoad();devLoad();
   /* napi bontás */
   const rows=await Promise.all(days.map(d=>Promise.all(["pv","uv","app","dl"].map(k=>get(k+"-"+d)))));
   const mx=Math.max(1,...rows.map(r=>r[0]||0));
@@ -167,6 +170,31 @@ async function load(){
   $("pages").innerHTML='<tr><th>Oldal</th><th>Megnyitás</th></tr>'+PAGES.map((p,i)=>[p,pv[i]]).sort((a,b)=>(b[1]||0)-(a[1]||0)).map(([p,v])=>'<tr><td>'+p[1]+'</td><td>'+fmt(v)+'</td></tr>').join("");
   $("upd").textContent="Frissítve: "+new Date().toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})+" · a napok budapesti idő szerint";
 }
+
+/* ---- telefonok: az app eszközönként egyszer bejegyzi a típust (dvn = darab, dvs-N-k = kódolt szöveg) ---- */
+const DA="~ 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.|*/";
+const dec=v=>{let o="";while(v>0){o+=DA[v%DA.length];v=Math.floor(v/DA.length);}return o;};
+function brand(m){const u=m.toUpperCase();
+  if(/^SM-|^GALAXY|^SAMSUNG/.test(u))return "Samsung";if(/^PIXEL/.test(u))return "Google";
+  if(/^(REDMI|POCO|MI |MI\d|M\d{4}|2\d{3}[A-Z0-9]{3,}|XIAOMI)/.test(u))return "Xiaomi";if(/^CPH|^OPPO/.test(u))return "Oppo / OnePlus";
+  if(/^(ONEPLUS|NE\d|LE\d|KB\d|IN\d|HD\d|GM\d)/.test(u))return "OnePlus";if(/^RMX/.test(u))return "Realme";if(/^V2\d{3}|^VIVO/.test(u))return "vivo";
+  if(/^MOTO|^XT\d/.test(u))return "Motorola";if(/^NOKIA|^TA-/.test(u))return "Nokia";if(/^XQ-|^SO-/.test(u))return "Sony";
+  if(/^(HUAWEI|[A-Z]{3}-[A-Z]{1,2}\d{2})/.test(u))return "Huawei / Honor";if(/^NOTHING|^A0\d{2}/.test(u))return "Nothing";return "";}
+function nev(m){const u=m.toUpperCase();let x;
+  if((x=u.match(/^SM-S9(\d)\d/)))return "Galaxy S"+(22+ +x[1]);if((x=u.match(/^SM-A(\d\d)\d/)))return "Galaxy A"+x[1];
+  if((x=u.match(/^SM-M(\d\d)\d/)))return "Galaxy M"+x[1];if((x=u.match(/^SM-F9(\d)\d/)))return "Galaxy Z Fold"+(+x[1]+2);
+  if((x=u.match(/^SM-F7(\d)\d/)))return "Galaxy Z Flip"+(+x[1]+2);if((x=u.match(/^SM-G99(\d)/)))return "Galaxy S"+(21+ +x[1]);
+  if(/^PIXEL/.test(u))return m.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/^Pixel /,"Pixel ");return "";}
+async function devLoad(){
+  const n=await get("dvn",1);const el=$("devs");
+  if(!n){el.innerHTML='<tr><td>Még egy telefon sem jelentkezett. Az app a következő megnyitáskor jegyzi be magát.</td></tr>';return;}
+  const rows=[];
+  for(let i=1;i<=n;i++){let str="";for(let k=0;k<5;k++){const v=await get("dvs-"+i+"-"+k,1);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}
+    if(!str)continue;const [mod,av,d,own]=str.split("|");rows.push({i,mod,av,d,own:own==="*"});}
+  const by={};rows.forEach(r=>{const b=brand(r.mod)||"Egyéb";by[b]=(by[b]||0)+1;});
+  el.innerHTML='<tr><th>#</th><th>Telefon</th><th>Típuskód</th><th>Android</th><th>Első jelentkezés</th></tr>'+rows.map(r=>{const b=brand(r.mod),nm=nev(r.mod);
+    return '<tr><td>'+r.i+'</td><td>'+(b?b+' ':'')+(nm||'')+(r.own?' <span style="color:var(--gold)">(saját)</span>':'')+'</td><td>'+r.mod+'</td><td>'+(r.av||'–')+'</td><td>'+(r.d?'20'+r.d.slice(0,2)+'. '+r.d.slice(2,4)+'. '+r.d.slice(4,6)+'.':'–')+'</td></tr>';}).join("");
+  $("devn").textContent=rows.length+" telefon"+(Object.keys(by).length?" · "+Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([b,c])=>b+": "+c).join(", "):"")+". A típuskódot a telefon adja meg (pl. SM-A546B = Samsung Galaxy A54). A november 13. előtt telepített appok a következő megnyitáskor jelentkeznek be.";}
 async function ghLoad(){
   try{const r=await fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/releases?per_page=100");const js=await r.json();
     let sum=0;const rows=js.map(x=>{const n=(x.assets||[]).reduce((a,b)=>a+b.download_count,0);sum+=n;return [x.tag_name.replace("app-",""),x.created_at,n];});
