@@ -89,6 +89,12 @@ button{font:inherit;color:inherit}
 
 /* top bar + ticker */
 .top{position:sticky;top:calc(34px + env(safe-area-inset-top,0px));z-index:50;background:color-mix(in srgb,var(--bg2) 92%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.lite .top{background:var(--bg2)}
+.tip:empty{display:none!important}
+/* telefonon a megye eredménykártyája a térkép alatt jelenik meg (nem takarja a gombokat) */
+#ctylabel.below{position:static;width:auto;max-width:none;margin:8px 0 0;opacity:1;font-size:12px;line-height:1.35;padding:8px 10px;box-shadow:none;border-radius:12px}
+#ctylabel.below>div{font-size:12.5px!important}#ctylabel.below small{font-size:11px}
+.mapfs #ctylabel.below{flex:none;max-height:32vh;overflow:auto}
 .top .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;padding-block:9px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:900;font-size:21px;letter-spacing:.06em;text-transform:uppercase}
 .brand .bars{display:inline-flex;gap:3px}
@@ -1828,6 +1834,10 @@ function ctyInfo(c){
   }
   return '<span class="muted">Megyei eredmény: nincs adat</span>';
 }
+/* keskeny képernyőn a megyekártya a térkép alá kerül */
+(function(){const L=document.getElementById("ctylabel"),S=document.getElementById("stage");if(!L||!S||!window.matchMedia)return;const mq=matchMedia("(max-width:700px)");
+  const f=()=>{if(mq.matches){if(L.parentNode===S)S.after(L);L.classList.add("below");}else{if(L.parentNode!==S)S.appendChild(L);L.classList.remove("below");}};
+  f();if(mq.addEventListener)mq.addEventListener("change",f);else if(mq.addListener)mq.addListener(f);})();
 function ctyLegend(){
   const st=[-28,-14,0,14,28].map(m=>ctyMix(m===0?0.0001:m));
   return '<div style="margin-top:4px"><div style="height:6px;border-radius:5px;background:linear-gradient(90deg,'+st[4]+','+st[3]+','+st[2]+','+st[1]+','+st[0]+')"></div><div style="display:flex;justify-content:space-between;font-size:9px;opacity:.75;margin-top:1px"><span>D +28</span><span>döntetlen</span><span>R +28</span></div></div>';
