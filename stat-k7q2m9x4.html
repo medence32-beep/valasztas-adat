@@ -112,6 +112,9 @@ button:disabled{opacity:.5;cursor:default}
   <h2>Telefonok, amelyeken az app fut</h2>
   <div class="card"><table id="devs"></table><p class="note" id="devn" style="margin-bottom:0"></p></div>
 
+  <h2>Legutóbbi app-megnyitások</h2>
+  <div class="card"><table id="logs"></table><p class="note" id="logn" style="margin-bottom:0"></p></div>
+
   <h2>Android-alkalmazás letöltései (GitHub)</h2>
   <div class="card"><table id="gh"></table></div>
 
@@ -148,7 +151,7 @@ async function load(){
   done=0;total=0;cache.clear();queue=[];
   const now=new Date(),days=[];for(let i=0;i<N;i++)days.push(dkey(new Date(now.getTime()-i*864e5)));
   const T=days[0],Y=days[1];
-  $("upd").textContent="Betöltés…";$("today").innerHTML="";$("tot").innerHTML="";
+  $("upd").textContent="Betöltés…";devLoad();$("today").innerHTML="";$("tot").innerHTML="";
   /* ma / tegnap */
   const TM=[["pv","Oldalmegnyitás"],["uv","Egyedi látogató"],["app","App-megnyitás"],["appu","App-felhasználó"],["dl","APK-letöltés kattintás"],["sh","Megosztás"]];
   const tv=await Promise.all(TM.map(([k])=>Promise.all([get(k+"-"+T),get(k+"-"+Y)])));
@@ -157,7 +160,7 @@ async function load(){
   const [uva,api]=await Promise.all([get("uv-all"),get("appi-all")]);
   tile($("tot"),"Különböző eszköz (látogató)",uva,undefined,"a számlálás kezdete óta");
   tile($("tot"),"App első indítása",api,undefined,"≈ telepítések a számlálás óta");
-  ghLoad();devLoad();
+  ghLoad();
   /* napi bontás */
   const rows=await Promise.all(days.map(d=>Promise.all(["pv","uv","app","dl"].map(k=>get(k+"-"+d)))));
   const mx=Math.max(1,...rows.map(r=>r[0]||0));
@@ -188,16 +191,30 @@ function nev(m){const u=m.toUpperCase();let x;
   if((x=u.match(/^SM-M(\d\d)\d/)))return "Galaxy M"+x[1];if((x=u.match(/^SM-F9(\d)\d/)))return "Galaxy Z Fold"+(+x[1]+2);
   if((x=u.match(/^SM-F7(\d)\d/)))return "Galaxy Z Flip"+(+x[1]+2);if((x=u.match(/^SM-G99(\d)/)))return "Galaxy S"+(21+ +x[1]);
   if(/^PIXEL/.test(u))return m.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/^Pixel /,"Pixel ");return "";}
+const tname=r=>{const b=brand(r.mod),nm=nev(r.mod);return (b?b+' ':'')+(nm||(b?'':r.mod))+(r.own?' <span style="color:var(--gold)">(saját)</span>':'');};
+const ido=perc=>new Date(Date.UTC(2026,0,1)+perc*6e4).toLocaleString("hu-HU",{timeZone:"Europe/Budapest",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
+async function szoveg(pre,k0){let str="";for(let k=k0||0;k<8;k++){const v=await get(pre+k,1);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}return str;}
 async function devLoad(){
-  const n=await get("dvn2",1);const el=$("devs");
-  if(!n){el.innerHTML='<tr><td>Még egy telefon sem jelentkezett. Az app a következő megnyitáskor jegyzi be magát.</td></tr>';return;}
-  const rows=[];
-  for(let i=1;i<=n;i++){let str="";for(let k=0;k<8;k++){const v=await get("dw-"+i+"-"+k,1);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}
-    if(!str)continue;const [mod,av,d,city,cc,own]=str.split("|");rows.push({i,mod,av,d,city,cc,own:own==="*"});}
+  const [n,ln]=await Promise.all([get("dvn2",1),get("lgn",1)]);const el=$("devs");
+  if(!n){el.innerHTML='<tr><td>Még egy telefon sem jelentkezett. Az app a következő megnyitáskor jegyzi be magát.</td></tr>';$("logs").innerHTML='<tr><td>Még nincs megnyitás.</td></tr>';return;}
+  const idx=[];for(let i=1;i<=n;i++)idx.push(i);
+  const rows=(await Promise.all(idx.map(async i=>{const str=await szoveg("dw-"+i+"-");if(!str)return null;const [mod,av,d,city,cc,own]=str.split("|");return {i,mod,av,d,city,cc,own:own==="*",n:0};}))).filter(Boolean);
+  const D={};rows.forEach(r=>D[r.i]=r);
+  /* legutóbbi megnyitások */
+  const L=[];for(let i=ln;i>0&&i>ln-30;i--)L.push(i);
+  const logs=(await Promise.all(L.map(async i=>{const v=await get("lg-"+i+"-0",1);if(!v)return null;const mas=v%2,x=Math.floor(v/2),perc=x%134217728,dv=Math.floor(x/134217728);
+    let city=null,cc=null;if(mas){const t=await szoveg("lg-"+i+"-",1);[city,cc]=t.split("|");}return {i,perc,dv,city,cc};}))).filter(Boolean);
+  const last={};logs.forEach(l=>{if(!last[l.dv]||l.perc>last[l.dv])last[l.dv]=l.perc;if(D[l.dv])D[l.dv].n++;});
   const by={};rows.forEach(r=>{const b=brand(r.mod)||"Egyéb";by[b]=(by[b]||0)+1;});
-  el.innerHTML='<tr><th>#</th><th>Telefon</th><th>Város</th><th>Típuskód</th><th>Android</th><th>Első jelentkezés</th></tr>'+rows.map(r=>{const b=brand(r.mod),nm=nev(r.mod);
-    return '<tr><td>'+r.i+'</td><td>'+(b?b+' ':'')+(nm||'')+(r.own?' <span style="color:var(--gold)">(saját)</span>':'')+'</td><td>'+varos(r.city,r.cc)+'</td><td>'+r.mod+'</td><td>'+(r.av||'–')+'</td><td>'+(r.d?'20'+r.d.slice(0,2)+'. '+r.d.slice(2,4)+'. '+r.d.slice(4,6)+'.':'–')+'</td></tr>';}).join("");
-  $("devn").textContent=rows.length+" telefon"+(Object.keys(by).length?" · "+Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([b,c])=>b+": "+c).join(", "):"")+". A típuskódot a telefon adja meg (pl. SM-A546B = Samsung Galaxy A54). A várost az internetkapcsolat alapján becsüljük (mobilneten gyakran a szolgáltató központja, pl. Budapest látszik); IP-címet nem tárolunk. A korábban telepített appok a következő megnyitáskor jelentkeznek be.";}
+  el.innerHTML='<tr><th>#</th><th>Telefon</th><th>Város</th><th>Típuskód</th><th>Android</th><th>Első jelentkezés</th><th>Utoljára</th></tr>'+rows.map(r=>
+    '<tr><td>'+r.i+'</td><td>'+tname(r)+'</td><td>'+varos(r.city,r.cc)+'</td><td>'+r.mod+'</td><td>'+(r.av||'–')+'</td><td>'+(r.d?'20'+r.d.slice(0,2)+'. '+r.d.slice(2,4)+'. '+r.d.slice(4,6)+'.':'–')+'</td><td>'+(last[r.i]!=null?ido(last[r.i]):'–')+'</td></tr>').join("");
+  $("devn").textContent=rows.length+" telefon"+(Object.keys(by).length?" · "+Object.entries(by).sort((a,b)=>b[1]-a[1]).map(([b,c])=>b+": "+c).join(", "):"")+". A típuskódot a telefon adja meg (pl. SM-A546B = Samsung Galaxy A54). A várost az internetkapcsolat alapján becsüljük (mobilneten gyakran a szolgáltató központja, pl. Budapest látszik); IP-címet nem tárolunk.";
+  $("logs").innerHTML=logs.length?'<tr><th>Mikor</th><th>Telefon</th><th>Város</th></tr>'+logs.sort((a,b)=>b.perc-a.perc).map(l=>{const r=D[l.dv];
+    return '<tr><td>'+ido(l.perc)+'</td><td>'+(r?tname(r):'#'+l.dv)+'</td><td>'+(l.city!=null?varos(l.city,l.cc):(r?varos(r.city,r.cc):'–'))+'</td></tr>';}).join(""):'<tr><td>Még nincs megnyitás.</td></tr>';
+  $("logn").textContent="Összesen "+fmt(ln||0)+" megnyitás (az utolsó 30 látszik, percenként frissül). Egy megnyitás = az app elindítása; ha nyitva marad és csak visszaváltasz rá, az nem számít újnak.";
+}
+/* a telefonok és a megnyitások percenként maguktól frissülnek, amíg az oldal nyitva van */
+setInterval(()=>{if(TOK&&document.visibilityState==="visible"){cache.delete("lgn");cache.delete("dvn2");devLoad();}},60000);
 async function ghLoad(){
   try{const r=await fetch("https://api.github.com/repos/medence32-beep/valasztas-adat/releases?per_page=100");const js=await r.json();
     let sum=0;const rows=js.map(x=>{const n=(x.assets||[]).reduce((a,b)=>a+b.download_count,0);sum+=n;return [x.tag_name.replace("app-",""),x.created_at,n];});

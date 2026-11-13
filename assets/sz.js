@@ -9,23 +9,33 @@
 try{
   if(navigator.webdriver)return;
   var ls=window.localStorage,ss=window.sessionStorage;
-  /* az alkalmazás telepítései: eszközönként egyszer bejegyzi a telefon típusát, az Android-verziót, a dátumot és a várost
-     (a várost egy IP-alapú helymeghatározó adja; maga az IP-cím sehol nincs eltárolva).
-     Sorszám: dvn2; szöveg: dw-N-0, dw-N-1, … számmá kódolva, 9 karakterenként */
-  if(/ValasztasokApp/.test(navigator.userAgent)&&!ls.getItem("vm-dev2"))(function(){
-    var u=navigator.userAgent,m=u.match(/Android ([\d.]+); ([^;)]+?)(?: Build\/[^;)]*)?[;)]/);
-    var d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}).slice(2).replace(/-/g,"");
-    var A="~ 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.|*/";
+  /* Az alkalmazás telepítései és megnyitásai (személyes adat nélkül; az IP-cím sehol nincs eltárolva, csak a becsült város).
+     Telepítés: eszközönként egyszer – dvn2 = sorszám, dw-N-k = „TÍPUS|ANDROID|ÉÉHHNN|VÁROS|ORSZÁG|*” 9 karakterenként számmá kódolva.
+     Megnyitás: app-munkamenetenként egyszer – lgn = sorszám, lg-I-0 = ((eszköz*2^27 + perc 2026 óta)*2 + más-város-e),
+     lg-I-1… = „VÁROS|ORSZÁG”, ha a város eltér a telepítéskoritól. */
+  if(/ValasztasokApp/.test(navigator.userAgent))(function(){
+    var H="https://abacus.jasoncameron.dev/",A="~ 0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ-_.|*/";
     var tisz=function(x){return String(x||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"").toUpperCase().split("").filter(function(c){return A.indexOf(c)>0&&c!=="|";}).join("");};
-    var H="https://abacus.jasoncameron.dev/";
+    var J=function(u){return fetch(H+u,{credentials:"omit"}).then(function(r){return r.json();});};
+    var ir=function(pre,s,k0){k0=k0||0;var ps=[];for(var k=0;k*9<s.length;k++){var c=s.substr(k*9,9),v=0;for(var i=c.length-1;i>=0;i--)v=v*A.length+A.indexOf(c[i]);
+      ps.push(fetch(H+"create/voksmero.hu/"+pre+(k+k0)+"?initializer="+v,{credentials:"omit"}));}return Promise.all(ps);};
+    var reg=ls.getItem("vm-dev2"),uj=!ss.getItem("vm-lg");
+    if(reg&&!uj)return;
     var hely=new Promise(function(res){var t=setTimeout(function(){res(null);},5000);
       fetch("https://get.geojs.io/v1/ip/geo.json",{credentials:"omit"}).then(function(r){return r.json();}).then(function(g){clearTimeout(t);res(g);}).catch(function(){clearTimeout(t);res(null);});});
     hely.then(function(g){
-      var s=[tisz(m?m[2]:"ISMERETLEN").slice(0,24),tisz(m?m[1]:""),d,tisz(g&&g.city).slice(0,22),tisz(g&&g.country_code).slice(0,2),ls.getItem("vm-nostat")?"*":""].join("|").replace(/\|+$/,"");
-      return fetch(H+"hit/voksmero.hu/dvn2",{credentials:"omit"}).then(function(r){return r.json();}).then(function(j){var n=j.value;if(!n)return;
-        var ps=[];for(var k=0;k*9<s.length;k++){var c=s.substr(k*9,9),v=0;for(var i=c.length-1;i>=0;i--)v=v*A.length+A.indexOf(c[i]);
-          ps.push(fetch(H+"create/voksmero.hu/dw-"+n+"-"+k+"?initializer="+v,{credentials:"omit"}));}
-        return Promise.all(ps).then(function(){ls.setItem("vm-dev2",String(n));});});}).catch(function(){});
+      var city=tisz(g&&g.city).slice(0,22),cc=tisz(g&&g.country_code).slice(0,2),hol=city+"|"+cc;
+      var elso=reg?Promise.resolve(+reg):J("hit/voksmero.hu/dvn2").then(function(j){var n=j.value;if(!n)throw 0;
+        var u=navigator.userAgent,m=u.match(/Android ([\d.]+); ([^;)]+?)(?: Build\/[^;)]*)?[;)]/);
+        var d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}).slice(2).replace(/-/g,"");
+        var s=[tisz(m?m[2]:"ISMERETLEN").slice(0,24),tisz(m?m[1]:""),d,city,cc,ls.getItem("vm-nostat")?"*":""].join("|").replace(/\|+$/,"");
+        return ir("dw-"+n+"-",s).then(function(){ls.setItem("vm-dev2",String(n));ls.setItem("vm-devh",hol);return n;});});
+      return elso.then(function(n){if(!uj)return;ss.setItem("vm-lg","1");
+        var perc=Math.floor((Date.now()-Date.UTC(2026,0,1))/6e4),mas=hol!==(ls.getItem("vm-devh")||hol)?1:0;
+        return J("hit/voksmero.hu/lgn").then(function(j){var i=j.value;if(!i)return;
+          var p=[fetch(H+"create/voksmero.hu/lg-"+i+"-0?initializer="+((n*134217728+perc)*2+mas),{credentials:"omit"})];
+          return Promise.all(p).then(function(){if(mas)return ir("lg-"+i+"-",hol,1);});});});
+    }).catch(function(){});
   })();
   if(ls.getItem("vm-nostat"))return;               /* a tulajdonos saját eszköze nem számít */
   var pg=(location.pathname.replace(/^\/+|\/+$/g,"").replace(/\.html$/,"")||"index").replace(/[^A-Za-z0-9_-]/g,"");
