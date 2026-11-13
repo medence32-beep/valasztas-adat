@@ -107,7 +107,7 @@
 (function(){"use strict";
 const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const nf=n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf=x=>x==null?"–":x.toFixed(2).replace(".",",")+"%";
-const PART={"José Maria Neves":"PAICV · hivatalban lévő elnök","Joana Rosa":"MpD · volt igazságügy-miniszter"};const KEP={"José Maria Neves":"assets/cv/neves.jpg","Joana Rosa":"assets/cv/rosa.jpg"};const AV=(x,i)=>KEP[x.n]?'<img class="av" src="'+KEP[x.n]+'" alt="'+esc(x.n)+'" width="58" height="58" style="--c:'+col(x.n,i)+'">':'<div class="av" style="background:'+col(x.n,i)+'">'+ini(x.n)+'</div>';const ini=n=>n.split(/\s+/).filter(w=>w.length>2).map(w=>w[0]).slice(0,2).join("").toUpperCase();
+const PART={"José Maria Neves":"PAICV · hivatalban lévő elnök","Joana Rosa":"MpD · volt igazságügy-miniszter"};const KEP={"José Maria Neves":"assets/cv/neves.jpg?v=2","Joana Rosa":"assets/cv/rosa.jpg"};const AV=(x,i)=>KEP[x.n]?'<img class="av" src="'+KEP[x.n]+'" alt="'+esc(x.n)+'" width="58" height="58" style="--c:'+col(x.n,i)+'">':'<div class="av" style="background:'+col(x.n,i)+'">'+ini(x.n)+'</div>';const ini=n=>n.split(/\s+/).filter(w=>w.length>2).map(w=>w[0]).slice(0,2).join("").toUpperCase();
 const COL={"José Maria Neves":"#E8B400","Joana Rosa":"#2E9E57"},PAL=["#E8B400","#2E9E57","#4C8DF6","#C0504D","#8E6BD8","#3FB6B2"];
 const col=(n,i)=>COL[n]||PAL[i%PAL.length];
 const EL="https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json";
