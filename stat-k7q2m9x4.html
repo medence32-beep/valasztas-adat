@@ -243,7 +243,7 @@ async function check(t){try{const r=await fetch("https://api.github.com/user",{h
 function enter(){$("gate").hidden=true;$("main").hidden=false;$("main").appendChild($("diagw"));$("diagw").hidden=false;
   try{if(!localStorage.getItem("vm-nostat-k")){localStorage.setItem("vm-nostat-k","1");localStorage.setItem("vm-nostat","1");}$("nost").checked=!!localStorage.getItem("vm-nostat");}catch(e){}
   diag();load();sList();}
-$("lf").addEventListener("submit",async e=>{e.preventDefault();const t=$("tok").value.trim();if(!t)return;if(t==="20110615"){location.href="bohoc";return;}$("lb").disabled=true;$("lerr").textContent="Ellenőrzés…";
+$("lf").addEventListener("submit",async e=>{e.preventDefault();const t=$("tok").value.trim();if(!t)return;$("lb").disabled=true;$("lerr").textContent="Ellenőrzés…";
   const ok=await check(t);$("lb").disabled=false;
   if(ok){TOK=t;try{localStorage.setItem("vm-gh",t);}catch(_){}$("lerr").textContent="";$("tok").value="";enter();}
   else $("lerr").textContent=ok===null?"Nincs kapcsolat a GitHubbal, próbáld újra.":"Ez a kulcs nem érvényes, vagy nem a tulajdonosé.";});
