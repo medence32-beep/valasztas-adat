@@ -133,15 +133,21 @@ function stat(){const d=D||{};const f=d.feld,t=d.reszv;
    const card=(x,i,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n,i)+'">'+AV(x,i)+'<div><b>'+esc(x.n)+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+(x.p==null?"–":pf(x.p))+'</div></div></div>';
    $("h2h").innerHTML='<div class="h2h">'+card(A,0)+card(B,1,1)+'</div><div class="split"><i style="width:'+(A.p||0)+'%;background:'+col(A.n,0)+'"></i><i style="flex:1"></i><i style="width:'+(B.p||0)+'%;background:'+col(B.n,1)+'"></i></div><div class="splitn"><span>'+nf(A.v)+' szavazat</span><span>50% kell a győzelemhez</span><span>'+nf(B.v)+' szavazat</span></div>';}
   const r=rows(d.nat&&d.nat.c);$("natn").textContent=r.length&&r[0].v?(r[0].p>50?r[0].n+" az érvényes szavazatok több mint felénél jár"+(f>=100?".":" (a számlálás még tart)."):"Jelenleg senki sincs 50% felett – ezen az állás szerint második forduló következne."):"";}
-function mun(m){if(!D||!D.mun)return null;return D.mun[m.k]||null;}
+const MUN_ALIAS={"sao vicente":"saovicente","ribeira brava":"ribeirabrava","tarrafal de sao nicolau":"tarrafaldesaonicolau","ribeira grande de santiago":"ribeiragrandedesantiago","sao domingos":"saodomingos","sao lourenco dos orgaos":"saolourencodosorgaos","sao salvador do mundo":"saosalvadordomundo","santa catarina do fogo":"santacatarinadofogo"};
+function mun(m){if(!D||!D.mun)return null;return D.mun[MUN_ALIAS[m.k]||m.k]||null;}
 function fill(){if(!G)return;const sv=document.querySelectorAll("#cvmap path");sv.forEach(p=>{const m=G[p.dataset.i],x=mun(m),r=rows(x&&x.c);
-  let f="var(--line)";if(r.length&&r[0].v){const i=ORD.indexOf(r[0].n);f=col(r[0].n,i<0?0:i);p.style.opacity=(x.feld==null||x.feld>=100)?1:.55+.45*x.feld/100;}else p.style.opacity=1;
+  let f="var(--line)";if(r.length&&r[0].v){const i=ORD.indexOf(r[0].n);f=col(r[0].n,i<0?0:i);p.style.opacity=(x.feld==null||x.feld>=100)?1:.55+.45*x.feld/100;}else{const nr=rows(D&&D.nat&&D.nat.c);if(nr.length&&nr[0].v){const i=ORD.indexOf(nr[0].n);f=col(nr[0].n,i<0?0:i);p.style.opacity=.28;}else p.style.opacity=1;}
   if(p.style.fill!==f){p.style.fill=f;}});
   const r=rows(D&&D.nat&&D.nat.c);$("lg2").innerHTML=r.filter(x=>x.v).map(x=>{const i=ORD.indexOf(x.n);return '<span><i style="background:'+col(x.n,i<0?0:i)+'"></i>'+esc(x.n)+' vezet</span>';}).join("")+'<span><i style="background:var(--line)"></i>Még nincs adat</span><span>Halványabb: még számolnak</span>';
   if(SEL!=null)panel(SEL,false);}
 function panel(i,anim){const m=G[i],x=mun(m);SEL=i;document.querySelectorAll("#cvmap path").forEach(p=>p.classList.toggle("sel",+p.dataset.i===i));
-  $("mp").innerHTML='<h3>'+esc(m.n)+'</h3><p class="muted">'+esc(m.sz)+' szigete</p>'+(x?'<p class="muted">Feldolgozottság: <b>'+pf(x.feld)+'</b> · Részvétel: <b>'+pf(x.reszv)+'</b>'+(x.szav!=null?' · '+nf(x.szav)+' szavazat':'')+'</p>'+bars(x.c):'<p class="muted">Még nincs adat.</p>');
-  if(anim&&window.MapAnim)MapAnim.panel($("mp"));}
+  const nr=rows(D&&D.nat&&D.nat.c);
+  $("mp").innerHTML='<h3>'+esc(m.n)+'</h3><p class="muted">'+esc(m.sz)+' szigete</p>'+
+    (x?'<p class="muted">Helyi eredmény · feldolgozottság: <b>'+pf(x.feld)+'</b> · részvétel: <b>'+pf(x.reszv)+'</b>'+(x.szav!=null?' · '+nf(x.szav)+' szavazat':'')+'</p>'+bars(x.c):
+    '<div class="mun-empty">Ehhez a községhez még nincs ellenőrzött, külön községi bontású hivatalos adat. A térkép színe halványan az országos vezetőt jelzi, nem a község győztesét.</div>'+
+    (nr.length?'<div class="mun-ref"><b>Országos referencia:</b> '+esc(nr[0].n)+' vezet '+pf(nr[0].p)+'-kal ('+nf(nr[0].v)+' szavazat).</div>':''));
+  if(anim&&window.MapAnim)MapAnim.panel($("mp"));
+  if(anim&&window.matchMedia&&matchMedia("(max-width:860px)").matches)setTimeout(()=>$("mp").scrollIntoView({behavior:"smooth",block:"nearest"}),120);}
 const SZIGET={"Boa Vista":"Boa Vista","Brava":"Brava","Maio":"Maio","Sal":"Sal","São Vicente":"São Vicente","Ribeira Brava":"São Nicolau","Tarrafal de São Nicolau":"São Nicolau","Porto Novo":"Santo Antão","Ribeira Grande":"Santo Antão","Paul":"Santo Antão","Mosteiros":"Fogo","Santa Catarina do Fogo":"Fogo","São Filipe":"Fogo"};
 function draw(gj){const fs=gj.features;let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;const k=Math.cos(16*Math.PI/180);
   const each=(g,fn)=>{const P=g.type==="Polygon"?[g.coordinates]:g.coordinates;P.forEach(pl=>pl.forEach(r=>r.forEach(fn)));};
@@ -152,7 +158,7 @@ function draw(gj){const fs=gj.features;let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;const k
   let h="";fs.forEach((f,i)=>{const P=f.geometry.type==="Polygon"?[f.geometry.coordinates]:f.geometry.coordinates;let d="";P.forEach(pl=>pl.forEach(r=>{d+="M"+r.map(c=>X(c)+" "+Y(c)).join("L")+"Z";}));
     h+='<path data-i="'+i+'" d="'+d+'"><title>'+esc(G[i].n)+'</title></path>';});
   const sv=$("cvmap");sv.innerHTML=h;$("mapn").textContent="Koppints egy községre a részletekért. A szín a községben vezető jelöltet mutatja.";
-  sv.addEventListener("click",e=>{const p=e.target.closest("path");if(p)panel(+p.dataset.i,true);});
+  sv.addEventListener("click",e=>{const p=e.target.closest("path[data-i]");if(p){const i=Number(p.dataset.i);if(Number.isInteger(i)&&G[i])panel(i,true);}});
   if(window.MapAnim)MapAnim.intro(sv.querySelectorAll("path"),{svg:sv});fill();}
 fetch(GEO).then(r=>r.json()).then(draw).catch(e=>{console.warn("térkép:",e);$("mapn").textContent="A térkép most nem tölthető be – az eredmények ettől függetlenül frissülnek.";});
 async function load(){try{const r=await fetch(EL+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();
