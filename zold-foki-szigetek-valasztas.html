@@ -49,7 +49,7 @@
 .cand b{font-size:16px}.cand small{color:var(--ink2);display:block}.cand .pc{font:800 22px var(--f-display);text-align:right}.cand .vt{color:var(--ink2);font-size:13px;text-align:right}
 .cand .br{grid-column:1/-1;height:10px;border-radius:6px;background:var(--line);overflow:hidden}.cand .br i{display:block;height:100%;border-radius:0 6px 6px 0;width:0;transition:width .7s}
 #cvmap{width:100%;height:auto;display:block;touch-action:manipulation}#cvmap path{stroke:var(--card);stroke-width:.6;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .4s}
-#cvmap path:hover{filter:brightness(1.15)}#cvmap path.sel{stroke:var(--acc);stroke-width:2.2}
+#cvmap path:hover{filter:brightness(1.15)}#cvmap path:focus-visible{outline:none;stroke:var(--acc);stroke-width:2.2}#cvmap path.sel{stroke:var(--acc);stroke-width:2.2}
 #cvmap text{font:600 10px var(--f-body);fill:var(--ink2);pointer-events:none}
 #mp h3{margin:0 0 4px;font:800 18px var(--f-display)}#mp .muted{color:var(--ink2);font-size:13px}
 .cvn{color:var(--ink3,#888);font-size:13px;margin-top:10px}.cvi{margin-top:16px}.cvi li{margin:6px 0;color:var(--ink2)}
@@ -128,15 +128,49 @@ function stat(){const d=D||{};const f=d.feld,t=d.reszv;
    const card=(x,i,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n,i)+'">'+AV(x,i)+'<div><b>'+esc(x.n)+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+(x.p==null?"–":pf(x.p))+'</div></div></div>';
    $("h2h").innerHTML='<div class="h2h">'+card(A,0)+card(B,1,1)+'</div><div class="split"><i style="width:'+(A.p||0)+'%;background:'+col(A.n,0)+'"></i><i style="flex:1"></i><i style="width:'+(B.p||0)+'%;background:'+col(B.n,1)+'"></i></div><div class="splitn"><span>'+nf(A.v)+' szavazat</span><span>50% kell a győzelemhez</span><span>'+nf(B.v)+' szavazat</span></div>';}
   const r=rows(d.nat&&d.nat.c);$("natn").textContent=r.length&&r[0].v?(r[0].p>50?r[0].n+" az érvényes szavazatok több mint felénél jár"+(f>=100?".":" (a számlálás még tart)."):"Jelenleg senki sincs 50% felett – ezen az állás szerint második forduló következne."):"";}
-function mun(m){if(!D||!D.mun)return null;return D.mun[m.k]||null;}
-function fill(){if(!G)return;const sv=document.querySelectorAll("#cvmap path");sv.forEach(p=>{const m=G[p.dataset.i],x=mun(m),r=rows(x&&x.c);
-  let f="var(--line)";if(r.length&&r[0].v){const i=ORD.indexOf(r[0].n);f=col(r[0].n,i<0?0:i);p.style.opacity=(x.feld==null||x.feld>=100)?1:.55+.45*x.feld/100;}else p.style.opacity=1;
-  if(p.style.fill!==f){p.style.fill=f;}});
-  const r=rows(D&&D.nat&&D.nat.c);$("lg2").innerHTML=r.filter(x=>x.v).map(x=>{const i=ORD.indexOf(x.n);return '<span><i style="background:'+col(x.n,i<0?0:i)+'"></i>'+esc(x.n)+' vezet</span>';}).join("")+'<span><i style="background:var(--line)"></i>Még nincs adat</span><span>Halványabb: még számolnak</span>';
-  if(SEL!=null)panel(SEL,false);}
-function panel(i,anim){const m=G[i],x=mun(m);SEL=i;document.querySelectorAll("#cvmap path").forEach(p=>p.classList.toggle("sel",+p.dataset.i===i));
-  $("mp").innerHTML='<h3>'+esc(m.n)+'</h3><p class="muted">'+esc(m.sz)+' szigete</p>'+(x?'<p class="muted">Feldolgozottság: <b>'+pf(x.feld)+'</b> · Részvétel: <b>'+pf(x.reszv)+'</b>'+(x.szav!=null?' · '+nf(x.szav)+' szavazat':'')+'</p>'+bars(x.c):'<p class="muted">Még nincs adat.</p>');
-  if(anim&&window.MapAnim)MapAnim.panel($("mp"));}
+function mun(m){
+  if(!D||!D.mun)return null;
+  const clean=s=>key(s).replace(/^(concelhode|municipiode|concelho|municipio)/,"");
+  const target=clean(m.k||m.n);
+  if(D.mun[target])return D.mun[target];
+  for(const [name,value] of Object.entries(D.mun)){if(clean(name)===target)return value;}
+  return null;
+}
+function fill(){
+  if(!G)return;
+  let covered=0;const leaders=new Set();
+  document.querySelectorAll("#cvmap path").forEach(p=>{
+    const m=G[Number(p.dataset.i)],x=mun(m),r=rows(x&&x.c),has=!!(r.length&&r[0].v);
+    let f="#8993A5",opacity=1,label=m.n+" – nincs községi eredmény";
+    if(has){
+      covered++;const winner=r[0],i=ORD.indexOf(winner.n);
+      leaders.add(winner.n);f=col(winner.n,i<0?0:i);
+      const processed=x.feld==null?100:Math.max(0,Math.min(100,x.feld));
+      opacity=processed>=100?1:.55+.45*processed/100;
+      label=m.n+" – "+winner.n+" vezet, "+pf(winner.p)+", "+nf(winner.v)+" szavazat";
+    }
+    p.style.fill=f;p.style.opacity=opacity;p.dataset.hasLocal=has?"1":"0";
+    p.setAttribute("aria-label",label);
+    const title=p.querySelector("title");if(title)title.textContent=label;
+  });
+  $("lg2").innerHTML=[...leaders].map(n=>{
+    const i=ORD.indexOf(n);return '<span><i style="background:'+col(n,i<0?0:i)+'"></i>'+esc(n)+' vezet</span>';
+  }).join("")+'<span><i style="background:#8993A5"></i>Nincs községi adat</span><span class="mun-coverage">'+covered+'/22 községhez van helyi eredmény</span>';
+  $("mapn").textContent="A szín a községben vezető jelöltet mutatja. Szürke: még nincs külön községi adat.";
+  if(SEL!=null)panel(SEL,false);
+}
+function panel(i,anim){
+  const m=G[i],x=mun(m),r=rows(x&&x.c),has=!!(r.length&&r[0].v);SEL=i;
+  document.querySelectorAll("#cvmap path").forEach(p=>p.classList.toggle("sel",+p.dataset.i===i));
+  const nr=rows(D&&D.nat&&D.nat.c),total=r.reduce((a,v)=>a+v.v,0),winner=r[0],runner=r[1];
+  const stats=x?'<div class="mun-stats"><span>Feldolgozottság: <b>'+pf(x.feld)+'</b></span><span>Részvétel: <b>'+pf(x.reszv)+'</b></span><span>Jelölti szavazatok: <b>'+(x.szav!=null?nf(x.szav):nf(total))+'</b></span></div>':'';
+  const lead=has?'<div class="mun-lead"><b>'+esc(winner.n)+' vezet</b><strong>'+pf(winner.p)+'</strong><span>'+nf(winner.v)+' szavazat'+(runner?' · előny: '+nf(winner.v-runner.v)+' szavazat':'')+'</span></div>':'';
+  const missing=has?'':'<div class="mun-empty">Ehhez a községhez jelenleg nincs letöltött, ellenőrzött községi eredmény. Ezért nem jelenítünk meg becsült szavazatszámot, és a térképen szürke marad.</div>'+
+    (nr.length?'<div class="mun-ref"><b>Országos referencia – nem helyi eredmény:</b> '+esc(nr[0].n)+' vezet '+pf(nr[0].p)+'-kal ('+nf(nr[0].v)+' szavazat).</div>':'');
+  $("mp").innerHTML='<h3>'+esc(m.n)+'</h3><p class="muted">'+esc(m.sz)+' szigete</p>'+lead+stats+(has?bars(x.c):missing);
+  if(anim&&window.MapAnim)MapAnim.panel($("mp"));
+  if(anim&&window.matchMedia&&matchMedia("(max-width:860px)").matches)setTimeout(()=>$("mp").scrollIntoView({behavior:"smooth",block:"nearest"}),120);
+}
 const SZIGET={"Boa Vista":"Boa Vista","Brava":"Brava","Maio":"Maio","Sal":"Sal","São Vicente":"São Vicente","Ribeira Brava":"São Nicolau","Tarrafal de São Nicolau":"São Nicolau","Porto Novo":"Santo Antão","Ribeira Grande":"Santo Antão","Paul":"Santo Antão","Mosteiros":"Fogo","Santa Catarina do Fogo":"Fogo","São Filipe":"Fogo"};
 function draw(gj){const fs=gj.features;let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;const k=Math.cos(16*Math.PI/180);
   const each=(g,fn)=>{const P=g.type==="Polygon"?[g.coordinates]:g.coordinates;P.forEach(pl=>pl.forEach(r=>r.forEach(fn)));};
@@ -145,9 +179,11 @@ function draw(gj){const fs=gj.features;let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;const k
   const X=c=>(ox+(c[0]*k-x0)*s).toFixed(1),Y=c=>(oy+(y1-c[1])*s).toFixed(1);
   G=fs.map(f=>{const n=f.properties.shapeName;return {n,k:key(n),sz:SZIGET[n]||"Santiago"};});
   let h="";fs.forEach((f,i)=>{const P=f.geometry.type==="Polygon"?[f.geometry.coordinates]:f.geometry.coordinates;let d="";P.forEach(pl=>pl.forEach(r=>{d+="M"+r.map(c=>X(c)+" "+Y(c)).join("L")+"Z";}));
-    h+='<path data-i="'+i+'" d="'+d+'"><title>'+esc(G[i].n)+'</title></path>';});
-  const sv=$("cvmap");sv.innerHTML=h;$("mapn").textContent="Koppints egy községre a részletekért. A szín a községben vezető jelöltet mutatja.";
-  sv.addEventListener("click",e=>{const p=e.target.closest("path");if(p)panel(+p.dataset.i,true);});
+    h+='<path tabindex="0" role="button" data-i="'+i+'" d="'+d+'" aria-label="'+esc(G[i].n)+' – községi eredmény megnyitása"><title>'+esc(G[i].n)+'</title></path>';});
+  const sv=$("cvmap");sv.innerHTML=h;$("mapn").textContent="Koppints egy községre a részletekért.";
+  const choose=e=>{const p=e.target&&e.target.closest?e.target.closest("path[data-i]"):null;if(p){const i=Number(p.dataset.i);if(Number.isInteger(i)&&G[i])panel(i,true);}};
+  sv.addEventListener("click",choose);
+  sv.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(e);}});
   if(window.MapAnim)MapAnim.intro(sv.querySelectorAll("path"),{svg:sv});fill();}
 fetch(GEO).then(r=>r.json()).then(draw).catch(e=>{console.warn("térkép:",e);$("mapn").textContent="A térkép most nem tölthető be – az eredmények ettől függetlenül frissülnek.";});
 async function load(){try{const r=await fetch(EL+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();
