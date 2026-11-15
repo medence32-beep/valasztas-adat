@@ -46,7 +46,7 @@
 .cvg{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}@media(max-width:860px){.cvg{grid-template-columns:1fr}}
 .cvc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}.cvc h2{font:800 20px var(--f-display);text-transform:uppercase;margin:0 0 12px}
 .cand{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 0;border-bottom:1px solid var(--line)}.cand:last-child{border:0}
-.cand b{font-size:16px}.cand small{color:var(--ink2);display:block}.cand .pc{font:800 22px var(--f-display);text-align:right}.cand .vt{color:var(--ink2);font-size:13px;text-align:right}
+.cand b{font-size:16px}.winner-check{display:inline-block;margin-left:7px;color:#20a66a;font:900 16px/1 var(--f-body);vertical-align:1px}.winner-check[title]{cursor:help}.cand small{color:var(--ink2);display:block}.cand .pc{font:800 22px var(--f-display);text-align:right}.cand .vt{color:var(--ink2);font-size:13px;text-align:right}
 .cand .br{grid-column:1/-1;height:10px;border-radius:6px;background:var(--line);overflow:hidden}.cand .br i{display:block;height:100%;border-radius:0 6px 6px 0;width:0;transition:width .7s}
 #cvmap{width:100%;height:auto;display:block;touch-action:manipulation}#cvmap path{stroke:var(--card);stroke-width:.6;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .4s}
 #cvmap path:hover{filter:brightness(1.15)}#cvmap path:focus-visible{outline:none;stroke:var(--acc);stroke-width:2.2}#cvmap path.sel{stroke:var(--acc);stroke-width:2.2}
@@ -116,18 +116,19 @@ const key=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()
 let D=null,G=null,SEL=null,ORD=[];
 /* eredménysorok: c = [[név, szavazat], …] -> százalékkal, csökkenő sorrendben */
 const rows=c=>{const t=(c||[]).reduce((a,x)=>a+(x[1]||0),0)||0;return (c||[]).map(x=>({n:x[0],v:x[1]||0,p:t?x[1]/t*100:null})).sort((a,b)=>b.v-a.v);};
-function bars(c){const r=rows(c);if(!r.length||!r.some(x=>x.v))return '<p class="muted">Még nincs adat.</p>';
-  return r.map(x=>{const i=ORD.indexOf(x.n);return '<div class="cand"><div><b>'+esc(x.n)+'</b></div><div class="pc">'+pf(x.p)+'</div><div></div><div class="vt">'+nf(x.v)+' szavazat</div><div class="br"><i style="background:'+col(x.n,i<0?0:i)+';width:'+(x.p||0).toFixed(2)+'%"></i></div></div>';}).join("");}
+function bars(c,national){const r=rows(c);if(!r.length||!r.some(x=>x.v))return '<p class="muted">Még nincs adat.</p>';
+  const winner=r[0],called=national&&winner.n==="José Maria Neves"&&winner.p>50;
+  return r.map(x=>{const i=ORD.indexOf(x.n),check=called&&x.n===winner.n?'<span class="winner-check" title="Előzetes első fordulós győztes" aria-label="Előzetes első fordulós győztes">✓</span>':'';return '<div class="cand"><div><b>'+esc(x.n)+check+'</b></div><div class="pc">'+pf(x.p)+'</div><div></div><div class="vt">'+nf(x.v)+' szavazat</div><div class="br"><i style="background:'+col(x.n,i<0?0:i)+';width:'+(x.p||0).toFixed(2)+'%"></i></div></div>';}).join("");}
 function stat(){const d=D||{};const f=d.feld,t=d.reszv;
   $("sFeld").textContent=f==null?"–":pf(f);$("bFeld").style.width=(f||0)+"%";$("sReszv").textContent=t==null?"–":pf(t);$("bReszv").style.width=(t||0)+"%";
   $("sSzav").textContent=d.szav==null?"–":nf(d.szav);
   $("sAll").textContent=d.allapot||(f>=100?"Előzetes végeredmény":f>0?"Számlálás folyik":"Választás előtt");
   $("sUpd").textContent="frissítés: "+(d.upd?new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"–");
-  $("nat").innerHTML=bars(d.nat&&d.nat.c);$("liv").hidden=!(f>0&&f<100);$("nupd").textContent=d.upd?"Utolsó adat: "+new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"";
+  $("nat").innerHTML=bars(d.nat&&d.nat.c,true);$("liv").hidden=!(f>0&&f<100);$("nupd").textContent=d.upd?"Utolsó adat: "+new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"";
   {const r2=rows(d.nat&&d.nat.c);const A=r2.find(x=>x.n===ORD[0])||{n:ORD[0],p:null,v:0},B=r2.find(x=>x.n===ORD[1])||{n:ORD[1],p:null,v:0};
-   const card=(x,i,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n,i)+'">'+AV(x,i)+'<div><b>'+esc(x.n)+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+(x.p==null?"–":pf(x.p))+'</div></div></div>';
+   const card=(x,i,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n,i)+'">'+AV(x,i)+'<div><b>'+esc(x.n)+(x.n==="José Maria Neves"&&A.n===x.n&&A.p>50?'<span class="winner-check" title="Előzetes első fordulós győztes" aria-label="Előzetes első fordulós győztes">✓</span>':'')+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+(x.p==null?"–":pf(x.p))+'</div></div></div>';
    $("h2h").innerHTML='<div class="h2h">'+card(A,0)+card(B,1,1)+'</div><div class="split"><i style="width:'+(A.p||0)+'%;background:'+col(A.n,0)+'"></i><i style="flex:1"></i><i style="width:'+(B.p||0)+'%;background:'+col(B.n,1)+'"></i></div><div class="splitn"><span>'+nf(A.v)+' szavazat</span><span>50% kell a győzelemhez</span><span>'+nf(B.v)+' szavazat</span></div>';}
-  const r=rows(d.nat&&d.nat.c);$("natn").textContent=r.length&&r[0].v?(r[0].p>50?r[0].n+" az érvényes szavazatok több mint felénél jár"+(f>=100?".":" (a számlálás még tart)."):"Jelenleg senki sincs 50% felett – ezen az állás szerint második forduló következne."):"";}
+  const r=rows(d.nat&&d.nat.c);$("natn").textContent=r.length&&r[0].v?(r[0].p>50?r[0].n+" az első forduló előzetes győztese; a hivatalos végeredmény kihirdetése még hátravan.":"Jelenleg senki sincs 50% felett – ezen az állás szerint második forduló következne."):"";}
 function mun(m){
   if(!D||!D.mun)return null;
   const clean=s=>key(s).replace(/^(concelhode|municipiode|concelho|municipio)/,"");
