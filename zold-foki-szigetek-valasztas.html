@@ -110,15 +110,15 @@ const nf=n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,
 const PART={"José Maria Neves":"PAICV · hivatalban lévő elnök","Joana Rosa":"MpD · volt igazságügy-miniszter"};const KEP={"José Maria Neves":"assets/cv/neves.jpg?v=2","Joana Rosa":"assets/cv/rosa.jpg"};const AV=(x,i)=>KEP[x.n]?'<img class="av" src="'+KEP[x.n]+'" alt="'+esc(x.n)+'" width="58" height="58" style="--c:'+col(x.n,i)+'">':'<div class="av" style="background:'+col(x.n,i)+'">'+ini(x.n)+'</div>';const ini=n=>n.split(/\s+/).filter(w=>w.length>2).map(w=>w[0]).slice(0,2).join("").toUpperCase();
 const COL={"José Maria Neves":"#E8B400","Joana Rosa":"#2E9E57"},PAL=["#E8B400","#2E9E57","#4C8DF6","#C0504D","#8E6BD8","#3FB6B2"];
 const col=(n,i)=>COL[n]||PAL[i%PAL.length];
-const EL="https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json?rev=20261115-2259";
+const EL="https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json?rev=20261115-2302";
 const GEO="https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/CPV/ADM1/geoBoundaries-CPV-ADM1_simplified.geojson";
 const key=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z]/g,"");
 let D=null,G=null,SEL=null,ORD=[];
 /* eredménysorok: c = [[név, szavazat], …] -> százalékkal, csökkenő sorrendben */
 const rows=c=>{const t=(c||[]).reduce((a,x)=>a+(x[1]||0),0)||0;return (c||[]).map(x=>({n:x[0],v:x[1]||0,p:t?x[1]/t*100:null})).sort((a,b)=>b.v-a.v);};
 function bars(c,national){const r=rows(c);if(!r.length||!r.some(x=>x.v))return '<p class="muted">Még nincs adat.</p>';
-  const winner=r[0],called=national&&winner.n==="José Maria Neves"&&winner.p>50;
-  return r.map(x=>{const i=ORD.indexOf(x.n),check=called&&x.n===winner.n?'<span class="winner-check" title="Előzetes első fordulós győztes" aria-label="Előzetes első fordulós győztes">✓</span>':'';return '<div class="cand"><div><b>'+esc(x.n)+check+'</b></div><div class="pc">'+pf(x.p)+'</div><div></div><div class="vt">'+nf(x.v)+' szavazat</div><div class="br"><i style="background:'+col(x.n,i<0?0:i)+';width:'+(x.p||0).toFixed(2)+'%"></i></div></div>';}).join("");}
+  const winner=r[0];
+  return r.map(x=>{const i=ORD.indexOf(x.n),check=x===winner?'<span class="winner-check" title="A községben jelenleg vezető jelölt" aria-label="A községben jelenleg vezető jelölt">✓</span>':'';return '<div class="cand"><div><b>'+esc(x.n)+check+'</b></div><div class="pc">'+pf(x.p)+'</div><div></div><div class="vt">'+nf(x.v)+' szavazat</div><div class="br"><i style="background:'+col(x.n,i<0?0:i)+';width:'+(x.p||0).toFixed(2)+'%"></i></div></div>';}).join("");}
 function stat(){const d=D||{};const f=d.feld,t=d.reszv;
   $("sFeld").textContent=f==null?"–":pf(f);$("bFeld").style.width=(f||0)+"%";$("sReszv").textContent=t==null?"–":pf(t);$("bReszv").style.width=(t||0)+"%";
   $("sSzav").textContent=d.szav==null?"–":nf(d.szav);
