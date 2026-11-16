@@ -17,12 +17,12 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
 <meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
-<title>Napi országrejtvény – melyik ország ez? | Voksmérő</title>
+<title>Országrejtvény – melyik ország ez? Napi, végtelen és 1v1 mód | Voksmérő</title>
 <link rel="canonical" href="https://voksmero.hu/napi-rejtveny">
 <meta name="description" content="Minden nap egy új ország: találd ki hat tippből a körvonala alapján! Távolság, irány, közelség – és választási érdekességek. Napi rejtvény a Voksmérőn.">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Voksmérő">
-<meta property="og:title" content="Napi országrejtvény – melyik ország ez?">
+<meta property="og:title" content="Országrejtvény – melyik ország ez? Napi, végtelen és 1v1 mód">
 <meta property="og:description" content="Minden nap egy új ország: találd ki hat tippből a körvonala alapján! Távolság, irány, közelség – és választási érdekességek. Napi rejtvény a Voksmérőn.">
 <meta property="og:url" content="https://voksmero.hu/napi-rejtveny">
 <meta property="og:locale" content="hu_HU">
@@ -47,6 +47,25 @@
 .jn{color:var(--ink3);font-size:12.5px}
 .seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.jw [hidden]{display:none!important}
+.modes{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:16px}
+.modes a,.modes button{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--card);color:var(--ink2);border-radius:999px;padding:8px 15px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none}
+.modes a.on,.modes button.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}.modes a:hover,.modes button:hover{border-color:var(--acc)}
+.modes .dot{width:7px;height:7px;border-radius:50%;background:#3A9A57;box-shadow:0 0 0 3px color-mix(in srgb,#3A9A57 25%,transparent)}
+.vsp{width:100%;border:1px solid var(--line2);border-radius:14px;padding:12px 14px;background:var(--bg2);display:grid;gap:10px}
+.vsp .hd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.vsp .hd b{font:800 15px var(--f-display);text-transform:uppercase;letter-spacing:.03em}.vsp .hd span{font:700 13px var(--f-body);color:var(--ink2);font-variant-numeric:tabular-nums}
+.vsp .pl{display:grid;grid-template-columns:1fr 1fr;gap:10px}.vsp .pc{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-width:0}
+.vsp .pc small{display:block;font:700 10.5px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}.vsp .pc strong{display:block;font:900 22px var(--f-display);font-variant-numeric:tabular-nums;margin-top:2px}
+.vsp .pc .tx{font-size:12.5px;color:var(--ink2);margin-top:2px}
+.vsp .mg{display:grid;gap:3px;margin-top:8px}.vsp .mg div{display:flex;gap:3px}.vsp .mg i{width:14px;height:14px;border-radius:3px;background:var(--line);display:block}.vsp .mg i.g{background:#3A9A57}.vsp .mg i.y{background:#C49A1E}.vsp .mg i.x{background:var(--ink3)}
+.vsp .lk{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.vsp .lk code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:var(--card);border:1px dashed var(--line2);border-radius:10px;padding:9px 11px;font:600 13px var(--f-mono,monospace);user-select:all}
+.vsp .msg{font-size:14px;color:var(--ink2);line-height:1.5}
+.vsp .vd{padding:12px 14px;border-radius:12px;font:900 22px var(--f-display);text-transform:uppercase;text-align:center}
+.vsp .vd.w{background:color-mix(in srgb,#3A9A57 18%,var(--card));color:#3A9A57}.vsp .vd.l{background:color-mix(in srgb,#D7392F 14%,var(--card));color:#D7392F}.vsp .vd.d{background:var(--card);color:var(--ink2)}
+.vsp .vd small{display:block;font:600 13px var(--f-body);text-transform:none;color:var(--ink2);margin-top:4px}
+.vsp .act{display:flex;gap:8px;flex-wrap:wrap}.vsp .pulse{animation:vpu 1.2s ease-in-out infinite}@keyframes vpu{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent)}}
 
 .rg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:20px;align-items:start}@media(max-width:860px){.rg{grid-template-columns:1fr}}
 .sil{aspect-ratio:1/1;max-height:420px;width:100%;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--acc2) 10%,var(--card)),var(--card));border-radius:14px;border:1px solid var(--line)}
@@ -88,18 +107,19 @@
   </div>
 </header>
 <main class="jw">
-<section class="jh"><div class="jk" id="kk">Napi országrejtvény</div><h1>Melyik ország ez?</h1>
-<p>Minden nap egy új ország. Hat tippből találd ki a körvonala alapján! Minden tipp után megmutatjuk, milyen messze vagy, és merre kell keresni.</p></section>
-<div class="rg"><div class="jc"><div class="sil" id="sil"><span class="jn">Betöltés…</span></div>
+<section class="jh"><div class="jk" id="kk">Napi országrejtvény</div><h1 id="h1">Melyik ország ez?</h1>
+<p id="lead">Minden nap egy új ország. Hat tippből találd ki a körvonala alapján! Minden tipp után megmutatjuk, milyen messze vagy, és merre kell keresni.</p>
+<nav class="modes" aria-label="Játékmód"><a href="napi-rejtveny" data-m="nap">Napi rejtvény</a><a href="napi-rejtveny#vegtelen" data-m="end">Végtelen</a><button type="button" data-m="vs" id="vsnew"><span class="dot"></span>1v1 online</button></nav></section>
+<div class="rg"><div class="jc"><div class="vsp" id="vsp" hidden style="margin-bottom:12px"></div><div class="sil" id="sil"><span class="jn">Betöltés…</span></div>
 <div class="inp"><input id="in" type="text" placeholder="Írd be egy ország nevét…" autocomplete="off" aria-label="Ország neve"><button class="jb p" id="go" type="button">Tipp</button><div class="sug" id="sug" hidden></div></div>
 <div class="hints" id="hints"></div></div>
 <div><div class="jc"><h2>Tippjeid</h2><div class="gl" id="gl"></div><div id="res"></div></div>
-<div class="jc" style="margin-top:16px"><h2>Statisztikád</h2><div class="st" id="st"></div><div class="dist" id="dist"></div></div>
+<div class="jc" style="margin-top:16px" id="stc"><h2 id="sth">Statisztikád</h2><div class="st" id="st"></div><div class="dist" id="dist"></div></div>
 <div class="jc rules" style="margin-top:16px"><h2>Szabályok</h2><ul>
 <li>A távolság a két ország középpontja között értendő, a nyíl az irányt mutatja.</li>
 <li>A százalék azt jelzi, mennyire vagy közel: 100% a telitalálat.</li>
 <li>Két rossz tipp után megmutatjuk a kontinenst, négy után egy választási érdekességet, öt után a kezdőbetűt.</li>
-<li>Új rejtvény minden éjfélkor (magyar idő szerint). Az eredményed megoszthatod – a megfejtés nélkül.</li></ul></div></div></div>
+<li><b>Napi rejtvény:</b> mindenkinek ugyanaz, éjfélkor jön az új. <b>Végtelen:</b> egymás után annyi országot fejthetsz meg, amennyit akarsz – mindig másikat kapsz. <b>1v1 online:</b> küldd el a linket egy barátodnak; ugyanazt az országot kapjátok, és az nyer, aki kevesebb tippből (egyenlőségnél gyorsabban) kitalálja.</li></ul></div></div></div>
 </main>
 <footer class="foot">
   <div class="wrap">
@@ -118,13 +138,14 @@ window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(
 </script>
 <script src="assets/orszagok.js?v=11"></script>
 <script src="assets/terkep-anim.js?v=4"></script>
+<script src="assets/jatek/vs.js?v=1"></script>
 <script>
 (function(){"use strict";const {$,esc,nf}=J;
 const V=window.VALASZTAS,FL=c=>V&&V.flag?V.flag(c,80):"https://flagcdn.com/w80/"+c.toLowerCase()+".png";
 const START=Date.UTC(2026,10,16),DAY=864e5;
 const today=()=>{const s=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});return Math.floor((Date.parse(s+"T00:00:00Z")-START)/DAY)+1;};
-const N=today();$("kk").textContent="Napi országrejtvény · #"+N;
-let W,POOL=[],BY={},T,ST=J.ls.get("vm-rejt",{p:{}}),G=(ST.p[N]&&ST.p[N].g)||[],DONE=!!(ST.p[N]&&ST.p[N].d);
+const N=today();
+let W,POOL=[],BY={},T,ST=J.ls.get("vm-rejt",{p:{}}),G=[],DONE=false,MODE="nap",BIG=[],ORD=[],LOCK=false,VX=null,tmT=null,EN=J.ls.get("vm-rejt-v",{cur:null,seen:[],p:0,s:0,b:0,di:[0,0,0,0,0,0]});
 function topo(t){const tr=t.transform,A=t.arcs.map(a=>{let x=0,y=0;return a.map(p=>{x+=p[0];y+=p[1];return [x*tr.scale[0]+tr.translate[0],y*tr.scale[1]+tr.translate[1]];});});
   const ring=ix=>{let o=[];ix.forEach((i,j)=>{const a=i<0?A[~i].slice().reverse():A[i];o=o.concat(j?a.slice(1):a);});return o;};
   return t.objects.countries.geometries.map(g=>({n:g.properties.name,p:g.type==="Polygon"?[g.arcs.map(ring)]:g.type==="MultiPolygon"?g.arcs.map(pl=>pl.map(ring)):[]}));}
@@ -156,23 +177,33 @@ function rows(nw){let h="";for(let i=0;i<6;i++){const g=G[i];if(!g){h+='<div cla
   const c=BY[g],d=dist(c.c,T.c),ok=g===T.code,p=ok?100:prox(d);
   h+='<div class="gr'+(ok?' ok':'')+(nw&&i===G.length-1?' new':'')+'"><div class="n"><img src="'+FL(g)+'" alt="">'+esc(c.name)+'</div><div class="d">'+(ok?'0 km':nf(d)+' km')+'</div><div class="a">'+(ok?OKI:arw(bear(c.c,T.c)))+'</div><div class="p">'+p+'%</div></div>';}
   $("gl").innerHTML=h;}
-function stats(){const P=Object.entries(ST.p).filter(([k,v])=>v.d).sort((a,b)=>a[0]-b[0]);const won=P.filter(([k,v])=>v.w);
-  let cur=0,best=0,run=0,prev=null;P.forEach(([k,v])=>{if(v.w&&(prev===null||+k===prev+1))run=(prev!==null&&+k===prev+1&&run>0)?run+1:1;else if(v.w)run=1;else run=0;best=Math.max(best,run);prev=+k;});
-  cur=(P.length&&+P[P.length-1][0]>=N-1)?run:0;const di=[0,0,0,0,0,0];won.forEach(([k,v])=>di[v.g.length-1]++);const mx=Math.max(1,...di);
-  $("st").innerHTML='<div><b>'+P.length+'</b><span>játék</span></div><div><b>'+(P.length?Math.round(won.length/P.length*100):0)+'%</b><span>nyerés</span></div><div><b>'+cur+'</b><span>sorozat</span></div><div><b>'+best+'</b><span>legjobb</span></div>';
-  const me=DONE&&ST.p[N].w?G.length:0;$("dist").innerHTML=di.map((n,i)=>'<div><span>'+(i+1)+'</span><i class="'+(me===i+1?'me':'')+'" style="width:'+Math.max(6,n/mx*100)+'%">'+n+'</i></div>').join("");}
-function shareText(){const w=G[G.length-1]===T.code;return "Voksmérő országrejtvény #"+N+" "+(w?G.length:"X")+"/6\n"+G.map(g=>{const ok=g===T.code,d=dist(BY[g].c,T.c);return emo(ok?100:prox(d))+(ok?"🎉":arrow(bear(BY[g].c,T.c)));}).join("")+"\n";}
+function statBox(P,cur,best,di,me,lab){const mx=Math.max(1,...di);
+  $("st").innerHTML='<div><b>'+P+'</b><span>'+lab+'</span></div><div><b>'+(P?Math.round(di.reduce((a,b)=>a+b,0)/P*100):0)+'%</b><span>nyerés</span></div><div><b>'+cur+'</b><span>sorozat</span></div><div><b>'+best+'</b><span>legjobb</span></div>';
+  $("dist").innerHTML=di.map((n,i)=>'<div><span>'+(i+1)+'</span><i class="'+(me===i+1?'me':'')+'" style="width:'+Math.max(6,n/mx*100)+'%">'+n+'</i></div>').join("");}
+function stats(){$("stc").hidden=MODE==="vs";
+  if(MODE==="end"){$("sth").textContent="Végtelen mód";statBox(EN.p,EN.s,EN.b,EN.di,EN.cur&&EN.cur.d&&EN.cur.w?G.length:0,"ország");return;}
+  $("sth").textContent="Statisztikád";const P=Object.entries(ST.p).filter(([k,v])=>v.d).sort((a,b)=>a[0]-b[0]);const won=P.filter(([k,v])=>v.w);
+  let best=0,run=0,prev=null;P.forEach(([k,v])=>{run=v.w?((prev!==null&&+k===prev+1&&run>0)?run+1:1):0;best=Math.max(best,run);prev=+k;});
+  const cur=(P.length&&+P[P.length-1][0]>=N-1)?run:0,di=[0,0,0,0,0,0];won.forEach(([k,v])=>di[v.g.length-1]++);
+  statBox(P.length,cur,best,di,DONE&&ST.p[N]&&ST.p[N].w?G.length:0,"játék");}
+function shareText(){const w=G[G.length-1]===T.code;return "Voksmérő országrejtvény "+(MODE==="end"?"(végtelen)":"#"+N)+" "+(w?G.length:"X")+"/6\n"+G.map(g=>{const ok=g===T.code,d=dist(BY[g].c,T.c);return emo(ok?100:prox(d))+(ok?"🎉":arrow(bear(BY[g].c,T.c)));}).join("")+"\n";}
 let cdT=null;
-function result(){if(!DONE){$("res").innerHTML="";return;}const w=ST.p[N].w,href=T.ready?T.ready.href:"orszag?k="+T.code.toLowerCase();
+function result(){clearInterval(cdT);if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===T.code,href=T.ready?T.ready.href:"orszag?k="+T.code.toLowerCase();
   $("res").innerHTML='<div class="res"><h3>'+(w?(G.length===1?"Elsőre! Zseniális!":G.length<=3?"Szép munka!":"Megvan!"):"Most nem jött össze")+'</h3><div class="cn"><img src="'+FL(T.code)+'" alt=""><b>'+esc(T.name)+'</b></div>'+
-  '<div class="jn">Következő rejtvény: <span class="cd" id="cd"></span></div><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>';
+  (MODE==="end"?'<div class="act"><button class="jb p" id="nx" type="button">Következő ország →</button><button class="jb" id="sh" type="button">Megosztás</button><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>':
+  '<div class="jn">Következő rejtvény: <span class="cd" id="cd"></span></div><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="napi-rejtveny#vegtelen">Végtelen mód →</a><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>');
+  if(MODE==="end"){$("nx").onclick=newEndless;$("sh").onclick=()=>J.share("Voksmérő országrejtvény",shareText(),"https://voksmero.hu/napi-rejtveny#vegtelen");return;}
   $("sh").onclick=()=>J.share("Voksmérő országrejtvény",shareText(),"https://voksmero.hu/napi-rejtveny");
   const tick=()=>{const now=new Date(),b=new Date(now.toLocaleString("en-US",{timeZone:"Europe/Budapest"}));const s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds());
     const e=$("cd");if(!e)return;e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();clearInterval(cdT);cdT=setInterval(tick,1000);}
-function save(){ST.p[N]={g:G,d:DONE,w:DONE&&G[G.length-1]===T.code};J.ls.set("vm-rejt",ST);}
-function guess(code){if(DONE||!BY[code]||G.includes(code))return;G.push(code);
-  if(code===T.code||G.length>=6){DONE=true;fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/rejt-"+N+(code===T.code?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
-  save();rows(true);hints();result();stats();$("in").value="";$("sug").hidden=true;$("in").disabled=$("go").disabled=DONE;if(!DONE)$("in").focus();
+function save(){const w=DONE&&G[G.length-1]===T.code;
+  if(MODE==="nap"){ST.p[N]={g:G,d:DONE,w};J.ls.set("vm-rejt",ST);}
+  else if(MODE==="end"){const was=EN.cur.d;EN.cur.g=G.slice();EN.cur.d=DONE;EN.cur.w=w;if(DONE&&!was){EN.p++;if(w){EN.s++;EN.b=Math.max(EN.b,EN.s);EN.di[G.length-1]++;}else EN.s=0;}J.ls.set("vm-rejt-v",EN);}}
+function guess(code){if(DONE||!BY[code]||G.includes(code))return;if(LOCK){J.toast("Várj, amíg az ellenfeled csatlakozik");return;}G.push(code);
+  if(code===T.code||G.length>=6){DONE=true;if(MODE==="nap")fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/rejt-"+N+(code===T.code?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
+  save();if(MODE==="vs"&&VX){const t=(Date.now()-VX.t0)/1000,c=code===T.code?100:Math.min(99,prox(dist(BY[code].c,T.c)));VX.me.push({c,t});
+    const sv=J.ls.get("vm-rejt-vs",{});sv[VX.id]={g:G,t:VX.me.map(x=>Math.round(x.t))};const ks=Object.keys(sv);if(ks.length>40)delete sv[ks[0]];J.ls.set("vm-rejt-vs",sv);
+    VS.post("orsz",VX.id,VX.slot,G.length,c,t);vsDone();}rows(true);hints();result();stats();$("in").value="";$("sug").hidden=true;$("in").disabled=$("go").disabled=DONE;if(!DONE)$("in").focus();
   if(code!==T.code&&!DONE)J.toast(nf(dist(BY[code].c,T.c))+" km – "+["észak","északkelet","kelet","délkelet","dél","délnyugat","nyugat","északnyugat"][Math.round(bear(BY[code].c,T.c)/45)%8]+" felé keresd");}
 const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();let SI=0,SL=[];
 function suggest(){const q=norm($("in").value.trim());if(!q){$("sug").hidden=true;return;}
@@ -184,14 +215,52 @@ $("in").addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="ArrowUp"
 $("sug").addEventListener("click",e=>{const b=e.target.closest("button[data-c]");if(b)guess(b.dataset.c);});
 $("go").addEventListener("click",()=>{if(SL[SI])guess(SL[SI].code);else{const q=norm($("in").value.trim());const c=POOL.find(x=>norm(x.name)===q);if(c)guess(c.code);else J.toast("Válassz a listából egy országot");}});
 document.addEventListener("click",e=>{if(!e.target.closest(".inp"))$("sug").hidden=true;});
+function draw(){sil(T);rows(false);hints();result();stats();$("in").disabled=$("go").disabled=DONE;}
+function newEndless(){const seen=new Set(EN.seen);let c=BIG.filter(x=>!seen.has(x.code));if(!c.length){EN.seen=[];c=BIG.slice();}
+  const t=c[Math.floor(Math.random()*c.length)];EN.seen.push(t.code);EN.cur={c:t.code,g:[],d:false,w:false};J.ls.set("vm-rejt-v",EN);load();}
+function mini(R){let h='<div class="mg">';for(let i=0;i<6;i++){const r=R[i];h+='<div style="align-items:center;gap:6px;font:700 12px var(--f-body);font-variant-numeric:tabular-nums">'+(r?'<i class="'+(r.c===100?'g':r.c>=85?'y':'x')+'" style="width:'+Math.max(8,r.c*.9)+'px"></i>'+r.c+'%':'<i style="width:90px"></i>')+'</div>';}return h+'</div>';}
+function vsRender(){const v=VX;if(!v)return;const p=$("vsp");p.hidden=false;$("sil").hidden=v.st==="full"||v.st==="err";document.querySelector(".inp").hidden=$("sil").hidden;
+  if(v.st==="join"){p.innerHTML='<div class="msg">Csatlakozás a meccshez…</div>';return;}
+  if(v.st==="full"){p.innerHTML='<div class="hd"><b>Ez a meccs már tele van</b></div><div class="msg">Ebben a meccsben már két játékos van. Indíts egy saját meccset, és küldd el a linkjét valakinek!</div><div class="act"><button class="jb p" type="button" data-vs="new">Új 1v1 meccs</button></div>';return;}
+  if(v.st==="err"){p.innerHTML='<div class="msg">Most nem sikerült kapcsolódni a játékszerverhez. Ellenőrizd a netet, és töltsd újra az oldalt.</div>';return;}
+  const link=VS.link("napi-rejtveny",v.id),now=v.t0?(DONE&&v.me.length?v.me[v.me.length-1].t:(Date.now()-v.t0)/1000):0;
+  if(!v.opJ){p.innerHTML='<div class="hd"><b>1v1 meccs</b><span>Várakozás az ellenfélre…</span></div><div class="msg">Küldd el ezt a linket annak, akivel játszani szeretnél. Amint megnyitja, indul a meccs – mindketten ugyanazt az országot kapjátok.</div><div class="lk"><code>'+esc(link)+'</code><button class="jb p" type="button" data-vs="copy">Link másolása</button></div>';return;}
+  const vd=VS.verdict(v.me,v.op,100,true);let h='<div class="hd"><b>1v1 meccs</b><span>'+(vd===null?(DONE?'Várjuk az ellenfeled…':'Fut az idő: '+VS.fmt(now)):'Vége')+'</span></div>';
+  if(vd!==null)h+='<div class="vd '+(vd>0?'w':vd<0?'l':'d')+'">'+(vd>0?'Nyertél!':vd<0?'Az ellenfeled nyert':'Döntetlen')+'<small>A megfejtés: '+esc(T.name)+(vd!==0&&!v.me.concat(v.op).some(x=>x.c===100)?' · a legközelebbi tipp döntött':'')+'</small></div>';
+  const pc=(lab,R,mine)=>{const s=R.length&&R[R.length-1].c===100,d=s||R.length>=6;return '<div class="pc"><small>'+lab+'</small><strong>'+(s?R.length+'/6':d?'X/6':R.length+'. tipp')+'</strong><div class="tx">'+(d?(s?'Kitalálta · '+VS.fmt(R[R.length-1].t):'Nem találta ki'):(mine?'játszol':'gondolkodik…'))+'</div>'+mini(R)+'</div>';};
+  h+='<div class="pl">'+pc("Te",v.me,true)+pc("Ellenfél",v.op,false)+'</div>';
+  if(vd!==null)h+='<div class="act"><button class="jb p'+(v.rm?' pulse':'')+'" type="button" data-vs="rematch">'+(v.rm?'Az ellenfeled visszavágót kér – mehet!':'Visszavágó')+'</button><button class="jb" type="button" data-vs="new">Új meccs mással</button></div>';
+  p.innerHTML=h;}
+function vsDone(){if(!VX)return;const vd=VS.verdict(VX.me,VX.op,100,true);if(vd!==null&&!VX.rmw)VX.rmw=VS.waitRematch("orsz",VX.id,()=>{VX.rm=true;vsRender();});
+  if(vd!==null&&!VX.shown){VX.shown=1;setTimeout(()=>{$("vsp").scrollIntoView({behavior:"smooth",block:"center"});},600);}vsRender();}
+function vsStart(id){VX={id,st:"join",me:[],op:[],opJ:false,t0:0};T=BIG[VS.hash("orsz|"+id)%BIG.length];
+  const sv=J.ls.get("vm-rejt-vs",{}),o=sv[id]||{g:[],t:[]};G=o.g.slice();DONE=G.length>=6||G[G.length-1]===T.code;
+  G.forEach((g,i)=>VX.me.push({c:g===T.code?100:Math.min(99,prox(dist(BY[g].c,T.c))),t:o.t[i]||0}));LOCK=true;draw();vsRender();
+  VS.join("orsz",id).then(s=>{if(!VX||VX.id!==id)return;if(s==="full"||s==="err"){VX.st=s;vsRender();return;}VX.st="ok";VX.slot=s;
+    VX.stop=VS.watch("orsz",id,s==="a"?"b":"a",()=>{VX.opJ=true;VX.t0=VS.startTime("orsz",id,true);LOCK=false;if(s==="a")J.toast("Az ellenfeled csatlakozott – indul a meccs!");vsRender();},
+      (n,r)=>{VX.op[n-1]=r;vsDone();});vsRender();});}
+function load(){if(VX&&VX.stop)VX.stop();if(VX&&VX.rmw)VX.rmw();VX=null;clearInterval(tmT);LOCK=false;$("vsp").hidden=true;$("sil").hidden=false;document.querySelector(".inp").hidden=false;$("in").value="";$("sug").hidden=true;
+  const id=VS.idFromHash();MODE=id?"vs":location.hash==="#vegtelen"?"end":"nap";
+  document.querySelectorAll(".modes [data-m]").forEach(a=>a.classList.toggle("on",a.dataset.m===MODE));
+  const H={nap:["Napi országrejtvény · #"+N,"Melyik ország ez?","Minden nap egy új ország. Hat tippből találd ki a körvonala alapján! Minden tipp után megmutatjuk, milyen messze vagy, és merre kell keresni."],
+    end:["Országrejtvény · végtelen mód","Ország ország után","Annyi országot fejthetsz meg egymás után, amennyit csak akarsz. Minden kör új, véletlenszerű ország – amíg el nem fogynak, egyik sem ismétlődik."],
+    vs:["Országrejtvény · 1v1 online","Párbaj: ki ismeri fel előbb?","Ugyanaz az ország, két játékos. Az nyer, aki kevesebb tippből kitalálja – egyenlőségnél az, aki gyorsabb volt."]}[MODE];
+  $("kk").textContent=H[0];$("h1").textContent=H[1];$("lead").textContent=H[2];
+  if(MODE==="nap"){T=ORD[(N-1)%ORD.length];G=(ST.p[N]&&ST.p[N].g)||[];DONE=!!(ST.p[N]&&ST.p[N].d);draw();}
+  else if(MODE==="end"){if(!EN.cur||!BY[EN.cur.c]){newEndless();return;}T=BY[EN.cur.c];G=EN.cur.g.slice();DONE=EN.cur.d;draw();}
+  else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
+$("vsnew").onclick=()=>{location.hash="vs-"+VS.rid();};
+$("vsp").addEventListener("click",e=>{const b=e.target.closest("[data-vs]");if(!b)return;const a=b.dataset.vs;
+  if(a==="copy")J.copy(VS.link("napi-rejtveny",VX.id),"Link a vágólapon – küldd el az ellenfelednek!");
+  else if(a==="new")location.hash="vs-"+VS.rid();else if(a==="rematch")location.hash="vs-"+VS.next(VX.id);});
 Promise.all([fetch("assets/world-110m.json").then(r=>r.json()),fetch("assets/jatek/orszagkod.json").then(r=>r.json()),fetch("assets/data/naptar.json").then(r=>r.json()).catch(()=>null)]).then(([t,kod,nap])=>{
   W=topo(t);const L={};(V&&V.list||[]).forEach(c=>L[c.code]=c);
   W.forEach(c=>{const k=kod[c.n];if(!k||!L[k])return;prep(c);Object.assign(c,L[k]);BY[k]=c;POOL.push(c);});
   POOL.sort((a,b)=>a.code<b.code?-1:1);
   const big=POOL.filter(c=>c.A>.35);const r=rng(20261116);const ord=big.slice();for(let i=ord.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
-  T=ord[(N-1)%ord.length];
+  BIG=big;ORD=ord;
   try{const td=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});(nap&&nap.v||[]).filter(x=>x.d>=td).sort((a,b)=>a.d<b.d?-1:1).forEach(x=>{if(x.k&&!NAP.find(y=>y.k===x.k))NAP.push({k:x.k,t:new Date(x.d+"T12:00:00").toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"})+" – "+(x.t||"választás")});});}catch(e){}
-  sil(T);rows(false);hints();result();stats();$("in").disabled=$("go").disabled=DONE;
+  load();addEventListener("hashchange",()=>{load();scrollTo({top:0,behavior:"smooth"});});
 }).catch(()=>{$("sil").innerHTML='<span class="jn">A rejtvény most nem tölthető be. Próbáld újra később.</span>';});
 })();
 </script>

@@ -279,6 +279,17 @@ html.mob .apqr,.apqr[hidden]{display:none}
 <section class="sec" id="jatekok" aria-labelledby="h-j" style="padding-top:8px;padding-bottom:8px"><div class="wrap">
 <style>
 .feat.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.fc .bgi{position:absolute;z-index:-1;pointer-events:none;background-repeat:no-repeat}
+.fc.rj .bgi{inset:0;background-image:url(assets/hatter/vilag.svg);background-size:170% auto;background-position:62% 38%;opacity:.12}
+.fc.sz .bgi{right:-34px;top:-26px;width:250px;height:250px;background-image:url(assets/hatter/szavak.svg);background-size:contain;opacity:.16;transform:rotate(-8deg)}
+.fc.tp .bgi{right:-36px;bottom:-12px;width:82%;height:80%;background-image:url(assets/hatter/magyar.svg);background-size:contain;background-position:right bottom;opacity:.13}
+.fc.tj .bgi{right:-14px;bottom:-18px;width:60%;height:88%;background-image:url(assets/hatter/spanyol.svg);background-size:contain;background-position:right bottom;opacity:.14}
+.fc.ut .bgi{right:-28px;bottom:-6px;width:86%;height:80%;background-image:url(assets/hatter/usa.svg);background-size:contain;background-position:right bottom;opacity:.13}
+.fc.iv .bgi{right:0;top:0;bottom:0;width:62%;background-image:url(assets/hatter/gyurcsany.webp);background-size:cover;background-position:center 20%;opacity:.5;-webkit-mask-image:linear-gradient(90deg,transparent,#000 55%);mask-image:linear-gradient(90deg,transparent,#000 55%)}
+.fc .crd{position:absolute;right:14px;top:12px;font:600 9.5px var(--f-body);opacity:.5;letter-spacing:.02em}
+.fc.es .bgi{right:-6px;bottom:52px;width:min(52%,360px);aspect-ratio:480/250;background-image:url(assets/hatter/parlament.svg);background-size:contain;opacity:.2}
+@media(max-width:560px){.fc.iv .bgi{width:70%;opacity:.38}.fc.es .bgi{opacity:.12}}
+
 .g3 .fc{min-height:196px;padding:18px}.g3 .fc h3{font-size:clamp(21px,1.9vw,25px);margin:12px 0 6px;max-width:13ch}.g3 .fc p{font-size:14px;max-width:30ch}
 .g3 .fc .cta{padding-top:12px;font-size:13.5px}.g3 .fc .cta i{width:32px;height:32px}
 .g3 .fc .meta{font:700 12px var(--f-body);opacity:.75;margin-top:8px;font-variant-numeric:tabular-nums}
@@ -298,20 +309,17 @@ html.mob .apqr,.apqr[hidden]{display:none}
 </style>
 <div class="sh"><div><span class="kicker">Játssz és fedezd fel</span><h2 id="h-j">Játékok</h2></div></div>
 <div class="feat g3">
-<a class="fc rj" href="napi-rejtveny"><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff" id="rjno">Napi rejtvény</span></div>
-<div class="tiles" aria-hidden="true"><i class="o"></i><i></i><i></i><i></i><i class="y"></i><i class="y"></i><i></i><i></i><i class="g"></i><i class="g"></i><i class="g"></i><i class="g"></i></div>
-<h3>Melyik ország ez?</h3><p>Egy ország körvonala, hat tipp. Minden tipp után látod, merre keresd.</p><div class="meta" id="rjcd"></div><div class="cta"><span>Mai rejtvény</span><i>→</i></div></a>
-<a class="fc sz" href="napi-szo"><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff" id="szno">Napi szó</span></div>
-<div class="wl" aria-hidden="true"><i class="x">L</i><i class="y">I</i><i>S</i><i class="g">T</i><i class="g">A</i></div>
-<h3>Találd ki a nap szavát</h3><p>Öt betű a választások világából, hat próbálkozás.</p><div class="meta">Új szó minden éjfélkor</div><div class="cta"><span>Mai szó</span><i>→</i></div></a>
-<a class="fc tp" href="telepulesem"><div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""></div>
+<a class="fc rj" href="napi-rejtveny"><span class="bgi" aria-hidden="true"></span><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff" id="rjno">Napi rejtvény</span></div>
+<h3>Melyik ország ez?</h3><p>Egy ország körvonala, hat tipp. Napi rejtvény, végtelen mód és 1v1 párbaj.</p><div class="meta" id="rjcd"></div><div class="cta"><span>Mai rejtvény</span><i>→</i></div></a>
+<a class="fc sz" href="napi-szo"><span class="bgi" aria-hidden="true"></span><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff" id="szno">Napi szó</span></div>
+<h3>Találd ki a nap szavát</h3><p>Öt betű a választások világából, hat próbálkozás.</p><div class="meta">Napi szó · végtelen mód · 1v1 online</div><div class="cta"><span>Mai szó</span><i>→</i></div></a>
+<a class="fc tp" href="telepulesem"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""></div>
 <h3>Hogy szavazott a településed?</h3><p>Részvétel, eredmény és rangsor mind a 3177 településre.</p><div class="cta"><span>Keresés</span><i>→</i></div></a>
-<a class="fc tj" href="spanyol-tippjatek"><div class="tag"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">November 29.</span></div>
+<a class="fc tj" href="spanyol-tippjatek"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">November 29.</span></div>
 <h3>Tippeld meg a spanyol választást</h3><p>A választás estéjén kiderül, mennyire voltál pontos.</p><div class="meta" id="jtnap"></div><div class="cta"><span>Tippelek</span><i>→</i></div></a>
-<a class="fc ut" href="usa-terkep"><div class="tag"><img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" alt=""></div>
+<a class="fc ut" href="usa-terkep"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" alt=""></div>
 <h3>Rajzold meg a saját térképed</h3><p>Színezd ki az államokat, és nézd, ki ér el elsőként 270 elektort.</p><div class="cta"><span>Rajzolás</span><i>→</i></div></a>
-<a class="fc iv" href="magyar-valasztasok-tortenete"><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">1990–2026</span></div>
-<div class="yrs" aria-hidden="true"><i style="height:52%;background:#1F8A70"></i><i style="height:56%;background:#D7263D"></i><i style="height:38%;background:#EE8410"></i><i style="height:55%;background:#D7263D"></i><i style="height:60%;background:#D7263D"></i><i style="height:84%;background:#EE8410"></i><i style="height:67%;background:#EE8410"></i><i style="height:67%;background:#EE8410"></i><i style="height:68%;background:#EE8410"></i><i style="height:71%;background:#2F6FE4"></i></div>
+<a class="fc iv" href="magyar-valasztasok-tortenete"><span class="bgi" aria-hidden="true"></span><span class="crd">Fotó: kremlin.ru · CC BY 4.0</span><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">1990–2026</span></div>
 <h3>A magyar választások története</h3><p>Tíz választás, egy idővonalon: parlament, pártok, részvétel.</p><div class="cta"><span>Idővonal</span><i>→</i></div></a>
 </div>
 <script>(function(){var d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}),n=Math.floor((Date.parse(d+"T00:00:00Z")-Date.UTC(2026,10,16))/864e5)+1;var e=document.getElementById("rjno");if(e)e.textContent="Napi rejtvény · #"+n;e=document.getElementById("szno");if(e)e.textContent="Napi szó · #"+n;
@@ -325,7 +333,7 @@ var c=document.getElementById("rjcd");function tk(){var b=new Date(new Date().to
     <div id="favpanel"></div>
     <div class="sh"><div><span class="kicker">Kiemelt</span><h2 id="h-feat">Elkészült oldalak</h2></div></div>
     <div class="feat">
-      <a class="fc es" href="spanyol-valasztas">
+      <a class="fc es" href="spanyol-valasztas"><span class="bgi" aria-hidden="true"></span>
         <div class="tag"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">November 29.</span></div>
         <h3>Spanyol választás 2026</h3>
         <p>Előrehozott választás Spanyolországban: Sánchez vagy Feijóo? Friss közvélemény-kutatások, esélyek, visszaszámlálás és a 2023-as eredmények.</p>
