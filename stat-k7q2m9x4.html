@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=3";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=4";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="robots" content="noindex, follow">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Voksmérő statisztika</title>
@@ -106,7 +106,7 @@ button:disabled{opacity:.5;cursor:default}
 
   <div class="two">
     <div><h2>Honnan jöttek (ma)</h2><div class="card"><table id="src"></table></div></div>
-    <div><h2>Oldalak (ma)</h2><div class="card"><table id="pages"></table></div></div>
+    <div><h2>Oldalak (ma és tegnap)</h2><div class="card"><table id="pages"></table></div></div>
   </div>
 
   <h2>Telefonok, amelyeken az app fut</h2>
@@ -132,46 +132,70 @@ const fmt=n=>n==null?"–":String(n).replace(/\B(?=(\d{3})+(?!\d))/g," ");
 const dkey=d=>d.toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});
 const dlabel=k=>{const d=new Date(k+"T12:00:00");return d.toLocaleDateString("hu-HU",{month:"short",day:"numeric"})+", "+d.toLocaleDateString("hu-HU",{weekday:"short"});};
 /* a szolgáltatás 10 másodpercenként legfeljebb 30 kérést enged: sorban, ütemezve kérdezünk */
+/* Gyorsítótár a böngészőben: ami már nem változhat (lezárt napok számlálói, a telefonok és megnyitások bejegyzései),
+   azt csak egyszer kérjük le, utána innen jön azonnal. Így a lassú, korlátozott lekérdezés csak a friss adatokra megy el. */
+const PK="vm-stat-pc";let PC={};try{PC=JSON.parse(localStorage.getItem(PK)||"{}");}catch(e){PC={};}
+let pcT=null;const pcSave=()=>{clearTimeout(pcT);pcT=setTimeout(()=>{try{localStorage.setItem(PK,JSON.stringify(PC));}catch(e){}},400);};
+const fixed=k=>{const m=/-(\d{4}-\d{2}-\d{2})$/.exec(k);if(m)return m[1]<dkey(new Date());return /^(dw|lg)-\d+-\d+$/.test(k);};
 const cache=new Map();let sent=[],queue=[],busy=false,done=0,total=0;
-function get(k,elore){if(cache.has(k))return cache.get(k);total++;const p=new Promise(res=>elore?queue.unshift({k,res}):queue.push({k,res}));cache.set(k,p);pump();return p;}
+const prog=()=>{const p=$("prog");if(p)p.firstElementChild.style.width=(total?done/total*100:100)+"%";};
+function get(k,elore){if(cache.has(k))return cache.get(k);
+  if(fixed(k)&&k in PC){const p=Promise.resolve(PC[k]);cache.set(k,p);return p;}
+  total++;const p=new Promise(res=>elore?queue.unshift({k,res}):queue.push({k,res}));p.then(()=>{p.kesz=1;});cache.set(k,p);pump();return p;}
+/* a szolgáltatás IP-címenként 10 másodpercenként 30 kérést enged: kihasználjuk, de nem lépjük túl */
 function pump(){if(busy)return;busy=true;(function step(){
   if(!queue.length){busy=false;return;}
-  const now=Date.now();sent=sent.filter(t=>now-t<10500);
-  if(sent.length>=26){setTimeout(step,10500-(now-sent[0])+50);return;}
+  const now=Date.now();sent=sent.filter(t=>now-t<10200);
+  if(sent.length>=29){setTimeout(step,10200-(now-sent[0])+30);return;}
   const it=queue.shift();sent.push(now);
-  fetch(G+it.k,{credentials:"omit"}).then(r=>r.ok?r.json():{value:0}).then(j=>it.res(+j.value||0)).catch(()=>it.res(null))
-    .finally(()=>{done++;$("prog").firstElementChild.style.width=(total?done/total*100:100)+"%";});
-  setTimeout(step,120);})();}
+  fetch(G+it.k,{credentials:"omit"}).then(r=>{
+      if(r.status===429){queue.unshift(it);sent=Array(29).fill(Date.now());return "retry";}
+      if(r.status===404)return 0;if(!r.ok)return null;return r.json().then(j=>+j.value||0);})
+    .catch(()=>null).then(v=>{if(v==="retry")return;if(v!=null&&fixed(it.k)&&(v>0||/-\d{4}-\d{2}-\d{2}$/.test(it.k))){PC[it.k]=v;pcSave();}it.res(v);done++;prog();});
+  setTimeout(step,25);})();}
 let N=7;
-const PAGES=[["index","Főoldal"],["spanyol-valasztas","Spanyol választás 2026"],["spanyol-szimulator","Spanyol szimulátor"],["eredmenyek","USA 2026"],["egyesult-allamok","Egyesült Államok"],["spanyolorszag","Spanyolország"],["magyarorszag","Magyarország"],["szimulator","Magyar szimulátor"],["naptar","Naptár"]];
+const PAGES=[["index","Főoldal"],["spanyol-valasztas","Spanyol választás 2026"],["spanyol-szimulator","Spanyol szimulátor"],["spanyol-tippjatek","Spanyol tippjáték"],["spanyolorszag","Spanyolország"],
+  ["eredmenyek","USA 2026 – eredmények"],["egyesult-allamok","Egyesült Államok"],["usa-terkep","USA-térképrajzoló"],["magyarorszag","Magyarország"],["szimulator","Magyar szimulátor"],["telepulesem","Hogy szavazott a településed?"],
+  ["magyar-valasztasok-tortenete","Magyar választások története"],["napi-rejtveny","Országrejtvény"],["napi-szo","Napi szó"],["naptar","Naptár"],["orszag","Országoldalak (orszag?k=…)"],["valasztasi-rendszer","Választási rendszer"],
+  ["zold-foki-szigetek-valasztas","Zöld-foki-szigetek"],["ausztria","Ausztria"],["nemetorszag","Németország"],["romania","Románia"],["szlovakia","Szlovákia"]];
 const SRC=[["google","Google-keresés"],["facebook","Facebook / Messenger"],["kereso","Más kereső"],["egyeb","Más oldal"],["kozvetlen","Közvetlen (beírt cím, könyvjelző)"],["app","Android-alkalmazás"]];
 function tile(el,label,v,prev,extra){const d=v!=null&&prev!=null?v-prev:null;
   el.insertAdjacentHTML("beforeend",'<div class="t"><b>'+fmt(v)+'</b><span>'+label+'</span>'+(prev!==undefined?'<small>tegnap: '+fmt(prev)+(d?' <span class="'+(d>0?"up":"dn")+'">('+(d>0?"+":"")+d+')</span>':'')+'</small>':'')+(extra?'<small>'+extra+'</small>':'')+'</div>');}
-async function load(){
-  done=0;total=0;cache.clear();queue=[];
+let GEN=0;
+async function load(){const gen=++GEN,ok=()=>gen===GEN;
+  /* a már megérkezett értékeket újrakérjük, a még úton lévőket nem dobjuk el */
+  for(const [k,p] of [...cache])if(p.kesz)cache.delete(k);done=0;total=queue.length;
   const now=new Date(),days=[];for(let i=0;i<N;i++)days.push(dkey(new Date(now.getTime()-i*864e5)));
   const T=days[0],Y=days[1];
-  $("upd").textContent="Betöltés…";devLoad();$("today").innerHTML="";$("tot").innerHTML="";
-  /* ma / tegnap */
+  $("upd").textContent="Betöltés…";$("today").innerHTML="";$("tot").innerHTML="";
+  /* minden kérést azonnal sorba állítunk, fontossági sorrendben – így a felső csempék másodpercek alatt megjelennek */
   const TM=[["pv","Oldalmegnyitás"],["uv","Egyedi látogató"],["app","App-megnyitás"],["appu","App-felhasználó"],["dl","APK-letöltés kattintás"],["sh","Megosztás"]];
-  const tv=await Promise.all(TM.map(([k])=>Promise.all([get(k+"-"+T),get(k+"-"+Y)])));
+  const qT=TM.map(([k])=>Promise.all([get(k+"-"+T),get(k+"-"+Y)]));
+  const qA=Promise.all([get("uv-all"),get("appi-all")]);
+  const qD=days.map(d=>Promise.all(["pv","uv","app","dl"].map(k=>get(k+"-"+d))));
+  const qS=SRC.map(([k])=>get("src-"+k+"-"+T));
+  const qP=PAGES.map(([k])=>get("pg-"+k+"-"+T));
+  devLoad();
+  const qPY=PAGES.map(([k])=>get("pg-"+k+"-"+Y));
+  /* ma / tegnap */
+  const tv=await Promise.all(qT);if(!ok())return;
   TM.forEach(([k,l],i)=>tile($("today"),l,tv[i][0],tv[i][1]));
   /* összesítők */
-  const [uva,api]=await Promise.all([get("uv-all"),get("appi-all")]);
+  const [uva,api]=await qA;if(!ok())return;
   tile($("tot"),"Különböző eszköz (látogató)",uva,undefined,"a számlálás kezdete óta");
   tile($("tot"),"App első indítása",api,undefined,"≈ telepítések a számlálás óta");
   ghLoad();
   /* napi bontás */
-  const rows=await Promise.all(days.map(d=>Promise.all(["pv","uv","app","dl"].map(k=>get(k+"-"+d)))));
+  const rows=await Promise.all(qD);if(!ok())return;
   const mx=Math.max(1,...rows.map(r=>r[0]||0));
   $("days").innerHTML='<tr><th>Nap</th><th></th><th>Megnyitás</th><th>Látogató</th><th>App</th><th>Letöltés</th></tr>'+
     days.map((d,i)=>{const r=rows[i];return '<tr><td>'+dlabel(d)+'</td><td class="bar"><i style="width:calc((100% - 20px)*'+((r[0]||0)/mx).toFixed(3)+')"></i><em style="width:calc((100% - 20px)*'+((r[1]||0)/mx).toFixed(3)+')"></em></td><td>'+fmt(r[0])+'</td><td>'+fmt(r[1])+'</td><td>'+fmt(r[2])+'</td><td>'+fmt(r[3])+'</td></tr>';}).join("");
   /* források és oldalak (ma) */
-  const sv=await Promise.all(SRC.map(([k])=>get("src-"+k+"-"+T)));const ss=sv.reduce((a,b)=>a+(b||0),0)||1;
+  const sv=await Promise.all(qS);if(!ok())return;const ss=sv.reduce((a,b)=>a+(b||0),0)||1;
   $("src").innerHTML='<tr><th>Forrás</th><th>Látogatás</th><th>Arány</th></tr>'+SRC.map((s,i)=>[s,sv[i]]).sort((a,b)=>(b[1]||0)-(a[1]||0)).map(([s,v])=>'<tr><td>'+s[1]+'</td><td>'+fmt(v)+'</td><td>'+((v||0)/ss*100).toFixed(0)+'%</td></tr>').join("");
-  const pv=await Promise.all(PAGES.map(([k])=>get("pg-"+k+"-"+T)));
-  $("pages").innerHTML='<tr><th>Oldal</th><th>Megnyitás</th></tr>'+PAGES.map((p,i)=>[p,pv[i]]).sort((a,b)=>(b[1]||0)-(a[1]||0)).map(([p,v])=>'<tr><td>'+p[1]+'</td><td>'+fmt(v)+'</td></tr>').join("");
-  $("upd").textContent="Frissítve: "+new Date().toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})+" · a napok budapesti idő szerint";
+  const pT=await Promise.all(qP);if(!ok())return;const pages=pY=>{$("pages").innerHTML='<tr><th>Oldal</th><th>Ma</th><th>Tegnap</th></tr>'+PAGES.map((p,i)=>[p,[pT[i],pY?pY[i]:undefined]]).sort((a,b)=>((b[1][0]||0)-(a[1][0]||0))||((b[1][1]||0)-(a[1][1]||0))).map(([p,v])=>'<tr><td><a href="'+(p[0]==="index"?"./":p[0])+'" target="_blank" rel="noopener" style="color:inherit">'+p[1]+'</a></td><td>'+fmt(v[0])+'</td><td>'+(v[1]===undefined?'…':fmt(v[1]))+'</td></tr>').join("");};
+  pages(null);Promise.all(qPY).then(v=>{if(ok())pages(v);});
+  if(ok())$("upd").textContent="Frissítve: "+new Date().toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"})+" · a napok budapesti idő szerint";
 }
 
 /* ---- telefonok: az app eszközönként egyszer bejegyzi a típust (dvn = darab, dvs-N-k = kódolt szöveg) ---- */
@@ -193,16 +217,16 @@ function nev(m){const u=m.toUpperCase();let x;
   if(/^PIXEL/.test(u))return m.toLowerCase().replace(/\b\w/g,c=>c.toUpperCase()).replace(/^Pixel /,"Pixel ");return "";}
 const tname=r=>{const b=brand(r.mod),nm=nev(r.mod);return (b?b+' ':'')+(nm||(b?'':r.mod))+(r.own?' <span style="color:var(--gold)">(saját)</span>':'');};
 const ido=perc=>new Date(Date.UTC(2026,0,1)+perc*6e4).toLocaleString("hu-HU",{timeZone:"Europe/Budapest",month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"});
-async function szoveg(pre,k0){let str="";for(let k=k0||0;k<8;k++){const v=await get(pre+k,1);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}return str;}
+async function szoveg(pre,k0){let str="";for(let k=k0||0;k<8;k++){const v=await get(pre+k);if(!v)break;const c=dec(v);str+=c;if(c.length<9)break;}return str;}
 async function devLoad(){
-  const [n,ln]=await Promise.all([get("dvn2",1),get("lgn",1)]);const el=$("devs");
+  const [n,ln]=await Promise.all([get("dvn2"),get("lgn")]);const el=$("devs");
   if(!n){el.innerHTML='<tr><td>Még egy telefon sem jelentkezett. Az app a következő megnyitáskor jegyzi be magát.</td></tr>';$("logs").innerHTML='<tr><td>Még nincs megnyitás.</td></tr>';return;}
   const idx=[];for(let i=1;i<=n;i++)idx.push(i);
   const rows=(await Promise.all(idx.map(async i=>{const str=await szoveg("dw-"+i+"-");if(!str)return null;const [mod,av,d,city,cc,own]=str.split("|");return {i,mod,av,d,city,cc,own:own==="*",n:0};}))).filter(Boolean);
   const D={};rows.forEach(r=>D[r.i]=r);
   /* legutóbbi megnyitások */
   const L=[];for(let i=ln;i>0&&i>ln-30;i--)L.push(i);
-  const logs=(await Promise.all(L.map(async i=>{const v=await get("lg-"+i+"-0",1);if(!v)return null;const mas=v%2,x=Math.floor(v/2),perc=x%134217728,dv=Math.floor(x/134217728);
+  const logs=(await Promise.all(L.map(async i=>{const v=await get("lg-"+i+"-0");if(!v)return null;const mas=v%2,x=Math.floor(v/2),perc=x%134217728,dv=Math.floor(x/134217728);
     let city=null,cc=null;if(mas){const t=await szoveg("lg-"+i+"-",1);[city,cc]=t.split("|");}return {i,perc,dv,city,cc};}))).filter(Boolean);
   const last={};logs.forEach(l=>{if(!last[l.dv]||l.perc>last[l.dv])last[l.dv]=l.perc;if(D[l.dv])D[l.dv].n++;});
   const by={};rows.forEach(r=>{const b=brand(r.mod)||"Egyéb";by[b]=(by[b]||0)+1;});
