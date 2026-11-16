@@ -282,6 +282,7 @@ img.fej{background:transparent!important;object-fit:cover}
 .hc .ph{border-radius:50%;background:transparent}
 .pn .jn,.jn{display:flex!important;align-items:center;gap:6px;min-width:0}.jn>span{min-width:0;overflow-wrap:break-word}.jn img.jlg{margin-right:0;flex:none}
 .pn .cn{display:block;font-weight:700;line-height:1.2}.pn .jn{margin-top:3px}.jn img.jlg{height:17px;max-width:56px}
+.pn b.cn,.vb .pn b.cn,.vb.vbm .pn b.cn{font:700 14px/1.2 var(--f-body);text-align:left;white-space:normal;color:var(--ink)}.vb span.pn,.vb.vbm span.pn,.vb .pn>span{overflow:visible}.pn .fej{margin:3px 0 3px 3px}
 </style>
 </head>
 <body>
@@ -667,10 +668,10 @@ function detail(o){const key=MODE+"|"+(o.t==="m"?"m"+o.o.id:"p"+o.id),isNew=key!
     if(MODE==="p23"){const x=m23(m.id);
       h+=x?'<div class="mst"><span><small>Választás</small><b>2023. júl. 23.</b></span><span><small>Részvétel</small><b>'+(x.part!=null?f1(x.part)+'%':'–')+'</b></span><span><small>Érvényes szavazat</small><b>'+fi(x.val)+'</b></span><span><small>Névjegyzék</small><b>'+fi(x.cens)+'</b></span></div>'+vbarsM(x)+'<p class="src">Forrás: Belügyminisztérium; a külföldön élők levélszavazatai nélkül.</p>'
         :'<p class="nodata">'+(M23?'Nincs adat':'Betöltés…')+'</p>';}
-    else h+=r&&r.r?'<p>'+(r.rp!=null?f1(r.rp)+'% feldolgozva':'')+(r.part!=null?' · részvétel: '+f2(r.part)+'%':'')+'</p>'+vbLive(r.r):'<p class="nodata">Még nincs adat</p><p>A település eredményei november 29-én az urnazárás (20:00) után, a számlálás során érkeznek. '+(t?'A település a(z) '+esc(t.n)+' választókerülethez tartozik, amely 2026-ban '+t.s26+' képviselőt választ.':'')+'</p>'+indulok(t);}
+    else h+=r&&r.r?'<p>'+(r.rp!=null?f1(r.rp)+'% feldolgozva':'')+(r.part!=null?' · részvétel: '+f2(r.part)+'%':'')+'</p>'+vbLive(r.r):'<p class="nodata">Még nincs adat</p><p>A település eredményei november 29-én az urnazárás (20:00) után, a számlálás során érkeznek. '+(t?'A település a(z) '+esc(t.n)+' választókerülethez tartozik, amely 2026-ban '+t.s26+' képviselőt választ.':'')+'</p>';}
   else{const id=o.id,t=TP&&TP[id],lv=(E.prov||{})[id];h='<h3>Választókerület</h3><div class="dn">'+esc(pname(id))+'</div>';
     if(MODE==="p23"&&t)h+='<p>2023-ban '+t.s+' mandátum; első: <b>'+esc(t.w)+'</b> ('+f1(t.p)+'%).</p>'+(t.el?'<div class="mst"><span><small>Részvétel</small><b>'+f1((t.vt-(t.cv||0))/(t.el-(t.ce||0))*100)+'%</b></span><span><small>Érvényes szavazat</small><b>'+fi(t.vv)+'</b></span><span><small>Mandátum 2026</small><b>'+t.s26+'</b></span></div>':'')+vbars(t)+(t.sz?'<p class="src">A szavazatszámok a spanyolországi lakóhelyű választók szavazatai (a külföldön élők levélszavazatai nélkül), a százalékok és a mandátumok a hivatalos végeredményből.</p>':'');
-    else h+=(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>'+indulok(t));}
+    else h+=(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');}
   $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
 function vbars(t,lim){const e=Object.entries(t.v||{}).slice(0,lim||8);if(!e.length)return chips(Object.entries(t.r));const mx=e[0][1];
   return '<div class="vb vbm">'+e.map(([p,v])=>'<div style="--c:'+cl(p)+'">'+pcell(p)+'<em style="width:'+(v/mx*100)+'%"></em><b>'+f1(v)+'%'+(t.r[p]?' · '+t.r[p]+' hely':'')+(t.sz&&t.sz[p]?'<small>'+fi(t.sz[p])+' szavazat</small>':'')+'</b></div>').join("")+'</div>';}
