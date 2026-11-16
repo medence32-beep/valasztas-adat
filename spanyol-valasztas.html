@@ -630,7 +630,9 @@ $("mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]"
 const pname=id=>(TP&&TP[id]?TP[id].n:(PRV[id]?PRV[id].n:""));
 function vbLive(r){const e=(r||[]).slice(0,8);if(!e.length)return '';const mx=e[0][1]||1;
   return '<div class="vb vbm">'+e.map(x=>'<div style="--c:'+cl(x[0])+'">'+pcell(x[0])+'<em style="width:'+(x[1]/mx*100)+'%"></em><b>'+f1(x[1])+'%'+(x[2]!=null?' · '+x[2]+' hely':'')+'</b></div>').join('')+'</div>';}
-function indulok(t){const ps=(t&&t.v&&Object.keys(t.v).length?Object.keys(t.v):Object.keys(R23)).slice(0,8);return '<h4 class="indh">Pártok és jelöltek</h4><div class="ind">'+ps.map(p=>'<div>'+pcell(p)+'<small>'+(t&&t.v&&t.v[p]!=null?'2023: '+f1(t.v[p])+'%':'')+'</small></div>').join('')+'</div>';}
+function indulok(t){let ps=(t&&t.v&&Object.keys(t.v).length?Object.keys(t.v):Object.keys(R23)).filter(p=>p!=="UPN").map(p=>p==="Sumar"?"Frente Amplio":p);["Podemos","SALF"].forEach(p=>{if(ps.indexOf(p)<0)ps.push(p);});ps=ps.slice(0,9);
+  const v23=p=>t&&t.v?(p==="Frente Amplio"?t.v.Sumar:t.v[p]):null;
+  return '<h4 class="indh">Pártok és jelöltek 2026</h4><div class="ind">'+ps.map(p=>'<div>'+pcell(p)+'<small>'+(v23(p)!=null?'2023: '+f1(v23(p))+'%'+(p==="Frente Amplio"?' (Sumar)':''):(p==='Podemos'?'2023: a Sumar listáján':'új lista'))+'</small></div>').join('')+'</div>';}
 function chips(r){return '<div class="chips">'+r.map(x=>'<span style="--c:'+cl(x[0])+'"><i></i>'+esc(x[0])+' '+(typeof x[1]==="number"&&x[1]%1?f1(x[1])+"%":x[1])+'</span>').join("")+'</div>';}
 function tipHTML(o){if(o.t==="m"){const m=o.o,r=(E.mun||{})[m.id],pv=mpv(m);
     if(m.kz)return '<b>'+esc(mname(m))+'</b><small>'+esc(pname(pv))+' tartomány · lakatlan közös terület, itt nem szavaznak</small>';
