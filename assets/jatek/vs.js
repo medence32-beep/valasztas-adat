@@ -2,7 +2,8 @@
    Csak linkkel lehet csatlakozni, és egy meccsben pontosan két játékos van: az első kettő, aki megnyitja a linket.
    Valós idejű üzenetek: ntfy.sh (nyilvános, ingyenes értesítési szolgáltatás), meccsenként egy kitalálhatatlan nevű témával.
    Üzenetek: {t:"j",c} csatlakozás · {t:"r",c,n,v,s} az n. tipp eredménye (v = kód, s = eltelt másodperc).
-   Személyes adat nincs: csak egy véletlen játékosazonosító, a tippek színei / közelsége és az idő kerül fel – a tippelt szó vagy ország nem. */
+   Személyes adat nincs: csak egy véletlen játékosazonosító, a tippek eredménye, maga a tipp (kódolva) és az idő kerül fel.
+   Rejtett tulajdonosi nézet: a #kk feliratra 7-szer koppintva, GitHub-kulccsal (a tár tulajdonosa) bekapcsolható. */
 (function(){
 "use strict";
 var NT="https://ntfy.sh/";
@@ -24,7 +25,7 @@ function conn(g,id){var k=g+"|"+id;if(CONN[k])return CONN[k];
   function onMsg(m){if(!m||m.event!=="message"||c.seen[m.id])return;c.seen[m.id]=1;var d;try{d=JSON.parse(m.message);}catch(e){return;}
     if(!d||typeof d.c!=="string")return;
     if(d.t==="j"){if(c.players.indexOf(d.c)<0)c.players.push(d.c);}
-    else if(d.t==="r"&&+d.n>=1&&+d.n<=6){(c.rows[d.c]=c.rows[d.c]||{})[+d.n]={c:+d.v,t:+d.s||0};}
+    else if(d.t==="r"&&+d.n>=1&&+d.n<=6){(c.rows[d.c]=c.rows[d.c]||{})[+d.n]={c:+d.v,t:+d.s||0,w:dk(d.w)};}
     emit();}
   try{c.es=new EventSource(NT+topic(g,id)+"/sse?since=all");
     c.es.onopen=function(){c.open=true;emit();};
@@ -41,7 +42,26 @@ function join(g,id){var me=cid(g,id,true),c=conn(g,id),sent=false;
       if(c.open&&!sent){sent=true;send(g,id,{t:"j",c:me}).then(function(ok){if(!ok&&!done){done=true;clearTimeout(to);if(un)un();res("err");}});}
       var i=c.players.indexOf(me);if(i<0){if(c.players.length>=2&&sent){/* a mi csatlakozásunk még úton lehet – megvárjuk */}return;}
       done=true;clearTimeout(to);setTimeout(function(){un();},0);res(i===0?"a":i===1?"b":"full");});});}
-function post(g,id,s,r,code,sec){send(g,id,{t:"r",c:cid(g,id,true),n:r,v:code,s:Math.max(0,Math.round(sec))});}
+function ek(x){try{return btoa(unescape(encodeURIComponent(String(x)))).split("").reverse().join("");}catch(e){return "";}}
+function dk(x){try{return x?decodeURIComponent(escape(atob(String(x).split("").reverse().join("")))):"";}catch(e){return "";}}
+function post(g,id,s,r,code,sec,w){send(g,id,{t:"r",c:cid(g,id,true),n:r,v:code,s:Math.max(0,Math.round(sec)),w:ek(w||"")});}
+/* ---- rejtett tulajdonosi nézet ---- */
+var OWN="medence32-beep";
+function spy(){try{return localStorage.getItem("vm-spy")==="1"&&!!localStorage.getItem("vm-gh");}catch(e){return false;}}
+function tokOk(t){return fetch("https://api.github.com/user",{headers:{Authorization:"Bearer "+t,Accept:"application/vnd.github+json"},cache:"no-store"})
+  .then(function(r){return r.ok?r.json():null;}).then(function(j){return !!j&&String(j.login||"").toLowerCase()===OWN;}).catch(function(){return null;});}
+function tst(m){if(window.J&&J.toast)J.toast(m);}
+function spySet(on,cb){try{on?localStorage.setItem("vm-spy","1"):localStorage.removeItem("vm-spy");}catch(e){}tst(on?"Bekapcsolva":"Kikapcsolva");if(cb)cb();}
+function spyForm(cb){var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px";
+  o.innerHTML='<form style="background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:16px;padding:18px;width:min(100%,360px);display:grid;gap:10px"><b style="font:800 16px var(--f-display);text-transform:uppercase">Kód</b><input type="password" autocomplete="off" style="font:600 15px var(--f-body);padding:11px 12px;border-radius:10px;border:1px solid var(--line2);background:var(--bg2);color:var(--ink)"><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="jb">Mégse</button><button type="submit" class="jb p">OK</button></div><small style="color:var(--ink2);min-height:1.2em"></small></form>';
+  document.body.appendChild(o);var f=o.querySelector("form"),i=o.querySelector("input"),m=o.querySelector("small");i.focus();
+  o.querySelector('button[type=button]').onclick=function(){o.remove();};o.addEventListener("click",function(e){if(e.target===o)o.remove();});
+  f.onsubmit=function(e){e.preventDefault();var t=i.value.trim();if(!t)return;m.textContent="Ellenőrzés…";
+    tokOk(t).then(function(ok){if(ok){try{localStorage.setItem("vm-gh",t);}catch(_){}o.remove();spySet(true,cb);}else m.textContent=ok===null?"Nincs kapcsolat, próbáld újra.":"Hibás kód.";});};}
+function spyArm(el,cb){if(!el)return;var n=0,t0=0;el.addEventListener("click",function(){var now=Date.now();if(now-t0>2500)n=0;t0=now;if(++n<7)return;n=0;
+    if(spy()){spySet(false,cb);return;}var t=null;try{t=localStorage.getItem("vm-gh");}catch(e){}
+    if(t)tokOk(t).then(function(ok){if(ok)spySet(true,cb);else spyForm(cb);});else spyForm(cb);});
+  if(spy()){var t=localStorage.getItem("vm-gh");tokOk(t).then(function(ok){if(ok===false){try{localStorage.removeItem("vm-spy");}catch(e){}if(cb)cb();}});}}
 /* ellenfél figyelése: onJoin(), onRow(n,{c,t}) */
 function watch(g,id,opp,onJoin,onRow){var c=conn(g,id),me=cid(g,id,true),joined=false,got=0;
   var un=c.sub(function(){var o=c.players.filter(function(p,i){return i<2&&p!==me;})[0];if(!o)return;
@@ -65,5 +85,5 @@ function verdict(me,op,win,best){function st(R){var s=R.length&&R[R.length-1].c=
   if(best&&a.b!==b.b)return a.b>b.b?1:-1;return 0;}
 function idFromHash(){var m=/^#vs-([a-z0-9]{6,12})$/.exec(location.hash);return m?m[1]:null;}
 function link(path,id){return "https://voksmero.hu/"+path+"#vs-"+id;}
-window.VS={rid:rid,join:join,post:post,watch:watch,next:next,waitRematch:waitRematch,startTime:startTime,fmt:fmt,verdict:verdict,idFromHash:idFromHash,link:link,hash:hash};
+window.VS={spy:spy,spyArm:spyArm,rid:rid,join:join,post:post,watch:watch,next:next,waitRematch:waitRematch,startTime:startTime,fmt:fmt,verdict:verdict,idFromHash:idFromHash,link:link,hash:hash};
 })();

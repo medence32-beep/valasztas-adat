@@ -65,6 +65,7 @@
 .vsp .vd{padding:12px 14px;border-radius:12px;font:900 22px var(--f-display);text-transform:uppercase;text-align:center}
 .vsp .vd.w{background:color-mix(in srgb,#3A9A57 18%,var(--card));color:#3A9A57}.vsp .vd.l{background:color-mix(in srgb,#D7392F 14%,var(--card));color:#D7392F}.vsp .vd.d{background:var(--card);color:var(--ink2)}
 .vsp .vd small{display:block;font:600 13px var(--f-body);text-transform:none;color:var(--ink2);margin-top:4px}
+.vsp .mg.lt i{width:19px;height:19px;display:grid;place-items:center;font:800 10.5px var(--f-body);font-style:normal;color:#fff}.vsp .spy{font-size:12.5px;color:var(--ink3)}.vsp .spy b{letter-spacing:.06em;color:var(--ink2)}
 .vsp .act{display:flex;gap:8px;flex-wrap:wrap}.vsp .pulse{animation:vpu 1.2s ease-in-out infinite}@keyframes vpu{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent)}}
 
 .rg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:20px;align-items:start}@media(max-width:860px){.rg{grid-template-columns:1fr}}
@@ -138,7 +139,7 @@ window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(
 </script>
 <script src="assets/orszagok.js?v=11"></script>
 <script src="assets/terkep-anim.js?v=4"></script>
-<script src="assets/jatek/vs.js?v=2"></script>
+<script src="assets/jatek/vs.js?v=3"></script>
 <script>
 (function(){"use strict";const {$,esc,nf}=J;
 const V=window.VALASZTAS,FL=c=>V&&V.flag?V.flag(c,80):"https://flagcdn.com/w80/"+c.toLowerCase()+".png";
@@ -203,7 +204,7 @@ function guess(code){if(DONE||!BY[code]||G.includes(code))return;if(LOCK){J.toas
   if(code===T.code||G.length>=6){DONE=true;if(MODE==="nap")fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/rejt-"+N+(code===T.code?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
   save();if(MODE==="vs"&&VX){const t=(Date.now()-VX.t0)/1000,c=code===T.code?100:Math.min(99,prox(dist(BY[code].c,T.c)));VX.me.push({c,t});
     const sv=J.ls.get("vm-rejt-vs",{});sv[VX.id]={g:G,t:VX.me.map(x=>Math.round(x.t))};const ks=Object.keys(sv);if(ks.length>40)delete sv[ks[0]];J.ls.set("vm-rejt-vs",sv);
-    VS.post("orsz",VX.id,VX.slot,G.length,c,t);vsDone();}rows(true);hints();result();stats();$("in").value="";$("sug").hidden=true;$("in").disabled=$("go").disabled=DONE;if(!DONE)$("in").focus();
+    VS.post("orsz",VX.id,VX.slot,G.length,c,t,code);vsDone();}rows(true);hints();result();stats();$("in").value="";$("sug").hidden=true;$("in").disabled=$("go").disabled=DONE;if(!DONE)$("in").focus();
   if(code!==T.code&&!DONE)J.toast(nf(dist(BY[code].c,T.c))+" km – "+["észak","északkelet","kelet","délkelet","dél","délnyugat","nyugat","északnyugat"][Math.round(bear(BY[code].c,T.c)/45)%8]+" felé keresd");}
 const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();let SI=0,SL=[];
 function suggest(){const q=norm($("in").value.trim());if(!q){$("sug").hidden=true;return;}
@@ -218,7 +219,7 @@ document.addEventListener("click",e=>{if(!e.target.closest(".inp"))$("sug").hidd
 function draw(){sil(T);rows(false);hints();result();stats();$("in").disabled=$("go").disabled=DONE;}
 function newEndless(){const seen=new Set(EN.seen);let c=BIG.filter(x=>!seen.has(x.code));if(!c.length){EN.seen=[];c=BIG.slice();}
   const t=c[Math.floor(Math.random()*c.length)];EN.seen.push(t.code);EN.cur={c:t.code,g:[],d:false,w:false};J.ls.set("vm-rejt-v",EN);load();}
-function mini(R){let h='<div class="mg">';for(let i=0;i<6;i++){const r=R[i];h+='<div style="align-items:center;gap:6px;font:700 12px var(--f-body);font-variant-numeric:tabular-nums">'+(r?'<i class="'+(r.c===100?'g':r.c>=85?'y':'x')+'" style="width:'+Math.max(8,r.c*.9)+'px"></i>'+r.c+'%':'<i style="width:90px"></i>')+'</div>';}return h+'</div>';}
+function mini(R,sp){let h='<div class="mg">';for(let i=0;i<6;i++){const r=R[i];h+='<div style="align-items:center;gap:6px;font:700 12px var(--f-body);font-variant-numeric:tabular-nums">'+(r?'<i class="'+(r.c===100?'g':r.c>=85?'y':'x')+'" style="width:'+Math.max(8,r.c*.9)+'px"></i>'+r.c+'%'+(sp&&r.w&&BY[r.w]?' <span style="font-weight:600;color:var(--ink2)">'+esc(BY[r.w].name)+'</span>':''):'<i style="width:90px"></i>')+'</div>';}return h+'</div>';}
 function vsRender(){const v=VX;if(!v)return;const p=$("vsp");p.hidden=false;$("sil").hidden=v.st==="full"||v.st==="err";document.querySelector(".inp").hidden=$("sil").hidden;
   if(v.st==="join"){p.innerHTML='<div class="msg">Csatlakozás a meccshez…</div>';return;}
   if(v.st==="full"){p.innerHTML='<div class="hd"><b>Ez a meccs már tele van</b></div><div class="msg">Ebben a meccsben már két játékos van. Indíts egy saját meccset, és küldd el a linkjét valakinek!</div><div class="act"><button class="jb p" type="button" data-vs="new">Új 1v1 meccs</button></div>';return;}
@@ -227,7 +228,8 @@ function vsRender(){const v=VX;if(!v)return;const p=$("vsp");p.hidden=false;$("s
   if(!v.opJ){p.innerHTML='<div class="hd"><b>1v1 meccs</b><span>Várakozás az ellenfélre…</span></div><div class="msg">Küldd el ezt a linket annak, akivel játszani szeretnél. Amint megnyitja, indul a meccs – mindketten ugyanazt az országot kapjátok.</div><div class="lk"><code>'+esc(link)+'</code><button class="jb p" type="button" data-vs="copy">Link másolása</button></div>';return;}
   const vd=VS.verdict(v.me,v.op,100,true);let h='<div class="hd"><b>1v1 meccs</b><span>'+(vd===null?(DONE?'Várjuk az ellenfeled…':'Fut az idő: '+VS.fmt(now)):'Vége')+'</span></div>';
   if(vd!==null)h+='<div class="vd '+(vd>0?'w':vd<0?'l':'d')+'">'+(vd>0?'Nyertél!':vd<0?'Az ellenfeled nyert':'Döntetlen')+'<small>A megfejtés: '+esc(T.name)+(vd!==0&&!v.me.concat(v.op).some(x=>x.c===100)?' · a legközelebbi tipp döntött':'')+'</small></div>';
-  const pc=(lab,R,mine)=>{const s=R.length&&R[R.length-1].c===100,d=s||R.length>=6;return '<div class="pc"><small>'+lab+'</small><strong>'+(s?R.length+'/6':d?'X/6':R.length+'. tipp')+'</strong><div class="tx">'+(d?(s?'Kitalálta · '+VS.fmt(R[R.length-1].t):'Nem találta ki'):(mine?'játszol':'gondolkodik…'))+'</div>'+mini(R)+'</div>';};
+  const pc=(lab,R,mine)=>{const s=R.length&&R[R.length-1].c===100,d=s||R.length>=6;return '<div class="pc"><small>'+lab+'</small><strong>'+(s?R.length+'/6':d?'X/6':R.length+'. tipp')+'</strong><div class="tx">'+(d?(s?'Kitalálta · '+VS.fmt(R[R.length-1].t):'Nem találta ki'):(mine?'játszol':'gondolkodik…'))+'</div>'+mini(R,!mine&&VS.spy())+'</div>';};
+  if(VS.spy())h+='<div class="spy">Megfejtés: <b>'+esc(T.name)+'</b></div>';
   h+='<div class="pl">'+pc("Te",v.me,true)+pc("Ellenfél",v.op,false)+'</div>';
   if(vd!==null)h+='<div class="act"><button class="jb p'+(v.rm?' pulse':'')+'" type="button" data-vs="rematch">'+(v.rm?'Az ellenfeled visszavágót kér – mehet!':'Visszavágó')+'</button><button class="jb" type="button" data-vs="new">Új meccs mással</button></div>';
   p.innerHTML=h;}
@@ -249,7 +251,7 @@ function load(){if(VX&&VX.stop)VX.stop();if(VX&&VX.rmw)VX.rmw();VX=null;clearInt
   if(MODE==="nap"){T=ORD[(N-1)%ORD.length];G=(ST.p[N]&&ST.p[N].g)||[];DONE=!!(ST.p[N]&&ST.p[N].d);draw();}
   else if(MODE==="end"){if(!EN.cur||!BY[EN.cur.c]){newEndless();return;}T=BY[EN.cur.c];G=EN.cur.g.slice();DONE=EN.cur.d;draw();}
   else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
-$("vsnew").onclick=()=>{location.hash="vs-"+VS.rid();};
+$("vsnew").onclick=()=>{location.hash="vs-"+VS.rid();};VS.spyArm($("kk"),()=>vsRender());
 $("vsp").addEventListener("click",e=>{const b=e.target.closest("[data-vs]");if(!b)return;const a=b.dataset.vs;
   if(a==="copy")J.copy(VS.link("napi-rejtveny",VX.id),"Link a vágólapon – küldd el az ellenfelednek!");
   else if(a==="new")location.hash="vs-"+VS.rid();else if(a==="rematch")location.hash="vs-"+VS.next(VX.id);});
