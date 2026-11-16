@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=3";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Napi szó – találd ki a választások szavát! | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/napi-szo">
+<meta name="description" content="Választási Wordle magyarul: minden nap egy új, öt betűs szó a választások világából. Hat tippből kell kitalálnod – zöld, sárga és szürke betűkkel segítünk.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Napi szó – találd ki a választások szavát!">
+<meta property="og:description" content="Választási Wordle magyarul: minden nap egy új, öt betűs szó a választások világából. Hat tippből kell kitalálnod – zöld, sárga és szürke betűkkel segítünk.">
+<meta property="og:url" content="https://voksmero.hu/napi-szo">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/index.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=16">
+<style>
+.jw{max-width:1180px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.jk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.jh h1{font:900 clamp(32px,5.6vw,58px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 10px;text-wrap:balance}
+.jh p{color:var(--ink2);max-width:68ch;margin:0}
+.jc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.jc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0 0 12px;letter-spacing:.02em}
+.jb{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 16px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s}
+.jb:hover{border-color:var(--acc)}.jb:active{transform:scale(.97)}.jb.p{background:var(--acc);border-color:var(--acc);color:#14100a}.jb:disabled{opacity:.45;cursor:default}
+.jn{color:var(--ink3);font-size:12.5px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.sg{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:16px;margin-top:18px;align-items:start}@media(max-width:900px){.sg{grid-template-columns:1fr}}
+.play{display:flex;flex-direction:column;align-items:center;gap:16px}
+.brd{display:grid;grid-template-rows:repeat(6,1fr);gap:6px;width:min(100%,330px)}
+.rw{display:grid;grid-template-columns:repeat(5,1fr);gap:6px}.rw.shk{animation:shk .4s}
+@keyframes shk{20%,60%{transform:translateX(-6px)}40%,80%{transform:translateX(6px)}}
+.tl{aspect-ratio:1/1;display:grid;place-items:center;border:2px solid var(--line2);border-radius:8px;font:900 clamp(24px,7vw,32px)/1 var(--f-display);text-transform:uppercase;color:var(--ink);background:var(--card);user-select:none}
+.tl.f{border-color:var(--ink3);animation:pop .12s}
+@keyframes pop{50%{transform:scale(1.08)}}
+.tl.g,.tl.y,.tl.x{color:#fff;animation:flp .5s ease both}.tl.g{background:#3A9A57;border-color:#3A9A57}.tl.y{background:#C49A1E;border-color:#C49A1E}.tl.x{background:var(--ink3);border-color:var(--ink3)}
+@keyframes flp{0%{transform:rotateX(0)}50%{transform:rotateX(90deg)}100%{transform:rotateX(0)}}
+.kb{display:grid;gap:6px;width:min(100%,560px)}.kr{display:flex;gap:4px;justify-content:center}
+.kr button{flex:1;min-width:0;max-width:44px;height:50px;border:0;border-radius:7px;background:var(--bg2);color:var(--ink);font:800 15px var(--f-body);cursor:pointer;padding:0;touch-action:manipulation;transition:background .2s}
+.kr button.w{max-width:72px;flex:1.6;font-size:12px;letter-spacing:.02em}.kr button:active{transform:scale(.95)}
+.kr button.g{background:#3A9A57;color:#fff}.kr button.y{background:#C49A1E;color:#fff}.kr button.x{background:var(--ink3);color:var(--card);opacity:.6}
+.res{padding:16px;border-radius:16px;border:1px solid var(--line2);background:var(--card)}
+.res h3{margin:0;font:900 24px var(--f-display);text-transform:uppercase}.res .wd{display:flex;gap:5px;margin:12px 0 10px}.res .wd span{width:40px;height:40px;display:grid;place-items:center;border-radius:7px;background:#3A9A57;color:#fff;font:900 22px var(--f-display)}
+.res p{margin:0 0 12px;color:var(--ink2);font-size:14.5px;line-height:1.5}.res .act{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:0 0 12px}.st b{display:block;font:900 26px var(--f-display)}.st span{font-size:11.5px;color:var(--ink2)}
+.dist{display:grid;gap:4px}.dist div{display:grid;grid-template-columns:16px 1fr;gap:8px;align-items:center;font:700 12px var(--f-body)}.dist i{display:block;height:18px;border-radius:4px;background:var(--line2);color:var(--ink);font-style:normal;text-align:right;padding-right:6px;line-height:18px;min-width:22px}.dist i.me{background:#3A9A57;color:#fff}
+.cd{font:800 18px var(--f-mono,monospace)}
+.rules{color:var(--ink2);font-size:14px;line-height:1.55}.rules ul{margin:0;padding-left:18px}.rules li{margin:5px 0}
+.ex{display:inline-flex;gap:3px;vertical-align:middle;margin-right:4px}.ex i{width:20px;height:20px;border-radius:4px;display:grid;place-items:center;font:900 12px var(--f-display);font-style:normal;color:#fff;background:var(--ink3)}.ex i.g{background:#3A9A57}.ex i.y{background:#C49A1E}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a><a href="zold-foki-szigetek-valasztas"><i class="live cv"></i><span>Zöld-fok<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main class="jw">
+<section class="jh"><div class="jk" id="kk">Napi szó</div><h1>Találd ki a nap szavát!</h1>
+<p>Minden nap egy új, öt betűs szó a választások világából. Hat próbálkozásod van – minden tipp után megmutatjuk, mely betűk vannak jó helyen.</p></section>
+<div class="sg"><div class="jc play"><div class="brd" id="brd" aria-label="Tipptábla"></div><div id="res" style="width:min(100%,560px)"></div><div class="kb" id="kb"></div></div>
+<div style="display:grid;gap:16px"><div class="jc"><h2>Statisztikád</h2><div class="st" id="st"></div><div class="dist" id="dist"></div></div>
+<div class="jc rules"><h2>Szabályok</h2><ul>
+<li><span class="ex"><i class="g">V</i></span> zöld: a betű jó helyen van.</li>
+<li><span class="ex"><i class="y">O</i></span> sárga: a betű benne van a szóban, de máshol.</li>
+<li><span class="ex"><i>K</i></span> szürke: ez a betű nincs a szóban.</li>
+<li>Az ékezetes betű külön betűnek számít: az A és az Á nem ugyanaz. A kettős betűk (sz, cs, gy…) két betűnek számítanak.</li>
+<li>Új szó minden éjfélkor, magyar idő szerint. Az eredményed megoszthatod, a megfejtés nélkül.</li></ul></div>
+<div class="jc"><h2>Még több játék</h2><p class="jn" style="margin:0 0 10px;font-size:14px">Ha megvan a mai szó, próbáld ki az országrejtvényt is: egy ország körvonalát kell kitalálnod.</p><a class="jb" href="napi-rejtveny">Napi országrejtvény →</a></div></div></div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script>
+window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+ nf:n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf:(x,d)=>x==null||isNaN(x)?"–":x.toFixed(d==null?1:d).replace(".",",")+"%",
+ ls:{get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}},
+ toast:m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200);},
+ copy:async(s,ok)=>{try{await navigator.clipboard.writeText(s);J.toast(ok||"Vágólapra másolva");}catch(e){prompt("Másold ki:",s);}},
+ share:async(title,text,url)=>{if(navigator.share){try{await navigator.share({title,text,url});return;}catch(e){if(e&&e.name==="AbortError")return;}}J.copy(text+(url?"\n"+url:""),"Szöveg a vágólapon – illeszd be bárhová");}};
+</script>
+<script src="assets/orszagok.js?v=11"></script>
+<script src="assets/terkep-anim.js?v=4"></script>
+<script>
+(function(){"use strict";const {$,esc}=J;
+const W=[["LISTA", "A pártlista: a pártlistás szavazólapon egy párt jelöltjeinek sorrendjére szavazol."], ["ELNÖK", "Az államfő. Magyarországon az Országgyűlés választja, az Egyesült Államokban az elektorok."], ["KVÓTA", "Ennyi szavazat kell egy mandátumhoz az arányos rendszerek egy részében (például a Droop-kvóta)."], ["ÁLLAM", "Az Egyesült Államok 50 állama külön-külön szervezi a választást és számolja a szavazatokat."], ["MEGYE", "Magyarország 19 megyére és a fővárosra oszlik; az eredményeket ebben a bontásban is közöljük."], ["VÁROS", "A városokban jellemzően magasabb a részvétel, és máshogy szavaznak, mint a falvakban."], ["VITÁK", "A jelöltek vitái a kampány legtöbbet nézett pillanatai közé tartoznak."], ["MÉRÉS", "Egy közvélemény-kutatás általában ezer körüli ember megkérdezésén alapul."], ["ESÉLY", "Az előrejelzők a kutatásokból számolják, mekkora eséllyel nyer egy jelölt vagy párt."], ["ARÁNY", "A szavazatarány és a mandátumarány ritkán egyezik: a választási rendszer torzít."], ["NYERŐ", "Az egyéni körzetekben az nyer, aki a legtöbb szavazatot kapja – akkor is, ha nincs meg az 50%."], ["HÍREK", "A választás estéjén percről percre frissülnek a hírek és az eredmények."], ["TÁBOR", "Egy párt szavazótábora: azok, akik szinte biztosan rá szavaznak."], ["BÁZIS", "A törzsszavazók köre, akikre egy párt minden választáson számíthat."], ["DÁTUM", "A magyar országgyűlési választás napját a köztársasági elnök tűzi ki."], ["KÖZÉP", "A politikai közép: a bal és a jobb oldal között elhelyezkedő pártok és szavazók."], ["LAKOS", "A választókerületek határait a lakosság, pontosabban a választópolgárok száma alapján húzzák meg."], ["HATÁR", "Határon túli magyarok is szavazhatnak – levélben, a pártlistákra."], ["SIKER", "A győztes párt eredményhirdetése a választási éjszaka csúcspontja."], ["BUKÁS", "Ha egy párt nem éri el az 5%-os küszöböt, egyetlen listás mandátumot sem kap."], ["ÜGYEK", "A kampány fő témái: azok az ügyek, amelyekről a pártok vitatkoznak."], ["TAGOK", "Az Országgyűlésnek 2014 óta 199 tagja van."], ["VEZÉR", "Pártvezér: a párt elnöke, gyakran egyben a miniszterelnök-jelöltje is."], ["URNÁK", "A kitöltött szavazólapok az urnákba kerülnek, és a szavazás végén ott számolják meg őket."], ["KÖRÖK", "Szavazókörök: Magyarországon több mint tízezer van belőlük."], ["KAMRA", "A parlament egyik háza. Az Egyesült Államokban és Spanyolországban is két kamra van."], ["MÉDIA", "A média a kampány fő terepe: plakátok, hirdetések, interjúk és viták."], ["JOGOK", "Választójoga minden nagykorú magyar állampolgárnak van."], ["LAPOK", "Szavazólapok: Magyarországon egyéni és pártlistás lapot is kapsz."], ["FŐNÖK", "A kormányfő a végrehajtó hatalom feje – Magyarországon a miniszterelnök."], ["ÉRVEK", "A kampányban a pártok érvekkel próbálják meggyőzni a bizonytalanokat."], ["ELVEK", "Egy párt elvei a programjában jelennek meg."], ["ÉRDEK", "A választók gyakran a saját érdekeik alapján döntenek."], ["BÉREK", "A bérek és az árak alakulása szinte minden kampány fő témája."], ["ÚJSÁG", "Az újságok kampányidőszakban naponta közölnek kutatásokat és elemzéseket."]];
+const START=Date.UTC(2026,10,16),DAY=864e5;
+const N=Math.floor((Date.parse(new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"})+"T00:00:00Z")-START)/DAY)+1;$("kk").textContent="Napi szó · #"+N;
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const ord=W.slice(),r=rng(7120261);for(let i=ord.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+const T=ord[((N-1)%ord.length+ord.length)%ord.length],ANS=[...T[0]];
+let ST=J.ls.get("vm-szo",{p:{}}),G=(ST.p[N]&&ST.p[N].g)||[],DONE=!!(ST.p[N]&&ST.p[N].d),CUR=[];
+const LET="AÁBCDEÉFGHIÍJKLMNOÓÖŐPQRSTUÚÜŰVWXYZ";
+const KB=[["Ö","Ü","Ó","Q","W","E","R","T","Z","U","I","O","P","Ő","Ú"],["A","S","D","F","G","H","J","K","L","É","Á","Ű"],["ENTER","Í","Y","X","C","V","B","N","M","DEL"]];
+function score(g){const res=Array(5).fill("x"),left={};ANS.forEach((c,i)=>{if(g[i]!==c)left[c]=(left[c]||0)+1;});
+  g.forEach((c,i)=>{if(c===ANS[i])res[i]="g";else if(left[c]){res[i]="y";left[c]--;}});return res;}
+function board(anim){let h="";for(let i=0;i<6;i++){const g=G[i]?[...G[i]]:(i===G.length&&!DONE?CUR:[]),sc=G[i]?score([...G[i]]):null;
+  h+='<div class="rw" id="rw'+i+'">';for(let j=0;j<5;j++){const c=g[j]||"";h+='<div class="tl'+(sc?" "+sc[j]:c?" f":"")+'"'+(sc&&anim&&i===G.length-1?' style="animation-delay:'+j*.18+'s"':sc?' style="animation:none"':'')+'>'+esc(c)+'</div>';}h+='</div>';}
+  $("brd").innerHTML=h;}
+function keys(){const best={};G.forEach(w=>{const s=score([...w]);const RK={x:1,y:2,g:3};[...w].forEach((c,i)=>{if(!best[c]||RK[s[i]]>RK[best[c]])best[c]=s[i];});});
+  $("kb").innerHTML=KB.map(row=>'<div class="kr">'+row.map(k=>k==="ENTER"?'<button type="button" class="w" data-k="ENTER">BEKÜLD</button>':k==="DEL"?'<button type="button" class="w" data-k="DEL" aria-label="Törlés"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 5h11v14H9l-6-7z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="m12 9 5 6m0-6-5 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>':'<button type="button" data-k="'+k+'" class="'+(best[k]||"")+'">'+k+'</button>').join("")+'</div>').join("");}
+function stats(){const P=Object.entries(ST.p).filter(([k,v])=>v.d).sort((a,b)=>a[0]-b[0]),won=P.filter(([k,v])=>v.w);let best=0,run=0,prev=null;
+  P.forEach(([k,v])=>{run=v.w?((prev!==null&&+k===prev+1&&run>0)?run+1:1):0;best=Math.max(best,run);prev=+k;});const cur=(P.length&&+P[P.length-1][0]>=N-1)?run:0;
+  const di=[0,0,0,0,0,0];won.forEach(([k,v])=>di[v.g.length-1]++);const mx=Math.max(1,...di),me=DONE&&ST.p[N].w?G.length:0;
+  $("st").innerHTML='<div><b>'+P.length+'</b><span>játék</span></div><div><b>'+(P.length?Math.round(won.length/P.length*100):0)+'%</b><span>nyerés</span></div><div><b>'+cur+'</b><span>sorozat</span></div><div><b>'+best+'</b><span>legjobb</span></div>';
+  $("dist").innerHTML=di.map((n,i)=>'<div><span>'+(i+1)+'</span><i class="'+(me===i+1?'me':'')+'" style="width:'+Math.max(6,n/mx*100)+'%">'+n+'</i></div>').join("");}
+let cdT=null;
+function result(){if(!DONE){$("res").innerHTML="";return;}const w=ST.p[N].w;
+  $("res").innerHTML='<div class="res"><h3>'+(w?(G.length<=2?"Lenyűgöző!":G.length<=4?"Szép munka!":"Megvan, épphogy!"):"Most nem jött össze")+'</h3><div class="wd">'+ANS.map(c=>'<span>'+esc(c)+'</span>').join("")+'</div><p>'+esc(T[1])+'</p><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><span class="jn">Új szó: <span class="cd" id="cd"></span></span></div></div>';
+  $("sh").onclick=()=>J.share("Voksmérő napi szó","Voksmérő napi szó #"+N+" "+(w?G.length:"X")+"/6\n"+G.map(g=>score([...g]).map(x=>x==="g"?"🟩":x==="y"?"🟨":"⬜").join("")).join("\n")+"\n","https://voksmero.hu/napi-szo");
+  const tick=()=>{const b=new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Budapest"})),s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds()),e=$("cd");if(!e)return;
+    e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();clearInterval(cdT);cdT=setInterval(tick,1000);}
+function shake(m){const e=$("rw"+G.length);if(e){e.classList.remove("shk");void e.offsetWidth;e.classList.add("shk");}J.toast(m);}
+function submit(){if(DONE)return;if(CUR.length<5){shake("Öt betű kell");return;}if(!/[AÁEÉIÍOÓÖŐUÚÜŰ]/.test(CUR.join(""))){shake("Ebben nincs magánhangzó");return;}
+  const g=CUR.join("");G.push(g);CUR=[];const win=g===T[0];
+  if(win||G.length>=6){DONE=true;fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+(win?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
+  ST.p[N]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);board(true);keys();
+  setTimeout(()=>{result();stats();if(DONE&&win)J.toast(["Zseniális!","Lenyűgöző!","Nagyszerű!","Szép munka!","Megvan!","Épphogy!"][G.length-1]);},950);}
+function press(k){if(DONE)return;if(k==="ENTER")return submit();if(k==="DEL"){CUR.pop();board(false);return;}if(CUR.length<5&&LET.includes(k)){CUR.push(k);board(false);}}
+$("kb").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");if(b){press(b.dataset.k);b.blur();}});
+document.addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.target.closest&&e.target.closest("input,textarea"))return;
+  if(e.key==="Enter"){e.preventDefault();press("ENTER");}else if(e.key==="Backspace"){e.preventDefault();press("DEL");}else if(e.key.length===1){const k=e.key.toLocaleUpperCase("hu");if(LET.includes(k))press(k);}});
+board(false);keys();result();stats();
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

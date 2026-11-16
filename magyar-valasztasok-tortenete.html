@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=2";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=3";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
@@ -78,9 +78,9 @@
 </header>
 <main class="jw">
 <section class="jh"><div class="jk">Magyarország · 1990–2026</div><h1>A magyar választások története</h1>
-<p>Húzd a csúszkát, vagy nyomd meg a lejátszást: így változott az Országgyűlés összetétele, a pártok eredménye és a részvétel a rendszerváltás óta, mind a tíz választáson.</p></section>
+<p>Húzd a csúszkát, vagy kattints egy évre: így változott az Országgyűlés összetétele, a pártok eredménye és a részvétel a rendszerváltás óta, mind a tíz választáson.</p></section>
 <div class="strip" id="strip"></div>
-<div class="ctl"><button class="jb p" id="play" type="button">▶ Lejátszás</button><input type="range" id="sl" min="0" max="9" step="1" aria-label="Választási év"></div>
+<div class="ctl"><input type="range" id="sl" min="0" max="9" step="1" aria-label="Választási év"></div>
 <div class="hg"><div class="jc"><div class="yr" id="yr">2026</div><p class="note" id="note"></p>
 <svg id="hemi" viewBox="0 0 420 222" role="img" aria-label="Az Országgyűlés összetétele"></svg>
 <div class="kp"><div><b id="kn">–</b><span>képviselő</span></div><div><b id="kt">–</b><span>részvétel</span></div><div><b id="km">–</b><span>a legnagyobb párt mandátumaránya</span></div></div></div>
@@ -106,7 +106,7 @@ window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(
 <script src="assets/orszagok.js?v=11"></script>
 <script src="assets/terkep-anim.js?v=4"></script>
 <script>
-(function(){"use strict";const {$,esc,nf,pf}=J;let E=[],I=9,TM=null;
+(function(){"use strict";const {$,esc,nf,pf}=J;let E=[],I=9;
 function hemi(p,n){const rows=n>300?12:8,R0=70,R1=200,cx=210,cy=210;const pts=[];
   for(let r=0;r<rows;r++){const rad=R0+(R1-R0)*r/(rows-1);const k=Math.round(n*rad/((R0+R1)/2*rows)*1);pts.push([rad,k]);}
   let tot=pts.reduce((a,x)=>a+x[1],0),i=0;while(tot!==n){pts[i%rows][1]+=tot<n?1:-1;tot+=tot<n?1:-1;i++;}
@@ -122,13 +122,11 @@ function show(i){I=i;const e=E[i];$("sl").value=i;$("yr").textContent=e.y;$("not
   const big=e.p.reduce((a,x)=>(x[3]||0)>(a[3]||0)?x:a,e.p[0]);$("km").textContent=pf((big[3]||0)/e.n*100);
   hemi(e.p,e.n);$("pl").innerHTML=e.p.map(x=>'<div class="r"><b>'+esc(x[0])+'</b><span class="v"><strong>'+(x[2]==null?'–':pf(x[2],2))+'</strong><span>'+(x[3]||0)+' mandátum</span></span><span class="br"><i style="background:'+x[1]+';width:'+(x[2]||0)+'%"></i></span></div>').join("");
   $("strip").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i));chart();try{history.replaceState(null,"",location.pathname+"#e"+e.y);}catch(_){}}
-function play(){if(TM){clearInterval(TM);TM=null;$("play").textContent="▶ Lejátszás";return;}if(I>=E.length-1)show(0);$("play").textContent="⏸ Megállítás";
-  TM=setInterval(()=>{if(I>=E.length-1){play();return;}show(I+1);},1900);}
-$("play").onclick=play;$("sl").oninput=()=>{if(TM)play();show(+$("sl").value);};
+$("sl").oninput=()=>show(+$("sl").value);
 document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT"&&e.target.type!=="range")return;if(e.key==="ArrowRight"&&I<E.length-1)show(I+1);if(e.key==="ArrowLeft"&&I>0)show(I-1);});
 fetch("assets/data/hu_tortenet.json?v=1").then(r=>r.json()).then(d=>{E=d.e;$("sl").max=E.length-1;
   $("strip").innerHTML=E.map((e,i)=>{const w=e.p.reduce((a,x)=>(x[3]||0)>(a[3]||0)?x:a,e.p[0]);return '<button type="button" data-i="'+i+'" style="background:'+w[1]+'">'+e.y+'<small>'+esc(w[0])+'</small></button>';}).join("");
-  $("strip").onclick=e=>{const b=e.target.closest("button[data-i]");if(b){if(TM)play();show(+b.dataset.i);}};
+  $("strip").onclick=e=>{const b=e.target.closest("button[data-i]");if(b)show(+b.dataset.i);};
   const m=/^#e(\d{4})$/.exec(location.hash),k=m?E.findIndex(e=>e.y===+m[1]):-1;show(k>=0?k:E.length-1);});
 })();
 </script>

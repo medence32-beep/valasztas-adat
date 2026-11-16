@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=2";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=3";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
@@ -59,11 +59,11 @@
 .gl{display:grid;gap:7px}.gr{display:grid;grid-template-columns:minmax(0,1fr) 96px 40px 56px;gap:6px;align-items:stretch}
 .gr>div{white-space:nowrap;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px 8px;display:flex;align-items:center;min-width:0;font:700 14px var(--f-body);font-variant-numeric:tabular-nums}
 .gr .n{gap:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.gr .n img{width:22px;height:15px;border-radius:3px;object-fit:cover;flex:none}
-.gr .d,.gr .p{justify-content:flex-end}.gr .a{justify-content:center;font-size:20px}.gr.e>div{opacity:.35}
+.gr .d,.gr .p{justify-content:flex-end}.gr .a{justify-content:center;color:var(--ink)}.gr .a svg{width:20px;height:20px;transition:transform .4s}.gr.ok .a{color:var(--good)}.gr.e>div{opacity:.35}
 .gr.new>div{animation:flip .5s ease both}.gr.new>div:nth-child(2){animation-delay:.08s}.gr.new>div:nth-child(3){animation-delay:.16s}.gr.new>div:nth-child(4){animation-delay:.24s}
 @keyframes flip{from{transform:rotateX(90deg);opacity:0}}
 .gr.ok>div{background:color-mix(in srgb,var(--good) 22%,var(--bg2));border-color:var(--good)}
-.hints{display:grid;gap:6px;margin-top:12px}.hint{font-size:14px;color:var(--ink2);background:var(--bg2);border:1px dashed var(--line2);border-radius:10px;padding:8px 11px}.hint b{color:var(--ink)}
+.hints{display:grid;gap:6px;margin-top:12px}.hint{display:grid;grid-template-columns:92px minmax(0,1fr);gap:10px;align-items:baseline;font-size:14px;color:var(--ink2);border-top:1px solid var(--line);padding:9px 2px}.hint:first-child{border-top:0}.hint b{color:var(--ink)}.hint i{font:700 10.5px var(--f-body);font-style:normal;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
 .res{margin-top:14px;padding:16px;border-radius:16px;border:1px solid var(--line2);background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 14%,var(--card)),var(--card))}
 .res h3{margin:0 0 4px;font:900 26px var(--f-display);text-transform:uppercase}.res .cn{display:flex;align-items:center;gap:10px;margin:8px 0}.res .cn img{width:44px;height:30px;border-radius:5px;object-fit:cover;box-shadow:var(--shadow)}
 .res .cn b{font:800 20px var(--f-display)}.res .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
@@ -139,6 +139,7 @@ const R=6371,rad=x=>x*Math.PI/180;
 const dist=(a,b)=>{const dl=rad(b[1]-a[1]),dn=rad(b[0]-a[0]);const h=Math.sin(dl/2)**2+Math.cos(rad(a[1]))*Math.cos(rad(b[1]))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h));};
 const bear=(a,b)=>{const y=Math.sin(rad(b[0]-a[0]))*Math.cos(rad(b[1])),x=Math.cos(rad(a[1]))*Math.sin(rad(b[1]))-Math.sin(rad(a[1]))*Math.cos(rad(b[1]))*Math.cos(rad(b[0]-a[0]));return (Math.atan2(y,x)*180/Math.PI+360)%360;};
 const ARR=["⬆️","↗️","➡️","↘️","⬇️","↙️","⬅️","↖️"],arrow=b=>ARR[Math.round(b/45)%8];
+const arw=b=>'<svg viewBox="0 0 24 24" style="transform:rotate('+Math.round(b)+'deg)" aria-label="irány"><path d="M12 3 5 11h4.5v10h5V11H19z" fill="currentColor"/></svg>',OKI='<svg viewBox="0 0 24 24" aria-label="talált"><path d="M4 12.5 9.5 18 20 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 const prox=d=>Math.max(0,Math.round((1-d/20015)*100));
 const emo=p=>p===100?"🟩":p>=85?"🟨":p>=65?"🟧":"⬜";
 function sil(c){const k=Math.cos(rad(c.c[1]));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;c.keep.forEach(pl=>pl.forEach(r=>r.forEach(q=>{const x=q[0]*k;x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1]);})));
@@ -147,13 +148,13 @@ function sil(c){const k=Math.cos(rad(c.c[1]));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;
   $("sil").innerHTML='<svg viewBox="-10 -10 320 320" role="img" aria-label="A keresett ország körvonala"><path d="'+d+'" fill-rule="evenodd"/></svg>';}
 const NAP=[];
 function hints(){const wrong=G.filter(g=>g!==T.code).length,h=[];
-  if(wrong>=2||DONE)h.push('🌍 Kontinens: <b>'+esc(V.CONT[T.cont]||"–")+'</b>');
-  if(wrong>=4||DONE){const e=NAP.find(x=>x.k===T.code);h.push('🗳️ '+(e?'Következő ismert választás: <b>'+esc(e.t)+'</b>':'Ebben az országban '+(T.ready?'<b>van részletes Voksmérő-oldal</b>':'jelenleg nincs a naptárunkban közeli választás')));}
-  if(wrong>=5||DONE)h.push('🔤 Kezdőbetű: <b>'+esc(T.name[0])+'</b>');
+  if(wrong>=2||DONE)h.push('<i>Kontinens</i><b>'+esc(V.CONT[T.cont]||"–")+'</b>');
+  if(wrong>=4||DONE){const e=NAP.find(x=>x.k===T.code);h.push('<i>Választás</i><span>'+(e?'Következő ismert választás: <b>'+esc(e.t)+'</b>':'Ebben az országban '+(T.ready?'<b>van részletes Voksmérő-oldal</b>':'jelenleg nincs a naptárunkban közeli választás'))+'</span>');}
+  if(wrong>=5||DONE)h.push('<i>Kezdőbetű</i><b>'+esc(T.name[0])+'</b>');
   $("hints").innerHTML=h.map(x=>'<div class="hint">'+x+'</div>').join("");}
 function rows(nw){let h="";for(let i=0;i<6;i++){const g=G[i];if(!g){h+='<div class="gr e"><div class="n">&nbsp;</div><div class="d"></div><div class="a"></div><div class="p"></div></div>';continue;}
   const c=BY[g],d=dist(c.c,T.c),ok=g===T.code,p=ok?100:prox(d);
-  h+='<div class="gr'+(ok?' ok':'')+(nw&&i===G.length-1?' new':'')+'"><div class="n"><img src="'+FL(g)+'" alt="">'+esc(c.name)+'</div><div class="d">'+(ok?'🎉':nf(d)+' km')+'</div><div class="a">'+(ok?'✅':arrow(bear(c.c,T.c)))+'</div><div class="p">'+p+'%</div></div>';}
+  h+='<div class="gr'+(ok?' ok':'')+(nw&&i===G.length-1?' new':'')+'"><div class="n"><img src="'+FL(g)+'" alt="">'+esc(c.name)+'</div><div class="d">'+(ok?'0 km':nf(d)+' km')+'</div><div class="a">'+(ok?OKI:arw(bear(c.c,T.c)))+'</div><div class="p">'+p+'%</div></div>';}
   $("gl").innerHTML=h;}
 function stats(){const P=Object.entries(ST.p).filter(([k,v])=>v.d).sort((a,b)=>a[0]-b[0]);const won=P.filter(([k,v])=>v.w);
   let cur=0,best=0,run=0,prev=null;P.forEach(([k,v])=>{if(v.w&&(prev===null||+k===prev+1))run=(prev!==null&&+k===prev+1&&run>0)?run+1:1;else if(v.w)run=1;else run=0;best=Math.max(best,run);prev=+k;});
