@@ -242,41 +242,99 @@ html.mob .apqr,.apqr[hidden]{display:none}
 </header>
 
 <main>
-<section class="hero">
-  <div class="wrap">
-    <div>
-      <span class="kicker">Választási adatok · magyarul</span>
-      <h1>A világ <em>választásai</em> egy helyen</h1>
-      <p class="lead">Térképek, élő eredmények és háttéranyagok országonként. Keresd meg az országot, amelyik érdekel – az oldalak folyamatosan bővülnek.</p>
-      <form class="qs" id="qs" role="search" autocomplete="off">
+<style>
+/* ---------- hírportál-főoldal ---------- */
+.mast{border-bottom:1px solid var(--line);background:linear-gradient(180deg,color-mix(in srgb,var(--acc2) 5%,transparent),transparent)}
+.mast .wrap{display:flex;align-items:center;justify-content:space-between;gap:14px 24px;flex-wrap:wrap;padding-block:14px}
+.mast .dt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.mast .dt b{font:800 15px var(--f-body)}.mast .dt span{font-size:13px;color:var(--ink2)}
+.mast .qs{margin:0;flex:1;max-width:460px;min-width:240px}.mast .qs .box{border-radius:12px;padding:3px 4px 3px 14px;box-shadow:none}.mast .qs input{font-size:15px;padding:8px 0}
+.np{padding-top:22px}
+.np .sh2{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:3px solid var(--ink);padding-top:8px;margin:0 0 12px}
+.np .sh2 h2{margin:0;font:900 22px/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em}.np .sh2 a{font:700 13px var(--f-body);color:var(--acc2);text-decoration:none}
+.lg{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:22px;align-items:stretch}
+@media(max-width:980px){.lg{grid-template-columns:minmax(0,1fr)}}
+.lead{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;border-radius:20px;padding:24px 24px 20px;color:#fff;text-decoration:none;background:linear-gradient(125deg,#3B080D 0%,#8E1219 48%,#C08200 100%)}
+.lead::before{content:"";position:absolute;right:-20px;bottom:-30px;width:min(58%,460px);aspect-ratio:480/250;background:url(assets/hatter/parlament.svg) no-repeat center/contain;opacity:.16;z-index:-1}
+.lead .kk{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font:700 11.5px var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.lead .kk img{width:30px;height:20px;border-radius:3px;object-fit:cover}.lead .kk .lv{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.28);padding:4px 9px;border-radius:999px;letter-spacing:.08em}
+.lead h2{margin:12px 0 8px;font:900 clamp(30px,3.6vw,46px)/.95 var(--f-display);text-transform:uppercase;letter-spacing:.01em;text-wrap:balance;max-width:22ch}
+.lead .dek{margin:0;max-width:58ch;font-size:16px;line-height:1.5;opacity:.9}
+.lead .pb{display:grid;gap:7px;margin-top:18px;max-width:560px}
+.lead .pr{display:grid;grid-template-columns:118px minmax(0,1fr) 54px 64px;gap:10px;align-items:center;font:600 14px var(--f-body)}
+.lead .pr .br{height:12px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden}.lead .pr .br i{display:block;height:100%;border-radius:6px}
+.lead .pr b{font:800 16px var(--f-display);text-align:right;font-variant-numeric:tabular-nums}.lead .pr small{font-size:12px;opacity:.75;text-align:right;font-variant-numeric:tabular-nums}
+.lead .src{font-size:12px;opacity:.7;margin-top:8px}
+.lead .ft{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:auto;padding-top:18px;align-items:center}
+.lead .ft .cd{display:flex;gap:6px}.lead .ft .cd span{background:rgba(0,0,0,.28);border-radius:10px;padding:6px 10px;text-align:center;min-width:54px}.lead .ft .cd b{display:block;font:900 22px/1 var(--f-display);font-variant-numeric:tabular-nums}.lead .ft .cd small{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;opacity:.8}
+.lead .ft .go{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}.lead .ft .go a{color:#fff;text-decoration:none;font:700 13.5px var(--f-body);padding:8px 13px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.18)}.lead .ft .go a:hover{background:rgba(255,255,255,.24)}
+@media(max-width:560px){.lead{padding:18px}.lead .pr{grid-template-columns:92px minmax(0,1fr) 46px;}.lead .pr small{display:none}.lead .ft .go{margin-left:0}}
+.rail{display:grid;gap:18px;min-width:0}
+.nl{list-style:none;margin:0;padding:0}.nl li{border-top:1px solid var(--line)}.nl li:first-child{border-top:0}
+.nl a{display:grid;grid-template-columns:66px minmax(0,1fr);gap:10px;padding:10px 0;text-decoration:none;color:inherit}.nl a:hover b{color:var(--acc2)}
+.nl time{font:700 12px var(--f-mono,monospace);color:var(--ink3);padding-top:2px}.nl b{display:block;font:700 15px/1.3 var(--f-body);transition:color .15s}.nl small{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:12px;color:var(--ink2)}
+.nl small img{width:16px;height:11px;border-radius:2px;object-fit:cover}.nl .tg{font:700 10px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}.nl .tg.h{color:#2FA36B}
+.up{list-style:none;margin:0;padding:0}.up li{border-top:1px solid var(--line)}.up li:first-child{border-top:0}
+.up a{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;text-decoration:none;color:inherit}
+.up img{width:30px;height:20px;border-radius:3px;object-fit:cover}.up b{display:block;font:700 14.5px var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.up small{display:block;font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.up em{font:900 20px/1 var(--f-display);font-style:normal;color:var(--acc);text-align:right;font-variant-numeric:tabular-nums}.up em small{display:block;font:600 10.5px var(--f-body);color:var(--ink3)}
+.st3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:26px}@media(max-width:980px){.st3{grid-template-columns:minmax(0,1fr)}}
+.st3 .fc{min-height:260px}.st3 .fc h3{font-size:clamp(22px,2.1vw,28px);max-width:16ch}.st3 .fc .mini{width:58%}
+.fc.cv{background:linear-gradient(135deg,#071F57 0%,#0B3A8C 55%,#7A1020 100%)}
+.fc.cv::after{content:"";position:absolute;left:0;right:0;bottom:34%;height:22px;z-index:-1;opacity:.22;background:linear-gradient(#fff 0 33%,#CF2027 33% 66%,#fff 66%)}
+.fc .res{margin-top:12px;display:grid;gap:7px;max-width:330px}.fc .res div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;font:600 14px var(--f-body)}.fc .res b{font:800 17px var(--f-display);font-variant-numeric:tabular-nums}.fc .res i{grid-column:1/-1;height:7px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden}.fc .res i u{display:block;height:100%;background:#fff;border-radius:4px}
+.np .tools{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 22px}@media(max-width:900px){.np .tools{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:520px){.np .tools{grid-template-columns:minmax(0,1fr)}}
+.np .tools a{display:block;padding:12px 0;border-top:1px solid var(--line);text-decoration:none;color:inherit}.np .tools a:hover b{color:var(--acc2)}
+.np .tools small{font:700 10.5px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}.np .tools b{display:block;font:800 18px/1.15 var(--f-display);text-transform:uppercase;margin:3px 0;transition:color .15s}.np .tools span{font-size:13.5px;color:var(--ink2);line-height:1.4}
+</style>
+<section class="mast" aria-label="Dátum és keresés"><div class="wrap"><div class="dt"><b id="npdate">Ma</b><span>Választások a világban – eredmények, kutatások, térképek</span></div>
+<form class="qs" id="qs" role="search" autocomplete="off">
         <div class="box"><svg class="lup" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
           <input id="q" type="search" placeholder="Ország keresése, pl. Németország" aria-label="Ország keresése" role="combobox" aria-expanded="false" aria-controls="sug" aria-autocomplete="list">
           <button class="btn go" type="submit">Keresés</button></div>
         <div class="sug" id="sug" role="listbox" hidden></div>
       </form>
-    </div>
-    <div class="globe" id="globe">
-      <svg viewBox="0 0 500 500">
-        <defs><radialGradient id="gfill" cx="38%" cy="32%" r="75%"><stop offset="0" stop-color="var(--card2)"/><stop offset="1" stop-color="var(--bg)"/></radialGradient></defs>
-        <circle class="halo" cx="250" cy="250" r="212"/>
-        <circle class="sph" cx="250" cy="250" r="210"/>
-        <g id="glines"></g>
-        <a href="egyesult-allamok" class="mk us" transform="translate(152 210)"><circle class="p" r="4.5"/><circle class="d" r="4.5"/><text x="11" y="-6">Egyesült Államok<tspan class="s" x="11" dy="15">választási eredmények</tspan></text></a>
-        <a href="magyarorszag" class="mk hu" transform="translate(338 168)"><circle class="p" r="4.5" style="animation-delay:1.2s"/><circle class="d" r="4.5"/><text x="11" y="-22">Magyarország<tspan class="s" x="11" dy="15">kutatások · térkép · szimulátor</tspan></text></a>
-      </svg>
-      <div class="gtip" id="gtip"></div><div class="ghint">Forgasd meg, és kattints egy országra<br><span class="gk us" style="margin-left:0"></span>USA <span class="gk hu"></span>Magyarország <span class="gk rd"></span>további országok</div>
-    </div>
-  </div>
-</section>
-<section class="sec" id="valasztasok" aria-labelledby="h-v" style="padding-bottom:8px"><div class="wrap">
-<style>.vk{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}.vk a{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;transition:transform .2s,border-color .2s;min-width:0}.vk a:hover{transform:translateY(-2px);border-color:var(--acc)}.vk .t{display:flex;align-items:center;gap:10px}.vk img{width:40px;height:28px;border-radius:5px;object-fit:cover;box-shadow:var(--shadow)}.vk b{font:800 18px/1.15 var(--f-display);text-transform:uppercase}.vk .t>div{display:flex;flex-direction:column;min-width:0}.vk small{color:var(--ink2);font-size:13px}.vk .st{align-self:flex-start;font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor}.vk .s1{color:#e5484d}.vk .s2{color:var(--acc)}.vk .s3{color:var(--ink3)}</style>
-<div class="sh" style="margin-bottom:0"><div><span class="kicker">Most</span><h2 id="h-v">Választások</h2></div></div>
-<div class="vk">
-<a href="zold-foki-szigetek-valasztas"><div class="t"><img src="https://flagcdn.com/w80/cv.png" alt=""><div><b>Zöld-foki-szigetek</b><small>Elnökválasztás · november 15.</small></div></div><span class="st s1">Élő eredmények</span><small>Részvétel, feldolgozottság, térkép mind a 22 községgel.</small></a>
-<a href="spanyol-valasztas"><div class="t"><img src="https://flagcdn.com/w80/es.png" alt=""><div><b>Spanyolország</b><small>Általános választás · november 29.</small></div></div><span class="st s2">Hamarosan</span><small>Kutatások, mandátumbecslés, térkép mind a 8131 településsel.</small></a>
-<a href="eredmenyek"><div class="t"><img src="https://flagcdn.com/w80/us.png" alt=""><div><b>Egyesült Államok</b><small>Félidős választás · november 3.</small></div></div><span class="st s3">Lezajlott</span><small>Szenátus, Képviselőház, kormányzók – államonként és megyénként.</small></a>
-</div></div></section>
-<section class="sec" id="jatekok" aria-labelledby="h-j" style="padding-top:8px;padding-bottom:8px"><div class="wrap">
+</div></section>
+<section class="np" aria-labelledby="h-lead"><div class="wrap">
+<div class="lg">
+<div class="lead" id="lead">
+  <div class="kk"><img src="https://flagcdn.com/w80/es.png" alt=""><span>Spanyolország · előrehozott választás</span><span class="lv" id="ldst">November 29.</span></div>
+  <h2 id="h-lead"><a href="spanyol-valasztas" style="color:inherit;text-decoration:none">Sánchez vagy Feijóo? <span id="ldd">Hamarosan</span> választ Spanyolország</a></h2>
+  <p class="dek">A Néppárt vezet, de a többséghez szükséges 176 mandátumhoz a Vox nélkül nem elég. Így áll a verseny a közvélemény-kutatások átlaga szerint.</p>
+  <div class="pb" id="ldpb"></div><div class="src" id="ldsrc"></div>
+  <div class="ft"><div class="cd" id="ldcd"></div><div class="go"><a href="spanyol-szimulator">Szimulátor</a><a href="spanyol-tippjatek">Tippjáték</a><a href="spanyol-valasztas">Kutatások, térkép, eredmények →</a></div></div>
+</div>
+<aside class="rail">
+  <div><div class="sh2"><h2>Legfrissebb</h2><a href="eredmenyek">USA 2026 →</a></div><ul class="nl" id="nl"><li><a href="eredmenyek"><time>–</time><span><b>Betöltés…</b></span></a></li></ul></div>
+  <div><div class="sh2"><h2>Következő választások</h2><a href="naptar">Naptár →</a></div><ul class="up" id="up"></ul></div>
+</aside>
+</div>
+<div class="st3">
+<a class="fc cv" href="zold-foki-szigetek-valasztas">
+  <div class="tag"><img src="https://flagcdn.com/w80/cv.png" srcset="https://flagcdn.com/w160/cv.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.16);color:#fff">Elnökválasztás</span></div>
+  <h3>Zöld-foki-szigetek</h3><p id="cvt">Előzetes végeredmény, minden szavazókör feldolgozva.</p>
+  <div class="res" id="cvres"><div><span>José Maria Neves</span><b>63,37%</b><i><u style="width:63.37%"></u></i></div><div><span>Joana Rosa</span><b>32,09%</b><i><u style="width:32.09%"></u></i></div></div>
+  <div class="cta"><span>Térkép és községek</span><i>→</i></div></a>
+<a class="fc us" href="eredmenyek">
+        <div class="tag"><img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" alt=""><span class="pill live"><i></i>Élő</span></div>
+        <h3>Amerikai félidős választás 2026</h3>
+        <p>Szenátus, Képviselőház és kormányzók – államonként, megyénként és körzetenként.</p>
+        <div class="nums" id="usnums"><div><small>Szenátus</small><b>–</b></div><div><small>Képviselőház</small><b>–</b></div></div>
+        <div class="upd" id="usupd"></div>
+        <div class="cta"><span>Eredmények megnyitása</span><i>→</i></div>
+      </a>
+<a class="fc hu" href="magyarorszag">
+        <span class="band"></span>
+        <div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""><span class="pill ok" style="background:rgba(67,207,140,.18);color:#7BE3B0">Új</span></div>
+        <h3>Magyarország</h3>
+        <p>Friss közvélemény-kutatások, a 106 egyéni körzet és mind a 3177 település 2026-os eredménye térképen.</p>
+        <div class="nums"><div><small>Egyéni körzet</small><b>106</b></div><div><small>Település</small><b>3177</b></div></div>
+        <svg class="mini" id="humini" viewBox="0 0 1000 618"></svg>
+        <div class="cta"><span>Kutatások és térkép</span><i>→</i></div>
+      </a>
+</div>
+</div></section>
+<section class="np" id="jatekok" aria-labelledby="h-j"><div class="wrap">
 <style>
 .feat.g3{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .fc .bgi{position:absolute;z-index:-1;pointer-events:none;background-repeat:no-repeat}
@@ -307,7 +365,7 @@ html.mob .apqr,.apqr[hidden]{display:none}
 @media(max-width:980px){.feat.g3{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.feat.g3{grid-template-columns:minmax(0,1fr)}.g3 .fc{min-height:0}}
 </style>
-<div class="sh"><div><span class="kicker">Játssz és fedezd fel</span><h2 id="h-j">Játékok</h2></div></div>
+<div class="sh2" style="margin-top:6px"><h2 id="h-j">Játékok</h2><a href="napi-szo">Napi szó →</a></div>
 <div class="feat g3">
 <a class="fc rj" href="napi-rejtveny"><span class="bgi" aria-hidden="true"></span><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff" id="rjno">Napi rejtvény</span></div>
 <h3>Melyik ország ez?</h3><p>Egy ország körvonala, hat tipp. Napi rejtvény, végtelen mód és 1v1 párbaj.</p><div class="meta" id="rjcd"></div><div class="cta"><span>Mai rejtvény</span><i>→</i></div></a>
@@ -328,51 +386,24 @@ var c=document.getElementById("rjcd");function tk(){var b=new Date(new Date().to
 </div></section>
 
 
-<section class="sec reveal" aria-labelledby="h-feat">
+<section class="np" aria-labelledby="h-tools"><div class="wrap">
+<div class="sh2"><h2 id="h-tools">Eszközök és háttér</h2></div>
+<div class="tools">
+<a href="szimulator"><small>Szimulátor</small><b>Magyar választási szimulátor</b><span>Saját eredményekkel, szavazókörről szavazókörre, pontos mandátumszámítással.</span></a>
+<a href="spanyol-szimulator"><small>Szimulátor</small><b>Spanyol szimulátor</b><span>Tartományonkénti D'Hondt-számítás és koalíciókalkulátor.</span></a>
+<a href="magyar-valasztasok-tortenete"><small>Idővonal</small><b>Magyar választások 1990–2026</b><span>Tíz választás, kormányok, botrányok és érdekességek.</span></a>
+<a href="valasztasi-rendszer"><small>Magyarázat</small><b>A választási rendszer</b><span>Hogyan lesz a szavazatokból mandátum?</span></a>
+</div></div></section>
+<div class="wrap"><div id="favpanel"></div></div>
+<section class="sec reveal" id="orszagok" aria-labelledby="h-c">
   <div class="wrap">
-    <div id="favpanel"></div>
-    <div class="sh"><div><span class="kicker">Kiemelt</span><h2 id="h-feat">Elkészült oldalak</h2></div></div>
-    <div class="feat">
-      <a class="fc es" href="spanyol-valasztas"><span class="bgi" aria-hidden="true"></span>
-        <div class="tag"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">November 29.</span></div>
-        <h3>Spanyol választás 2026</h3>
-        <p>Előrehozott választás Spanyolországban: Sánchez vagy Feijóo? Friss közvélemény-kutatások, esélyek, visszaszámlálás és a 2023-as eredmények.</p>
-        <div class="nums"><div><small>Még</small><b id="esd">–</b></div><div><small>Képviselő</small><b>350</b></div><div><small>Többséghez</small><b>176</b></div></div>
-        <div class="cta"><span>Részvétel, térkép, eredmények</span><i>→</i></div>
-      </a>
-      <a class="fc us" href="eredmenyek">
-        <div class="tag"><img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" alt=""><span class="pill live"><i></i>Élő</span></div>
-        <h3>Amerikai félidős választás 2026</h3>
-        <p>Szenátus, Képviselőház és kormányzók – államonként, megyénként és körzetenként.</p>
-        <div class="nums" id="usnums"><div><small>Szenátus</small><b>–</b></div><div><small>Képviselőház</small><b>–</b></div></div>
-        <div class="upd" id="usupd"></div>
-        <div class="cta"><span>Eredmények megnyitása</span><i>→</i></div>
-      </a>
-      <a class="fc hu" href="magyarorszag">
-        <span class="band"></span>
-        <div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""><span class="pill ok" style="background:rgba(67,207,140,.18);color:#7BE3B0">Új</span></div>
-        <h3>Magyarország</h3>
-        <p>Friss közvélemény-kutatások, a 106 egyéni körzet és mind a 3177 település 2026-os eredménye térképen.</p>
-        <div class="nums"><div><small>Egyéni körzet</small><b>106</b></div><div><small>Település</small><b>3177</b></div></div>
-        <svg class="mini" id="humini" viewBox="0 0 1000 618"></svg>
-        <div class="cta"><span>Kutatások és térkép</span><i>→</i></div>
-      </a>
-      <a class="fc sim" href="szimulator">
-        <div class="tag"><span class="pill" style="background:rgba(255,255,255,.16);color:#fff">Új</span><span class="pill" style="background:rgba(0,0,0,.25);color:#fff">Magyarország</span></div>
-        <h3>Választási szimulátor</h3>
-        <p>Add meg a pártok eredményét – akár saját, kitalált pártokkal –, és nézd végig a választási éjszakát szavazókörről szavazókörre, pontos mandátumszámítással.</p>
-        <div class="nums"><div><small>Mandátum</small><b>199</b></div><div><small>Szavazókör</small><b>11 542</b></div><div><small>Település</small><b>3177</b></div></div>
-        <svg class="hemi" id="simhemi" viewBox="0 0 400 214" aria-hidden="true"></svg>
-        <div class="cta"><span>Szimulátor indítása</span><i>→</i></div>
-      </a>
-      <a class="fc cal" href="naptar">
-        <div class="tag"><span class="pill" style="background:rgba(255,255,255,.16);color:#fff">Új</span></div>
-        <h3>Választási naptár</h3>
-        <p>Mikor hol választanak? Közelgő választások a világban, visszaszámlálással.</p>
-        <div class="calx" id="calx"></div>
-        <div class="cta"><span>Naptár megnyitása</span><i>→</i></div>
-      </a>
+    <div class="sh"><div><span class="kicker">Böngéssz</span><h2 id="h-c">Országok</h2><p>Kattints egy országra. Ahol még nincs kész az oldal, ott ezt jelezzük.</p></div></div>
+    <div class="ctl">
+      <label class="fbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Szűrés név szerint</span><input id="f" type="search" placeholder="Szűrés név szerint" autocomplete="off"></label>
+      <div class="chips" id="chips" role="group" aria-label="Földrész szerinti szűrés"></div>
     </div>
+    <p class="cnt" id="cnt"></p>
+    <div id="clist"></div>
   </div>
 </section>
 
@@ -415,29 +446,6 @@ var c=document.getElementById("rjcd");function tk(){var b=new Date(new Date().to
   </div>
 </section>
 
-<section class="sec reveal" id="orszagok" aria-labelledby="h-c" style="padding-top:0">
-  <div class="wrap">
-    <div class="sh"><div><span class="kicker">Böngéssz</span><h2 id="h-c">Országok</h2><p>Kattints egy országra. Ahol még nincs kész az oldal, ott ezt jelezzük.</p></div></div>
-    <div class="ctl">
-      <label class="fbox"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg><span class="sr">Szűrés név szerint</span><input id="f" type="search" placeholder="Szűrés név szerint" autocomplete="off"></label>
-      <div class="chips" id="chips" role="group" aria-label="Földrész szerinti szűrés"></div>
-    </div>
-    <p class="cnt" id="cnt"></p>
-    <div id="clist"></div>
-  </div>
-</section>
-
-<section class="sec reveal" aria-labelledby="h-how" style="padding-top:0">
-  <div class="wrap">
-    <div class="sh"><div><span class="kicker">Rólunk</span><h2 id="h-how">Mit találsz itt?</h2></div></div>
-    <div class="how">
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 4 3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/></svg></div><h3>Interaktív térképek</h3><p>Nagyítható, mozgatható térképek választókerületekkel, megyékkel és államokkal – gépen és telefonon is.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div><h3>Élő eredmények</h3><p>Választás éjszakáján percre frissülő számok, feldolgozottság és hírek megbízható forrásokból.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20V3H6.5A2.5 2.5 0 0 0 4 5.5z"/><path d="M4 19.5A2.5 2.5 0 0 0 6.5 22H20v-5"/></svg></div><h3>Magyarul</h3><p>Minden adat és magyarázat magyar nyelven, az országok választási rendszerének rövid bemutatásával.</p></div>
-      <div class="card"><div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20a8 8 0 0 1 16 0"/><path d="M12 12V6M12 12l4-3"/><circle cx="12" cy="20" r="1.2"/></svg></div><h3>Szimulátor</h3><p>Játszd le a saját választási éjszakádat: egyedi pártok, valósághű számlálás és hivatalos mandátumkiosztás.</p></div>
-    </div>
-  </div>
-</section>
 </main>
 
 <footer class="foot">
@@ -558,6 +566,37 @@ render();
   rad.forEach((r,i)=>{for(let k=0;k<cnt[i];k++){const a=Math.PI-(Math.PI*(k+.5)/cnt[i]);S.push([cx+r*Math.cos(a),cy-r*Math.sin(a),a]);}});S.sort((p,q)=>q[2]-p[2]);
   const C=[];[["#6FA5FF",141],["#FFA53D",52],["#8FCB4B",6]].forEach(x=>{for(let i=0;i<x[1];i++)C.push(x[0]);});
   el.innerHTML=S.map((s,i)=>'<circle cx="'+s[0].toFixed(1)+'" cy="'+s[1].toFixed(1)+'" r="5.2" fill="'+C[i]+'"/>').join("");})();
+})();
+</script>
+<script>
+/* ---------- hírportál-főoldal: dátum, főcikk (spanyol kutatások), legfrissebb hírek, következő választások, Zöld-foki-szigetek ---------- */
+(function(){"use strict";const $=id=>document.getElementById(id),V=window.VALASZTAS,esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  const tz={timeZone:"Europe/Budapest"};try{$("npdate").textContent=new Date().toLocaleDateString("hu-HU",Object.assign({year:"numeric",month:"long",day:"numeric",weekday:"long"},tz));}catch(e){}
+  /* főcikk */
+  const E=new Date("2026-11-29T20:00:00+01:00");
+  function cd(){const t=E-new Date(),el=$("ldcd");if(!el)return;if(t<=0){el.innerHTML="";$("ldd").textContent="ma";$("ldst").textContent="Választás napja";return;}
+    const d=Math.floor(t/864e5),h=Math.floor(t%864e5/36e5),m=Math.floor(t%36e5/6e4);$("ldd").textContent=d>1?d+" nap múlva":d===1?"holnap":"ma";
+    el.innerHTML='<span><b>'+d+'</b><small>nap</small></span><span><b>'+h+'</b><small>óra</small></span><span><b>'+String(m).padStart(2,"0")+'</b><small>perc</small></span>';}
+  cd();setInterval(cd,30000);
+  const PC={PP:"#1D84CE",PSOE:"#E30613",Vox:"#63BE21","Frente Amplio":"#E51C55",Podemos:"#6B2E68",SALF:"#8E9AAF"};
+  fetch("assets/data/kutatas/es.json").then(r=>r.json()).then(k=>{const P=(k.polls||[]).filter(p=>p.v);if(!P.length)return;const last=new Date(P[0].d+"T12:00:00");
+    const use=[],seen={};P.forEach(p=>{if(last-new Date(p.d+"T12:00:00")>14*864e5||seen[p.f])return;seen[p.f]=1;use.push(p);});
+    const avg=(key,fld)=>{const xs=use.map(p=>p[fld]&&p[fld][key]).filter(x=>x!=null);return xs.length?xs.reduce((a,b)=>a+b,0)/xs.length:null;};
+    const R=Object.keys(PC).map(n=>({n,v:avg(n,"v"),m:avg(n,"m")})).filter(x=>x.v!=null).sort((a,b)=>b.v-a.v).slice(0,5);const mx=Math.max(...R.map(x=>x.v));
+    $("ldpb").innerHTML=R.map(x=>'<div class="pr"><span>'+esc(x.n)+'</span><span class="br"><i style="width:'+(x.v/mx*100).toFixed(1)+'%;background:'+PC[x.n]+'"></i></span><b>'+x.v.toFixed(1).replace(".",",")+'%</b><small>'+(x.m!=null?"~"+Math.round(x.m)+" hely":"")+'</small></div>').join("");
+    $("ldsrc").textContent=use.length+" közvélemény-kutatás átlaga · utolsó mérés: "+last.toLocaleDateString("hu-HU",{month:"long",day:"numeric"})+" · a helyek becsült mandátumszámok";}).catch(()=>{});
+  /* legfrissebb hírek (amerikai választás) */
+  const rel=t=>{const s=(Date.now()-t)/1000;if(s<3600)return Math.max(1,Math.round(s/60))+" perce";if(s<86400)return Math.round(s/3600)+" órája";return new Date(t).toLocaleDateString("hu-HU",{month:"short",day:"numeric"}).replace(/\s/g,"");};
+  fetch("data.json?_="+Math.floor(Date.now()/6e4),{cache:"no-store"}).then(r=>r.json()).then(d=>{const F=Object.values(d.feed||{}).filter(x=>x.tag!=="Frissítés"&&x.title).sort((a,b)=>a.t<b.t?1:-1).slice(0,4);
+    if(!F.length)return;$("nl").innerHTML=F.map(x=>{const t=Date.parse(x.t);return '<li><a href="eredmenyek"><time datetime="'+esc(x.t)+'">'+rel(t)+'</time><span><b>'+esc(x.title)+'</b><small><img src="https://flagcdn.com/w40/us.png" alt=""><span class="tg'+(x.tag==="Hívás"?" h":"")+'">'+esc(x.tag==="Hívás"?"Eldőlt":x.tag)+'</span>· '+esc(x.src||"")+'</small></span></a></li>';}).join("");}).catch(()=>{$("nl").innerHTML="";});
+  /* következő választások */
+  const MS=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."],n=new Date(),T=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  fetch("assets/data/naptar.json?v=1").then(r=>r.json()).then(j=>{const L=j.v.filter(e=>{const [y,m,d]=e.d.split("-").map(Number);e._d=new Date(y,m-1,d);return e._d>=T&&!e.h;}).slice(0,4);
+    $("up").innerHTML=L.map(e=>{const k=Math.round((e._d-T)/864e5),href=V&&V.READY&&V.READY[e.k]?V.READY[e.k].href:"naptar";return '<li><a href="'+href+'"><img src="'+(V?V.flag(e.k,80):"")+'" alt=""><span><b>'+esc(V?V.name(e.k):e.k)+'</b><small>'+MS[e._d.getMonth()]+' '+e._d.getDate()+'. · '+esc(String(e.t||"választás").replace(/\s*\(.*\)\s*$/,""))+'</small></span><em>'+(k===0?"ma":k)+(k?'<small>nap</small>':'')+'</em></a></li>';}).join("");}).catch(()=>{});
+  /* Zöld-foki-szigetek: friss számok, ha elérhetők */
+  fetch("https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{const c=d&&d.nat&&d.nat.c;if(!c)return;const tot=c.reduce((a,x)=>a+x[1],0);
+    $("cvres").innerHTML=c.slice(0,2).map(x=>{const p=x[1]/tot*100;return '<div><span>'+esc(x[0])+'</span><b>'+p.toFixed(2).replace(".",",")+'%</b><i><u style="width:'+p.toFixed(2)+'%"></u></i></div>';}).join("");
+    $("cvt").textContent=(d.allapot||"Eredmény")+(d.feld!=null?", "+d.feld+"% feldolgozva":"")+(d.reszv!=null?" · részvétel "+String(d.reszv).replace(".",",")+"%":"")+".";}).catch(()=>{});
 })();
 </script>
 <script src="assets/kedvencek.js?v=3"></script>
