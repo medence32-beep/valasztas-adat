@@ -2875,7 +2875,7 @@ const D=c.party==="D";el.classList.add("on");el.classList.toggle("r",!D);
 document.getElementById("cb"+(sfx?"2":"")+"-t").textContent=ttl(D);
 document.getElementById("cb"+(sfx?"2":"")+"-s").textContent=txt(c,D);
 document.getElementById("cb"+(sfx?"2":"")+"-n").innerHTML="<i>"+c.d+"</i> – <u>"+c.r+"</u>";};
-one(C.senate,"",D=>D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust",(c,D)=>{const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;return "Az AP számolása szerint "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");});
+one(C.senate,"",D=>D?"A demokraták megnyerték a Szenátust":"A republikánusok megtartották a Szenátust",(c,D)=>{const w=D?c.d:c.r,l=D?c.r:c.d,left=100-c.d-c.r;return "Az eldőlt versenyek alapján "+w+" helyük van (51 kell a többséghez), az ellenfélnek "+l+"."+(left>0?" Még "+left+" hely eldöntetlen.":"")+(c.t?" Frissítve: "+c.t+".":"");});
 one(C.house,"2",D=>D?"A demokraták megnyerték a Képviselőházat":"A republikánusok megtartották a Képviselőházat",(c,D)=>"Az "+(c.src||"NBC News")+" szerint "+(D?"a demokraták":"a republikánusok")+" megszerezték a többséget. Az AP számolása szerint eddig "+c.d+" demokrata és "+c.r+" republikánus körzet dőlt el (218 kell); az AP hivatalosan még nem hívta ki."+(c.t?" Frissítve: "+c.t+".":""));}
 function renderVotes(){
   const el=document.getElementById("votes");if(!el)return;
