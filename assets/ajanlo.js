@@ -14,16 +14,16 @@ var L=[
 ].filter(function(x){return x[0]!==pg;});
 var day=Math.floor(Date.now()/864e5),k0=day%L.length;var pick=L.slice(k0).concat(L.slice(0,k0)).slice(0,4);
 var css=".fdz{max-width:1240px;margin:34px auto 0;padding:0 max(18px,env(safe-area-inset-right,0px)) 10px max(18px,env(safe-area-inset-left,0px))}"+
-".fdz h2{font:900 clamp(24px,3.4vw,34px)/1 var(--f-display);text-transform:uppercase;margin:0 0 14px}"+
-".fdz .g{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px}"+
-".fdz a{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:16px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:var(--ink);transition:transform .2s,border-color .2s;min-width:0}"+
-".fdz a:hover{transform:translateY(-2px);border-color:var(--acc)}.fdz a i{font-style:normal;font-size:26px;line-height:1}.fdz a b{display:block;font:800 16px/1.2 var(--f-display)}.fdz a small{display:block;color:var(--ink2);font-size:13px;line-height:1.4;margin-top:3px}"+
+".fdz h2{font:900 clamp(28px,3.6vw,40px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 16px}"+
+".fdz .g{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;border-top:1px solid var(--line2)}@media(max-width:760px){.fdz .g{grid-template-columns:1fr}}"+
+".fdz .g a{display:grid;grid-template-columns:40px minmax(0,1fr);gap:2px 12px;align-items:baseline;padding:14px 2px;border-bottom:1px solid var(--line2);text-decoration:none;color:var(--ink);transition:padding .2s,background .2s}"+
+".fdz .g a:hover{padding-left:8px;background:color-mix(in srgb,var(--acc) 6%,transparent)}.fdz .g a i{font:700 12px var(--f-mono,monospace);font-style:normal;color:var(--ink3);grid-row:span 2}.fdz .g a b{display:block;font:800 18px/1.15 var(--f-display);text-transform:uppercase}.fdz .g a small{display:block;color:var(--ink2);font-size:13.5px;line-height:1.4}"+
 ".fdz .nx{display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;margin-top:12px;padding:12px 16px;border-radius:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 14%,var(--card)),var(--card));border:1px solid var(--line)}"+
 ".fdz .nx img{width:34px;height:23px;border-radius:4px;object-fit:cover}.fdz .nx b{font:800 16px var(--f-display)}.fdz .nx .d{margin-left:auto;font:900 26px var(--f-display);color:var(--acc);font-variant-numeric:tabular-nums}.fdz .nx .d small{font:700 12px var(--f-body);color:var(--ink2);margin-left:4px}";
 var st=document.createElement("style");st.textContent=css;document.head.appendChild(st);
 var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
 var s=document.createElement("section");s.className="fdz";s.id="fedezd";
-s.innerHTML='<h2>Fedezd fel</h2><div class="g">'+pick.map(function(x){return '<a href="'+x[0]+'"><i>'+x[1]+'</i><span><b>'+esc(x[2])+'</b><small>'+esc(x[3])+'</small></span></a>';}).join("")+'</div><div class="nx" id="fdzn" hidden></div>';
+s.innerHTML='<span class="kicker">Játssz és fedezd fel</span><h2>Ezt is nézd meg</h2><div class="g">'+pick.map(function(x,i){return '<a href="'+x[0]+'"><i>0'+(i+1)+'</i><b>'+esc(x[2])+'</b><small>'+esc(x[3])+'</small></a>';}).join("")+'</div><div class="nx" id="fdzn" hidden></div>';
 var f=document.querySelector("footer");if(f)f.parentNode.insertBefore(s,f);else document.body.appendChild(s);
 fetch("assets/data/naptar.json").then(function(r){return r.json();}).then(function(d){
   var td=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});var n=(d.v||[]).filter(function(x){return x.d>=td;}).sort(function(a,b){return a.d<b.d?-1:1;})[0];if(!n)return;

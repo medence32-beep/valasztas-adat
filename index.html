@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=1";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=2";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
@@ -270,22 +270,44 @@ html.mob .apqr,.apqr[hidden]{display:none}
 </section>
 <section class="sec" id="valasztasok" aria-labelledby="h-v" style="padding-bottom:8px"><div class="wrap">
 <style>.vk{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}.vk a{display:flex;flex-direction:column;gap:10px;padding:16px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;transition:transform .2s,border-color .2s;min-width:0}.vk a:hover{transform:translateY(-2px);border-color:var(--acc)}.vk .t{display:flex;align-items:center;gap:10px}.vk img{width:40px;height:28px;border-radius:5px;object-fit:cover;box-shadow:var(--shadow)}.vk b{font:800 18px/1.15 var(--f-display);text-transform:uppercase}.vk .t>div{display:flex;flex-direction:column;min-width:0}.vk small{color:var(--ink2);font-size:13px}.vk .st{align-self:flex-start;font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid currentColor}.vk .s1{color:#e5484d}.vk .s2{color:var(--acc)}.vk .s3{color:var(--ink3)}</style>
-<h2 id="h-v">Választások</h2>
+<div class="sh" style="margin-bottom:0"><div><span class="kicker">Most</span><h2 id="h-v">Választások</h2></div></div>
 <div class="vk">
 <a href="zold-foki-szigetek-valasztas"><div class="t"><img src="https://flagcdn.com/w80/cv.png" alt=""><div><b>Zöld-foki-szigetek</b><small>Elnökválasztás · november 15.</small></div></div><span class="st s1">Élő eredmények</span><small>Részvétel, feldolgozottság, térkép mind a 22 községgel.</small></a>
 <a href="spanyol-valasztas"><div class="t"><img src="https://flagcdn.com/w80/es.png" alt=""><div><b>Spanyolország</b><small>Általános választás · november 29.</small></div></div><span class="st s2">Hamarosan</span><small>Kutatások, mandátumbecslés, térkép mind a 8131 településsel.</small></a>
 <a href="eredmenyek"><div class="t"><img src="https://flagcdn.com/w80/us.png" alt=""><div><b>Egyesült Államok</b><small>Félidős választás · november 3.</small></div></div><span class="st s3">Lezajlott</span><small>Szenátus, Képviselőház, kormányzók – államonként és megyénként.</small></a>
 </div></div></section>
 <section class="sec" id="jatekok" aria-labelledby="h-j" style="padding-top:8px;padding-bottom:8px"><div class="wrap">
-<style>.jg{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;margin-top:16px}.jg a{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:6px;padding:18px;border-radius:18px;background:var(--card);border:1px solid var(--line);text-decoration:none;color:inherit;transition:transform .2s,border-color .2s;min-width:0}.jg a:hover{transform:translateY(-3px);border-color:var(--acc)}.jg .e{font-size:34px;line-height:1}.jg b{font:900 20px/1.1 var(--f-display);text-transform:uppercase}.jg small{color:var(--ink2);font-size:13.5px;line-height:1.45}.jg .tag{position:absolute;right:14px;top:14px;font:800 10.5px var(--f-body);letter-spacing:.08em;text-transform:uppercase;padding:3px 8px;border-radius:999px;background:var(--acc);color:#14100a}.jg a.hero{background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 22%,var(--card)),var(--card))}</style>
-<h2 id="h-j">Játékok és felfedezés</h2>
-<div class="jg">
-<a class="hero" href="napi-rejtveny"><span class="tag">Naponta új</span><span class="e">🧩</span><b>Napi országrejtvény</b><small>Melyik ország ez? Hat tippből kell kitalálnod a körvonala alapján – oszd meg az eredményed!</small></a>
-<a href="telepulesem"><span class="e">🏘️</span><b>Hogy szavazott a településed?</b><small>Részvétel, eredmény, országos rangsor és hasonló települések – mind a 3177 településre.</small></a>
-<a href="spanyol-tippjatek"><span class="tag">Nov. 29.</span><span class="e">🎯</span><b>Tippeld meg a spanyol választást</b><small>Add le a tipped – a választás estéjén kiderül, mennyire voltál pontos.</small></a>
-<a href="usa-terkep"><span class="e">🗺️</span><b>Rajzold meg a saját térképed</b><small>Színezd ki az amerikai államokat, és nézd, ki éri el a 270 elektort.</small></a>
-<a href="magyar-valasztasok-tortenete"><span class="e">⏳</span><b>Választások 1990–2026</b><small>Interaktív idővonal: parlament, pártok és részvétel mind a tíz választáson.</small></a>
-</div></div></section>
+<style>
+.jx{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:18px;align-items:stretch}@media(max-width:900px){.jx{grid-template-columns:1fr}}
+.jf{position:relative;display:grid;grid-template-rows:auto 1fr auto;gap:10px;padding:22px;border-radius:22px;background:var(--card);border:1px solid var(--line2);text-decoration:none;color:inherit;overflow:hidden;min-height:330px}
+.jf:hover{border-color:var(--acc)}.jf .no{font:700 12px/1 var(--f-mono,monospace);letter-spacing:.12em;color:var(--ink3);text-transform:uppercase}
+.jf h3{margin:4px 0 0;font:900 clamp(30px,3.6vw,42px)/.95 var(--f-display);text-transform:uppercase;max-width:9ch}
+.jf .ms{position:absolute;right:-24px;top:34px;width:48%;max-width:260px;aspect-ratio:1;opacity:.95}
+.jf .ms circle,.jf .ms path{fill:none;stroke:var(--acc);stroke-width:1.6;vector-effect:non-scaling-stroke;stroke-dasharray:4 5}
+.jf .ms text{font:900 120px var(--f-display);fill:var(--acc);opacity:.18}
+.jf p{position:relative;margin:0;color:var(--ink2);max-width:30ch;font-size:15px;line-height:1.5;align-self:end}.jf .go{font:700 14px var(--f-body);color:var(--acc)}
+.jl{display:grid;border-top:1px solid var(--line2)}
+.jl a{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:4px 14px;align-items:center;padding:16px 4px;border-bottom:1px solid var(--line2);text-decoration:none;color:inherit;transition:background .2s,padding .2s}
+.jl a:hover{background:color-mix(in srgb,var(--acc) 6%,transparent);padding-left:10px}
+.jl .n{font:700 13px var(--f-mono,monospace);color:var(--ink3);grid-row:span 2}
+.jl b{font:800 20px/1.1 var(--f-display);text-transform:uppercase;letter-spacing:.01em}
+.jl small{grid-column:2;color:var(--ink2);font-size:14px;line-height:1.4}
+.jl .k{grid-row:1/span 2;grid-column:3;text-align:right;font:900 26px/1 var(--f-display);color:var(--ink);font-variant-numeric:tabular-nums}.jl .k em{display:block;font:600 11px var(--f-body);font-style:normal;color:var(--ink3);margin-top:3px;letter-spacing:.04em}
+</style>
+<div class="sh"><div><span class="kicker">Játssz és fedezd fel</span><h2 id="h-j">Játékok</h2></div></div>
+<div class="jx">
+<a class="jf" href="napi-rejtveny"><span class="no" id="rjno">Napi rejtvény</span><h3>Melyik ország ez?</h3>
+<svg class="ms" id="rjsil" viewBox="0 0 300 300" aria-hidden="true"><circle cx="150" cy="150" r="118"/><path d="M32 150h236M150 32c-46 40-46 196 0 236M150 32c46 40 46 196 0 236"/><text x="150" y="190" text-anchor="middle">?</text></svg>
+<p>Minden nap egy új ország körvonala. Hat tipped van, minden tipp után megtudod, milyen messze jársz és merre keresd.</p><span class="go">Mai rejtvény →</span></a>
+<div class="jl">
+<a href="telepulesem"><span class="n">01</span><b>Hogy szavazott a településed?</b><small>Részvétel, eredmény és rangsor az országos átlaghoz mérve.</small><span class="k">3177<em>település</em></span></a>
+<a href="spanyol-tippjatek"><span class="n">02</span><b>Tippeld meg a spanyol választást</b><small>A választás estéjén kiderül, mennyire voltál pontos.</small><span class="k" id="jtnap">–<em>nap a zárásig</em></span></a>
+<a href="usa-terkep"><span class="n">03</span><b>Rajzold meg a saját térképed</b><small>Színezd ki az amerikai államokat, és számold az elektorokat.</small><span class="k">270<em>elektor kell</em></span></a>
+<a href="magyar-valasztasok-tortenete"><span class="n">04</span><b>A magyar választások 1990–2026</b><small>Parlament, pártok és részvétel egy idővonalon.</small><span class="k">10<em>választás</em></span></a>
+</div></div>
+<script>(function(){var s=Date.UTC(2026,10,16),d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}),n=Math.floor((Date.parse(d+"T00:00:00Z")-s)/864e5)+1;var e=document.getElementById("rjno");if(e)e.textContent="Napi rejtvény · #"+n;
+var t=Math.max(0,Math.round((Date.parse("2026-11-29T00:00:00Z")-Date.parse(d+"T00:00:00Z"))/864e5)),k=document.getElementById("jtnap");if(k)k.firstChild.nodeValue=t?String(t):"Ma";})();</script>
+</div></section>
 
 
 <section class="sec reveal" aria-labelledby="h-feat">
