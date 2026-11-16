@@ -252,7 +252,7 @@ html.mob .apqr,.apqr[hidden]{display:none}
 .np{padding-top:22px}
 .np .sh2{display:flex;align-items:baseline;justify-content:space-between;gap:10px;border-top:3px solid var(--ink);padding-top:8px;margin:0 0 12px}
 .np .sh2 h2{margin:0;font:900 22px/1 var(--f-display);text-transform:uppercase;letter-spacing:.03em}.np .sh2 a{font:700 13px var(--f-body);color:var(--acc2);text-decoration:none}
-.lg{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:22px;align-items:stretch}
+.lg{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:22px;align-items:start}.lcol{display:grid;gap:18px;min-width:0}
 @media(max-width:980px){.lg{grid-template-columns:minmax(0,1fr)}}
 .lead{position:relative;isolation:isolate;overflow:hidden;display:flex;flex-direction:column;border-radius:20px;padding:24px 24px 20px;color:#fff;text-decoration:none;background:linear-gradient(125deg,#3B080D 0%,#8E1219 48%,#C08200 100%)}
 .lead::before{content:"";position:absolute;right:-20px;bottom:-30px;width:min(58%,460px);aspect-ratio:480/250;background:url(assets/hatter/parlament.svg) no-repeat center/contain;opacity:.16;z-index:-1}
@@ -272,9 +272,9 @@ html.mob .apqr,.apqr[hidden]{display:none}
 .rail{display:grid;gap:18px;min-width:0}
 .nl{list-style:none;margin:0;padding:0}.nl li{border-top:1px solid var(--line)}.nl li:first-child{border-top:0}
 .nl a{display:grid;grid-template-columns:66px minmax(0,1fr);gap:10px;padding:10px 0;text-decoration:none;color:inherit}.nl a:hover b{color:var(--acc2)}
-.nl time{font:700 12px var(--f-mono,monospace);color:var(--ink3);padding-top:2px}.nl b{display:block;font:700 15px/1.3 var(--f-body);transition:color .15s}.nl small{display:flex;align-items:center;gap:6px;margin-top:3px;font-size:12px;color:var(--ink2)}
-.nl small img{width:16px;height:11px;border-radius:2px;object-fit:cover}.nl .tg{font:700 10px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}.nl .tg.h{color:#2FA36B}
-.up{list-style:none;margin:0;padding:0}.up li{border-top:1px solid var(--line)}.up li:first-child{border-top:0}
+.nl time{font:700 12px var(--f-mono,monospace);color:var(--ink3);padding-top:2px}.nl b{display:block;font:700 15px/1.3 var(--f-body);transition:color .15s}.nl small{display:flex;flex-wrap:wrap;align-items:center;gap:2px 6px;margin-top:3px;font-size:12px;color:var(--ink2)}
+.nl small img{width:16px;height:11px;border-radius:2px;object-fit:cover}.nl .tg{font:700 10px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}.nl .tg.h{color:#2FA36B}.nl .tg.k{color:var(--acc2)}
+.up{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 18px}.up li{border-top:1px solid var(--line)}@media(max-width:760px){.up{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:420px){.up{grid-template-columns:minmax(0,1fr)}}
 .up a{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:10px;align-items:center;padding:9px 0;text-decoration:none;color:inherit}
 .up img{width:30px;height:20px;border-radius:3px;object-fit:cover}.up b{display:block;font:700 14.5px var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.up small{display:block;font-size:12px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .up em{font:900 20px/1 var(--f-display);font-style:normal;color:var(--acc);text-align:right;font-variant-numeric:tabular-nums}.up em small{display:block;font:600 10.5px var(--f-body);color:var(--ink3)}
@@ -297,16 +297,17 @@ html.mob .apqr,.apqr[hidden]{display:none}
 </div></section>
 <section class="np" aria-labelledby="h-lead"><div class="wrap">
 <div class="lg">
-<div class="lead" id="lead">
+<div class="lcol"><div class="lead" id="lead">
   <div class="kk"><img src="https://flagcdn.com/w80/es.png" alt=""><span>Spanyolország · előrehozott választás</span><span class="lv" id="ldst">November 29.</span></div>
   <h2 id="h-lead"><a href="spanyol-valasztas" style="color:inherit;text-decoration:none">Sánchez vagy Feijóo? <span id="ldd">Hamarosan</span> választ Spanyolország</a></h2>
   <p class="dek">A Néppárt vezet, de a többséghez szükséges 176 mandátumhoz a Vox nélkül nem elég. Így áll a verseny a közvélemény-kutatások átlaga szerint.</p>
   <div class="pb" id="ldpb"></div><div class="src" id="ldsrc"></div>
   <div class="ft"><div class="cd" id="ldcd"></div><div class="go"><a href="spanyol-szimulator">Szimulátor</a><a href="spanyol-tippjatek">Tippjáték</a><a href="spanyol-valasztas">Kutatások, térkép, eredmények →</a></div></div>
 </div>
+<div class="upw"><div><div class="sh2"><h2>Következő választások</h2><a href="naptar">Naptár →</a></div><ul class="up" id="up"></ul></div></div></div>
 <aside class="rail">
-  <div><div class="sh2"><h2>Legfrissebb</h2><a href="eredmenyek">USA 2026 →</a></div><ul class="nl" id="nl"><li><a href="eredmenyek"><time>–</time><span><b>Betöltés…</b></span></a></li></ul></div>
-  <div><div class="sh2"><h2>Következő választások</h2><a href="naptar">Naptár →</a></div><ul class="up" id="up"></ul></div>
+  <div><div class="sh2"><h2>Legfrissebb</h2><a href="naptar">Naptár →</a></div><ul class="nl" id="nl"><li><a href="eredmenyek"><time>–</time><span><b>Betöltés…</b></span></a></li></ul></div>
+
 </aside>
 </div>
 <div class="st3">
@@ -585,10 +586,23 @@ render();
     const R=Object.keys(PC).map(n=>({n,v:avg(n,"v"),m:avg(n,"m")})).filter(x=>x.v!=null).sort((a,b)=>b.v-a.v).slice(0,5);const mx=Math.max(...R.map(x=>x.v));
     $("ldpb").innerHTML=R.map(x=>'<div class="pr"><span>'+esc(x.n)+'</span><span class="br"><i style="width:'+(x.v/mx*100).toFixed(1)+'%;background:'+PC[x.n]+'"></i></span><b>'+x.v.toFixed(1).replace(".",",")+'%</b><small>'+(x.m!=null?"~"+Math.round(x.m)+" hely":"")+'</small></div>').join("");
     $("ldsrc").textContent=use.length+" közvélemény-kutatás átlaga · utolsó mérés: "+last.toLocaleDateString("hu-HU",{month:"long",day:"numeric"})+" · a helyek becsült mandátumszámok";}).catch(()=>{});
-  /* legfrissebb hírek (amerikai választás) */
+  /* legfrissebb hírek – mindenhonnan: amerikai döntések, friss közvélemény-kutatások, eredmények, választásnapok */
   const rel=t=>{const s=(Date.now()-t)/1000;if(s<3600)return Math.max(1,Math.round(s/60))+" perce";if(s<86400)return Math.round(s/3600)+" órája";return new Date(t).toLocaleDateString("hu-HU",{month:"short",day:"numeric"}).replace(/\s/g,"");};
-  fetch("data.json?_="+Math.floor(Date.now()/6e4),{cache:"no-store"}).then(r=>r.json()).then(d=>{const F=Object.values(d.feed||{}).filter(x=>x.tag!=="Frissítés"&&x.title).sort((a,b)=>a.t<b.t?1:-1).slice(0,4);
-    if(!F.length)return;$("nl").innerHTML=F.map(x=>{const t=Date.parse(x.t);return '<li><a href="eredmenyek"><time datetime="'+esc(x.t)+'">'+rel(t)+'</time><span><b>'+esc(x.title)+'</b><small><img src="https://flagcdn.com/w40/us.png" alt=""><span class="tg'+(x.tag==="Hívás"?" h":"")+'">'+esc(x.tag==="Hívás"?"Eldőlt":x.tag)+'</span>· '+esc(x.src||"")+'</small></span></a></li>';}).join("");}).catch(()=>{$("nl").innerHTML="";});
+  const pf=x=>String(Math.round(x*10)/10).replace(".",",")+"%",href=k=>k==="es"?"spanyol-valasztas":k==="us"?"eredmenyek":k==="cv"?"zold-foki-szigetek-valasztas":(V&&V.READY&&V.READY[k.toUpperCase()]?V.READY[k.toUpperCase()].href:"orszag?k="+k);
+  const nm=k=>V?V.name(k.toUpperCase()):k.toUpperCase(),NOW=Date.now(),H=[];
+  const KUT=["es","de","ro","sk","at"].map(k=>fetch("assets/data/kutatas/"+k+".json").then(r=>r.json()).then(d=>{
+      (d.polls||[]).filter(p=>p.v&&NOW-Date.parse(p.d+"T12:00:00Z")<30*864e5).slice(0,2).forEach(p=>{
+        const top=Object.entries(p.v).filter(x=>x[1]!=null).sort((a,b)=>b[1]-a[1]).slice(0,3);if(!top.length)return;
+        H.push({k,t:Date.parse(p.d+"T12:00:00Z"),tag:"Kutatás",title:nm(k)+": "+top[0][0]+" vezet "+(/^[AEIOUÁÉÍÓÖŐÚÜŰ]/i.test(p.f)?"az ":"a ")+p.f+" felmérésében",sub:top.map(x=>x[0]+" "+pf(x[1])).join(" · ")});});}).catch(()=>{}));
+  const US=fetch("data.json?_="+Math.floor(NOW/6e4),{cache:"no-store"}).then(r=>r.json()).then(d=>{Object.values(d.feed||{}).filter(x=>x.tag!=="Frissítés"&&x.title).sort((a,b)=>a.t<b.t?1:-1).slice(0,3)
+      .forEach(x=>H.push({k:"us",t:Date.parse(x.t),tag:x.tag==="Hívás"?"Eldőlt":x.tag,title:x.title,sub:x.src||""}));}).catch(()=>{});
+  const CV=fetch("https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json",{cache:"no-store"}).then(r=>r.ok?r.json():null).then(d=>{const c=d&&d.nat&&d.nat.c;if(!c||!d.upd)return;
+      const tot=c.reduce((a,x)=>a+x[1],0);H.push({k:"cv",t:d.upd,tag:"Eredmény",title:"Zöld-foki-szigetek: "+c[0][0]+" nyert "+pf(c[0][1]/tot*100)+"-kal",sub:(d.allapot||"Eredmény")+(d.feld!=null?", "+d.feld+"% feldolgozva":"")});}).catch(()=>{});
+  const NAP=fetch("assets/data/naptar.json?v=1").then(r=>r.json()).then(j=>{const td=new Date().toLocaleDateString("sv-SE",tz);const tm=new Date(Date.now()+864e5).toLocaleDateString("sv-SE",tz);
+      (j.v||[]).filter(e=>!e.h&&(e.d===td||e.d===tm)).forEach(e=>H.push({k:e.k.toLowerCase(),t:Date.parse(td+"T05:00:00Z"),tag:"Választás",title:(e.d===td?"Ma":"Holnap")+" választ: "+nm(e.k),sub:String(e.t||"választás").replace(/\s*\(.*\)\s*$/,"")}));}).catch(()=>{});
+  Promise.all(KUT.concat([US,CV,NAP])).then(()=>{const per={},out=[];H.sort((a,b)=>b.t-a.t).forEach(x=>{per[x.k]=(per[x.k]||0)+1;if(per[x.k]<=2&&out.length<7)out.push(x);});
+    if(!out.length){$("nl").innerHTML="";return;}
+    $("nl").innerHTML=out.map(x=>'<li><a href="'+href(x.k)+'"><time>'+rel(x.t)+'</time><span><b>'+esc(x.title)+'</b><small><img src="https://flagcdn.com/w40/'+x.k+'.png" alt=""><span class="tg'+(x.tag==="Eldőlt"||x.tag==="Eredmény"?" h":x.tag==="Kutatás"?" k":"")+'">'+esc(x.tag)+'</span>'+(x.sub?'· '+esc(x.sub):'')+'</small></span></a></li>').join("");});
   /* következő választások */
   const MS=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."],n=new Date(),T=new Date(n.getFullYear(),n.getMonth(),n.getDate());
   fetch("assets/data/naptar.json?v=1").then(r=>r.json()).then(j=>{const L=j.v.filter(e=>{const [y,m,d]=e.d.split("-").map(Number);e._d=new Date(y,m-1,d);return e._d>=T&&!e.h;}).slice(0,4);
