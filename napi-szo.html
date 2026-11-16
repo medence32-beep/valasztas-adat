@@ -95,6 +95,7 @@
 <li><span class="ex"><i class="g">V</i></span> zöld: a betű jó helyen van.</li>
 <li><span class="ex"><i class="y">O</i></span> sárga: a betű benne van a szóban, de máshol.</li>
 <li><span class="ex"><i>K</i></span> szürke: ez a betű nincs a szóban.</li>
+<li>Csak létező magyar szót írhatsz be (ragozott alak is jó, például: LAPOK, VÁROM).</li>
 <li>Az ékezetes betű külön betűnek számít: az A és az Á nem ugyanaz. A kettős betűk (sz, cs, gy…) két betűnek számítanak.</li>
 <li>Új szó minden éjfélkor, magyar idő szerint. Az eredményed megoszthatod, a megfejtés nélkül.</li></ul></div>
 <div class="jc"><h2>Még több játék</h2><p class="jn" style="margin:0 0 10px;font-size:14px">Ha megvan a mai szó, próbáld ki az országrejtvényt is: egy ország körvonalát kell kitalálnod.</p><a class="jb" href="napi-rejtveny">Napi országrejtvény →</a></div></div></div>
@@ -146,8 +147,9 @@ function result(){if(!DONE){$("res").innerHTML="";return;}const w=ST.p[N].w;
   const tick=()=>{const b=new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Budapest"})),s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds()),e=$("cd");if(!e)return;
     e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();clearInterval(cdT);cdT=setInterval(tick,1000);}
 function shake(m){const e=$("rw"+G.length);if(e){e.classList.remove("shk");void e.offsetWidth;e.classList.add("shk");}J.toast(m);}
-function submit(){if(DONE)return;if(CUR.length<5){shake("Öt betű kell");return;}if(!/[AÁEÉIÍOÓÖŐUÚÜŰ]/.test(CUR.join(""))){shake("Ebben nincs magánhangzó");return;}
-  const g=CUR.join("");G.push(g);CUR=[];const win=g===T[0];
+let DICT=null;fetch("assets/jatek/szavak5.txt?v=1").then(r=>r.ok?r.text():Promise.reject()).then(t=>{const d=new Set(),a=[...t.trim()];for(let i=0;i+5<=a.length;i+=5)d.add(a.slice(i,i+5).join(""));W.forEach(x=>d.add(x[0]));DICT=d;}).catch(()=>{});
+function submit(){if(DONE)return;if(CUR.length<5){shake("Öt betű kell");return;}
+  const g=CUR.join("");if(DICT?!DICT.has(g):!/[AÁEÉIÍOÓÖŐUÚÜŰ]/.test(g)){shake("Ez a szó nincs a szótárunkban");return;}G.push(g);CUR=[];const win=g===T[0];
   if(win||G.length>=6){DONE=true;fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+(win?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
   ST.p[N]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);board(true);keys();
   setTimeout(()=>{result();stats();if(DONE&&win)J.toast(["Zseniális!","Lenyűgöző!","Nagyszerű!","Szép munka!","Megvan!","Épphogy!"][G.length-1]);},950);}
