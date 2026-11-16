@@ -225,6 +225,19 @@
 .exr .tr{position:relative;height:12px;border-radius:6px;background:var(--bg2)}.exr .tr em{position:absolute;top:0;bottom:0;border-radius:6px;background:var(--c)}.exr .tr u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.5}
 .exr b{text-align:right;font:700 13px var(--f-mono)}
 .rr.pre .v,.rr.pre .s{color:var(--ink3)}.rr.pre .tr em{opacity:.28}.rr.pre .v small,.rr.pre .s small{color:var(--ink3)}.rr.rh{border-top:0;padding:0 0 2px;font:700 10.5px var(--f-cond);letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}.rr.rh .v,.rr.rh .s{font:inherit}
+
+.jg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}@media(max-width:1000px){.jg{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.jg{grid-template-columns:minmax(0,1fr)}}
+.jl{position:relative;overflow:hidden;display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:start;padding:14px;border-radius:16px;border:1px solid var(--line);background:linear-gradient(160deg,color-mix(in srgb,var(--c) 14%,var(--card)),var(--card) 60%)}
+.jl::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--c)}
+.jl img{width:96px;height:96px;border-radius:12px;object-fit:cover;box-shadow:0 0 0 2px var(--c)}
+.jl .jp,.jo small{display:inline-flex;align-items:center;gap:6px;font:800 11px var(--f-cond);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}.jl .jp i,.jo small i{width:8px;height:8px;border-radius:2px;background:var(--c)}
+.jl b{display:block;font:900 20px/1.05 var(--f-display);text-transform:uppercase;margin:4px 0 2px}.jl small{display:block;font-size:12px;color:var(--ink2)}.jl p{margin:8px 0 0;font-size:13px;line-height:1.45;color:var(--ink2)}
+@media(max-width:1200px) and (min-width:1001px){.jl{grid-template-columns:minmax(0,1fr)}.jl img{width:72px;height:72px}}
+.jog{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 18px;margin-top:12px}@media(max-width:900px){.jog{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:480px){.jog{grid-template-columns:minmax(0,1fr)}}
+.jo{display:grid;grid-template-columns:38px minmax(0,1fr);gap:10px;align-items:center;padding:9px 0;border-top:1px solid var(--line)}
+.jo .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:800 13px var(--f-body);color:#fff;background:color-mix(in srgb,var(--c) 70%,#000)}
+.jo b{display:block;font:700 14.5px var(--f-body)}.jo small{text-transform:none;letter-spacing:0;font:600 12px/1.35 var(--f-body);display:block}.jo small i{display:inline-block;margin-right:5px;vertical-align:1px}
+.rr .pn .jn{display:block;font-style:normal;font:600 11px var(--f-body);color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rr .pn>span{min-width:0}
 </style>
 </head>
 <body>
@@ -284,6 +297,13 @@
     <div><span class="kicker">Közvélemény-kutatások</span><b>Hogyan áll a verseny a felmérések szerint?</b><p>Minden kutatás egy helyen: trendgrafikon a 2023-as választás óta, intézetenkénti mérések és mandátumbecslések a Spanyolország-oldalon.</p></div>
     <div class="kx" id="kx"></div><span class="go">Kutatások megnyitása <i>→</i></span>
   </a>
+</div></section>
+
+<section class="sec2"><div class="wrap">
+  <div class="sh2 nl"><h2>Jelöltek</h2><small>Miniszterelnök-jelöltek és listavezetők, 2026</small></div>
+  <div class="jg"><div class="jl" style="--c:#1D84CE"><img src="assets/es/feijoo.webp" alt="Alberto Núñez Feijóo" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>PP</span><b>Alberto Núñez Feijóo</b><small>Néppárt · jobbközép</small><p>A Néppárt elnöke, korábban Galicia elnöke. 2023-ban pártja lett az első, de nem tudott többséget szerezni.</p></div></div><div class="jl" style="--c:#E30613"><img src="assets/es/sanchez.webp" alt="Pedro Sánchez" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>PSOE</span><b>Pedro Sánchez</b><small>Szocialista Munkáspárt · balközép</small><p>2018 óta miniszterelnök. Ő írta ki az előrehozott választást, hogy szélesebb többséget szerezzen.</p></div></div><div class="jl" style="--c:#63BE21"><img src="assets/es/abascal.webp" alt="Santiago Abascal" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>Vox</span><b>Santiago Abascal</b><small>Vox · radikális jobboldal</small><p>A Vox alapító elnöke. A kutatások szerint pártja a harmadik, és a PP lehetséges koalíciós partnere.</p></div></div><div class="jl" style="--c:#E51C55"><img src="assets/es/colau.webp" alt="Ada Colau" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>Frente Amplio</span><b>Ada Colau</b><small>Széles Front · baloldal</small><p>Barcelona volt polgármestere, a barcelonai lista vezetője. A Széles Front a Sumar, a Más Madrid, az Izquierda Unida és a Catalunya en Comú közös listája.</p></div></div></div>
+  <div class="jog"><div class="jo" style="--c:#6B2E68"><span class="av">IM</span><div><b>Irene Montero</b><small><i></i>Podemos · EP-képviselő; a Podemos önállóan indul</small></div></div><div class="jo" style="--c:#8E9AAF"><span class="av">AP</span><div><b>Luis „Alvise” Pérez</b><small><i></i>SALF · Se Acabó La Fiesta; madridi listavezető</small></div></div><div class="jo" style="--c:#FFB232"><span class="av">GR</span><div><b>Gabriel Rufián</b><small><i></i>ERC · Katalán Republikánus Baloldal</small></div></div><div class="jo" style="--c:#00C3B2"><span class="av">MN</span><div><b>Míriam Nogueras</b><small><i></i>Junts · Együtt Katalóniáért</small></div></div><div class="jo" style="--c:#B5CF18"><span class="av">OM</span><div><b>Oskar Matute</b><small><i></i>EH Bildu · baszk baloldali nacionalisták</small></div></div><div class="jo" style="--c:#4AAE4A"><span class="av">MV</span><div><b>Maribel Vaquero</b><small><i></i>PNV · Baszk Nacionalista Párt</small></div></div><div class="jo" style="--c:#76B3DD"><span class="av">NR</span><div><b>Néstor Rego</b><small><i></i>BNG · Galiciai Nacionalista Blokk</small></div></div><div class="jo" style="--c:#FFD700"><span class="av">CV</span><div><b>Cristina Valido</b><small><i></i>CC · Kanári Koalíció</small></div></div></div>
+  <p class="rn">A Navarrai Népi Unió (UPN) ezúttal a Néppárttal közös listán indul Navarrában. Forrás: <a href="https://es.euronews.com/2026/10/22/29n-listas-candidatos-partidos-generales" target="_blank" rel="noopener">Euronews</a>, <a href="https://www.democrata.es/en/politics/alvise-registers-salf-lists-for-congress-in-46-provinces-and-rules-out-competing-for-the-senate/" target="_blank" rel="noopener">Demócrata</a>.</p>
 </div></section>
 
 <section class="sec2"><div class="wrap">
@@ -351,6 +371,9 @@ const NYIT=new Date("2026-11-29T09:00:00+01:00"),KD=new Date("2026-11-29T20:00:0
 const P23={"14":40.48,"18":53.12,"vege":70.38};
 let COL={"PP":"#1D84CE","PSOE":"#E30613","Vox":"#63BE21","Sumar":"#E51C55","Frente Amplio":"#E51C55","Podemos":"#6B2E68","SALF":"#8E9AAF","ERC":"#FFB232","Junts":"#00C3B2","EH Bildu":"#B5CF18","PNV":"#4AAE4A","BNG":"#76B3DD","CC":"#FFD700","UPN":"#2A52BE","Egyéb":"#9AA4B8"};
 const cl=p=>COL[p]||"#9AA4B8";
+const JEL={"PP":"Feijóo","PSOE":"Sánchez","Vox":"Abascal","Frente Amplio":"Colau","Sumar":"Colau (Széles Front)","Podemos":"Montero","SALF":"Alvise Pérez","ERC":"Rufián","Junts":"Nogueras","EH Bildu":"Matute","PNV":"Vaquero","BNG":"Rego","CC":"Valido","UPN":"a PP-vel közösen"};
+const pnm=p=>esc(p)+(JEL[p]?'<em class="jn">'+esc(JEL[p])+'</em>':'');
+
 let E={st:"elott",part:{},nat:[],prov:{},mun:{},rp:0};
 
 /* ---------- állapot és visszaszámlálás ---------- */
@@ -395,7 +418,7 @@ function results(){const nat=E.nat||[];const rp=E.rp||0;$("rpl").textContent=f1(
   if(!nat.length){prep();paintState();return;}$("cntl").textContent=E.st==="vege"?"Végeredmény":"Számlálás";
   const mx=Math.max(...nat.map(r=>r[2]));
   const dd=(x,d,u)=>x==null?'':'<small class="'+(x>=0?'up':'dn')+'">'+(x>=0?'+':'−')+(d?f1(Math.abs(x)):Math.abs(x))+(u||'')+'</small>';
-  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'"><span class="pn"><i></i><span>'+esc(r[0])+'</span></span><span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
+  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'"><span class="pn"><i></i><span>'+pnm(r[0])+'</span></span><span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
     '<p class="rn">Az utolsó oszlop a jelenlegi állás szerinti mandátumszám; a kis számok a 2023-as eredményhez képesti változást mutatják. Előzetes, nem hivatalos végeredmény.</p>';
   koal(nat);
   const parts=nat.filter(r=>r[3]>0).map(r=>({n:r[0],m:r[3],c:cl(r[0])}));hemi($("hemi2"),parts);sbar($("sbar2"),parts);
@@ -414,7 +437,7 @@ $("kclr")&&$("kclr").addEventListener("click",()=>{KS.clear();document.querySele
 
 /* ---------- előkészített állapot: a 2023-as pártok, üres értékekkel; a koalícióépítő a 2023-as mandátumokkal ---------- */
 function prep(){if(E.nat&&E.nat.length)return;
-  $("res").innerHTML='<div class="rr rh"><span></span><span></span><span class="v">%</span><span class="s">hely</span></div>'+Object.entries(R23).map(([p,o])=>'<div class="rr pre" style="--c:'+cl(p)+'"><span class="pn"><i></i><span>'+esc(p)+'</span></span><span class="tr"><em style="width:'+(o[0]/34*100)+'%"></em></span><span class="v">–<small>'+f1(o[0])+'</small></span><span class="s"><b>–</b><small>'+o[1]+'</small></span></div>').join("")+
+  $("res").innerHTML='<div class="rr rh"><span></span><span></span><span class="v">%</span><span class="s">hely</span></div>'+Object.entries(R23).map(([p,o])=>'<div class="rr pre" style="--c:'+cl(p)+'"><span class="pn"><i></i><span>'+pnm(p)+'</span></span><span class="tr"><em style="width:'+(o[0]/34*100)+'%"></em></span><span class="v">–<small>'+f1(o[0])+'</small></span><span class="s"><b>–</b><small>'+o[1]+'</small></span></div>').join("")+
     '<p class="rn">Az értékek az urnazárás után, a feldolgozással együtt töltődnek fel. Kis számokkal és halvány oszlopokkal: a 2023-as eredmény.</p>';
   const p23=Object.entries(R23).map(([n,o])=>({n,m:o[1],c:cl(n)}));hemi($("hemi2"),p23.map(x=>({...x,c:"color-mix(in srgb,"+x.c+" 28%,var(--bg2))"})));sbar($("sbar2"),p23);
   $("slg2").innerHTML='<span class="muted">Halványan: a 2023-as parlament. Az új mandátumok a számlálás alatt rajzolódnak ki.</span>';
