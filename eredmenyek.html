@@ -42,6 +42,20 @@ body.pre-only .layout{display:block}
 .rh-bar{position:relative;display:flex;height:10px;border-radius:5px;background:var(--line);overflow:hidden;margin:10px 0 7px}.rh-bar u{display:block;height:100%}.rh-bar u.d{background:var(--dem)}.rh-bar u.r{background:var(--rep);margin-left:auto}
 .rh-bar em{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);transform:translateX(-1px)}
 .rh-c>span{font-size:12.5px;color:var(--ink2)}.rh-c>span b{color:var(--ink)}
+
+/* a két ház ülésrendje kicsiben, a főcikkben */
+.ldsb{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr) minmax(0,.8fr);gap:12px;margin-top:18px;align-items:stretch}
+@media(max-width:900px){.ldsb{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.ldsb .rh-c{grid-column:1/-1}}
+@media(max-width:560px){.ldsb{grid-template-columns:minmax(0,1fr)}}
+.ldsb .boards{display:contents}
+.ldsb .boards .card{margin:0;padding:12px 14px 10px;border-radius:14px;box-shadow:none;background:color-mix(in srgb,var(--bg) 55%,transparent);border:1px solid var(--line);min-width:0}
+.ldsb .board-h h3{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-family:var(--f-body);font-weight:700;color:var(--ink2)}.ldsb .board-h .lbl{font-size:11px}
+.ldsb .hemi{max-width:230px;margin:2px auto 0}
+.ldsb .score{margin-top:2px;gap:6px}.ldsb .num{font-size:34px}.ldsb .hc b{font-size:20px}.ldsb .hc span{font-size:9.5px}
+.ldsb .side .who{font-size:11.5px}.ldsb .side .ldx{font-size:11px;min-height:0}
+.ldsb .note{display:none}
+.ldsb .rh-c{display:flex;flex-direction:column;justify-content:center}
+.ld-st{margin:12px 0 0;font-size:13px;line-height:1.5;color:var(--ink2);max-width:90ch}.ld-st b{color:var(--ink)}
 .rh-c .st{display:block;margin-top:6px;font-size:12.5px;line-height:1.45;color:var(--ink2)}.rh-c .st b{color:var(--ink)}
 #ctrl-banner.on,#ctrl-banner2.on{display:none!important}
 .tops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 24px;margin-top:26px}@media(max-width:900px){.tops{grid-template-columns:minmax(0,1fr);gap:20px}}
@@ -917,11 +931,11 @@ body.mapfs-on{overflow:hidden}
     <div class="ld-k"><span class="kicker">USA félidős választás · 2026. november 3.</span><span class="ld-u" id="rh-upd"></span></div>
     <h1 id="hero-h">Így alakult a Kongresszus</h1>
     <p class="lead" id="hero-lead">Az AP számolása és hívásai alapján: a Szenátus, a Képviselőház és 36 kormányzói szék eredménye, államonként, megyénként és körzetenként.</p>
-    <div class="rh-sb" id="rh-sb">
-      <div class="rh-c" data-k="senate"><small>Szenátus</small><div class="rh-n"><b class="d">–</b><i>–</i><b class="r">–</b></div><div class="rh-bar"><u class="d"></u><u class="r"></u><em style="left:51%"></em></div><span>51 kell a többséghez</span></div>
-      <div class="rh-c" data-k="house"><small>Képviselőház</small><div class="rh-n"><b class="d">–</b><i>–</i><b class="r">–</b></div><div class="rh-bar"><u class="d"></u><u class="r"></u><em style="left:50.11%"></em></div><span>218 kell a többséghez</span></div>
+    <div class="ldsb"><div class="boards" id="boards"></div>
       <div class="rh-c" data-k="gov"><small>Kormányzók</small><div class="rh-n"><b class="d">–</b><i>–</i><b class="r">–</b></div><div class="rh-bar"><u class="d"></u><u class="r"></u></div><span>36 székből eldőlt</span></div>
     </div>
+    <p class="ld-st" id="ld-st"></p>
+    <p id="link-note" hidden></p>
   </div>
   <div hidden><div class="facts" id="facts"></div><div class="card ring-card" aria-live="polite">
       <div class="ring">
@@ -1002,10 +1016,7 @@ body.mapfs-on{overflow:hidden}
     <div id="house"></div>
   </section>
 
-  <section aria-labelledby="h-score" class="sec-anim">
-    <div class="sec-h"><h2 id="h-score">Állás a két házban</h2><p id="link-note"></p></div>
-    <div class="boards" id="boards"></div>
-  </section>
+  
 
   <section aria-labelledby="h-votes" class="sec-anim" id="sec-votes">
     <div class="sec-h"><h2 id="h-votes">Összes szavazat pártonként</h2><p>Az eddig megszámolt szavazatok összege pártonként, minden induló jelölttel, külön a szenátusi, a kormányzói és a képviselőházi versenyekben. A feldolgozottság államonként eltér.</p></div>
@@ -2937,11 +2948,10 @@ async function pollJSON(){let ok=false,cur=0,apiTag="";
   function put(k,d,r,tot,maj){const c=document.querySelector('.rh-c[data-k="'+k+'"]');if(!c)return;const n=c.querySelectorAll(".rh-n b");n[0].textContent=d;n[1].textContent=r;
     const u=c.querySelectorAll(".rh-bar u");u[0].style.width=(d/tot*100)+"%";u[1].style.width=(r/tot*100)+"%";if(k==="gov")c.querySelector("span").innerHTML="<b>"+(d+r)+"</b> a 36 székből eldőlt";}
   function load(){fetch("data.json?_="+Math.floor(Date.now()/3e4),{cache:"no-store"}).then(r=>r.json()).then(D=>{const C=(D.meta&&D.meta.control)||{},s=C.senate||{},h=C.house||{};
-    put("senate",s.d||0,s.r||0,100,51);put("house",h.d||0,h.r||0,435,218);
-    /* a régi felső sávok szövege (AP-hívás, még eldöntetlen helyek) a kártyákba kerül */
-    setTimeout(()=>{[["ctrl-banner","cb-t","cb-s"],["ctrl-banner2","cb2-t","cb2-s"]].forEach(([w,t,x])=>{const W=$(w),T=$(t),X=$(x);if(!W||!W.classList.contains("on")||!T)return;
-      const k=/Szenátus/i.test(T.textContent)?"senate":/Képviselőház|Ház/i.test(T.textContent)?"house":null;if(!k)return;const c=document.querySelector('.rh-c[data-k="'+k+'"]');if(!c)return;
-      let e=c.querySelector(".st");if(!e){e=document.createElement("span");e.className="st";c.appendChild(e);}e.innerHTML="<b>"+T.textContent+"</b> – "+X.textContent;});},400);
+
+    /* a régi felső sávok szövege (AP-hívás, még eldöntetlen helyek) a főcikk alá */
+    setTimeout(()=>{const o=[];[["ctrl-banner","cb-t","cb-s"],["ctrl-banner2","cb2-t","cb2-s"]].forEach(([w,t,x])=>{const W=$(w),T=$(t),X=$(x);if(W&&W.classList.contains("on")&&T&&T.textContent)o.push("<b>"+T.textContent+".</b> "+(X?X.textContent:""));});
+      const e=$("ld-st");if(e)e.innerHTML=o.join("<br>");},400);
     const G=Object.values(D.governor||{});put("gov",G.filter(x=>x.call==="D").length,G.filter(x=>x.call==="R").length,36,0);
     const u=D.meta&&D.meta.status&&D.meta.status.updated;if(u)$("rh-upd").textContent="Frissítve: "+u;}).catch(()=>{});}
   load();setInterval(()=>{if(!document.hidden)load();},60000);})();
