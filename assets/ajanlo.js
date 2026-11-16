@@ -30,7 +30,7 @@ var st=document.createElement("style");st.textContent=css;document.head.appendCh
 var esc=function(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});};
 var s=document.createElement("section");s.className="fdz";s.id="fedezd";
 s.innerHTML='<h2>Nézz körül</h2><div class="g"><a class="nx" id="fdzn" href="naptar"><small>Következő választás</small><span class="r"><span><b>Naptár</b><span class="s">Közelgő választások a világban</span></span></span><span class="d"></span></a>'+
- pick.map(function(x){return '<a href="'+x[0]+'" style="background:'+x[3]+'"><span class="bg b-'+x[4]+'" aria-hidden="true"></span>'+(x[4]==="foto"?'<span class="crd">Fotó: kremlin.ru · CC BY 4.0</span>':'')+'<small>'+esc(x[1])+'</small><b>'+esc(x[2])+'</b><i>→</i></a>';}).join("")+'</div>';
+ pick.map(function(x){return '<a href="'+x[0]+'" style="background:'+x[3]+'"><span class="bg b-'+x[4]+'" aria-hidden="true"></span>'+(x[4]==="foto"?'<span class="crd">Fotó: kremlin.ru · CC BY 4.0 · módosítva</span>':'')+'<small>'+esc(x[1])+'</small><b>'+esc(x[2])+'</b><i>→</i></a>';}).join("")+'</div>';
 var f=document.querySelector("footer");if(f)f.parentNode.insertBefore(s,f);else document.body.appendChild(s);
 fetch("assets/data/naptar.json").then(function(r){return r.json();}).then(function(d){
   var td=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});var n=(d.v||[]).filter(function(x){return x.d>=td;}).sort(function(a,b){return a.d<b.d?-1:1;})[0];if(!n)return;
