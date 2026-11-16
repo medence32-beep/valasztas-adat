@@ -197,6 +197,25 @@ body[data-ph="elott"] #live{display:none}
 @media (max-width:1000px){.g3{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.g3>:first-child{grid-column:1/-1}}
 @media (max-width:820px){.ehg{grid-template-columns:minmax(0,1fr)}.facts2{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:600px){.g3{grid-template-columns:minmax(0,1fr)}}
+
+.eb{margin-left:4px;display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;border:1px solid var(--line2);color:var(--ink2);letter-spacing:.1em}
+.eb.on{border-color:#E5484D;color:#fff;background:#E5484D}.eb.on::before{content:"";width:7px;height:7px;border-radius:50%;background:#fff;animation:ebp 1.4s infinite}@keyframes ebp{50%{opacity:.3}}
+.kutx{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr) auto;gap:18px;align-items:center;padding:20px 22px;border-radius:18px;text-decoration:none;color:inherit;border:1px solid var(--line);
+  background:linear-gradient(120deg,color-mix(in srgb,#C60B1E 16%,var(--card)),var(--card) 55%,color-mix(in srgb,#FFC400 10%,var(--card)));transition:transform .2s,border-color .2s}
+.kutx:hover{transform:translateY(-2px);border-color:var(--acc)}
+.kutx b{display:block;font:900 clamp(22px,2.6vw,30px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 8px}.kutx p{margin:0;color:var(--ink2);font-size:14.5px;line-height:1.5}
+.kx{display:grid;gap:7px}.kx div{display:grid;grid-template-columns:5.2em minmax(0,1fr) 3.4em;gap:8px;align-items:center;font:700 13px var(--f-body)}.kx em{display:block;height:8px;border-radius:4px;background:var(--c)}.kx span:last-child{text-align:right;font-family:var(--f-mono)}
+.kutx .go{white-space:nowrap;font:800 14px var(--f-body);color:var(--acc)}.kutx .go i{font-style:normal;display:inline-block;transition:transform .2s}.kutx:hover .go i{transform:translateX(4px)}
+@media (max-width:820px){.kutx{grid-template-columns:minmax(0,1fr)}}
+.koal{margin-top:16px}.koal .kh{display:flex;justify-content:space-between;align-items:center;gap:10px}.koal h3{margin:0}
+.kclr{border:1px solid var(--line2);background:none;color:var(--ink2);border-radius:999px;padding:5px 11px;font:700 12px var(--f-body);cursor:pointer}
+.kp{display:flex;flex-wrap:wrap;gap:6px}.kp button{display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line2);background:var(--bg2);color:var(--ink);border-radius:999px;padding:6px 11px;font:700 13px var(--f-body);cursor:pointer}
+.kp button i{width:9px;height:9px;border-radius:3px;background:var(--c)}.kp button b{font-family:var(--f-mono);color:var(--ink2)}.kp button.on{background:color-mix(in srgb,var(--c) 22%,var(--card));border-color:var(--c)}.kp button.on b{color:var(--ink)}
+.ks{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;margin-top:12px}.ks b{font:900 28px var(--f-display);font-variant-numeric:tabular-nums}
+.kbar{position:relative;height:14px;border-radius:7px;background:var(--bg2);display:flex;overflow:hidden}.kbar i{display:block;height:100%}.kbar u{position:absolute;left:50.29%;top:-3px;bottom:-3px;width:2px;background:var(--ink)}
+.kst{margin-top:8px;font:700 13.5px var(--f-body)}.kst.ok{color:var(--good)}.kst.no{color:var(--ink2)}
+.rr .v small,.rr .s small{display:block;font:600 10.5px var(--f-mono);margin-top:2px}.rr small.up{color:var(--good)}.rr small.dn{color:var(--bad)}
+.bgt{max-width:78ch}.bgt p{margin:0 0 10px;color:var(--ink2);font-size:15.5px;line-height:1.6}
 </style>
 </head>
 <body>
@@ -217,7 +236,7 @@ body[data-ph="elott"] #live{display:none}
 <section class="eh"><div class="wrap">
   <div class="ehg">
     <div>
-      <div class="ek"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span>Spanyolország · előrehozott általános választás</span></div>
+      <div class="ek"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span>Spanyolország · előrehozott általános választás</span><span class="eb" id="eb">Választás előtt</span></div>
       <h1>Spanyol választás 2026</h1>
       <p class="lead">Sánchez vagy Feijóo? A kutatások átlaga, a várható mandátumok és a többség esélyei – a választás estéjén élő eredményekkel mind a 8131 településről.</p>
       <p class="eu" id="upd">Az oldal magától frissül, nem kell újratölteni.</p>
@@ -235,6 +254,7 @@ body[data-ph="elott"] #live{display:none}
     <div class="card pc"><h3>Szavazatok</h3><div class="prog"><span id="rpl">0% feldolgozva</span><span class="bar"><i id="rpb"></i></span></div><div id="res"><div class="wbox"><b>Hamarosan</b> <span>Az első eredmények az urnazárás (20:00) után érkeznek.</span></div></div></div>
     <div class="card pc"><h3>Mandátumok · 350 hely · 176 a többséghez</h3><svg id="hemi2" viewBox="0 0 400 214" role="img" aria-label="Mandátumok"></svg><div class="sbar" id="sbar2"></div><div class="slg" id="slg2"><span class="muted">A mandátumok a számlálás alatt folyamatosan változnak.</span></div></div>
   </div>
+  <div class="card pc koal"><div class="kh"><h3>Koalícióépítő</h3><button type="button" class="kclr" id="kclr">Mind törlése</button></div><p class="rn" style="margin:0 0 10px">Kattints a pártokra, és nézd meg, összejön-e a 176 mandátumos többség.</p><div class="kp" id="kp"><span class="muted">A mandátumok az első eredményekkel jelennek meg.</span></div><div class="ks"><div class="kbar" id="kbar"><u></u></div><b id="ksum">0</b></div><div class="kst" id="kst"></div></div>
 </div></section>
 <section class="sec2"><div class="wrap">
   <div class="sh2 nl"><h2>Részvétel</h2><small>Hivatalos részadatok: 14:00, 18:00 és az urnazárás után</small></div>
@@ -248,13 +268,10 @@ body[data-ph="elott"] #live{display:none}
 </div>
 
 <section class="sec2"><div class="wrap">
-  <div class="sh2 nl"><h2>Hol tart a verseny?</h2><small id="vupd"></small></div>
-  <div class="g3">
-    <div class="card pc" id="vavg"><p class="muted">Betöltés…</p></div>
-    <div class="card pc"><h3>Várható mandátumok</h3><svg id="hemi" viewBox="0 0 400 214" role="img" aria-label="Becsült mandátumok"></svg>
-      <div class="sbar" id="sbar"></div><div class="slg" id="slg"></div><p class="rn" id="pnote">A kutatóintézetek mandátumbecsléseinek átlaga. A vonal a 176-os többség.</p><small class="rn" id="pupd"></small></div>
-    <div class="card pc"><h3>Kinek lehet többsége?</h3><div class="blk" id="blk"><p class="muted">Betöltés…</p></div><a class="btn sm" href="spanyol-szimulator">Számold ki a szimulátorban →</a></div>
-  </div>
+  <a class="kutx" href="spanyolorszag#kut">
+    <div><span class="kicker">Közvélemény-kutatások</span><b>Hogyan áll a verseny a felmérések szerint?</b><p>Minden kutatás egy helyen: trendgrafikon a 2023-as választás óta, intézetenkénti mérések és mandátumbecslések a Spanyolország-oldalon.</p></div>
+    <div class="kx" id="kx"></div><span class="go">Kutatások megnyitása <i>→</i></span>
+  </a>
 </div></section>
 
 <section class="sec2"><div class="wrap">
@@ -272,6 +289,13 @@ body[data-ph="elott"] #live{display:none}
     <div class="card det" id="det"><h3>Kiválasztva</h3><div class="dn">Spanyolország</div><p id="dtx">Kattints egy tartományra. A „Közelkép” gombbal a kiválasztott tartomány települései is megjelennek; a választás estéjén ezek a győztes párt színét kapják – minél erősebb a győzelem, annál sötétebbet.</p><div id="dch"></div><div class="mlg" id="mlg"></div></div>
   </div>
   <p class="rn" id="msrc">Térkép: <a href="https://github.com/martgnz/es-atlas" target="_blank" rel="noopener">es-atlas</a> (Instituto Geográfico Nacional, CC BY 4.0).</p>
+</div></section>
+
+<section class="sec2"><div class="wrap">
+  <div class="sh2 nl"><h2>Háttér</h2></div>
+  <div class="bgt"><p>A 2023. júliusi választáson a Néppárt (PP) lett az első 137 hellyel, de Alberto Núñez Feijóo nem szerzett többséget. Novemberben Pedro Sánchez (PSOE) maradt a miniszterelnök – a Sumar, az ERC, a Junts, az EH Bildu, a PNV, a BNG és a Kanári Koalíció támogatásával, 179 szavazattal.</p>
+  <p>2026 októberében, miután a katalán Junts nemet mondott a kormány lakhatási rendeleteire, Sánchez október 5-én feloszlatta a parlamentet, és november 29-re előrehozott választást írt ki. Indoklása szerint szélesebb parlamenti többség kell a reformok folytatásához.</p>
+  <p>Az előzetes eredmények a magyar idő szerinti 20:00-s urnazárás után, a Kanári-szigeteki szavazás lezárultával (21:00) érkeznek; a végleges, hivatalos eredményt a választási bizottság napokkal később teszi közzé.</p></div>
 </div></section>
 
 <section class="sec2"><div class="wrap">
@@ -320,7 +344,7 @@ let E={st:"elott",part:{},nat:[],prov:{},mun:{},rp:0};
 /* ---------- állapot és visszaszámlálás ---------- */
 const STL={elott:"Választás előtt",szavazas:"Szavazás folyik",szamlalas:"Számlálás folyik",vege:"Előzetes végeredmény"};
 function phase(){const n=new Date();if(E.st==="vege")return "vege";if(n<NYIT)return "elott";if(n<KD)return "szavazas";return "szamlalas";}
-function paintState(){const ph=phase();document.body.dataset.ph=ph;
+function paintState(){const ph=phase();document.body.dataset.ph=ph;const eb=$("eb");if(eb){eb.textContent=STL[ph];eb.classList.toggle("on",ph==="szavazas"||ph==="szamlalas");}
   if(ph==="szamlalas"||ph==="vege"){$("cdt").style.display="none";$("cdk").textContent=ph==="vege"?"Lezárult a számlálás":"Lezárultak az urnák";$("cdb").textContent=ph==="vege"?"Előzetes végeredmény":"Folyik a számlálás";}}
 (function(){const bs=[...$("cdt").querySelectorAll("b")];function tick(){const s=Math.max(0,(KD-new Date())/1000);
   const v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),Math.floor(s%60)];bs.forEach((b,i)=>{const x=String(v[i]).padStart(2,"0");if(b.textContent!==x)b.textContent=x;});if(s<=0)paintState();}
@@ -357,10 +381,23 @@ function results(){const nat=E.nat||[];const rp=E.rp||0;$("rpl").textContent=f1(
   if(E.upd){const d=new Date(E.upd);$("rupd").textContent="Frissítve: "+hm(d)+" (magyar idő) · forrás: spanyol Belügyminisztérium";$("upd").textContent="Utolsó adat: "+hm(d)+" · az oldal magától frissül.";}
   if(!nat.length){paintState();return;}
   const mx=Math.max(...nat.map(r=>r[2]));
-  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>'<div class="rr" style="--c:'+cl(r[0])+'"><span class="pn"><i></i><span>'+esc(r[0])+'</span></span><span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%</span><span class="s"><b>'+(r[3]||0)+'</b></span></div>').join("")+
-    '<p class="rn">Az utolsó oszlop a jelenlegi állás szerinti mandátumszám. Előzetes, nem hivatalos végeredmény.</p>';
+  const dd=(x,d,u)=>x==null?'':'<small class="'+(x>=0?'up':'dn')+'">'+(x>=0?'+':'−')+(d?f1(Math.abs(x)):Math.abs(x))+(u||'')+'</small>';
+  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'"><span class="pn"><i></i><span>'+esc(r[0])+'</span></span><span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
+    '<p class="rn">Az utolsó oszlop a jelenlegi állás szerinti mandátumszám; a kis számok a 2023-as eredményhez képesti változást mutatják. Előzetes, nem hivatalos végeredmény.</p>';
+  koal(nat);
   const parts=nat.filter(r=>r[3]>0).map(r=>({n:r[0],m:r[3],c:cl(r[0])}));hemi($("hemi2"),parts);sbar($("sbar2"),parts);
   $("slg2").innerHTML=parts.sort((a,b)=>b.m-a.m).map(p=>'<span style="--c:'+p.c+'"><i></i>'+esc(p.n)+' <b>'+p.m+'</b></span>').join("");paintState();}
+
+/* ---------- 2023-as országos eredmény (az összevetéshez) és koalícióépítő ---------- */
+const R23={"PP":[33.05,137],"PSOE":[31.70,121],"Vox":[12.39,33],"Sumar":[12.31,31],"ERC":[1.89,7],"Junts":[1.60,7],"EH Bildu":[1.36,6],"PNV":[1.12,5],"BNG":[0.62,1],"CC":[0.46,1],"UPN":[0.15,1]};
+const KS=new Set();let KN=[];
+function koal(nat){KN=(nat||[]).filter(r=>r[3]>0);if(!KN.length)return;
+  $("kp").innerHTML=KN.map(r=>'<button type="button" data-p="'+esc(r[0])+'" class="'+(KS.has(r[0])?'on':'')+'" style="--c:'+cl(r[0])+'"><i></i>'+esc(r[0])+' <b>'+r[3]+'</b></button>').join("");kpaint();}
+function kpaint(){const sel=KN.filter(r=>KS.has(r[0])),s=sel.reduce((a,r)=>a+r[3],0);$("ksum").textContent=s;
+  $("kbar").innerHTML=sel.map(r=>'<i style="width:'+(r[3]/N*100)+'%;background:'+cl(r[0])+'"></i>').join("")+'<u></u>';
+  const k=$("kst");if(!sel.length){k.className="kst";k.textContent="";return;}k.className="kst "+(s>=MAJ?"ok":"no");k.textContent=s>=MAJ?"✓ Megvan a többség – "+(s-MAJ)+" mandátummal több a szükségesnél":(MAJ-s)+" mandátum hiányzik a 176-os többséghez";}
+$("kp")&&$("kp").addEventListener("click",e=>{const b=e.target.closest("button[data-p]");if(!b)return;const p=b.dataset.p;KS.has(p)?KS.delete(p):KS.add(p);b.classList.toggle("on",KS.has(p));kpaint();});
+$("kclr")&&$("kclr").addEventListener("click",()=>{KS.clear();document.querySelectorAll("#kp button").forEach(b=>b.classList.remove("on"));kpaint();});
 
 /* ---------- élő adatok betöltése ---------- */
 const SRC=["https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/es-elo.json","assets/data/es-elo.json"];
@@ -370,6 +407,10 @@ loop();paintState();
 
 /* ---------- kutatások és becslés ---------- */
 fetch("assets/data/kutatas/es.json?_="+Math.floor(Date.now()/6e5)).then(r=>r.ok?r.json():null).then(K=>{
+  if(!$("vavg")){if(!K||!K.polls||!K.polls.length||!$("kx"))return;K.parties.forEach(([n,c])=>{if(c)COL[n]=c;});const P=K.polls,last=new Date(P[0].d+"T12:00:00"),seen={},u=[];
+    P.forEach(p=>{if(last-new Date(p.d+"T12:00:00")>14*864e5||seen[p.f])return;seen[p.f]=1;u.push(p);});
+    const av=K.parties.map(([n])=>{const v=u.map(p=>p.v[n]).filter(x=>x!=null);return {n,a:v.length?v.reduce((a,b)=>a+b,0)/v.length:null};}).filter(x=>x.a!=null).sort((a,b)=>b.a-a.a).slice(0,4),mx=av[0].a;
+    $("kx").innerHTML=av.map(x=>'<div style="--c:'+cl(x.n)+'"><span>'+esc(x.n)+'</span><em style="width:'+(x.a/mx*100)+'%"></em><span>'+f1(x.a)+'%</span></div>').join("");return;}
   if(!K||!K.polls||!K.polls.length){$("vavg").innerHTML='<p class="muted">A kutatások hamarosan érkeznek.</p>';$("blk").innerHTML='<p class="muted">Nincs még elég adat.</p>';return;}
   K.parties.forEach(([n,c])=>{if(c)COL[n]=c;});
   const P=K.polls,last=new Date(P[0].d+"T12:00:00");
