@@ -37,32 +37,42 @@
 <link rel="stylesheet" href="assets/portal.css?v=16">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Event", "name": "Zöld-foki-szigeteki elnökválasztás 2026", "startDate": "2026-11-15T07:00:00-01:00", "endDate": "2026-11-15T18:00:00-01:00", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "eventStatus": "https://schema.org/EventScheduled", "location": {"@type": "Place", "name": "Zöld-foki-szigetek", "address": {"@type": "PostalAddress", "addressCountry": "CV"}}, "image": ["https://voksmero.hu/assets/og/orszag.png"], "organizer": {"@type": "Organization", "name": "Comissão Nacional de Eleições (CNE)", "url": "https://cne.cv/"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://voksmero.hu/zold-foki-szigetek-valasztas"}, "description": "Elnökválasztás a Zöld-foki Köztársaságban (első forduló)."}</script>
 <style>
-.cvw{max-width:1180px;margin:0 auto;padding:28px max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px))}
-.cvh h1{font:900 clamp(30px,5vw,52px)/1.02 var(--f-display);text-transform:uppercase;margin:6px 0 10px}.cvh p{color:var(--ink2);max-width:70ch}
-.cvk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
-.cvst{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin:22px 0}
-.cvst>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0}.cvst b{display:block;font:800 30px/1.1 var(--f-display)}.cvst span{color:var(--ink2);font-size:13px}
-.cvbar{height:8px;border-radius:6px;background:var(--line);overflow:hidden;margin-top:8px}.cvbar i{display:block;height:100%;background:var(--acc);width:0;transition:width .6s}
-.cvg{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:16px;align-items:start}@media(max-width:860px){.cvg{grid-template-columns:1fr}}
-.cvc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}.cvc h2{font:800 20px var(--f-display);text-transform:uppercase;margin:0 0 12px}
-.cand{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 0;border-bottom:1px solid var(--line)}.cand:last-child{border:0}
-.cand b{font-size:16px}.winner-check{display:inline-block;margin-left:7px;color:#20a66a;font:900 16px/1 var(--f-body);vertical-align:1px}.winner-check[title]{cursor:help}.cand small{color:var(--ink2);display:block}.cand .pc{font:800 22px var(--f-display);text-align:right}.cand .vt{color:var(--ink2);font-size:13px;text-align:right}
-.cand .br{grid-column:1/-1;height:10px;border-radius:6px;background:var(--line);overflow:hidden}.cand .br i{display:block;height:100%;border-radius:0 6px 6px 0;width:0;transition:width .7s}
-#cvmap{width:100%;height:auto;display:block;touch-action:manipulation}#cvmap path{stroke:var(--card);stroke-width:.6;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .4s}
-#cvmap path:hover{filter:brightness(1.15)}#cvmap path:focus-visible{outline:none;stroke:var(--acc);stroke-width:2.2}#cvmap path.sel{stroke:var(--acc);stroke-width:2.2}
-#cvmap text{font:600 10px var(--f-body);fill:var(--ink2);pointer-events:none}
-#mp h3{margin:0 0 4px;font:800 18px var(--f-display)}#mp .muted{color:var(--ink2);font-size:13px}
-.cvn{color:var(--ink3,#888);font-size:13px;margin-top:10px}.cvi{margin-top:16px}.cvi li{margin:6px 0;color:var(--ink2)}
-.lg2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;color:var(--ink2);margin-top:8px}.lg2 i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
-.cvt{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.cvt img{width:56px;height:38px;border-radius:6px;object-fit:cover;box-shadow:var(--shadow)}
-.cvlive{display:inline-flex;align-items:center;gap:6px;font:700 12px var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:#e5484d;border:1px solid currentColor;border-radius:999px;padding:3px 10px}.cvlive i{width:8px;height:8px;border-radius:50%;background:currentColor;animation:lv 1.4s infinite}@keyframes lv{50%{opacity:.25}}
-.note{display:flex;gap:8px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:9px 12px;font-size:13px;color:var(--ink2);margin-top:14px}
-.h2h{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}.pc2{display:flex;gap:12px;align-items:center;min-width:0}.pc2.r{flex-direction:row-reverse;text-align:right}
-.av{object-fit:cover;flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;font:800 20px var(--f-display);color:#fff;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c)}
-.pc2 b{display:block;font-size:15px}.pc2 small{color:var(--ink2);font-size:12px}.pc2 .pp{font:900 30px/1 var(--f-display);color:var(--c)}
-.split{display:flex;height:16px;border-radius:9px;overflow:hidden;background:var(--line);position:relative}.split i{display:block;height:100%;transition:width .7s}.split:after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:2px dashed var(--ink)}
-.pc2>div:last-child{min-width:0;overflow-wrap:anywhere}@media(max-width:560px){.av{width:42px;height:42px;font-size:15px}.pc2{gap:8px;align-items:flex-start}.pc2 b{font-size:13px}.pc2 small{display:none}.pc2 .pp{font-size:22px;margin-top:2px}}
-.splitn{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--ink2);margin:4px 0 6px}
+.cvw{max-width:1200px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 44px max(16px,env(safe-area-inset-left,0px))}
+.cvt{display:flex;align-items:center;gap:14px;flex-wrap:wrap}.cvt img{width:54px;height:36px;border-radius:6px;object-fit:cover;box-shadow:var(--shadow)}
+.cvk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc);display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.cvh h1{font:900 clamp(32px,5.4vw,56px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 0}
+.chip{display:inline-flex;align-items:center;gap:6px;font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;border-radius:999px;padding:3px 10px;border:1px solid currentColor}
+.chip.l{color:#e5484d}.chip.l i{width:7px;height:7px;border-radius:50%;background:currentColor;animation:cvp 1.4s infinite}@keyframes cvp{50%{opacity:.25}}.chip.e{color:var(--ink2)}
+.ban{margin:18px 0 0;padding:14px 16px;border-radius:16px;background:linear-gradient(90deg,color-mix(in srgb,var(--c) 22%,var(--card)),var(--card));border:1px solid color-mix(in srgb,var(--c) 45%,var(--line));display:flex;gap:12px;align-items:center}
+.ban b{font:800 18px/1.25 var(--f-display)}.ban small{display:block;color:var(--ink2);font-size:13px;margin-top:2px}.ban img{width:46px;height:46px;border-radius:50%;object-fit:cover;flex:none;box-shadow:0 0 0 2px var(--c)}
+.cvst{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:18px 0}@media(max-width:820px){.cvst{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.cvst>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:13px 15px;min-width:0}.cvst b{display:block;font:800 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}.cvst span{color:var(--ink2);font-size:12.5px}
+.mbar{height:6px;border-radius:5px;background:var(--line);overflow:hidden;margin-top:8px}.mbar i{display:block;height:100%;background:var(--acc);transition:width .6s}
+.cvc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}.cvc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0;letter-spacing:.02em}
+.hd{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px}.seg button{border:0;background:none;color:var(--ink2);font:700 12.5px var(--f-body);padding:6px 12px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.h2h{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:center;margin-bottom:12px}.vs{font:800 13px var(--f-display);color:var(--ink3)}
+.pc2{display:flex;gap:10px;align-items:center;min-width:0}.pc2.r{flex-direction:row-reverse;text-align:right}.pc2>div{min-width:0}
+.av{flex:none;width:56px;height:56px;border-radius:50%;object-fit:cover;display:grid;place-items:center;font:800 18px var(--f-display);color:#fff;box-shadow:0 0 0 3px var(--card),0 0 0 5px var(--c)}
+.pc2 b{display:block;font-size:14.5px;line-height:1.2}.pc2 small{color:var(--ink2);font-size:12px}.pc2 .pp{font:900 28px/1.05 var(--f-display);color:var(--c);font-variant-numeric:tabular-nums}
+.split{display:flex;height:14px;border-radius:8px;overflow:hidden;background:var(--line);position:relative}.split i{display:block;height:100%;transition:width .7s}.split:after{content:"";position:absolute;left:50%;top:-3px;bottom:-3px;border-left:2px dashed var(--ink)}
+.splitn{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--ink2);margin:5px 0 4px}
+@media(max-width:560px){.av{width:44px;height:44px;font-size:15px}.pc2 small{display:none}.pc2 .pp{font-size:22px}.pc2 b{font-size:13px}}
+.rl{display:grid;gap:10px;margin-top:6px}.rr{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:4px 10px;align-items:center}
+.rr .d{width:14px;height:14px;border-radius:4px}.rr b{font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rr .v{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}.rr .v strong{font:800 16px var(--f-display);margin-right:8px}.rr .v span{color:var(--ink2);font-size:12.5px}
+.rr .br{grid-column:2/-1;height:7px;border-radius:5px;background:var(--line);overflow:hidden}.rr .br i{display:block;height:100%;border-radius:5px;transition:width .7s}
+.ok{color:#20a66a;font-weight:900;margin-left:6px}
+.mg{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;align-items:start}@media(max-width:900px){.mg{grid-template-columns:1fr}}
+#cvmap{width:100%;height:auto;display:block;-webkit-tap-highlight-color:transparent}
+#cvmap path{stroke:var(--card);stroke-width:.7;vector-effect:non-scaling-stroke;cursor:pointer;transition:fill .4s,opacity .25s;outline:none}
+#cvmap path:focus{outline:none}#cvmap.has path:not(.sel){opacity:.45}#cvmap path:hover{opacity:1}
+.mp{position:sticky;top:calc(var(--hh,64px) + 12px);background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:14px;min-width:0}
+.mp h3{margin:0;font:800 20px/1.15 var(--f-display)}.mp .is{color:var(--ink2);font-size:13px;margin:2px 0 10px}.mp .x{float:right;border:0;background:none;color:var(--ink2);font-size:22px;line-height:1;cursor:pointer;padding:0 2px}
+.lg2{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink2);margin-top:10px}.lg2 i{display:inline-block;width:12px;height:10px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.tb{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;font-size:14px}.tb th{font:700 11px var(--f-body);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);text-align:right;padding:8px;border-bottom:1px solid var(--line)}.tb th:first-child,.tb td:first-child{text-align:left}
+.tb td{padding:8px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}.tb tr{cursor:pointer}.tb tbody tr:hover{background:var(--bg2)}.tb tr.sel{background:color-mix(in srgb,var(--acc) 12%,transparent)}
+.tb .w{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}.tbw{overflow-x:auto;margin-top:6px}
+.cvn{color:var(--ink3);font-size:12.5px;margin:10px 0 0}.cvi li{margin:6px 0;color:var(--ink2)}.sec{margin-top:16px}
 </style>
 </head>
 <body>
@@ -80,19 +90,19 @@
   </div>
 </header>
 <main class="cvw">
-<section class="cvh"><div class="cvt"><img src="https://flagcdn.com/w160/cv.png" alt="A Zöld-foki-szigetek zászlaja"><div><div class="cvk">Zöld-foki-szigetek · 2026. november 15. <span class="cvlive" id="liv" hidden><i></i>Élő</span></div><h1>Elnökválasztás 2026</h1></div></div>
-<p>A Zöld-foki Köztársaság elnökét öt évre választják, két fordulóban: aki az első fordulóban megszerzi az érvényes szavazatok több mint felét, az nyer; különben a két legjobb jelölt második fordulóba jut. Az urnák helyi idő szerint 18 órakor (magyar idő szerint 20 órakor) zárnak.</p><div class="note">ⓘ Az oldal magától frissül, nem kell újratölteni. <span id="nupd"></span></div></section>
-<div class="cvst"><div><b id="sFeld">–</b><span>feldolgozottság</span><div class="cvbar"><i id="bFeld"></i></div></div><div><b id="sReszv">–</b><span>részvétel</span><div class="cvbar"><i id="bReszv"></i></div></div><div><b id="sSzav">–</b><span>leadott szavazat</span></div><div><b id="sAll">Választás előtt</b><span id="sUpd">frissítés: –</span></div></div>
-<div class="cvg"><div class="cvc"><h2>Térkép · 22 község</h2><svg id="cvmap" viewBox="0 0 600 520" role="img" aria-label="A Zöld-foki-szigetek községei"></svg><div class="lg2" id="lg2"></div><p class="cvn" id="mapn">Térkép betöltése…</p></div>
-<div><div class="cvc"><h2>Országos eredmény</h2><div id="h2h"></div><div id="nat"></div><p class="cvn" id="natn"></p></div>
-<div class="cvc" style="margin-top:16px" id="mp"><h3>Válassz egy községet</h3><p class="muted">Koppints a térképen egy községre a helyi eredményért és részvételért.</p></div></div></div>
-<div class="cvc cvi"><h2>Tudnivalók</h2><ul>
-<li><b>Jelöltek:</b> José Maria Neves (PAICV, a hivatalban lévő elnök) és Joana Rosa (MpD, volt igazságügy-miniszter). A végleges jelöltlistát az élő adatok mutatják.</li>
-<li><b>Második forduló:</b> ha senki sem szerzi meg az érvényes szavazatok több mint felét, a két legtöbb szavazatot kapó jelölt között új forduló lesz.</li>
-<li><b>2021-ben</b> José Maria Neves az első fordulóban, 51% feletti eredménnyel nyert.</li>
-<li><b>Külföldön élők</b> is szavazhatnak; az ő eredményük a „Külföld” sorban jelenik meg, amint a hivatalos adat elérhető.</li>
+<section class="cvh"><div class="cvt"><img src="https://flagcdn.com/w160/cv.png" alt="A Zöld-foki-szigetek zászlaja"><div><div class="cvk">Zöld-foki-szigetek · 2026. november 15. <span id="chip"></span></div><h1>Elnökválasztás 2026</h1></div></div>
+<div class="ban" id="ban" hidden></div></section>
+<div class="cvst"><div><b id="sFeld">–</b><span id="sMes">feldolgozott szavazókör</span><div class="mbar"><i id="bFeld"></i></div></div><div><b id="sReszv">–</b><span id="sIns">részvétel</span><div class="mbar"><i id="bReszv"></i></div></div><div><b id="sSzav">–</b><span>leadott szavazat</span></div><div><b id="sUe">–</b><span>üres / érvénytelen</span></div></div>
+<div class="cvc"><div class="hd"><h2>Országos eredmény</h2><div class="seg" id="sc"><button data-s="nat" class="on">Országon belül</button><button data-s="global">Külföldiekkel együtt</button></div></div>
+<div id="h2h"></div><div class="rl" id="nat"></div><p class="cvn" id="natn"></p></div>
+<div class="cvc sec"><div class="hd"><h2>Térkép · 22 község</h2></div><div class="mg"><div><svg id="cvmap" viewBox="0 0 600 520" role="img" aria-label="A Zöld-foki-szigetek községei"></svg><div class="lg2" id="lg2"></div></div>
+<div class="mp" id="mp"><h3>Válassz egy községet</h3><p class="is">Koppints a térképen vagy a lenti táblázatban egy községre: itt jelenik meg az eredménye.</p></div></div></div>
+<div class="cvc sec"><div class="hd"><h2>Községenként</h2></div><div class="tbw"><table class="tb" id="tb"></table></div></div>
+<div class="cvc sec cvi"><h2>Tudnivalók</h2><ul>
+<li><b>Rendszer:</b> az elnököt öt évre választják. Aki az első fordulóban megszerzi az érvényes szavazatok több mint felét, nyer; különben a két legjobb jelölt második fordulóba jut.</li>
+<li><b>„Országon belül”</b> a szigeteken leadott szavazatokat, <b>„Külföldiekkel együtt”</b> a külföldön élő választók szavazataival együtt számolt eredményt mutatja.</li>
 <li>Az eredmények előzetesek; a hivatalos végeredményt a Nemzeti Választási Bizottság (CNE) hirdeti ki.</li></ul>
-<p class="cvn">Források: <a href="https://cne.cv/" target="_blank" rel="noopener">CNE Cabo Verde</a>, <a href="https://en.wikipedia.org/wiki/2026_Cape_Verdean_presidential_election" target="_blank" rel="noopener">Wikipedia</a>. Térkép: <a href="https://www.geoboundaries.org/" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 4.0).</p></div>
+<p class="cvn">Forrás: <a href="https://www.eleicoes.cv/resultados/nacional" target="_blank" rel="noopener">eleicoes.cv (CNE/DGAPE)</a>. Térkép: <a href="https://www.geoboundaries.org/" target="_blank" rel="noopener">geoBoundaries</a> (CC BY 4.0).</p></div>
 </main>
 <footer class="foot">
   <div class="wrap">
@@ -106,91 +116,63 @@
 <script>
 (function(){"use strict";
 const $=id=>document.getElementById(id),esc=s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const nf=n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf=x=>x==null?"–":x.toFixed(2).replace(".",",")+"%";
-const PART={"José Maria Neves":"PAICV · hivatalban lévő elnök","Joana Rosa":"MpD · volt igazságügy-miniszter"};const KEP={"José Maria Neves":"assets/cv/neves.jpg?v=2","Joana Rosa":"assets/cv/rosa.jpg"};const AV=(x,i)=>KEP[x.n]?'<img class="av" src="'+KEP[x.n]+'" alt="'+esc(x.n)+'" width="58" height="58" style="--c:'+col(x.n,i)+'">':'<div class="av" style="background:'+col(x.n,i)+'">'+ini(x.n)+'</div>';const ini=n=>n.split(/\s+/).filter(w=>w.length>2).map(w=>w[0]).slice(0,2).join("").toUpperCase();
-const COL={"José Maria Neves":"#E8B400","Joana Rosa":"#2E9E57"},PAL=["#E8B400","#2E9E57","#4C8DF6","#C0504D","#8E6BD8","#3FB6B2"];
-const col=(n,i)=>COL[n]||PAL[i%PAL.length];
-const EL="https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json?rev=20261115-2302";
+const nf=n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf=x=>x==null||isNaN(x)?"–":x.toFixed(2).replace(".",",")+"%";
+const COL={"José Maria Neves":"#E0A800","Joana Rosa":"#2E9E57","Gilson Alves":"#4C8DF6","Antero Tavares":"#C0504D","Casimiro de Pina":"#8E6BD8","Loisito Sousa":"#3FB6B2"},PAL=["#E0A800","#2E9E57","#4C8DF6","#C0504D","#8E6BD8","#3FB6B2","#D9822B"];
+const PART={"José Maria Neves":"PAICV · hivatalban lévő elnök","Joana Rosa":"MpD · volt igazságügy-miniszter"};
+const KEP={"José Maria Neves":"assets/cv/neves.jpg?v=2","Joana Rosa":"assets/cv/rosa.jpg"};
+const EL="https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/cv-elo.json";
 const GEO="https://media.githubusercontent.com/media/wmgeolab/geoBoundaries/9469f09/releaseData/gbOpen/CPV/ADM1/geoBoundaries-CPV-ADM1_simplified.geojson";
-const key=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z]/g,"");
-let D=null,G=null,SEL=null,ORD=[];
-/* eredménysorok: c = [[név, szavazat], …] -> százalékkal, csökkenő sorrendben */
-const rows=c=>{const t=(c||[]).reduce((a,x)=>a+(x[1]||0),0)||0;return (c||[]).map(x=>({n:x[0],v:x[1]||0,p:t?x[1]/t*100:null})).sort((a,b)=>b.v-a.v);};
-function bars(c,national){const r=rows(c);if(!r.length||!r.some(x=>x.v))return '<p class="muted">Még nincs adat.</p>';
-  const winner=r[0];
-  return r.map(x=>{const i=ORD.indexOf(x.n),check=x===winner?'<span class="winner-check" title="A községben jelenleg vezető jelölt" aria-label="A községben jelenleg vezető jelölt">✓</span>':'';return '<div class="cand"><div><b>'+esc(x.n)+check+'</b></div><div class="pc">'+pf(x.p)+'</div><div></div><div class="vt">'+nf(x.v)+' szavazat</div><div class="br"><i style="background:'+col(x.n,i<0?0:i)+';width:'+(x.p||0).toFixed(2)+'%"></i></div></div>';}).join("");}
-function stat(){const d=D||{};const f=d.feld,t=d.reszv;
-  $("sFeld").textContent=f==null?"–":pf(f);$("bFeld").style.width=(f||0)+"%";$("sReszv").textContent=t==null?"–":pf(t);$("bReszv").style.width=(t||0)+"%";
-  $("sSzav").textContent=d.szav==null?"–":nf(d.szav);
-  $("sAll").textContent=d.allapot||(f>=100?"Előzetes végeredmény":f>0?"Számlálás folyik":"Választás előtt");
-  $("sUpd").textContent="frissítés: "+(d.upd?new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"–");
-  $("nat").innerHTML=bars(d.nat&&d.nat.c,true);$("liv").hidden=!(f>0&&f<100);$("nupd").textContent=d.upd?"Utolsó adat: "+new Date(d.upd).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"}):"";
-  {const r2=rows(d.nat&&d.nat.c);const A=r2.find(x=>x.n===ORD[0])||{n:ORD[0],p:null,v:0},B=r2.find(x=>x.n===ORD[1])||{n:ORD[1],p:null,v:0};
-   const card=(x,i,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n,i)+'">'+AV(x,i)+'<div><b>'+esc(x.n)+(x.n==="José Maria Neves"&&A.n===x.n&&A.p>50?'<span class="winner-check" title="Előzetes első fordulós győztes" aria-label="Előzetes első fordulós győztes">✓</span>':'')+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+(x.p==null?"–":pf(x.p))+'</div></div></div>';
-   $("h2h").innerHTML='<div class="h2h">'+card(A,0)+card(B,1,1)+'</div><div class="split"><i style="width:'+(A.p||0)+'%;background:'+col(A.n,0)+'"></i><i style="flex:1"></i><i style="width:'+(B.p||0)+'%;background:'+col(B.n,1)+'"></i></div><div class="splitn"><span>'+nf(A.v)+' szavazat</span><span>50% kell a győzelemhez</span><span>'+nf(B.v)+' szavazat</span></div>';}
-  const r=rows(d.nat&&d.nat.c);$("natn").textContent=r.length&&r[0].v?(r[0].p>50?r[0].n+" az első forduló előzetes győztese; a hivatalos végeredmény kihirdetése még hátravan.":"Jelenleg senki sincs 50% felett – ezen az állás szerint második forduló következne."):"";}
-function mun(m){
-  if(!D||!D.mun)return null;
-  const clean=s=>key(s).replace(/^(concelhode|municipiode|concelho|municipio)/,"");
-  const target=clean(m.k||m.n);
-  if(D.mun[target])return D.mun[target];
-  for(const [name,value] of Object.entries(D.mun)){if(clean(name)===target)return value;}
-  return null;
-}
-function fill(){
-  if(!G)return;
-  let covered=0;const leaders=new Set();
-  document.querySelectorAll("#cvmap path").forEach(p=>{
-    const m=G[Number(p.dataset.i)],x=mun(m),r=rows(x&&x.c),has=!!(r.length&&r[0].v);
-    let f="#8993A5",opacity=1,label=m.n+" – nincs községi eredmény";
-    if(has){
-      covered++;const winner=r[0],i=ORD.indexOf(winner.n);
-      leaders.add(winner.n);f=col(winner.n,i<0?0:i);
-      const processed=x.feld==null?100:Math.max(0,Math.min(100,x.feld));
-      opacity=processed>=100?1:.55+.45*processed/100;
-      label=m.n+" – "+winner.n+" vezet, "+pf(winner.p)+", "+nf(winner.v)+" szavazat";
-    }
-    p.style.fill=f;p.style.opacity=opacity;p.dataset.hasLocal=has?"1":"0";
-    p.setAttribute("aria-label",label);
-    const title=p.querySelector("title");if(title)title.textContent=label;
-  });
-  $("lg2").innerHTML=[...leaders].map(n=>{
-    const i=ORD.indexOf(n);return '<span><i style="background:'+col(n,i<0?0:i)+'"></i>'+esc(n)+' vezet</span>';
-  }).join("")+'<span><i style="background:#8993A5"></i>Nincs községi adat</span><span class="mun-coverage">'+covered+'/22 községhez van helyi eredmény</span>';
-  $("mapn").textContent="A szín a községben vezető jelöltet mutatja. Szürke: még nincs külön községi adat.";
-  if(SEL!=null)panel(SEL,false);
-}
-function panel(i,anim){
-  const m=G[i],x=mun(m),r=rows(x&&x.c),has=!!(r.length&&r[0].v);SEL=i;
-  document.querySelectorAll("#cvmap path").forEach(p=>p.classList.toggle("sel",+p.dataset.i===i));
-  const nr=rows(D&&D.nat&&D.nat.c),total=r.reduce((a,v)=>a+v.v,0),winner=r[0],runner=r[1];
-  const stats=x?'<div class="mun-stats"><span>Feldolgozottság: <b>'+pf(x.feld)+'</b></span><span>Részvétel: <b>'+pf(x.reszv)+'</b></span><span>Jelölti szavazatok: <b>'+(x.szav!=null?nf(x.szav):nf(total))+'</b></span></div>':'';
-  const lead=has?'<div class="mun-lead"><b>'+esc(winner.n)+' vezet</b><strong>'+pf(winner.p)+'</strong><span>'+nf(winner.v)+' szavazat'+(runner?' · előny: '+nf(winner.v-runner.v)+' szavazat':'')+'</span></div>':'';
-  const missing=has?'':'<div class="mun-empty">Ehhez a községhez jelenleg nincs letöltött, ellenőrzött községi eredmény. Ezért nem jelenítünk meg becsült szavazatszámot, és a térképen szürke marad.</div>'+
-    (nr.length?'<div class="mun-ref"><b>Országos referencia – nem helyi eredmény:</b> '+esc(nr[0].n)+' vezet '+pf(nr[0].p)+'-kal ('+nf(nr[0].v)+' szavazat).</div>':'');
-  $("mp").innerHTML='<h3>'+esc(m.n)+'</h3><p class="muted">'+esc(m.sz)+' szigete</p>'+lead+stats+(has?bars(x.c):missing);
-  if(anim&&window.MapAnim)MapAnim.panel($("mp"));
-  if(anim&&window.matchMedia&&matchMedia("(max-width:860px)").matches)setTimeout(()=>$("mp").scrollIntoView({behavior:"smooth",block:"nearest"}),120);
-}
+const key=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/^(concelho|municipio)\s*(de|do|da)?\s*/,"").replace(/[^a-z]/g,"");
+let D=null,G=null,SEL=null,SC="nat";const ORD=["José Maria Neves","Joana Rosa"];
+const col=n=>{let i=ORD.indexOf(n);if(i<0){ORD.push(n);i=ORD.length-1;}return COL[n]||PAL[i%PAL.length];};
+const ini=n=>n.split(/\s+/).filter(w=>w.length>2).map(w=>w[0]).slice(0,2).join("").toUpperCase();
+const AV=n=>KEP[n]?'<img class="av" src="'+KEP[n]+'" alt="'+esc(n)+'" style="--c:'+col(n)+'">':'<div class="av" style="background:'+col(n)+';--c:'+col(n)+'">'+ini(n)+'</div>';
+const rows=c=>{const t=(c||[]).reduce((a,x)=>a+(+x[1]||0),0);return (c||[]).map(x=>({n:x[0],v:+x[1]||0,p:t?(+x[1]||0)/t*100:null})).sort((a,b)=>b.v-a.v);};
+const blk=()=>{const d=D||{};if(SC==="global"&&d.global)return d.global;return d.nacional||{feld:d.feld,reszv:d.reszv,szav:d.szav,c:d.nat&&d.nat.c,mesas:d.mesas,inscritos:d.inscritos,nulos:d.nulos,brancos:d.brancos};};
+function list(c,mini){const r=rows(c);if(!r.length||!r.some(x=>x.v))return '<p class="cvn">Még nincs adat.</p>';
+  return r.map((x,i)=>'<div class="rr"><span class="d" style="background:'+col(x.n)+'"></span><b>'+esc(x.n)+(i===0&&x.p>50&&!mini?'<span class="ok" title="Az érvényes szavazatok több mint fele">✓</span>':'')+'</b><span class="v"><strong>'+pf(x.p)+'</strong><span>'+nf(x.v)+'</span></span><span class="br"><i style="background:'+col(x.n)+';width:'+(x.p||0).toFixed(2)+'%"></i></span></div>').join("");}
+function stat(){const b=blk(),d=D||{},f=b.feld,t=b.reszv;
+  $("sFeld").textContent=f==null?"–":pf(f);$("bFeld").style.width=(f||0)+"%";$("sMes").textContent=b.mesas?nf(b.mesas.value)+" / "+nf(b.mesas.total)+" szavazókör feldolgozva":"feldolgozottság";
+  $("sReszv").textContent=t==null?"–":pf(t);$("bReszv").style.width=(t||0)+"%";$("sIns").textContent=b.inscritos?"részvétel · "+nf(b.inscritos)+" választópolgár":"részvétel";
+  $("sSzav").textContent=nf(b.szav);$("sUe").textContent=b.brancos!=null||b.nulos!=null?nf(b.brancos)+" / "+nf(b.nulos):"–";
+  const done=f>=100,cnt=f>0&&!done;$("chip").innerHTML=cnt?'<span class="chip l"><i></i>Élő · számlálás</span>':(f>0?'<span class="chip e">Előzetes végeredmény</span>':'<span class="chip e">Választás előtt</span>');
+  const r=rows(b.c);const A=r[0];
+  if(A&&A.v&&A.p>50){$("ban").hidden=false;$("ban").style.setProperty("--c",col(A.n));$("ban").innerHTML=(KEP[A.n]?'<img src="'+KEP[A.n]+'" alt="">':'')+'<div><b>'+esc(A.n)+' az első fordulóban '+pf(A.p)+'-kal az érvényes szavazatok több mint felét szerezte meg</b><small>Előzetes eredmény, '+pf(f)+' feldolgozottságnál. A hivatalos végeredményt a CNE hirdeti ki.</small></div>';}else $("ban").hidden=true;
+  const X=r.find(x=>x.n===ORD[0])||{n:ORD[0],p:null,v:0},Y=r.find(x=>x.n===ORD[1])||{n:ORD[1],p:null,v:0};
+  const card=(x,rr)=>'<div class="pc2'+(rr?' r':'')+'" style="--c:'+col(x.n)+'">'+AV(x.n)+'<div><b>'+esc(x.n)+'</b><small>'+esc(PART[x.n]||"")+'</small><div class="pp">'+pf(x.p)+'</div></div></div>';
+  $("h2h").innerHTML='<div class="h2h">'+card(X)+'<span class="vs">VS</span>'+card(Y,1)+'</div><div class="split"><i style="width:'+(X.p||0)+'%;background:'+col(X.n)+'"></i><i style="flex:1"></i><i style="width:'+(Y.p||0)+'%;background:'+col(Y.n)+'"></i></div><div class="splitn"><span>'+nf(X.v)+' szavazat</span><span>50% kell a győzelemhez</span><span>'+nf(Y.v)+' szavazat</span></div>';
+  $("nat").innerHTML=list(b.c);
+  $("natn").textContent=(d.upd?"Utolsó adat: "+new Date(d.upd).toLocaleString("hu-HU",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})+". ":"")+"Az oldal magától frissül.";}
+function mun(m){if(!D||!D.mun)return null;if(D.mun[m.k])return D.mun[m.k];for(const k in D.mun)if(key(k)===m.k)return D.mun[k];return null;}
+function fill(){if(!G)return;const L=new Set();document.querySelectorAll("#cvmap path").forEach(p=>{const m=G[+p.dataset.i],x=mun(m),r=rows(x&&x.c);let f="var(--line)";
+  if(r.length&&r[0].v){f=col(r[0].n);L.add(r[0].n);}p.style.fill=f;});
+  $("lg2").innerHTML=[...L].map(n=>'<span><i style="background:'+col(n)+'"></i>'+esc(n)+' vezet</span>').join("")+'<span><i style="background:var(--line)"></i>Nincs adat</span>';
+  table();if(SEL!=null)panel(SEL,false);}
+function table(){if(!G)return;const T=G.map((m,i)=>({m,i,r:rows((mun(m)||{}).c)})).sort((a,b)=>a.m.n.localeCompare(b.m.n,"pt"));
+  $("tb").innerHTML='<thead><tr><th>Község</th><th>Győztes</th><th>Neves</th><th>Rosa</th><th>Szavazat</th></tr></thead><tbody>'+T.map(o=>{const r=o.r,w=r[0],tot=r.reduce((a,x)=>a+x.v,0),g=n=>{const x=r.find(y=>y.n===n);return x?pf(x.p):"–";};
+    return '<tr data-i="'+o.i+'"'+(SEL===o.i?' class="sel"':'')+'><td>'+esc(o.m.n)+'</td><td>'+(w&&w.v?'<span class="w" style="background:'+col(w.n)+'"></span>'+esc(w.n.split(" ").slice(-1)[0]):'–')+'</td><td>'+g("José Maria Neves")+'</td><td>'+g("Joana Rosa")+'</td><td>'+(tot?nf(tot):'–')+'</td></tr>';}).join("")+'</tbody>';}
+function panel(i,user){const m=G[i],x=mun(m);SEL=i;$("cvmap").classList.add("has");document.querySelectorAll("#cvmap path").forEach(p=>p.classList.toggle("sel",+p.dataset.i===i));
+  document.querySelectorAll("#tb tr[data-i]").forEach(t=>t.classList.toggle("sel",+t.dataset.i===i));
+  const r=rows(x&&x.c),tot=r.reduce((a,y)=>a+y.v,0);
+  $("mp").innerHTML='<button class="x" type="button" aria-label="Bezárás">×</button><h3>'+esc(m.n)+'</h3><p class="is">'+esc(m.sz)+' szigete'+(tot?' · '+nf(tot)+' érvényes szavazat':'')+(x&&x.reszv!=null?' · részvétel '+pf(x.reszv):'')+(x&&x.feld!=null?' · '+pf(x.feld)+' feldolgozva':'')+'</p><div class="rl">'+list(x&&x.c,1)+'</div>';
+  $("mp").querySelector(".x").onclick=()=>{SEL=null;$("cvmap").classList.remove("has");document.querySelectorAll("#cvmap path,#tb tr").forEach(p=>p.classList.remove("sel"));$("mp").innerHTML='<h3>Válassz egy községet</h3><p class="is">Koppints a térképen vagy a táblázatban egy községre.</p>';};
+  if(user){if(window.MapAnim)MapAnim.panel($("mp"));const rc=$("mp").getBoundingClientRect();if(rc.top<70||rc.bottom>innerHeight)$("mp").scrollIntoView({behavior:"smooth",block:"nearest"});}}
 const SZIGET={"Boa Vista":"Boa Vista","Brava":"Brava","Maio":"Maio","Sal":"Sal","São Vicente":"São Vicente","Ribeira Brava":"São Nicolau","Tarrafal de São Nicolau":"São Nicolau","Porto Novo":"Santo Antão","Ribeira Grande":"Santo Antão","Paul":"Santo Antão","Mosteiros":"Fogo","Santa Catarina do Fogo":"Fogo","São Filipe":"Fogo"};
 function draw(gj){const fs=gj.features;let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;const k=Math.cos(16*Math.PI/180);
-  const each=(g,fn)=>{const P=g.type==="Polygon"?[g.coordinates]:g.coordinates;P.forEach(pl=>pl.forEach(r=>r.forEach(fn)));};
+  const each=(g,fn)=>{(g.type==="Polygon"?[g.coordinates]:g.coordinates).forEach(pl=>pl.forEach(r=>r.forEach(fn)));};
   fs.forEach(f=>each(f.geometry,c=>{x0=Math.min(x0,c[0]*k);x1=Math.max(x1,c[0]*k);y0=Math.min(y0,c[1]);y1=Math.max(y1,c[1]);}));
-  const W=600,H=520,pad=14,s=Math.min((W-2*pad)/(x1-x0),(H-2*pad)/(y1-y0)),ox=(W-(x1-x0)*s)/2,oy=(H-(y1-y0)*s)/2;
+  const W=600,H=520,pad=10,s=Math.min((W-2*pad)/(x1-x0),(H-2*pad)/(y1-y0)),ox=(W-(x1-x0)*s)/2,oy=(H-(y1-y0)*s)/2;
   const X=c=>(ox+(c[0]*k-x0)*s).toFixed(1),Y=c=>(oy+(y1-c[1])*s).toFixed(1);
   G=fs.map(f=>{const n=f.properties.shapeName;return {n,k:key(n),sz:SZIGET[n]||"Santiago"};});
-  let h="";fs.forEach((f,i)=>{const P=f.geometry.type==="Polygon"?[f.geometry.coordinates]:f.geometry.coordinates;let d="";P.forEach(pl=>pl.forEach(r=>{d+="M"+r.map(c=>X(c)+" "+Y(c)).join("L")+"Z";}));
-    h+='<path tabindex="0" role="button" data-i="'+i+'" d="'+d+'" aria-label="'+esc(G[i].n)+' – községi eredmény megnyitása"><title>'+esc(G[i].n)+'</title></path>';});
-  const sv=$("cvmap");sv.innerHTML=h;$("mapn").textContent="Koppints egy községre a részletekért.";
-  const choose=e=>{const p=e.target&&e.target.closest?e.target.closest("path[data-i]"):null;if(p){const i=Number(p.dataset.i);if(Number.isInteger(i)&&G[i])panel(i,true);}};
-  sv.addEventListener("click",choose);
-  sv.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();choose(e);}});
+  let h="";fs.forEach((f,i)=>{let d="";(f.geometry.type==="Polygon"?[f.geometry.coordinates]:f.geometry.coordinates).forEach(pl=>pl.forEach(r=>{d+="M"+r.map(c=>X(c)+" "+Y(c)).join("L")+"Z";}));h+='<path data-i="'+i+'" d="'+d+'"><title>'+esc(G[i].n)+'</title></path>';});
+  const sv=$("cvmap");sv.innerHTML=h;sv.addEventListener("click",e=>{const p=e.target.closest("path");if(p)panel(+p.dataset.i,true);});
+  $("tb").addEventListener("click",e=>{const t=e.target.closest("tr[data-i]");if(t){panel(+t.dataset.i,false);$("mp").scrollIntoView({behavior:"smooth",block:"center"});}});
   if(window.MapAnim)MapAnim.intro(sv.querySelectorAll("path"),{svg:sv});fill();}
-fetch(GEO).then(r=>r.json()).then(draw).catch(e=>{console.warn("térkép:",e);$("mapn").textContent="A térkép most nem tölthető be – az eredmények ettől függetlenül frissülnek.";});
-async function load(){try{const r=await fetch(EL+"&_="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();
-  if(D&&d.upd===D.upd)return;D=d;rows(d.nat&&d.nat.c).forEach(x=>{if(ORD.indexOf(x.n)<0)ORD.push(x.n);});stat();fill();}catch(e){if(!D){D={};stat();}}}
-["José Maria Neves","Joana Rosa"].forEach(n=>ORD.push(n));
-load();document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")load();});setInterval(()=>{if(document.visibilityState==="visible")load();},30000);
+fetch(GEO).then(r=>r.json()).then(draw).catch(()=>{$("lg2").textContent="A térkép most nem tölthető be – az eredmények ettől függetlenül frissülnek.";});
+$("sc").addEventListener("click",e=>{const b=e.target.closest("button[data-s]");if(!b)return;SC=b.dataset.s;$("sc").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));stat();});
+async function load(){try{const r=await fetch(EL+"?_="+Date.now(),{cache:"no-store"});if(!r.ok)throw 0;const d=await r.json();if(D&&d.upd===D.upd)return;D=d;
+  if(!d.global)$("sc").hidden=true;stat();fill();}catch(e){if(!D){D={};stat();}}}
+load();setInterval(()=>{if(document.visibilityState==="visible")load();},30000);document.addEventListener("visibilitychange",()=>{if(document.visibilityState==="visible")load();});
 })();
 </script>
 <script src="assets/anim.js?v=3" defer></script>
