@@ -270,7 +270,13 @@
 @media(max-width:600px){.exr{grid-template-columns:minmax(0,1fr) 5.4em;grid-template-areas:'n b' 't t';row-gap:6px}.exr>.pn{grid-area:n}.exr>.tr{grid-area:t}.exr>b{grid-area:b}}
 .ind .pn>span{min-width:0}.ind .jn,.vb .jn{display:block;font:600 11px var(--f-body);font-style:normal;color:var(--ink3)}
 .vb em.jn,.vb.vbm em.jn{height:auto;background:none;box-shadow:none;min-width:0;border-radius:0;width:auto!important}
-.lgo.lgd{filter:brightness(0) invert(1)}:root[data-theme="light"] .lgo.lgd{filter:none}@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .lgo.lgd{filter:none}}
+.lgd{filter:brightness(0) invert(1)}:root[data-theme="light"] .lgd{filter:none}@media (prefers-color-scheme: light){:root:not([data-theme="dark"]) .lgd{filter:none}}
+.fej{display:block;flex:none;width:40px;height:40px;border-radius:50%;object-fit:cover;box-shadow:0 0 0 2px var(--c);background:var(--bg2)}
+.fx{display:grid;place-items:center;font:800 13px/1 var(--f-display);font-style:normal;letter-spacing:.02em;color:var(--ink);background:color-mix(in srgb,var(--c) 28%,var(--card))}
+.jn img.jlg{width:auto;height:14px;max-width:46px;border-radius:0;object-fit:contain;vertical-align:-3px;margin-right:6px}
+.vb.vbm .fej,.ind .fej{width:34px;height:34px}.exr .fej{width:32px;height:32px}
+@media(max-width:600px){.rr .pn .fej{width:34px;height:34px}}
+.rr .pn i.fej{width:40px;height:40px;border-radius:50%;background:color-mix(in srgb,var(--c) 28%,var(--card))}@media(max-width:600px){.rr .pn i.fej{width:34px;height:34px}}
 </style>
 </head>
 <body>
@@ -411,8 +417,11 @@ const cl=p=>COL[p]||"#9AA4B8";
 const JEL={"PP":"Alberto Núñez Feijóo","PSOE":"Pedro Sánchez Pérez-Castejón","Vox":"Santiago Abascal Conde","Frente Amplio":"Ada Colau Ballano","Sumar":"Ada Colau Ballano (Frente Amplio)","Podemos":"Irene Montero Gil","SALF":"Luis „Alvise” Pérez Fernández","ERC":"Gabriel Rufián Romero","Junts":"Míriam Nogueras i Camero","EH Bildu":"Oskar Matute García de Jalón","PNV":"Maribel Vaquero Montero","BNG":"Néstor Rego Candamil","CC":"Cristina Valido García","UPN":"közös lista a Partido Popularral"};
 const LOGO={"PP": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Logo_del_PP_%282022%29.svg/250px-Logo_del_PP_%282022%29.svg.png", "PSOE": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Logo_PSOE_41_Congreso.svg/250px-Logo_PSOE_41_Congreso.svg.png", "Vox": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/VOX_logo.svg/250px-VOX_logo.svg.png", "Frente Amplio": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Frente_AMPLIO.svg/250px-Frente_AMPLIO.svg.png", "Sumar": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Movimiento_Sumar_logo_2025.svg/250px-Movimiento_Sumar_logo_2025.svg.png", "Podemos": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Logo_de_Podemos_%282022%29.svg/250px-Logo_de_Podemos_%282022%29.svg.png", "SALF": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Se_acabo_la_fiesta_wordmark.png/250px-Se_acabo_la_fiesta_wordmark.png", "ERC": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/ERC_logo_2025.svg/250px-ERC_logo_2025.svg.png", "Junts": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Junts_per_Catalunya_%282020%29.svg/250px-Junts_per_Catalunya_%282020%29.svg.png", "EH Bildu": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_de_EH_Bildu_%282023%29.svg/250px-Logo_de_EH_Bildu_%282023%29.svg.png", "PNV": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Logo_PNV_2025.svg/250px-Logo_PNV_2025.svg.png", "BNG": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bloque_Nacionalista_Galego.svg/250px-Bloque_Nacionalista_Galego.svg.png", "CC": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Coalici%C3%B3n_Canaria.svg/250px-Coalici%C3%B3n_Canaria.svg.png", "UPN": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_UPN_2017.svg/250px-Logo_UPN_2017.svg.png"},FOTO={"PP": "assets/es/feijoo.webp", "PSOE": "assets/es/sanchez.webp", "Vox": "assets/es/abascal.webp", "Frente Amplio": "assets/es/colau.webp", "Sumar": "assets/es/colau.webp"};
 const lgo=p=>LOGO[p]?'<img class="lgo'+(p==="ERC"||p==="SALF"?' lgd':'')+'" src="'+LOGO[p]+'" alt="'+esc(p)+'" loading="lazy">':'<i class="lgx" style="background:'+cl(p)+'"></i>';
-const pnm=p=>esc(p)+(JEL[p]?'<em class="jn">'+(FOTO[p]?'<img src="'+FOTO[p]+'" alt="" loading="lazy">':'')+esc(JEL[p])+'</em>':'');
-const pcell=p=>'<span class="pn">'+lgo(p)+'<span>'+pnm(p)+'</span></span>';
+const lgs=p=>LOGO[p]?'<img class="jlg'+(p==="ERC"||p==="SALF"?' lgd':'')+'" src="'+LOGO[p]+'" alt="'+esc(p)+'" loading="lazy">':'';
+const pnm=p=>esc(p)+(JEL[p]?'<em class="jn">'+lgs(p)+esc(JEL[p])+'</em>':(LOGO[p]?'<em class="jn">'+lgs(p)+'</em>':''));
+const mono=p=>{const j=JEL[p];if(!j||/^közös/.test(j))return esc(p.slice(0,3));const w=j.replace(/[„”"]/g,"").split(/\s+/).filter(x=>/^[A-ZÁÉÍÓÖŐÚÜŰÑ]/.test(x));return esc((w[0]||"")[0]+((w[1]||"")[0]||""));};
+const fej=p=>FOTO[p]?'<img class="fej" style="--c:'+cl(p)+'" src="'+FOTO[p]+'" alt="'+esc(JEL[p]||p)+'" loading="lazy">':'<i class="fej fx" style="--c:'+cl(p)+'">'+mono(p)+'</i>';
+const pcell=p=>'<span class="pn">'+fej(p)+'<span>'+pnm(p)+'</span></span>';
 
 let E={st:"elott",part:{},nat:[],prov:{},mun:{},rp:0};
 
