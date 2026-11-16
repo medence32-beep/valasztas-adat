@@ -238,6 +238,36 @@
 .jo .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:800 13px var(--f-body);color:#fff;background:color-mix(in srgb,var(--c) 70%,#000)}
 .jo b{display:block;font:700 14.5px var(--f-body)}.jo small{text-transform:none;letter-spacing:0;font:600 12px/1.35 var(--f-body);display:block}.jo small i{display:inline-block;margin-right:5px;vertical-align:1px}
 .rr .pn .jn{display:block;font-style:normal;font:600 11px var(--f-body);color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.rr .pn>span{min-width:0}
+
+.duel .wrap{padding-top:6px}
+.dk{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.h2s{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);gap:14px;align-items:stretch}
+.hc{position:relative;overflow:hidden;display:grid;align-items:center;gap:14px;padding:14px;border-radius:18px;border:1px solid var(--line);min-width:0}
+.hc.l{grid-template-columns:120px minmax(0,1fr) auto;background:linear-gradient(100deg,color-mix(in srgb,var(--c) 26%,var(--card)),var(--card) 70%)}
+.hc.r{grid-template-columns:auto minmax(0,1fr) 120px;text-align:right;background:linear-gradient(260deg,color-mix(in srgb,var(--c) 26%,var(--card)),var(--card) 70%)}
+.hc .ph{width:120px;height:120px;border-radius:14px;object-fit:cover;box-shadow:0 0 0 3px var(--c)}
+.hc .hi{min-width:0}.hc .hi b{display:block;font:900 clamp(20px,2.2vw,28px)/1 var(--f-display);text-transform:uppercase;margin:8px 0 4px}.hc .hi small{font-size:12.5px;color:var(--ink2)}
+.hc .lgo{height:30px;width:auto;max-width:110px}
+.hc .hn b{display:block;font:900 clamp(30px,3.6vw,46px)/1 var(--f-display);color:var(--c);font-variant-numeric:tabular-nums}.hc .hn small{display:block;font:700 12.5px var(--f-body);color:var(--ink2);margin-top:4px}
+.vs{align-self:center;font:900 22px var(--f-display);color:var(--ink3)}
+.dbar{display:flex;height:12px;border-radius:6px;overflow:hidden;background:var(--bg2);margin-top:14px}.dbar i{display:block;height:100%;transition:width 1s cubic-bezier(.2,.8,.2,1);width:0}.dbar span{flex:1}
+.dlg{display:flex;justify-content:space-between;gap:10px;margin-top:6px;font-size:12px;color:var(--ink2)}
+@media(max-width:860px){.h2s{grid-template-columns:minmax(0,1fr)}.vs{text-align:center}.hc.l,.hc.r{grid-template-columns:84px minmax(0,1fr) auto;text-align:left}.hc.r .ph{grid-column:1;grid-row:1}.hc.r .hi{grid-column:2;grid-row:1}.hc.r .hn{grid-column:3;grid-row:1}.hc .ph{width:84px;height:84px}}
+.lgo{display:inline-block;flex:none;width:44px;height:24px;object-fit:contain;background:#fff;border-radius:5px;padding:2px 3px;box-sizing:border-box;vertical-align:middle}
+.lgx{display:inline-block;flex:none;width:10px;height:10px;border-radius:3px}
+.rr .pn{gap:10px}.rr .pn .lgo{width:46px;height:26px}
+.vb.vbm span.pn{display:flex;align-items:center;gap:8px;min-width:0;font-weight:700}.vb.vbm span.pn>span{min-width:0}
+.vb.vbm .jn,.exr .jn{display:block;font:600 11px var(--f-body);font-style:normal;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.jn img{width:15px;height:15px;border-radius:50%;object-fit:cover;vertical-align:-3px;margin-right:4px}
+.exr .pn{display:flex;align-items:center;gap:8px;min-width:0}.exr{grid-template-columns:13em minmax(0,1fr) 5.2em}
+.kp button .lgo{width:36px;height:20px;padding:1px 2px}
+.kx div{grid-template-columns:8.6em minmax(0,1fr) 3.4em}.kx .pn{display:flex;align-items:center;gap:6px}.kx .lgo{width:34px;height:18px;padding:1px 2px}
+.indh{margin:14px 0 4px;font:800 11px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--ink2)}
+.ind{display:grid;gap:0}.ind div{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:7px 0;border-top:1px solid var(--line)}.ind div:first-child{border-top:0}.ind .pn{display:flex;align-items:center;gap:8px;min-width:0;font-weight:700;font-size:13.5px}.ind small{font:700 12px var(--f-mono);color:var(--ink3)}
+.rr{grid-template-columns:minmax(0,2.1fr) minmax(0,1.3fr) 4.4em 3.4em}
+.jn,.rr .pn .jn,.vb.vbm .jn,.exr .jn{white-space:normal!important;overflow:visible!important;text-overflow:clip!important;line-height:1.25;margin-top:2px}
+@media(max-width:600px){.rr{grid-template-columns:minmax(0,1fr) 4.8em 3em;grid-template-areas:'n v s' 't t t';row-gap:6px}.rr>:nth-child(1){grid-area:n}.rr>:nth-child(2){grid-area:t}.rr>:nth-child(3){grid-area:v}.rr>:nth-child(4){grid-area:s}.rr .tr{height:6px}.rr.rh{row-gap:0}.rr .pn .lgo{width:38px;height:22px}}
+@media(max-width:600px){.exr{grid-template-columns:minmax(0,1fr) 5.4em;grid-template-areas:'n b' 't t';row-gap:6px}.exr>.pn{grid-area:n}.exr>.tr{grid-area:t}.exr>b{grid-area:b}}
 </style>
 </head>
 <body>
@@ -269,6 +299,17 @@
   </div>
 </div></section>
 
+<section class="sec2 duel"><div class="wrap">
+  <div class="dk"><span class="kicker">A miniszterelnöki székért</span><small class="rn" id="dsrc">A kutatások átlaga · becsült mandátumok</small></div>
+  <div class="h2s">
+    <div class="hc l" style="--c:#E30613"><img class="ph" src="assets/es/sanchez.webp" alt="Pedro Sánchez Pérez-Castejón" width="120" height="120"><div class="hi"><img class="lgo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Logo_PSOE_41_Congreso.svg/250px-Logo_PSOE_41_Congreso.svg.png" alt="PSOE"><b>Pedro Sánchez Pérez-Castejón</b><small>Miniszterelnök · Partido Socialista Obrero Español</small></div><div class="hn"><b id="dpL">–</b><small id="dsL">–</small></div></div>
+    <div class="vs">VS</div>
+    <div class="hc r" style="--c:#1D84CE"><div class="hn"><b id="dpR">–</b><small id="dsR">–</small></div><div class="hi"><img class="lgo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Logo_del_PP_%282022%29.svg/250px-Logo_del_PP_%282022%29.svg.png" alt="PP"><b>Alberto Núñez Feijóo</b><small>Ellenzékvezető · Partido Popular</small></div><img class="ph" src="assets/es/feijoo.webp" alt="Alberto Núñez Feijóo" width="120" height="120"></div>
+  </div>
+  <div class="dbar"><i id="dbL" style="background:#E30613"></i><span></span><i id="dbR" style="background:#1D84CE"></i></div>
+  <div class="dlg"><span id="dlL"></span><span id="dlR"></span></div>
+</div></section>
+
 <div id="live">
 <section class="sec2"><div class="wrap">
   <div class="sh2 nl"><h2>Eredmények · Képviselőház</h2><small id="rupd">Az első adatok november 29-én, 20:00 után</small></div>
@@ -297,13 +338,6 @@
     <div><span class="kicker">Közvélemény-kutatások</span><b>Hogyan áll a verseny a felmérések szerint?</b><p>Minden kutatás egy helyen: trendgrafikon a 2023-as választás óta, intézetenkénti mérések és mandátumbecslések a Spanyolország-oldalon.</p></div>
     <div class="kx" id="kx"></div><span class="go">Kutatások megnyitása <i>→</i></span>
   </a>
-</div></section>
-
-<section class="sec2"><div class="wrap">
-  <div class="sh2 nl"><h2>Jelöltek</h2><small>Miniszterelnök-jelöltek és listavezetők, 2026</small></div>
-  <div class="jg"><div class="jl" style="--c:#1D84CE"><img src="assets/es/feijoo.webp" alt="Alberto Núñez Feijóo" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>PP</span><b>Alberto Núñez Feijóo</b><small>Partido Popular · jobbközép</small><p>A Partido Popular elnöke, korábban Galicia elnöke. 2023-ban pártja lett az első, de nem tudott többséget szerezni.</p></div></div><div class="jl" style="--c:#E30613"><img src="assets/es/sanchez.webp" alt="Pedro Sánchez" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>PSOE</span><b>Pedro Sánchez Pérez-Castejón</b><small>Partido Socialista Obrero Español · balközép</small><p>2018 óta miniszterelnök. Ő írta ki az előrehozott választást, hogy szélesebb többséget szerezzen.</p></div></div><div class="jl" style="--c:#63BE21"><img src="assets/es/abascal.webp" alt="Santiago Abascal" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>Vox</span><b>Santiago Abascal Conde</b><small>Vox · radikális jobboldal</small><p>A Vox alapító elnöke. A kutatások szerint pártja a harmadik, és a PP lehetséges koalíciós partnere.</p></div></div><div class="jl" style="--c:#E51C55"><img src="assets/es/colau.webp" alt="Ada Colau Ballano" loading="lazy" width="96" height="96"><div><span class="jp"><i></i>Frente Amplio</span><b>Ada Colau Ballano</b><small>Frente Amplio · baloldal</small><p>Barcelona volt polgármestere, a barcelonai lista vezetője. A Frente Amplio a Sumar, a Más Madrid, az Izquierda Unida és a Catalunya en Comú közös listája.</p></div></div></div>
-  <div class="jog"><div class="jo" style="--c:#6B2E68"><span class="av">IM</span><div><b>Irene Montero Gil</b><small><i></i>Podemos · EP-képviselő, a párt önállóan indul</small></div></div><div class="jo" style="--c:#8E9AAF"><span class="av">AP</span><div><b>Luis „Alvise” Pérez Fernández</b><small><i></i>SALF · Se Acabó La Fiesta · madridi listavezető</small></div></div><div class="jo" style="--c:#FFB232"><span class="av">GR</span><div><b>Gabriel Rufián Romero</b><small><i></i>ERC · Esquerra Republicana de Catalunya</small></div></div><div class="jo" style="--c:#00C3B2"><span class="av">MN</span><div><b>Míriam Nogueras i Camero</b><small><i></i>Junts · Junts per Catalunya</small></div></div><div class="jo" style="--c:#B5CF18"><span class="av">OM</span><div><b>Oskar Matute García de Jalón</b><small><i></i>EH Bildu · Euskal Herria Bildu</small></div></div><div class="jo" style="--c:#4AAE4A"><span class="av">MV</span><div><b>Maribel Vaquero Montero</b><small><i></i>PNV · Partido Nacionalista Vasco</small></div></div><div class="jo" style="--c:#76B3DD"><span class="av">NR</span><div><b>Néstor Rego Candamil</b><small><i></i>BNG · Bloque Nacionalista Galego</small></div></div><div class="jo" style="--c:#FFD700"><span class="av">CV</span><div><b>Cristina Valido García</b><small><i></i>CC · Coalición Canaria</small></div></div></div>
-  <p class="rn">Az Unión del Pueblo Navarro (UPN) ezúttal a Partido Popularral közös listán indul Navarrában. Forrás: <a href="https://es.euronews.com/2026/10/22/29n-listas-candidatos-partidos-generales" target="_blank" rel="noopener">Euronews</a>, <a href="https://www.democrata.es/en/politics/alvise-registers-salf-lists-for-congress-in-46-provinces-and-rules-out-competing-for-the-senate/" target="_blank" rel="noopener">Demócrata</a>.</p>
 </div></section>
 
 <section class="sec2"><div class="wrap">
@@ -372,7 +406,10 @@ const P23={"14":40.48,"18":53.12,"vege":70.38};
 let COL={"PP":"#1D84CE","PSOE":"#E30613","Vox":"#63BE21","Sumar":"#E51C55","Frente Amplio":"#E51C55","Podemos":"#6B2E68","SALF":"#8E9AAF","ERC":"#FFB232","Junts":"#00C3B2","EH Bildu":"#B5CF18","PNV":"#4AAE4A","BNG":"#76B3DD","CC":"#FFD700","UPN":"#2A52BE","Egyéb":"#9AA4B8"};
 const cl=p=>COL[p]||"#9AA4B8";
 const JEL={"PP":"Alberto Núñez Feijóo","PSOE":"Pedro Sánchez Pérez-Castejón","Vox":"Santiago Abascal Conde","Frente Amplio":"Ada Colau Ballano","Sumar":"Ada Colau Ballano (Frente Amplio)","Podemos":"Irene Montero Gil","SALF":"Luis „Alvise” Pérez Fernández","ERC":"Gabriel Rufián Romero","Junts":"Míriam Nogueras i Camero","EH Bildu":"Oskar Matute García de Jalón","PNV":"Maribel Vaquero Montero","BNG":"Néstor Rego Candamil","CC":"Cristina Valido García","UPN":"közös lista a Partido Popularral"};
-const pnm=p=>esc(p)+(JEL[p]?'<em class="jn">'+esc(JEL[p])+'</em>':'');
+const LOGO={"PP": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/Logo_del_PP_%282022%29.svg/250px-Logo_del_PP_%282022%29.svg.png", "PSOE": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Logo_PSOE_41_Congreso.svg/250px-Logo_PSOE_41_Congreso.svg.png", "Vox": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/VOX_logo.svg/250px-VOX_logo.svg.png", "Frente Amplio": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/Frente_AMPLIO.svg/250px-Frente_AMPLIO.svg.png", "Sumar": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Movimiento_Sumar_logo_2025.svg/250px-Movimiento_Sumar_logo_2025.svg.png", "Podemos": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Logo_de_Podemos_%282022%29.svg/250px-Logo_de_Podemos_%282022%29.svg.png", "SALF": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Se_acabo_la_fiesta_wordmark.png/250px-Se_acabo_la_fiesta_wordmark.png", "ERC": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9a/ERC_logo_2025.svg/250px-ERC_logo_2025.svg.png", "Junts": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Junts_per_Catalunya_%282020%29.svg/250px-Junts_per_Catalunya_%282020%29.svg.png", "EH Bildu": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/Logo_de_EH_Bildu_%282023%29.svg/250px-Logo_de_EH_Bildu_%282023%29.svg.png", "PNV": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Logo_PNV_2025.svg/250px-Logo_PNV_2025.svg.png", "BNG": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Bloque_Nacionalista_Galego.svg/250px-Bloque_Nacionalista_Galego.svg.png", "CC": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1c/Coalici%C3%B3n_Canaria.svg/250px-Coalici%C3%B3n_Canaria.svg.png", "UPN": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Logo_UPN_2017.svg/250px-Logo_UPN_2017.svg.png"},FOTO={"PP": "assets/es/feijoo.webp", "PSOE": "assets/es/sanchez.webp", "Vox": "assets/es/abascal.webp", "Frente Amplio": "assets/es/colau.webp", "Sumar": "assets/es/colau.webp"};
+const lgo=p=>LOGO[p]?'<img class="lgo" src="'+LOGO[p]+'" alt="'+esc(p)+'" loading="lazy">':'<i class="lgx" style="background:'+cl(p)+'"></i>';
+const pnm=p=>esc(p)+(JEL[p]?'<em class="jn">'+(FOTO[p]?'<img src="'+FOTO[p]+'" alt="" loading="lazy">':'')+esc(JEL[p])+'</em>':'');
+const pcell=p=>'<span class="pn">'+lgo(p)+'<span>'+pnm(p)+'</span></span>';
 
 let E={st:"elott",part:{},nat:[],prov:{},mun:{},rp:0};
 
@@ -418,9 +455,9 @@ function results(){const nat=E.nat||[];const rp=E.rp||0;$("rpl").textContent=f1(
   if(!nat.length){prep();paintState();return;}$("cntl").textContent=E.st==="vege"?"Végeredmény":"Számlálás";
   const mx=Math.max(...nat.map(r=>r[2]));
   const dd=(x,d,u)=>x==null?'':'<small class="'+(x>=0?'up':'dn')+'">'+(x>=0?'+':'−')+(d?f1(Math.abs(x)):Math.abs(x))+(u||'')+'</small>';
-  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'"><span class="pn"><i></i><span>'+pnm(r[0])+'</span></span><span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
+  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'">'+pcell(r[0])+'<span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
     '<p class="rn">Az utolsó oszlop a jelenlegi állás szerinti mandátumszám; a kis számok a 2023-as eredményhez képesti változást mutatják. Előzetes, nem hivatalos végeredmény.</p>';
-  koal(nat);
+  koal(nat);{const g=n=>nat.find(r=>r[0]===n)||[];duel(g('PSOE')[2],g('PP')[2],g('PSOE')[3],g('PP')[3],'e');}
   const parts=nat.filter(r=>r[3]>0).map(r=>({n:r[0],m:r[3],c:cl(r[0])}));hemi($("hemi2"),parts);sbar($("sbar2"),parts);
   $("slg2").innerHTML=parts.sort((a,b)=>b.m-a.m).map(p=>'<span style="--c:'+p.c+'"><i></i>'+esc(p.n)+' <b>'+p.m+'</b></span>').join("");paintState();}
 
@@ -428,7 +465,7 @@ function results(){const nat=E.nat||[];const rp=E.rp||0;$("rpl").textContent=f1(
 const R23={"PP":[33.05,137],"PSOE":[31.70,121],"Vox":[12.39,33],"Sumar":[12.31,31],"ERC":[1.89,7],"Junts":[1.60,7],"EH Bildu":[1.36,6],"PNV":[1.12,5],"BNG":[0.62,1],"CC":[0.46,1],"UPN":[0.15,1]};
 const KS=new Set();let KN=[];
 function koal(nat){const nk=(nat||[]).filter(r=>r[3]>0);if(!nk.length)return;KN=nk;if($("knote"))$("knote").textContent="Kattints a pártokra, és nézd meg, összejön-e a 176 mandátumos többség.";
-  $("kp").innerHTML=KN.map(r=>'<button type="button" data-p="'+esc(r[0])+'" class="'+(KS.has(r[0])?'on':'')+'" style="--c:'+cl(r[0])+'"><i></i>'+esc(r[0])+' <b>'+r[3]+'</b></button>').join("");kpaint();}
+  $("kp").innerHTML=KN.map(r=>'<button type="button" data-p="'+esc(r[0])+'" class="'+(KS.has(r[0])?'on':'')+'" style="--c:'+cl(r[0])+'">'+lgo(r[0])+esc(r[0])+' <b>'+r[3]+'</b></button>').join("");kpaint();}
 function kpaint(){const sel=KN.filter(r=>KS.has(r[0])),s=sel.reduce((a,r)=>a+r[3],0);$("ksum").textContent=s;
   $("kbar").innerHTML=sel.map(r=>'<i style="width:'+(r[3]/N*100)+'%;background:'+cl(r[0])+'"></i>').join("")+'<u></u>';
   const k=$("kst");if(!sel.length){k.className="kst";k.textContent="";return;}k.className="kst "+(s>=MAJ?"ok":"no");k.textContent=s>=MAJ?"✓ Megvan a többség – "+(s-MAJ)+" mandátummal több a szükségesnél":(MAJ-s)+" mandátum hiányzik a 176-os többséghez";}
@@ -437,17 +474,24 @@ $("kclr")&&$("kclr").addEventListener("click",()=>{KS.clear();document.querySele
 
 /* ---------- előkészített állapot: a 2023-as pártok, üres értékekkel; a koalícióépítő a 2023-as mandátumokkal ---------- */
 function prep(){if(E.nat&&E.nat.length)return;
-  $("res").innerHTML='<div class="rr rh"><span></span><span></span><span class="v">%</span><span class="s">hely</span></div>'+Object.entries(R23).map(([p,o])=>'<div class="rr pre" style="--c:'+cl(p)+'"><span class="pn"><i></i><span>'+pnm(p)+'</span></span><span class="tr"><em style="width:'+(o[0]/34*100)+'%"></em></span><span class="v">–<small>'+f1(o[0])+'</small></span><span class="s"><b>–</b><small>'+o[1]+'</small></span></div>').join("")+
+  $("res").innerHTML='<div class="rr rh"><span></span><span></span><span class="v">%</span><span class="s">hely</span></div>'+Object.entries(R23).map(([p,o])=>'<div class="rr pre" style="--c:'+cl(p)+'">'+pcell(p)+'<span class="tr"><em style="width:'+(o[0]/34*100)+'%"></em></span><span class="v">–<small>'+f1(o[0])+'</small></span><span class="s"><b>–</b><small>'+o[1]+'</small></span></div>').join("")+
     '<p class="rn">Az értékek az urnazárás után, a feldolgozással együtt töltődnek fel. Kis számokkal és halvány oszlopokkal: a 2023-as eredmény.</p>';
   const p23=Object.entries(R23).map(([n,o])=>({n,m:o[1],c:cl(n)}));hemi($("hemi2"),p23.map(x=>({...x,c:"color-mix(in srgb,"+x.c+" 28%,var(--bg2))"})));sbar($("sbar2"),p23);
   $("slg2").innerHTML='<span class="muted">Halványan: a 2023-as parlament. Az új mandátumok a számlálás alatt rajzolódnak ki.</span>';
   if(!KN.length){KN=Object.entries(R23).map(([n,o])=>[n,0,o[0],o[1]]);$("knote").textContent="Most a 2023-as mandátumokkal próbálhatod ki – az eredmények érkezésével a friss számokra vált.";
-    $("kp").innerHTML=KN.map(r=>'<button type="button" data-p="'+esc(r[0])+'" style="--c:'+cl(r[0])+'"><i></i>'+esc(r[0])+' <b>'+r[3]+'</b></button>').join("");kpaint();}}
+    $("kp").innerHTML=KN.map(r=>'<button type="button" data-p="'+esc(r[0])+'" style="--c:'+cl(r[0])+'">'+lgo(r[0])+esc(r[0])+' <b>'+r[3]+'</b></button>').join("");kpaint();}}
 /* exit poll: mandátumsávok */
 function exitp(){const X=E.exit;if(!X||!X.length)return;const x=X[X.length-1],m=x.m||{};$("exsrc").textContent=(x.f||"")+(x.t?" · "+x.t:"");
   const rows=Object.entries(m).sort((a,b)=>(b[1][0]+b[1][1])-(a[1][0]+a[1][1])),mx=Math.max(...rows.map(r=>r[1][1]),1);
-  $("exit").innerHTML=rows.map(([p,[lo,hi]])=>'<div class="exr" style="--c:'+cl(p)+'"><span>'+esc(p)+'</span><span class="tr"><em style="left:'+(lo/mx*100)+'%;width:'+Math.max(1.5,(hi-lo)/mx*100)+'%"></em>'+(R23[p]?'<u style="left:'+(R23[p][1]/mx*100)+'%" title="2023: '+R23[p][1]+'"></u>':'')+'</span><b>'+(lo===hi?lo:lo+'–'+hi)+'</b></div>').join("")+
+  $("exit").innerHTML=rows.map(([p,[lo,hi]])=>'<div class="exr" style="--c:'+cl(p)+'">'+pcell(p)+'<span class="tr"><em style="left:'+(lo/mx*100)+'%;width:'+Math.max(1.5,(hi-lo)/mx*100)+'%"></em>'+(R23[p]?'<u style="left:'+(R23[p][1]/mx*100)+'%" title="2023: '+R23[p][1]+'"></u>':'')+'</span><b>'+(lo===hi?lo:lo+'–'+hi)+'</b></div>').join("")+
     '<p class="rn">Becsült mandátumsávok; a halvány függőleges vonal a 2023-as eredmény. Az exit poll nem eredmény – a számlálás akár jelentősen eltérhet tőle.</p>';}
+
+/* ---------- párbaj: Sánchez (PSOE) – Feijóo (PP) ---------- */
+function duel(pL,pR,sL,sR,src){if(!$("dpL"))return;$("dpL").textContent=pL==null?'–':f1(pL)+'%';$("dpR").textContent=pR==null?'–':f1(pR)+'%';
+  $("dsL").textContent=sL==null?'':(src==='k'?'~':'')+Math.round(sL)+' mandátum';$("dsR").textContent=sR==null?'':(src==='k'?'~':'')+Math.round(sR)+' mandátum';
+  $("dbL").style.width=(pL||0)+'%';$("dbR").style.width=(pR||0)+'%';
+  $("dsrc").textContent=src==='k'?'A kutatások átlaga (utolsó 14 nap) · becsült mandátumok':(E.st==='vege'?'Előzetes végeredmény':'Részeredmény · '+f1(E.rp||0)+'% feldolgozva');
+  $("dlL").textContent=src==='k'?'Kutatási átlag':'Szavazatarány';$("dlR").textContent='176 mandátum kell a többséghez';}
 
 /* ---------- élő adatok betöltése ---------- */
 const SRC=["https://raw.githubusercontent.com/medence32-beep/valasztas-adat/elo/es-elo.json","assets/data/es-elo.json"];
@@ -459,8 +503,10 @@ loop();paintState();prep();
 fetch("assets/data/kutatas/es.json?_="+Math.floor(Date.now()/6e5)).then(r=>r.ok?r.json():null).then(K=>{
   if(!$("vavg")){if(!K||!K.polls||!K.polls.length||!$("kx"))return;K.parties.forEach(([n,c])=>{if(c)COL[n]=c;});const P=K.polls,last=new Date(P[0].d+"T12:00:00"),seen={},u=[];
     P.forEach(p=>{if(last-new Date(p.d+"T12:00:00")>14*864e5||seen[p.f])return;seen[p.f]=1;u.push(p);});
+    const A=(n,f)=>{const v=u.map(p=>p[f]&&p[f][n]).filter(x=>x!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;};
+    if(!(E&&E.nat&&E.nat.length))duel(A("PSOE","v"),A("PP","v"),A("PSOE","m"),A("PP","m"),'k');
     const av=K.parties.map(([n])=>{const v=u.map(p=>p.v[n]).filter(x=>x!=null);return {n,a:v.length?v.reduce((a,b)=>a+b,0)/v.length:null};}).filter(x=>x.a!=null).sort((a,b)=>b.a-a.a).slice(0,4),mx=av[0].a;
-    $("kx").innerHTML=av.map(x=>'<div style="--c:'+cl(x.n)+'"><span>'+esc(x.n)+'</span><em style="width:'+(x.a/mx*100)+'%"></em><span>'+f1(x.a)+'%</span></div>').join("");return;}
+    $("kx").innerHTML=av.map(x=>'<div style="--c:'+cl(x.n)+'"><span class="pn">'+lgo(x.n)+esc(x.n)+'</span><em style="width:'+(x.a/mx*100)+'%"></em><span>'+f1(x.a)+'%</span></div>').join("");return;}
   if(!K||!K.polls||!K.polls.length){$("vavg").innerHTML='<p class="muted">A kutatások hamarosan érkeznek.</p>';$("blk").innerHTML='<p class="muted">Nincs még elég adat.</p>';return;}
   K.parties.forEach(([n,c])=>{if(c)COL[n]=c;});
   const P=K.polls,last=new Date(P[0].d+"T12:00:00");
@@ -524,7 +570,7 @@ const mname=m=>m.kz?(/\d{5}/.test(m.n)?"Közös használatú terület":m.n):m.n;
 function m23(id){const a=M23&&M23.m[id];if(!a||!a[2])return null;const r=[];for(let i=5;i<a.length;i+=2)r.push([M23.p[a[i]],a[i+1],a[i+1]/a[2]*100]);
   return {cens:a[0],vot:a[1],val:a[2],bl:a[3],nul:a[4],part:a[0]?a[1]/a[0]*100:null,r:r,w:r.length?r[0][0]:null,p:r.length?r[0][2]:null};}
 function vbarsM(x,lim){const e=x.r.filter((q,i)=>i<4||q[2]>=1).slice(0,lim||8);if(!e.length)return "";const mx=e[0][1];
-  return '<div class="vb vbm">'+e.map(([p,v,pc])=>'<div style="--c:'+cl(p)+'"><span>'+esc(p)+'</span><em style="width:'+(v/mx*100)+'%"></em><b>'+f1(pc)+'%<small>'+fi(v)+'</small></b></div>').join("")+'</div>';}
+  return '<div class="vb vbm">'+e.map(([p,v,pc])=>'<div style="--c:'+cl(p)+'">'+pcell(p)+'<em style="width:'+(v/mx*100)+'%"></em><b>'+f1(pc)+'%<small>'+fi(v)+'</small></b></div>').join("")+'</div>';}
 /* A települések térképe (8000+ alakzat, kb. 5 MB) egy háttérszálon (Web Worker) töltődik és dolgozódik fel,
    így telefonon sem fagy meg az oldal; a főszál csak a megnyitott tartomány alakzatait kapja meg. */
 let MW=null,MWQ={},MWN=0;
@@ -582,6 +628,9 @@ function setMode(m){MODE=m;$("mode").querySelectorAll("button").forEach(b=>b.cla
 $("mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(b)setMode(b.dataset.m);});
 
 const pname=id=>(TP&&TP[id]?TP[id].n:(PRV[id]?PRV[id].n:""));
+function vbLive(r){const e=(r||[]).slice(0,8);if(!e.length)return '';const mx=e[0][1]||1;
+  return '<div class="vb vbm">'+e.map(x=>'<div style="--c:'+cl(x[0])+'">'+pcell(x[0])+'<em style="width:'+(x[1]/mx*100)+'%"></em><b>'+f1(x[1])+'%'+(x[2]!=null?' · '+x[2]+' hely':'')+'</b></div>').join('')+'</div>';}
+function indulok(t){const ps=(t&&t.v&&Object.keys(t.v).length?Object.keys(t.v):Object.keys(R23)).slice(0,8);return '<h4 class="indh">Pártok és jelöltek</h4><div class="ind">'+ps.map(p=>'<div>'+pcell(p)+'<small>'+(t&&t.v&&t.v[p]!=null?'2023: '+f1(t.v[p])+'%':'')+'</small></div>').join('')+'</div>';}
 function chips(r){return '<div class="chips">'+r.map(x=>'<span style="--c:'+cl(x[0])+'"><i></i>'+esc(x[0])+' '+(typeof x[1]==="number"&&x[1]%1?f1(x[1])+"%":x[1])+'</span>').join("")+'</div>';}
 function tipHTML(o){if(o.t==="m"){const m=o.o,r=(E.mun||{})[m.id],pv=mpv(m);
     if(m.kz)return '<b>'+esc(mname(m))+'</b><small>'+esc(pname(pv))+' tartomány · lakatlan közös terület, itt nem szavaznak</small>';
@@ -599,13 +648,13 @@ function detail(o){const key=MODE+"|"+(o.t==="m"?"m"+o.o.id:"p"+o.id),isNew=key!
     if(MODE==="p23"){const x=m23(m.id);
       h+=x?'<div class="mst"><span><small>Választás</small><b>2023. júl. 23.</b></span><span><small>Részvétel</small><b>'+(x.part!=null?f1(x.part)+'%':'–')+'</b></span><span><small>Érvényes szavazat</small><b>'+fi(x.val)+'</b></span><span><small>Névjegyzék</small><b>'+fi(x.cens)+'</b></span></div>'+vbarsM(x)+'<p class="src">Forrás: Belügyminisztérium; a külföldön élők levélszavazatai nélkül.</p>'
         :'<p class="nodata">'+(M23?'Nincs adat':'Betöltés…')+'</p>';}
-    else h+=r&&r.r?'<p>'+(r.rp!=null?f1(r.rp)+'% feldolgozva':'')+(r.part!=null?' · részvétel: '+f2(r.part)+'%':'')+'</p>'+chips(r.r):'<p class="nodata">Még nincs adat</p><p>A település eredményei november 29-én az urnazárás (20:00) után, a számlálás során érkeznek. '+(t?'A település a(z) '+esc(t.n)+' választókerülethez tartozik, amely 2026-ban '+t.s26+' képviselőt választ.':'')+'</p>';}
+    else h+=r&&r.r?'<p>'+(r.rp!=null?f1(r.rp)+'% feldolgozva':'')+(r.part!=null?' · részvétel: '+f2(r.part)+'%':'')+'</p>'+vbLive(r.r):'<p class="nodata">Még nincs adat</p><p>A település eredményei november 29-én az urnazárás (20:00) után, a számlálás során érkeznek. '+(t?'A település a(z) '+esc(t.n)+' választókerülethez tartozik, amely 2026-ban '+t.s26+' képviselőt választ.':'')+'</p>'+indulok(t);}
   else{const id=o.id,t=TP&&TP[id],lv=(E.prov||{})[id];h='<h3>Választókerület</h3><div class="dn">'+esc(pname(id))+'</div>';
     if(MODE==="p23"&&t)h+='<p>2023-ban '+t.s+' mandátum; első: <b>'+esc(t.w)+'</b> ('+f1(t.p)+'%).</p>'+(t.el?'<div class="mst"><span><small>Részvétel</small><b>'+f1((t.vt-(t.cv||0))/(t.el-(t.ce||0))*100)+'%</b></span><span><small>Érvényes szavazat</small><b>'+fi(t.vv)+'</b></span><span><small>Mandátum 2026</small><b>'+t.s26+'</b></span></div>':'')+vbars(t)+(t.sz?'<p class="src">A szavazatszámok a spanyolországi lakóhelyű választók szavazatai (a külföldön élők levélszavazatai nélkül), a százalékok és a mandátumok a hivatalos végeredményből.</p>':'');
-    else h+=(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+chips(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');}
+    else h+=(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>'+indulok(t));}
   $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
 function vbars(t,lim){const e=Object.entries(t.v||{}).slice(0,lim||8);if(!e.length)return chips(Object.entries(t.r));const mx=e[0][1];
-  return '<div class="vb vbm">'+e.map(([p,v])=>'<div style="--c:'+cl(p)+'"><span>'+esc(p)+'</span><em style="width:'+(v/mx*100)+'%"></em><b>'+f1(v)+'%'+(t.r[p]?' · '+t.r[p]+' hely':'')+(t.sz&&t.sz[p]?'<small>'+fi(t.sz[p])+' szavazat</small>':'')+'</b></div>').join("")+'</div>';}
+  return '<div class="vb vbm">'+e.map(([p,v])=>'<div style="--c:'+cl(p)+'">'+pcell(p)+'<em style="width:'+(v/mx*100)+'%"></em><b>'+f1(v)+'%'+(t.r[p]?' · '+t.r[p]+' hely':'')+(t.sz&&t.sz[p]?'<small>'+fi(t.sz[p])+' szavazat</small>':'')+'</b></div>').join("")+'</div>';}
 let SK="n",SU=true;
 function table(){if(!TP||!$("ptab"))return;const C=["PP","PSOE","Vox","Sumar"];const head=[["n","Tartomány"],["s26","2026"]].concat(C.map(c=>[c,c])).concat([["reg","Regionális"],["w","2023 győztes"]]);
   const val=(t,k)=>k==="n"?t.n:k==="s26"?t.s26:k==="w"?t.w:k==="reg"?(Object.entries(t.v||{}).filter(([p])=>C.indexOf(p)<0).reduce((a,b)=>a+b[1],0)):(t.v||{})[k]??-1;
