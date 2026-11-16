@@ -51,10 +51,9 @@
 .strip{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:18px}.strip button{border:0;border-radius:10px;padding:10px 2px 8px;cursor:pointer;color:#fff;font:800 13px var(--f-body);position:relative;opacity:.55;transition:opacity .2s,transform .2s}
 .strip button.on{opacity:1;transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.25)}.strip button small{display:block;font:600 10px var(--f-body);opacity:.9;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 3px}
 @media(max-width:640px){.strip{grid-template-columns:repeat(5,1fr)}}
-.evc{margin-top:16px}.evh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}.evh h2{margin:0}
-.evn{display:flex;gap:6px}.evn button{width:38px;height:38px;border-radius:50%;border:1px solid var(--line2);background:var(--card);color:var(--ink);font:800 16px var(--f-body);cursor:pointer}.evn button:disabled{opacity:.35;cursor:default}.evn button:hover:not(:disabled){border-color:var(--acc)}
+.evc{margin-top:14px;padding:14px 18px 12px}.evh{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:6px}.evh h2{margin:0}
 .evs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px}@media(max-width:760px){.evs{grid-template-columns:1fr}}
-.ev{display:grid;grid-template-columns:92px minmax(0,1fr);gap:12px;align-items:baseline;padding:12px 0;border-top:1px solid var(--line);font-size:15px;line-height:1.5}
+.ev{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px;line-height:1.45}
 @media(max-width:560px){.ev{grid-template-columns:1fr;gap:3px}}
 .ev i{font:700 10.5px var(--f-body);font-style:normal;letter-spacing:.12em;text-transform:uppercase}
 .ev.k-Kormány i{color:var(--acc)}.ev.k-Esemény i{color:#3B82F6}.ev.k-Botrány i{color:#E5484D}.ev.k-Érdekesség i{color:#2FA36B}
@@ -87,13 +86,13 @@
 <section class="jh"><div class="jk">Magyarország · 1990–2026</div><h1>A magyar választások története</h1>
 <p>Kattints egy évre: így változott az Országgyűlés összetétele, a pártok eredménye és a részvétel a rendszerváltás óta, mind a tíz választáson.</p></section>
 <div class="strip" id="strip"></div>
+<section class="jc evc" aria-labelledby="evt"><div class="evh"><h2 id="evt">A ciklus eseményei</h2></div>
+<div class="evs" id="evs"></div><div class="evl"><span><b style="background:var(--acc)"></b>Kormány</span><span><b style="background:#3B82F6"></b>Esemény</span><span><b style="background:#E5484D"></b>Botrány</span><span><b style="background:#2FA36B"></b>Érdekesség</span></div></section>
 <div class="hg"><div class="jc"><div class="yr" id="yr">2026</div><p class="note" id="note"></p>
 <svg id="hemi" viewBox="0 0 420 222" role="img" aria-label="Az Országgyűlés összetétele"></svg>
 <div class="kp"><div><b id="kn">–</b><span>képviselő</span></div><div><b id="kt">–</b><span>részvétel</span></div><div><b id="km">–</b><span>a legnagyobb párt mandátumaránya</span></div></div></div>
 <div style="display:grid;gap:16px"><div class="jc"><h2>Pártlistás eredmény és mandátumok</h2><div class="pl" id="pl"></div></div>
 <div class="jc"><h2>Részvétel 1990–2026</h2><svg id="tch" viewBox="0 0 420 160" role="img" aria-label="Részvétel választásonként"></svg></div></div></div>
-<section class="jc evc" aria-labelledby="evt"><div class="evh"><h2 id="evt">A ciklus eseményei</h2><div class="evn"><button type="button" id="prv" aria-label="Előző választás">←</button><button type="button" id="nxt" aria-label="Következő választás">→</button></div></div>
-<div class="evs" id="evs"></div><div class="evl"><span><b style="background:var(--acc)"></b>Kormány</span><span><b style="background:#3B82F6"></b>Esemény</span><span><b style="background:#E5484D"></b>Botrány</span><span><b style="background:#2FA36B"></b>Érdekesség</span></div></section>
 <p class="jn" style="margin-top:14px">Forrás: Nemzeti Választási Iroda, Wikipedia. 1990–2010 között 386, 2014 óta 199 tagú az Országgyűlés. A százalékok a pártlistás szavazatok arányai.</p>
 </main>
 <footer class="foot">
@@ -130,9 +129,9 @@ function show(i){I=i;const e=E[i];$("yr").textContent=e.y;$("note").textContent=
   const big=e.p.reduce((a,x)=>(x[3]||0)>(a[3]||0)?x:a,e.p[0]);$("km").textContent=pf((big[3]||0)/e.n*100);
   hemi(e.p,e.n);$("pl").innerHTML=e.p.map(x=>'<div class="r"><b>'+esc(x[0])+'</b><span class="v"><strong>'+(x[2]==null?'–':pf(x[2],2))+'</strong><span>'+(x[3]||0)+' mandátum</span></span><span class="br"><i style="background:'+x[1]+';width:'+(x[2]||0)+'%"></i></span></div>').join("");
   const nx=E[i+1],per=e.y+"–"+(nx?nx.y:"");$("evt").textContent="A ciklus eseményei · "+per;
-  $("evs").innerHTML=(e.ev||[]).map(x=>'<div class="ev k-'+x.k+'"><i>'+esc(x.k)+'</i><span>'+esc(x.t)+'</span></div>').join("");$("prv").disabled=i===0;$("nxt").disabled=i===E.length-1;
+  $("evs").innerHTML=(e.ev||[]).map(x=>'<div class="ev k-'+x.k+'"><i>'+esc(x.k)+'</i><span>'+esc(x.t)+'</span></div>').join("");
   $("strip").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i));chart();try{history.replaceState(null,"",location.pathname+"#e"+e.y);}catch(_){}}
-$("prv").onclick=()=>{if(I>0)show(I-1);};$("nxt").onclick=()=>{if(I<E.length-1)show(I+1);};
+
 document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT")return;if(e.key==="ArrowRight"&&I<E.length-1)show(I+1);if(e.key==="ArrowLeft"&&I>0)show(I-1);});
 fetch("assets/data/hu_tortenet.json?v=2").then(r=>r.json()).then(d=>{E=d.e;
   $("strip").innerHTML=E.map((e,i)=>{const w=e.p.reduce((a,x)=>(x[3]||0)>(a[3]||0)?x:a,e.p[0]);return '<button type="button" data-i="'+i+'" style="background:'+w[1]+'">'+e.y+'<small>'+esc(w[0])+'</small></button>';}).join("");
