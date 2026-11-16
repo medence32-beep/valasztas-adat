@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=1";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>A magyar választások története 1990–2026 – interaktív idővonal | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/magyar-valasztasok-tortenete">
+<meta name="description" content="Így változott az Országgyűlés összetétele, a pártok eredménye és a részvétel 1990 és 2026 között: interaktív idővonal mind a tíz magyar országgyűlési választással.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="A magyar választások története 1990–2026 – interaktív idővonal">
+<meta property="og:description" content="Így változott az Országgyűlés összetétele, a pártok eredménye és a részvétel 1990 és 2026 között: interaktív idővonal mind a tíz magyar országgyűlési választással.">
+<meta property="og:url" content="https://voksmero.hu/magyar-valasztasok-tortenete">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/magyarorszag.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/magyarorszag.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=16">
+<style>
+.jw{max-width:1180px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.jk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.jh h1{font:900 clamp(32px,5.6vw,58px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 10px;text-wrap:balance}
+.jh p{color:var(--ink2);max-width:68ch;margin:0}
+.jc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.jc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0 0 12px;letter-spacing:.02em}
+.jb{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 16px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s}
+.jb:hover{border-color:var(--acc)}.jb:active{transform:scale(.97)}.jb.p{background:var(--acc);border-color:var(--acc);color:#14100a}.jb:disabled{opacity:.45;cursor:default}
+.jn{color:var(--ink3);font-size:12.5px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.strip{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;margin-top:18px}.strip button{border:0;border-radius:10px;padding:10px 2px 8px;cursor:pointer;color:#fff;font:800 13px var(--f-body);position:relative;opacity:.55;transition:opacity .2s,transform .2s}
+.strip button.on{opacity:1;transform:translateY(-3px);box-shadow:0 6px 16px rgba(0,0,0,.25)}.strip button small{display:block;font:600 10px var(--f-body);opacity:.9;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 3px}
+@media(max-width:640px){.strip{grid-template-columns:repeat(5,1fr)}}
+.ctl{display:flex;align-items:center;gap:12px;margin-top:14px}.ctl input{flex:1;accent-color:var(--acc)}
+.yr{font:900 clamp(64px,12vw,120px)/.9 var(--f-display);color:var(--acc);font-variant-numeric:tabular-nums}
+.hg{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;margin-top:16px;align-items:start}@media(max-width:900px){.hg{grid-template-columns:1fr}}
+.note{font-size:17px;line-height:1.55;margin:10px 0 0;min-height:3.1em}
+#hemi{width:100%;height:auto;display:block}#hemi circle{transition:fill .5s}
+.pl{display:grid;gap:10px}.pl .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px}.pl b{font-size:14.5px}.pl .v{text-align:right;font-variant-numeric:tabular-nums}.pl .v strong{font:800 17px var(--f-display);margin-right:6px}.pl .v span{color:var(--ink2);font:700 12px var(--f-body)}
+.pl .br{grid-column:1/-1;height:9px;border-radius:5px;background:var(--line);overflow:hidden}.pl .br i{display:block;height:100%;border-radius:5px;transition:width .6s cubic-bezier(.2,.8,.2,1)}
+.kp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px}.kp div{background:var(--bg2);border-radius:12px;padding:10px 12px}.kp b{display:block;font:900 24px var(--f-display);font-variant-numeric:tabular-nums}.kp span{font-size:12px;color:var(--ink2)}
+#tch{width:100%;height:auto;display:block}#tch text{font:600 10px var(--f-body);fill:var(--ink3)}#tch .ln{fill:none;stroke-width:2.4}#tch .gd{stroke:var(--line);stroke-width:1}#tch .cur{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:3 3}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a><a href="zold-foki-szigetek-valasztas"><i class="live cv"></i><span>Zöld-fok<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main class="jw">
+<section class="jh"><div class="jk">Magyarország · 1990–2026</div><h1>A magyar választások története</h1>
+<p>Húzd a csúszkát, vagy nyomd meg a lejátszást: így változott az Országgyűlés összetétele, a pártok eredménye és a részvétel a rendszerváltás óta, mind a tíz választáson.</p></section>
+<div class="strip" id="strip"></div>
+<div class="ctl"><button class="jb p" id="play" type="button">▶ Lejátszás</button><input type="range" id="sl" min="0" max="9" step="1" aria-label="Választási év"></div>
+<div class="hg"><div class="jc"><div class="yr" id="yr">2026</div><p class="note" id="note"></p>
+<svg id="hemi" viewBox="0 0 420 222" role="img" aria-label="Az Országgyűlés összetétele"></svg>
+<div class="kp"><div><b id="kn">–</b><span>képviselő</span></div><div><b id="kt">–</b><span>részvétel</span></div><div><b id="km">–</b><span>a legnagyobb párt mandátumaránya</span></div></div></div>
+<div style="display:grid;gap:16px"><div class="jc"><h2>Pártlistás eredmény és mandátumok</h2><div class="pl" id="pl"></div></div>
+<div class="jc"><h2>Részvétel 1990–2026</h2><svg id="tch" viewBox="0 0 420 160" role="img" aria-label="Részvétel választásonként"></svg></div></div></div>
+<p class="jn" style="margin-top:14px">Forrás: Nemzeti Választási Iroda, Wikipedia. 1990–2010 között 386, 2014 óta 199 tagú az Országgyűlés. A százalékok a pártlistás szavazatok arányai.</p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script>
+window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+ nf:n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf:(x,d)=>x==null||isNaN(x)?"–":x.toFixed(d==null?1:d).replace(".",",")+"%",
+ ls:{get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}},
+ toast:m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200);},
+ copy:async(s,ok)=>{try{await navigator.clipboard.writeText(s);J.toast(ok||"Vágólapra másolva");}catch(e){prompt("Másold ki:",s);}},
+ share:async(title,text,url)=>{if(navigator.share){try{await navigator.share({title,text,url});return;}catch(e){if(e&&e.name==="AbortError")return;}}J.copy(text+(url?"\n"+url:""),"Szöveg a vágólapon – illeszd be bárhová");}};
+</script>
+<script src="assets/orszagok.js?v=11"></script>
+<script src="assets/terkep-anim.js?v=4"></script>
+<script>
+(function(){"use strict";const {$,esc,nf,pf}=J;let E=[],I=9,TM=null;
+function hemi(p,n){const rows=n>300?12:8,R0=70,R1=200,cx=210,cy=210;const pts=[];
+  for(let r=0;r<rows;r++){const rad=R0+(R1-R0)*r/(rows-1);const k=Math.round(n*rad/((R0+R1)/2*rows)*1);pts.push([rad,k]);}
+  let tot=pts.reduce((a,x)=>a+x[1],0),i=0;while(tot!==n){pts[i%rows][1]+=tot<n?1:-1;tot+=tot<n?1:-1;i++;}
+  const all=[];pts.forEach(([rad,k])=>{for(let j=0;j<k;j++){const a=Math.PI*(1-j/(k-1||1));all.push([cx+rad*Math.cos(a),cy-rad*Math.sin(a),a]);}});
+  all.sort((a,b)=>b[2]-a[2]);const cols=[];p.forEach(x=>{for(let j=0;j<(x[3]||0);j++)cols.push(x[1]);});
+  const r=n>300?4.1:5.6;$("hemi").innerHTML=all.map((q,j)=>'<circle cx="'+q[0].toFixed(1)+'" cy="'+q[1].toFixed(1)+'" r="'+r+'" fill="'+(cols[j]||'var(--line)')+'"/>').join("")+'<text x="210" y="205" text-anchor="middle" style="font:900 30px var(--f-display);fill:var(--ink)">'+n+'</text>';}
+function chart(){const W=420,H=160,L=30,Rr=10,T=10,Bm=24,x=i=>L+i*(W-L-Rr)/(E.length-1),y=v=>T+(1-(v-50)/40)*(H-T-Bm);
+  let h="";[50,60,70,80,90].forEach(v=>h+='<line class="gd" x1="'+L+'" x2="'+(W-Rr)+'" y1="'+y(v)+'" y2="'+y(v)+'"/><text x="'+(L-4)+'" y="'+(y(v)+3)+'" text-anchor="end">'+v+'%</text>');
+  h+='<path class="ln" style="stroke:var(--acc)" d="'+E.map((e,i)=>(i?"L":"M")+x(i)+" "+y(e.t)).join("")+'"/>';
+  E.forEach((e,i)=>{h+='<circle cx="'+x(i)+'" cy="'+y(e.t)+'" r="'+(i===I?5.5:3)+'" style="fill:'+(i===I?'var(--acc)':'var(--card)')+';stroke:var(--acc);stroke-width:2"/><text x="'+x(i)+'" y="'+(H-8)+'" text-anchor="middle">'+String(e.y).slice(2)+'</text>';});
+  h+='<line class="cur" x1="'+x(I)+'" x2="'+x(I)+'" y1="'+T+'" y2="'+(H-Bm)+'"/>';$("tch").innerHTML=h;}
+function show(i){I=i;const e=E[i];$("sl").value=i;$("yr").textContent=e.y;$("note").textContent=e.note||"";$("kn").textContent=e.n;$("kt").textContent=pf(e.t,2);
+  const big=e.p.reduce((a,x)=>(x[3]||0)>(a[3]||0)?x:a,e.p[0]);$("km").textContent=pf((big[3]||0)/e.n*100);
+  hemi(e.p,e.n);$("pl").innerHTML=e.p.map(x=>'<div class="r"><b>'+esc(x[0])+'</b><span class="v"><strong>'+(x[2]==null?'–':pf(x[2],2))+'</strong><span>'+(x[3]||0)+' mandátum</span></span><span class="br"><i style="background:'+x[1]+';width:'+(x[2]||0)+'%"></i></span></div>').join("");
+  $("strip").querySelectorAll("button").forEach((b,j)=>b.classList.toggle("on",j===i));chart();try{history.replaceState(null,"",location.pathname+"#e"+e.y);}catch(_){}}
+function play(){if(TM){clearInterval(TM);TM=null;$("play").textContent="▶ Lejátszás";return;}if(I>=E.length-1)show(0);$("play").textContent="⏸ Megállítás";
+  TM=setInterval(()=>{if(I>=E.length-1){play();return;}show(I+1);},1900);}
+$("play").onclick=play;$("sl").oninput=()=>{if(TM)play();show(+$("sl").value);};
+document.addEventListener("keydown",e=>{if(e.target.tagName==="INPUT"&&e.target.type!=="range")return;if(e.key==="ArrowRight"&&I<E.length-1)show(I+1);if(e.key==="ArrowLeft"&&I>0)show(I-1);});
+fetch("assets/data/hu_tortenet.json?v=1").then(r=>r.json()).then(d=>{E=d.e;$("sl").max=E.length-1;
+  $("strip").innerHTML=E.map((e,i)=>{const w=e.p.reduce((a,x)=>(x[3]||0)>(a[3]||0)?x:a,e.p[0]);return '<button type="button" data-i="'+i+'" style="background:'+w[1]+'">'+e.y+'<small>'+esc(w[0])+'</small></button>';}).join("");
+  $("strip").onclick=e=>{const b=e.target.closest("button[data-i]");if(b){if(TM)play();show(+b.dataset.i);}};
+  const m=/^#e(\d{4})$/.exec(location.hash),k=m?E.findIndex(e=>e.y===+m[1]):-1;show(k>=0?k:E.length-1);});
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

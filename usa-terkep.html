@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=1";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Rajzold meg a saját amerikai térképed – 270 elektor | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/usa-terkep">
+<meta name="description" content="Ki nyerné az amerikai elnökválasztást? Színezd ki az államokat, számold az elektori szavazatokat 270-ig, és oszd meg a saját térképed. Interaktív játék a Voksmérőn.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Rajzold meg a saját amerikai térképed – 270 elektor">
+<meta property="og:description" content="Ki nyerné az amerikai elnökválasztást? Színezd ki az államokat, számold az elektori szavazatokat 270-ig, és oszd meg a saját térképed. Interaktív játék a Voksmérőn.">
+<meta property="og:url" content="https://voksmero.hu/usa-terkep">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/usa.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/usa.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=16">
+<style>
+.jw{max-width:1180px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.jk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.jh h1{font:900 clamp(32px,5.6vw,58px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 10px;text-wrap:balance}
+.jh p{color:var(--ink2);max-width:68ch;margin:0}
+.jc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.jc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0 0 12px;letter-spacing:.02em}
+.jb{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 16px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s}
+.jb:hover{border-color:var(--acc)}.jb:active{transform:scale(.97)}.jb.p{background:var(--acc);border-color:var(--acc);color:#14100a}.jb:disabled{opacity:.45;cursor:default}
+.jn{color:var(--ink3);font-size:12.5px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.ug{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin-top:18px;align-items:start}@media(max-width:960px){.ug{grid-template-columns:1fr}}
+.tot{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-top:18px}
+.tot .s{font:900 clamp(34px,5vw,52px)/1 var(--f-display);font-variant-numeric:tabular-nums}.tot .s small{display:block;font:700 12px var(--f-body);color:var(--ink2);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
+.tot .d{color:#2E6FE0}.tot .r{color:#D7392F;text-align:right}
+.bar{position:relative;height:26px;border-radius:13px;overflow:hidden;background:var(--line);display:flex}.bar i{display:block;height:100%;transition:width .45s cubic-bezier(.2,.8,.2,1)}
+.bar .bd{background:#2E6FE0}.bar .bdl{background:#8DB3F2}.bar .bt{background:#C9A44A}.bar .brl{background:#F0A39C}.bar .br{background:#D7392F}.bar .bx{flex:1}
+.bar:after{content:"270";position:absolute;left:50.19%;top:-1px;bottom:-1px;border-left:2px solid var(--ink);font:800 10px var(--f-body);color:var(--ink);padding-left:3px;line-height:26px}
+.win{margin-top:12px;padding:12px 14px;border-radius:14px;font:800 17px var(--f-display);text-align:center;transition:background .3s}
+.win.d{background:color-mix(in srgb,#2E6FE0 18%,var(--card));color:#2E6FE0}.win.r{background:color-mix(in srgb,#D7392F 16%,var(--card));color:#D7392F}.win.t{background:var(--bg2);color:var(--ink2)}
+#um{width:100%;height:auto;display:block;-webkit-tap-highlight-color:transparent}
+#um path{stroke:var(--card);stroke-width:1;cursor:pointer;transition:fill .25s,filter .15s;outline:none}#um path:hover{filter:brightness(1.12)}
+#um text{font:800 10px var(--f-body);fill:#fff;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px}
+.f0{fill:var(--line2)}.fD{fill:#2E6FE0}.fd{fill:#8DB3F2}.fT{fill:#C9A44A}.fr{fill:#F0A39C}.fR{fill:#D7392F}
+.brush{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.brush button{border:2px solid transparent;border-radius:12px;padding:9px 6px;font:800 13px var(--f-body);cursor:pointer;color:#fff}
+.brush button.on{border-color:var(--ink);box-shadow:0 0 0 2px var(--card) inset}.brush .bD{background:#2E6FE0}.brush .bd{background:#8DB3F2;color:#0b1a33}.brush .bT{background:#C9A44A;color:#1c1400}.brush .br{background:#F0A39C;color:#3a0d09}.brush .bR{background:#D7392F}.brush .b0{background:var(--bg2);color:var(--ink);border-color:var(--line2)}
+.sm{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}.sm button{border:1px solid var(--line2);border-radius:10px;padding:7px 4px;font:800 12px var(--f-body);cursor:pointer;color:var(--ink);background:var(--bg2)}
+.sm button.fD,.sm button.fR{color:#fff;border-color:transparent}.sm button.fd,.sm button.fr,.sm button.fT{color:#1a1a1a;border-color:transparent}
+.sm button.fD{background:#2E6FE0}.sm button.fd{background:#8DB3F2}.sm button.fT{background:#C9A44A}.sm button.fr{background:#F0A39C}.sm button.fR{background:#D7392F}
+.side{display:grid;gap:12px}.row{display:flex;flex-wrap:wrap;gap:8px}
+.tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 10px;border-radius:9px;font:700 13px var(--f-body);opacity:0;transition:opacity .12s}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a><a href="zold-foki-szigetek-valasztas"><i class="live cv"></i><span>Zöld-fok<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main class="jw">
+<section class="jh"><div class="jk">Játék · Egyesült Államok</div><h1>Rajzold meg a saját térképed!</h1>
+<p>Ki nyerné a következő amerikai elnökválasztást? Színezd ki az államokat, és figyeld, ki éri el elsőként a győzelemhez szükséges 270 elektori szavazatot. A kész térképed egy linkkel megoszthatod.</p></section>
+<div class="jc" style="margin-top:18px"><div class="tot"><div class="s d" id="sd">0<small>Demokrata</small></div><div><div class="bar" id="bar"></div></div><div class="s r" id="sr">0<small>Republikánus</small></div></div><div class="win t" id="win">Még senki sincs 270 felett</div></div>
+<div class="ug"><div class="jc"><svg id="um" viewBox="20 0 900 512" role="img" aria-label="Az Egyesült Államok térképe – kattints egy államra"></svg>
+<p class="jn" style="margin:8px 0 0">Kattints egy államra a kiválasztott színnel; újra rákattintva törlöd. Maine és Nebraska a valóságban körzetenként is oszt elektorokat – itt egyszerűsítve egészben számolunk.</p></div>
+<div class="side"><div class="jc"><h2>Ecset</h2><div class="brush" id="brush">
+<button class="bD on" data-v="D" type="button">Demokrata</button><button class="bd" data-v="d" type="button">D valószínű</button><button class="bT" data-v="T" type="button">Billegő</button>
+<button class="br" data-v="r" type="button">R valószínű</button><button class="bR" data-v="R" type="button">Republikánus</button><button class="b0" data-v="0" type="button">Radír</button></div></div>
+<div class="jc"><h2>Kiinduló térkép</h2><div class="row"><button class="jb" data-p="2024" type="button">2024</button><button class="jb" data-p="2020" type="button">2020</button><button class="jb" data-p="0" type="button">Üres</button><button class="jb" data-p="rnd" type="button">🎲 Véletlen</button></div></div>
+<div class="jc"><h2>Kis államok</h2><div class="sm" id="sm"></div></div>
+<div class="jc"><h2>Megosztás</h2><div class="row"><button class="jb p" id="shr" type="button">Térkép megosztása</button><button class="jb" id="cpy" type="button">Link másolása</button></div><p class="jn" style="margin:8px 0 0">A link a te színezésedet tartalmazza – aki megnyitja, ugyanezt a térképet látja.</p></div></div></div>
+</main>
+<div class="tip" id="tip"></div>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script>
+window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+ nf:n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf:(x,d)=>x==null||isNaN(x)?"–":x.toFixed(d==null?1:d).replace(".",",")+"%",
+ ls:{get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}},
+ toast:m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200);},
+ copy:async(s,ok)=>{try{await navigator.clipboard.writeText(s);J.toast(ok||"Vágólapra másolva");}catch(e){prompt("Másold ki:",s);}},
+ share:async(title,text,url)=>{if(navigator.share){try{await navigator.share({title,text,url});return;}catch(e){if(e&&e.name==="AbortError")return;}}J.copy(text+(url?"\n"+url:""),"Szöveg a vágólapon – illeszd be bárhová");}};
+</script>
+<script src="assets/orszagok.js?v=11"></script>
+<script src="assets/terkep-anim.js?v=4"></script>
+<script>
+(function(){"use strict";const {$,esc}=J;
+let S=null,K=[],ST={},BR="D";const ORD="0DdTrR";
+const SMALL=["DC","DE","RI","CT","NJ","MD","MA","NH","VT","HI"];
+const D20="AZ GA MI NV PA WI".split(" ");
+function tot(){let a={D:0,d:0,T:0,r:0,R:0,0:0};K.forEach(k=>a[ST[k]||"0"]+=S[k].ev);return a;}
+function render(){K.forEach(k=>{const v=ST[k]||"0",p=document.querySelector('#um path[data-s="'+k+'"]');if(p)p.setAttribute("class","f"+v);const b=document.querySelector('#sm button[data-s="'+k+'"]');if(b)b.className="f"+v;});
+  const a=tot(),D=a.D+a.d,R=a.R+a.r,w=x=>(x/538*100).toFixed(2)+"%";
+  $("sd").firstChild.nodeValue=D;$("sr").firstChild.nodeValue=R;
+  $("bar").innerHTML='<i class="bd" style="width:'+w(a.D)+'"></i><i class="bdl" style="width:'+w(a.d)+'"></i><i class="bt" style="width:'+w(a.T)+'"></i><i class="bx"></i><i class="brl" style="width:'+w(a.r)+'"></i><i class="br" style="width:'+w(a.R)+'"></i>';
+  const e=$("win");if(D>=270){e.className="win d";e.textContent="🎉 A demokrata jelölt nyer – "+D+" elektori szavazat";}else if(R>=270){e.className="win r";e.textContent="🎉 A republikánus jelölt nyer – "+R+" elektori szavazat";}
+  else if(D===269&&R===269){e.className="win t";e.textContent="Döntetlen: 269–269! Ilyenkor a Képviselőház választ elnököt.";}
+  else{e.className="win t";e.textContent="Még senki sincs 270 felett · billegő: "+a.T+" · színezetlen: "+a[0];}
+  try{history.replaceState(null,"",location.pathname+"#"+enc());}catch(e){}}
+const enc=()=>"t"+K.map(k=>ORD.indexOf(ST[k]||"0")).join("");
+function dec(h){if(!/^#t[0-5]{51}$/.test(h))return false;K.forEach((k,i)=>{const v=ORD[+h[i+2]];if(v==="0")delete ST[k];else ST[k]=v;});return true;}
+function preset(p){ST={};if(p==="2024"||p==="2020")K.forEach(k=>{ST[k]=(S[k].r24==="D"||(p==="2020"&&D20.includes(k)))?"D":"R";});
+  else if(p==="rnd")K.forEach(k=>{const base=S[k].r24,x=Math.random();ST[k]=x<.12?(base==="D"?"r":"d"):x<.3?(base==="D"?"d":"r"):x<.36?"T":base;});render();
+  if(window.MapAnim)MapAnim.intro(document.querySelectorAll("#um path"),{svg:$("um"),now:true,spread:.5});}
+function click(k){ST[k]=(ST[k]===BR||BR==="0")?undefined:BR;if(!ST[k])delete ST[k];render();}
+$("brush").addEventListener("click",e=>{const b=e.target.closest("button[data-v]");if(!b)return;BR=b.dataset.v;$("brush").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));});
+document.querySelectorAll("[data-p]").forEach(b=>b.addEventListener("click",()=>preset(b.dataset.p)));
+const tip=$("tip");
+fetch("assets/jatek/usa-allamok.json").then(r=>r.json()).then(d=>{S=d;K=Object.keys(d).sort();
+  let h="";K.forEach(k=>{h+='<path data-s="'+k+'" d="'+d[k].d+'"><title>'+esc(d[k].n)+' – '+d[k].ev+' elektor</title></path>';});
+  K.filter(k=>!SMALL.includes(k)&&d[k].a>600).forEach(k=>{h+='<text x="'+d[k].cx+'" y="'+(d[k].cy+3)+'" text-anchor="middle">'+k+'</text>';});
+  $("um").innerHTML=h;$("sm").innerHTML=SMALL.map(k=>'<button type="button" data-s="'+k+'">'+k+' · '+d[k].ev+'</button>').join("");
+  $("um").addEventListener("click",e=>{const p=e.target.closest("path[data-s]");if(p)click(p.dataset.s);});
+  $("sm").addEventListener("click",e=>{const b=e.target.closest("button[data-s]");if(b)click(b.dataset.s);});
+  $("um").addEventListener("pointermove",e=>{const p=e.target.closest("path[data-s]");if(!p||e.pointerType!=="mouse"){tip.style.opacity=0;return;}const s=S[p.dataset.s];tip.textContent=s.n+" · "+s.ev+" elektor";tip.style.left=(e.clientX+14)+"px";tip.style.top=(e.clientY+14)+"px";tip.style.opacity=1;});
+  $("um").addEventListener("pointerleave",()=>tip.style.opacity=0);
+  if(!dec(location.hash))preset("2024");else render();
+  if(window.MapAnim)MapAnim.intro(document.querySelectorAll("#um path"),{svg:$("um")});});
+const link=()=>"https://voksmero.hu/usa-terkep#"+enc();
+const txt=()=>{const a=tot();return "Az én térképem: Demokrata "+(a.D+a.d)+" – Republikánus "+(a.R+a.r)+" elektor. Rajzold meg a tiédet!";};
+$("shr").onclick=()=>J.share("Az én amerikai térképem – Voksmérő",txt(),link());$("cpy").onclick=()=>J.copy(link(),"Link a vágólapon");
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

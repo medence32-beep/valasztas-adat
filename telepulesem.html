@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=1";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Hogy szavazott a településed? – 2026-os választás településenként | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/telepulesem">
+<meta name="description" content="Írd be a településed, és nézd meg, hogyan szavazott a 2026-os országgyűlési választáson: részvétel, pártlistás eredmény az országos átlaghoz képest, rangsor és hasonló települések.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Hogy szavazott a településed? – 2026-os választás településenként">
+<meta property="og:description" content="Írd be a településed, és nézd meg, hogyan szavazott a 2026-os országgyűlési választáson: részvétel, pártlistás eredmény az országos átlaghoz képest, rangsor és hasonló települések.">
+<meta property="og:url" content="https://voksmero.hu/telepulesem">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/magyarorszag.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/magyarorszag.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=16">
+<style>
+.jw{max-width:1180px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.jk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.jh h1{font:900 clamp(32px,5.6vw,58px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 10px;text-wrap:balance}
+.jh p{color:var(--ink2);max-width:68ch;margin:0}
+.jc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.jc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0 0 12px;letter-spacing:.02em}
+.jb{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 16px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s}
+.jb:hover{border-color:var(--acc)}.jb:active{transform:scale(.97)}.jb.p{background:var(--acc);border-color:var(--acc);color:#14100a}.jb:disabled{opacity:.45;cursor:default}
+.jn{color:var(--ink3);font-size:12.5px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.srch{position:relative;max-width:640px;margin-top:18px}.srch input{width:100%;font:600 18px var(--f-body);color:var(--ink);background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:15px 18px 15px 48px;box-shadow:var(--shadow)}
+.srch input:focus{outline:2px solid var(--acc);outline-offset:1px}.srch svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--ink3)}
+.sug{position:absolute;left:0;right:0;top:100%;margin-top:6px;background:var(--card);border:1px solid var(--line2);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.25);max-height:320px;overflow:auto;z-index:20}
+.sug button{display:flex;justify-content:space-between;gap:10px;width:100%;border:0;background:none;color:var(--ink);padding:10px 14px;font:600 15px var(--f-body);text-align:left;cursor:pointer}.sug button small{color:var(--ink3)}.sug button:hover,.sug button.a{background:var(--bg2)}
+.quick{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}.quick button{border:1px solid var(--line2);background:var(--bg2);color:var(--ink2);border-radius:999px;padding:5px 11px;font:600 13px var(--f-body);cursor:pointer}
+.tg{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:16px;margin-top:18px;align-items:start}@media(max-width:900px){.tg{grid-template-columns:1fr}}
+.th h2{font:900 clamp(30px,4.6vw,46px)/1.02 var(--f-display);text-transform:uppercase;margin:0}.th .m{color:var(--ink2);font-size:14px;margin:6px 0 0}
+.win{display:inline-flex;align-items:center;gap:8px;margin-top:12px;padding:6px 12px;border-radius:999px;font:800 13px var(--f-body);color:#fff}
+.kp{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0}.kp>div{background:var(--bg2);border:1px solid var(--line);border-radius:14px;padding:11px 12px;min-width:0}
+.kp b{display:block;font:900 26px/1.1 var(--f-display);font-variant-numeric:tabular-nums}.kp span{font-size:12px;color:var(--ink2)}.kp em{font-style:normal;font:700 12px var(--f-body)}
+.up{color:var(--good)}.dn{color:var(--bad)}
+.pr{display:grid;gap:12px}.pr .r{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;align-items:center}.pr b{font-size:15px}.pr .v{text-align:right;font-variant-numeric:tabular-nums}.pr .v strong{font:800 18px var(--f-display);margin-right:6px}.pr .v span{font:700 12px var(--f-body)}
+.pr .br{grid-column:1/-1;position:relative;height:10px;border-radius:6px;background:var(--line);overflow:visible}.pr .br i{display:block;height:100%;border-radius:6px;transition:width .7s cubic-bezier(.2,.8,.2,1)}
+.pr .br u{position:absolute;top:-4px;bottom:-4px;border-left:2px solid var(--ink);opacity:.55}
+.facts{display:grid;gap:8px}.fact{display:flex;gap:10px;align-items:flex-start;background:var(--bg2);border-radius:12px;padding:10px 12px;font-size:14.5px;line-height:1.45}.fact i{font-style:normal;font-size:20px;line-height:1.1}
+#tm{width:100%;height:auto;display:block;max-height:420px}#tm path{fill:var(--line);stroke:var(--card);stroke-width:.4;vector-effect:non-scaling-stroke;cursor:pointer}#tm path:hover{filter:brightness(1.1)}#tm path.on{stroke:var(--ink);stroke-width:2}
+.sim{display:grid;gap:6px}.sim button{display:flex;justify-content:space-between;gap:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);border-radius:10px;padding:8px 11px;font:600 14px var(--f-body);cursor:pointer;text-align:left}.sim button:hover{border-color:var(--acc)}.sim small{color:var(--ink3)}
+.rec{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px}.rec button{text-align:left;border:1px solid var(--line);background:var(--bg2);border-radius:14px;padding:12px;cursor:pointer;color:var(--ink)}.rec button b{display:block;font:800 16px var(--f-display)}.rec button small{color:var(--ink2);font-size:12.5px}.rec button:hover{border-color:var(--acc)}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a><a href="zold-foki-szigetek-valasztas"><i class="live cv"></i><span>Zöld-fok<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main class="jw">
+<section class="jh"><div class="jk">Magyarország · 2026-os országgyűlési választás</div><h1>Hogy szavazott a településed?</h1>
+<p>Írd be a településed nevét, és megmutatjuk, hogyan szavazott az országos átlaghoz képest: részvétel, pártlistás eredmény, országos rangsor, és hogy melyik települések szavaztak a leginkább hozzá hasonlóan.</p>
+<div class="srch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+<input id="q" type="text" placeholder="pl. Debrecen, Tiszakécske, Bp. 11. kerület…" autocomplete="off" aria-label="Település neve"><div class="sug" id="sug" hidden></div></div>
+<div class="quick" id="quick"></div></section>
+<div id="out"></div>
+<div class="jc" style="margin-top:18px" id="recw"><h2>Országos rekorderek</h2><div class="rec" id="rec"></div></div>
+<p class="jn" style="margin-top:14px">Forrás: Nemzeti Választási Iroda, 2026-os országgyűlési választás, belföldi pártlistás szavazatok szavazókörönként összesítve (a levélszavazatok településhez nem rendelhetők). A budapesti kerületek külön szerepelnek.</p>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script>
+window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+ nf:n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf:(x,d)=>x==null||isNaN(x)?"–":x.toFixed(d==null?1:d).replace(".",",")+"%",
+ ls:{get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}},
+ toast:m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200);},
+ copy:async(s,ok)=>{try{await navigator.clipboard.writeText(s);J.toast(ok||"Vágólapra másolva");}catch(e){prompt("Másold ki:",s);}},
+ share:async(title,text,url)=>{if(navigator.share){try{await navigator.share({title,text,url});return;}catch(e){if(e&&e.name==="AbortError")return;}}J.copy(text+(url?"\n"+url:""),"Szöveg a vágólapon – illeszd be bárhová");}};
+</script>
+<script src="assets/orszagok.js?v=11"></script>
+<script src="assets/terkep-anim.js?v=4"></script>
+<script>
+(function(){"use strict";const {$,esc,nf,pf}=J;
+const P=[["T","Tisza","#2F6FE4"],["F","Fidesz–KDNP","#EE8410"],["M","Mi Hazánk","#5E8F22"],["D","DK","#1F9BDE"],["K","MKKP","#8E8E8E"]];
+const MEGYE={"01":"Budapest","02":"Baranya","03":"Bács-Kiskun","04":"Békés","05":"Borsod-Abaúj-Zemplén","06":"Csongrád-Csanád","07":"Fejér","08":"Győr-Moson-Sopron","09":"Hajdú-Bihar","10":"Heves","11":"Komárom-Esztergom","12":"Nógrád","13":"Pest","14":"Somogy","15":"Szabolcs-Szatmár-Bereg","16":"Jász-Nagykun-Szolnok","17":"Tolna","18":"Vas","19":"Veszprém","20":"Zala"};
+const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
+let T=[],BY={},NAT=null,RANK={},SEL=null;
+function prep(d){T=d.r.map(r=>{const v=r[4]+r[5]+r[6]+r[7]+r[8]||1;return {c:r[0],n:r[1],m:r[0].slice(0,2),vp:r[2],sz:r[3],v:v,s:[r[4]/v,r[5]/v,r[6]/v,r[7]/v,r[8]/v],o:r[9],t:r[2]?r[3]/r[2]:0,k:norm(r[1])};});
+  T.forEach(t=>BY[t.c]=t);const S=[0,0,0,0,0];let V=0,VP=0,SZ=0;T.forEach(t=>{t.s.forEach((x,i)=>S[i]+=x*t.v);V+=t.v;VP+=t.vp;SZ+=t.sz;});
+  NAT={s:S.map(x=>x/V),t:SZ/VP};
+  const big=T.filter(t=>t.vp>=100);P.forEach((p,i)=>{const o=big.slice().sort((a,b)=>b.s[i]-a.s[i]);RANK[i]=new Map(o.map((t,j)=>[t.c,j+1]));});
+  const ot=big.slice().sort((a,b)=>b.t-a.t);RANK.t=new Map(ot.map((t,j)=>[t.c,j+1]));RANK.n=big.length;}
+const win=t=>{let i=0;t.s.forEach((x,j)=>{if(x>t.s[i])i=j;});return i;};
+const diff=(x,y)=>{const d=(x-y)*100;return '<em class="'+(d>=0?'up':'dn')+'">'+(d>=0?'+':'')+d.toFixed(1).replace(".",",")+' pp</em>';};
+function similar(t){return T.filter(x=>x!==t&&x.vp>=200).map(x=>({x,d:x.s.reduce((a,v,i)=>a+(v-t.s[i])**2,0)+(x.t-t.t)**2*.5})).sort((a,b)=>a.d-b.d).slice(0,6).map(o=>o.x);}
+function facts(t){const f=[],w=win(t),n=RANK.n;
+  if(t.vp>=100){P.forEach((p,i)=>{const r=RANK[i].get(t.c);if(r&&(r<=Math.max(30,n*.05)))f.push(['🏆','Az ország <b>'+r+'.</b> leginkább '+esc(p[1])+'-párti települése ('+nf(n)+' közül).']);
+      if(r&&r>n-Math.max(30,n*.05)&&i<2)f.push(['📉','Az ország '+(n-r+1)+'. legkevésbé '+esc(p[1])+'-párti települése.']);});
+    const rt=RANK.t.get(t.c);if(rt<=n*.05)f.push(['🗳️','Részvételben az ország <b>'+rt+'.</b> legaktívabb települése.']);else if(rt>n*.95)f.push(['😴','Részvételben a '+(n-rt+1)+'. legkevésbé aktív település.']);}
+  const nw=win({s:NAT.s});if(w!==nw)f.push(['🔄','Itt <b>'+esc(P[w][1])+'</b> nyert, országosan viszont a(z) '+esc(P[nw][1])+'.']);
+  const mx=t.s.reduce((a,x,i)=>Math.abs(x-NAT.s[i])>Math.abs(a.d)?{i,d:x-NAT.s[i]}:a,{i:0,d:0});f.push(['📊','A legnagyobb eltérés az országos eredménytől: <b>'+esc(P[mx.i][1])+'</b> '+(mx.d>0?'+':'')+(mx.d*100).toFixed(1).replace(".",",")+' százalékpont.']);
+  if(t.o.indexOf("|")>0)f.push(['🧩','A település több egyéni választókerülethez is tartozik: '+esc(t.o.split("|").join(", "))+'.']);
+  return f.slice(0,5);}
+async function county(t){const sv=$("tm");if(!sv)return;try{const g=await (await fetch("assets/tel/"+t.m+".json")).json();
+  let h="";g.s.forEach(s=>{const c=t.m+"-"+s.k,x=BY[c],col=x?P[win(x)][2]:"var(--line)";h+='<path data-c="'+c+'" d="'+s.d+'" style="fill:'+col+';opacity:'+(c===t.c?1:.55)+'"'+(c===t.c?' class="on"':'')+'><title>'+esc(s.n)+'</title></path>';});
+  sv.innerHTML=h;const b=sv.getBBox();sv.setAttribute("viewBox",[b.x-4,b.y-4,b.width+8,b.height+8].join(" "));const on=sv.querySelector(".on");if(on)sv.appendChild(on);
+  sv.onclick=e=>{const p=e.target.closest("path[data-c]");if(p&&BY[p.dataset.c])show(BY[p.dataset.c],true);};}catch(e){sv.parentNode.innerHTML='<p class="jn">A megye térképe most nem tölthető be.</p>';}}
+function show(t,scroll){SEL=t;const w=win(t),sim=similar(t);try{history.replaceState(null,"",location.pathname+"#"+t.c);}catch(e){}
+  $("out").innerHTML='<div class="tg"><div class="jc th"><div class="jk">'+esc(MEGYE[t.m]||"")+(t.m!=="01"?" megye":"")+'</div><h2>'+esc(t.n)+'</h2><p class="m">'+nf(t.vp)+' választópolgár · '+esc(t.o.split("|").join(", "))+'</p>'+
+   '<span class="win" style="background:'+P[w][2]+'">Itt nyert: '+esc(P[w][1])+' · '+pf(t.s[w]*100)+'</span>'+
+   '<div class="kp"><div><b>'+pf(t.t*100)+'</b><span>részvétel</span><br>'+diff(t.t,NAT.t)+'</div><div><b>'+nf(t.sz)+'</b><span>szavazó</span></div><div><b>'+(t.vp>=100?RANK.t.get(t.c)+'.':'–')+'</b><span>helyezés részvételben</span></div></div>'+
+   '<div class="pr">'+P.map((p,i)=>'<div class="r"><b>'+esc(p[1])+'</b><span class="v"><strong>'+pf(t.s[i]*100)+'</strong>'+diff(t.s[i],NAT.s[i])+'</span><span class="br"><i style="background:'+p[2]+';width:'+(t.s[i]*100).toFixed(2)+'%"></i><u style="left:'+(NAT.s[i]*100).toFixed(2)+'%" title="országos: '+pf(NAT.s[i]*100)+'"></u></span></div>').join("")+'</div>'+
+   '<p class="jn" style="margin:10px 0 0">A függőleges vonal az országos (belföldi) eredményt jelöli. pp = százalékpont.</p>'+
+   '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="jb p" id="shr" type="button">Megosztás</button><a class="jb" href="magyarorszag">Országos térkép →</a></div></div>'+
+   '<div style="display:grid;gap:16px"><div class="jc"><h2>Érdekességek</h2><div class="facts">'+facts(t).map(f=>'<div class="fact"><i>'+f[0]+'</i><span>'+f[1]+'</span></div>').join("")+'</div></div>'+
+   '<div class="jc"><h2>'+esc(MEGYE[t.m]||"")+(t.m!=="01"?" megye":"")+'</h2><svg id="tm" role="img" aria-label="A megye települései"></svg><p class="jn" style="margin:6px 0 0">Szín: az adott településen győztes párt. Kattints egy másikra!</p></div>'+
+   '<div class="jc"><h2>Hozzá leginkább hasonló települések</h2><div class="sim">'+sim.map(x=>'<button type="button" data-c="'+x.c+'"><span>'+esc(x.n)+'</span><small>'+esc(MEGYE[x.m]||"")+' · '+esc(P[win(x)][1])+' '+pf(x.s[win(x)]*100)+'</small></button>').join("")+'</div></div></div></div>';
+  $("shr").onclick=()=>J.share("Így szavazott "+t.n,t.n+": "+P[w][1]+" "+pf(t.s[w]*100)+", részvétel "+pf(t.t*100)+". Nézd meg, hogy szavazott a te településed!","https://voksmero.hu/telepulesem#"+t.c);
+  $("out").querySelectorAll(".sim button").forEach(b=>b.onclick=()=>show(BY[b.dataset.c],true));
+  county(t);if(window.MapAnim)MapAnim.panel($("out").querySelector(".th"));if(scroll)$("out").scrollIntoView({behavior:"smooth",block:"start"});}
+let SL=[],SI=0;
+function sug(){const q=norm($("q").value);if(q.length<2){$("sug").hidden=true;return;}
+  SL=T.filter(t=>t.k.includes(q)).sort((a,b)=>(a.k.startsWith(q)?0:1)-(b.k.startsWith(q)?0:1)||b.vp-a.vp).slice(0,10);SI=0;
+  $("sug").innerHTML=SL.map((t,i)=>'<button type="button" data-c="'+t.c+'" class="'+(i?'':'a')+'"><span>'+esc(t.n)+'</span><small>'+esc(MEGYE[t.m]||"")+'</small></button>').join("");$("sug").hidden=!SL.length;}
+$("q").addEventListener("input",sug);
+$("q").addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();SI=(SI+(e.key==="ArrowDown"?1:-1)+SL.length)%Math.max(1,SL.length);$("sug").querySelectorAll("button").forEach((b,i)=>b.classList.toggle("a",i===SI));}
+  else if(e.key==="Enter"&&SL[SI]){e.preventDefault();pick(SL[SI].c);}});
+const pick=c=>{$("sug").hidden=true;$("q").value=BY[c].n;$("q").blur();show(BY[c],true);};
+$("sug").addEventListener("click",e=>{const b=e.target.closest("button[data-c]");if(b)pick(b.dataset.c);});
+document.addEventListener("click",e=>{if(!e.target.closest(".srch"))$("sug").hidden=true;});
+fetch("assets/jatek/telepulesek.json").then(r=>r.json()).then(d=>{prep(d);
+  const Q=["Debrecen","Szeged","Miskolc","Pécs","Győr","Kecskemét","Hódmezővásárhely","Gödöllő"];$("quick").innerHTML=Q.map(n=>{const t=T.find(x=>x.n===n);return t?'<button type="button" data-c="'+t.c+'">'+esc(n)+'</button>':'';}).join("");
+  $("quick").onclick=e=>{const b=e.target.closest("button[data-c]");if(b)pick(b.dataset.c);};
+  const big=T.filter(t=>t.vp>=300),mx=(f,s)=>big.slice().sort((a,b)=>s*(f(b)-f(a)))[0];
+  const R=[["Legmagasabb részvétel",mx(t=>t.t,1),t=>pf(t.t*100)],["Legalacsonyabb részvétel",mx(t=>t.t,-1),t=>pf(t.t*100)],["Legerősebb Tisza",mx(t=>t.s[0],1),t=>pf(t.s[0]*100)],["Legerősebb Fidesz–KDNP",mx(t=>t.s[1],1),t=>pf(t.s[1]*100)],["Legerősebb Mi Hazánk",mx(t=>t.s[2],1),t=>pf(t.s[2]*100)],["Legkiegyenlítettebb verseny",big.slice().sort((a,b)=>Math.abs(a.s[0]-a.s[1])-Math.abs(b.s[0]-b.s[1]))[0],t=>pf(t.s[0]*100)+" – "+pf(t.s[1]*100)]];
+  $("rec").innerHTML=R.map(r=>'<button type="button" data-c="'+r[1].c+'"><small>'+r[0]+' (300+ választópolgár)</small><b>'+esc(r[1].n)+'</b><small>'+r[2](r[1])+'</small></button>').join("");
+  $("rec").onclick=e=>{const b=e.target.closest("button[data-c]");if(b)pick(b.dataset.c);};
+  const h=decodeURIComponent(location.hash.slice(1));if(BY[h])show(BY[h],false);});
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>

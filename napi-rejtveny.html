@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=1";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Napi országrejtvény – melyik ország ez? | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/napi-rejtveny">
+<meta name="description" content="Minden nap egy új ország: találd ki hat tippből a körvonala alapján! Távolság, irány, közelség – és választási érdekességek. Napi rejtvény a Voksmérőn.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Napi országrejtvény – melyik ország ez?">
+<meta property="og:description" content="Minden nap egy új ország: találd ki hat tippből a körvonala alapján! Távolság, irány, közelség – és választási érdekességek. Napi rejtvény a Voksmérőn.">
+<meta property="og:url" content="https://voksmero.hu/napi-rejtveny">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/index.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=16">
+<style>
+.jw{max-width:1180px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.jk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.jh h1{font:900 clamp(32px,5.6vw,58px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 10px;text-wrap:balance}
+.jh p{color:var(--ink2);max-width:68ch;margin:0}
+.jc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.jc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0 0 12px;letter-spacing:.02em}
+.jb{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 16px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s}
+.jb:hover{border-color:var(--acc)}.jb:active{transform:scale(.97)}.jb.p{background:var(--acc);border-color:var(--acc);color:#14100a}.jb:disabled{opacity:.45;cursor:default}
+.jn{color:var(--ink3);font-size:12.5px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.rg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:20px;align-items:start}@media(max-width:860px){.rg{grid-template-columns:1fr}}
+.sil{aspect-ratio:1/1;max-height:420px;width:100%;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--acc2) 10%,var(--card)),var(--card));border-radius:14px;border:1px solid var(--line)}
+.sil svg{width:86%;height:86%}.sil path{fill:var(--acc);stroke:var(--card);stroke-width:.6;vector-effect:non-scaling-stroke;animation:silin .7s cubic-bezier(.2,.8,.2,1) both}
+@keyframes silin{from{opacity:0;transform:scale(.92)}}
+.inp{display:flex;gap:8px;margin-top:14px;position:relative}.inp input{flex:1;min-width:0;font:600 16px var(--f-body);color:var(--ink);background:var(--bg2);border:1px solid var(--line2);border-radius:12px;padding:12px 14px}
+.inp input:focus{outline:2px solid var(--acc);outline-offset:1px}
+.sug{position:absolute;left:0;right:0;top:100%;margin-top:4px;background:var(--card);border:1px solid var(--line2);border-radius:12px;box-shadow:var(--shadow2,0 10px 30px rgba(0,0,0,.3));max-height:260px;overflow:auto;z-index:20}
+.sug button{display:flex;width:100%;align-items:center;gap:10px;border:0;background:none;color:var(--ink);padding:9px 12px;font:600 15px var(--f-body);text-align:left;cursor:pointer}.sug button:hover,.sug button.a{background:var(--bg2)}.sug img{width:24px;height:16px;border-radius:3px;object-fit:cover}
+.gl{display:grid;gap:7px}.gr{display:grid;grid-template-columns:minmax(0,1fr) 96px 40px 56px;gap:6px;align-items:stretch}
+.gr>div{white-space:nowrap;background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:9px 8px;display:flex;align-items:center;min-width:0;font:700 14px var(--f-body);font-variant-numeric:tabular-nums}
+.gr .n{gap:8px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}.gr .n img{width:22px;height:15px;border-radius:3px;object-fit:cover;flex:none}
+.gr .d,.gr .p{justify-content:flex-end}.gr .a{justify-content:center;font-size:20px}.gr.e>div{opacity:.35}
+.gr.new>div{animation:flip .5s ease both}.gr.new>div:nth-child(2){animation-delay:.08s}.gr.new>div:nth-child(3){animation-delay:.16s}.gr.new>div:nth-child(4){animation-delay:.24s}
+@keyframes flip{from{transform:rotateX(90deg);opacity:0}}
+.gr.ok>div{background:color-mix(in srgb,var(--good) 22%,var(--bg2));border-color:var(--good)}
+.hints{display:grid;gap:6px;margin-top:12px}.hint{font-size:14px;color:var(--ink2);background:var(--bg2);border:1px dashed var(--line2);border-radius:10px;padding:8px 11px}.hint b{color:var(--ink)}
+.res{margin-top:14px;padding:16px;border-radius:16px;border:1px solid var(--line2);background:linear-gradient(135deg,color-mix(in srgb,var(--acc) 14%,var(--card)),var(--card))}
+.res h3{margin:0 0 4px;font:900 26px var(--f-display);text-transform:uppercase}.res .cn{display:flex;align-items:center;gap:10px;margin:8px 0}.res .cn img{width:44px;height:30px;border-radius:5px;object-fit:cover;box-shadow:var(--shadow)}
+.res .cn b{font:800 20px var(--f-display)}.res .act{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.st{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;text-align:center;margin:6px 0 12px}.st b{display:block;font:900 26px var(--f-display)}.st span{font-size:11.5px;color:var(--ink2)}
+.dist{display:grid;gap:4px}.dist div{display:grid;grid-template-columns:16px 1fr;gap:8px;align-items:center;font:700 12px var(--f-body)}.dist i{display:block;height:18px;border-radius:4px;background:var(--line2);color:var(--ink);font-style:normal;text-align:right;padding-right:6px;line-height:18px;min-width:22px}.dist i.me{background:var(--acc);color:#14100a}
+.cd{font:800 22px var(--f-mono,monospace);letter-spacing:.04em}
+.rules{color:var(--ink2);font-size:14px;line-height:1.55}.rules li{margin:4px 0}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a><a href="zold-foki-szigetek-valasztas"><i class="live cv"></i><span>Zöld-fok<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main class="jw">
+<section class="jh"><div class="jk" id="kk">Napi országrejtvény</div><h1>Melyik ország ez?</h1>
+<p>Minden nap egy új ország. Hat tippből találd ki a körvonala alapján! Minden tipp után megmutatjuk, milyen messze vagy, és merre kell keresni.</p></section>
+<div class="rg"><div class="jc"><div class="sil" id="sil"><span class="jn">Betöltés…</span></div>
+<div class="inp"><input id="in" type="text" placeholder="Írd be egy ország nevét…" autocomplete="off" aria-label="Ország neve"><button class="jb p" id="go" type="button">Tipp</button><div class="sug" id="sug" hidden></div></div>
+<div class="hints" id="hints"></div></div>
+<div><div class="jc"><h2>Tippjeid</h2><div class="gl" id="gl"></div><div id="res"></div></div>
+<div class="jc" style="margin-top:16px"><h2>Statisztikád</h2><div class="st" id="st"></div><div class="dist" id="dist"></div></div>
+<div class="jc rules" style="margin-top:16px"><h2>Szabályok</h2><ul>
+<li>A távolság a két ország középpontja között értendő, a nyíl az irányt mutatja.</li>
+<li>A százalék azt jelzi, mennyire vagy közel: 100% a telitalálat.</li>
+<li>Két rossz tipp után megmutatjuk a kontinenst, négy után egy választási érdekességet, öt után a kezdőbetűt.</li>
+<li>Új rejtvény minden éjfélkor (magyar idő szerint). Az eredményed megoszthatod – a megfejtés nélkül.</li></ul></div></div></div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script>
+window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+ nf:n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf:(x,d)=>x==null||isNaN(x)?"–":x.toFixed(d==null?1:d).replace(".",",")+"%",
+ ls:{get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}},
+ toast:m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200);},
+ copy:async(s,ok)=>{try{await navigator.clipboard.writeText(s);J.toast(ok||"Vágólapra másolva");}catch(e){prompt("Másold ki:",s);}},
+ share:async(title,text,url)=>{if(navigator.share){try{await navigator.share({title,text,url});return;}catch(e){if(e&&e.name==="AbortError")return;}}J.copy(text+(url?"\n"+url:""),"Szöveg a vágólapon – illeszd be bárhová");}};
+</script>
+<script src="assets/orszagok.js?v=11"></script>
+<script src="assets/terkep-anim.js?v=4"></script>
+<script>
+(function(){"use strict";const {$,esc,nf}=J;
+const V=window.VALASZTAS,FL=c=>V&&V.flag?V.flag(c,80):"https://flagcdn.com/w80/"+c.toLowerCase()+".png";
+const START=Date.UTC(2026,10,16),DAY=864e5;
+const today=()=>{const s=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});return Math.floor((Date.parse(s+"T00:00:00Z")-START)/DAY)+1;};
+const N=today();$("kk").textContent="Napi országrejtvény · #"+N;
+let W,POOL=[],BY={},T,ST=J.ls.get("vm-rejt",{p:{}}),G=(ST.p[N]&&ST.p[N].g)||[],DONE=!!(ST.p[N]&&ST.p[N].d);
+function topo(t){const tr=t.transform,A=t.arcs.map(a=>{let x=0,y=0;return a.map(p=>{x+=p[0];y+=p[1];return [x*tr.scale[0]+tr.translate[0],y*tr.scale[1]+tr.translate[1]];});});
+  const ring=ix=>{let o=[];ix.forEach((i,j)=>{const a=i<0?A[~i].slice().reverse():A[i];o=o.concat(j?a.slice(1):a);});return o;};
+  return t.objects.countries.geometries.map(g=>({n:g.properties.name,p:g.type==="Polygon"?[g.arcs.map(ring)]:g.type==="MultiPolygon"?g.arcs.map(pl=>pl.map(ring)):[]}));}
+const area=r=>{let a=0;for(let i=0,j=r.length-1;i<r.length;j=i++)a+=(r[j][0]+r[i][0])*(r[j][1]-r[i][1]);return Math.abs(a/2);};
+function prep(c){const span=c.p.flat(2);let mn=1e9,mx=-1e9;span.forEach(q=>{mn=Math.min(mn,q[0]);mx=Math.max(mx,q[0]);});
+  if(mx-mn>180)c.p=c.p.map(pl=>pl.map(r=>r.map(q=>[q[0]<0?q[0]+360:q[0],q[1]])));
+  const pa=c.p.map(pl=>area(pl[0]));const big=Math.max(...pa);c.A=big;c.keep=c.p.filter((pl,i)=>pa[i]>=big*.012);
+  const L=c.p[pa.indexOf(big)][0];let cx=0,cy=0,s=0;for(let i=0,j=L.length-1;i<L.length;j=i++){const f=L[j][0]*L[i][1]-L[i][0]*L[j][1];cx+=(L[j][0]+L[i][0])*f;cy+=(L[j][1]+L[i][1])*f;s+=f;}
+  c.c=s?[cx/(3*s),cy/(3*s)]:L[0];if(c.c[0]>180)c.c[0]-=360;}
+function rng(seed){return()=>{seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+const R=6371,rad=x=>x*Math.PI/180;
+const dist=(a,b)=>{const dl=rad(b[1]-a[1]),dn=rad(b[0]-a[0]);const h=Math.sin(dl/2)**2+Math.cos(rad(a[1]))*Math.cos(rad(b[1]))*Math.sin(dn/2)**2;return 2*R*Math.asin(Math.sqrt(h));};
+const bear=(a,b)=>{const y=Math.sin(rad(b[0]-a[0]))*Math.cos(rad(b[1])),x=Math.cos(rad(a[1]))*Math.sin(rad(b[1]))-Math.sin(rad(a[1]))*Math.cos(rad(b[1]))*Math.cos(rad(b[0]-a[0]));return (Math.atan2(y,x)*180/Math.PI+360)%360;};
+const ARR=["⬆️","↗️","➡️","↘️","⬇️","↙️","⬅️","↖️"],arrow=b=>ARR[Math.round(b/45)%8];
+const prox=d=>Math.max(0,Math.round((1-d/20015)*100));
+const emo=p=>p===100?"🟩":p>=85?"🟨":p>=65?"🟧":"⬜";
+function sil(c){const k=Math.cos(rad(c.c[1]));let x0=1e9,x1=-1e9,y0=1e9,y1=-1e9;c.keep.forEach(pl=>pl.forEach(r=>r.forEach(q=>{const x=q[0]*k;x0=Math.min(x0,x);x1=Math.max(x1,x);y0=Math.min(y0,q[1]);y1=Math.max(y1,q[1]);})));
+  const s=300/Math.max(x1-x0,y1-y0),ox=(300-(x1-x0)*s)/2,oy=(300-(y1-y0)*s)/2;let d="";
+  c.keep.forEach(pl=>pl.forEach(r=>{d+="M"+r.map(q=>(ox+(q[0]*k-x0)*s).toFixed(1)+" "+(oy+(y1-q[1])*s).toFixed(1)).join("L")+"Z";}));
+  $("sil").innerHTML='<svg viewBox="-10 -10 320 320" role="img" aria-label="A keresett ország körvonala"><path d="'+d+'" fill-rule="evenodd"/></svg>';}
+const NAP=[];
+function hints(){const wrong=G.filter(g=>g!==T.code).length,h=[];
+  if(wrong>=2||DONE)h.push('🌍 Kontinens: <b>'+esc(V.CONT[T.cont]||"–")+'</b>');
+  if(wrong>=4||DONE){const e=NAP.find(x=>x.k===T.code);h.push('🗳️ '+(e?'Következő ismert választás: <b>'+esc(e.t)+'</b>':'Ebben az országban '+(T.ready?'<b>van részletes Voksmérő-oldal</b>':'jelenleg nincs a naptárunkban közeli választás')));}
+  if(wrong>=5||DONE)h.push('🔤 Kezdőbetű: <b>'+esc(T.name[0])+'</b>');
+  $("hints").innerHTML=h.map(x=>'<div class="hint">'+x+'</div>').join("");}
+function rows(nw){let h="";for(let i=0;i<6;i++){const g=G[i];if(!g){h+='<div class="gr e"><div class="n">&nbsp;</div><div class="d"></div><div class="a"></div><div class="p"></div></div>';continue;}
+  const c=BY[g],d=dist(c.c,T.c),ok=g===T.code,p=ok?100:prox(d);
+  h+='<div class="gr'+(ok?' ok':'')+(nw&&i===G.length-1?' new':'')+'"><div class="n"><img src="'+FL(g)+'" alt="">'+esc(c.name)+'</div><div class="d">'+(ok?'🎉':nf(d)+' km')+'</div><div class="a">'+(ok?'✅':arrow(bear(c.c,T.c)))+'</div><div class="p">'+p+'%</div></div>';}
+  $("gl").innerHTML=h;}
+function stats(){const P=Object.entries(ST.p).filter(([k,v])=>v.d).sort((a,b)=>a[0]-b[0]);const won=P.filter(([k,v])=>v.w);
+  let cur=0,best=0,run=0,prev=null;P.forEach(([k,v])=>{if(v.w&&(prev===null||+k===prev+1))run=(prev!==null&&+k===prev+1&&run>0)?run+1:1;else if(v.w)run=1;else run=0;best=Math.max(best,run);prev=+k;});
+  cur=(P.length&&+P[P.length-1][0]>=N-1)?run:0;const di=[0,0,0,0,0,0];won.forEach(([k,v])=>di[v.g.length-1]++);const mx=Math.max(1,...di);
+  $("st").innerHTML='<div><b>'+P.length+'</b><span>játék</span></div><div><b>'+(P.length?Math.round(won.length/P.length*100):0)+'%</b><span>nyerés</span></div><div><b>'+cur+'</b><span>sorozat</span></div><div><b>'+best+'</b><span>legjobb</span></div>';
+  const me=DONE&&ST.p[N].w?G.length:0;$("dist").innerHTML=di.map((n,i)=>'<div><span>'+(i+1)+'</span><i class="'+(me===i+1?'me':'')+'" style="width:'+Math.max(6,n/mx*100)+'%">'+n+'</i></div>').join("");}
+function shareText(){const w=G[G.length-1]===T.code;return "Voksmérő országrejtvény #"+N+" "+(w?G.length:"X")+"/6\n"+G.map(g=>{const ok=g===T.code,d=dist(BY[g].c,T.c);return emo(ok?100:prox(d))+(ok?"🎉":arrow(bear(BY[g].c,T.c)));}).join("")+"\n";}
+let cdT=null;
+function result(){if(!DONE){$("res").innerHTML="";return;}const w=ST.p[N].w,href=T.ready?T.ready.href:"orszag?k="+T.code.toLowerCase();
+  $("res").innerHTML='<div class="res"><h3>'+(w?(G.length===1?"Elsőre! Zseniális!":G.length<=3?"Szép munka!":"Megvan!"):"Most nem jött össze")+'</h3><div class="cn"><img src="'+FL(T.code)+'" alt=""><b>'+esc(T.name)+'</b></div>'+
+  '<div class="jn">Következő rejtvény: <span class="cd" id="cd"></span></div><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>';
+  $("sh").onclick=()=>J.share("Voksmérő országrejtvény",shareText(),"https://voksmero.hu/napi-rejtveny");
+  const tick=()=>{const now=new Date(),b=new Date(now.toLocaleString("en-US",{timeZone:"Europe/Budapest"}));const s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds());
+    const e=$("cd");if(!e)return;e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();clearInterval(cdT);cdT=setInterval(tick,1000);}
+function save(){ST.p[N]={g:G,d:DONE,w:DONE&&G[G.length-1]===T.code};J.ls.set("vm-rejt",ST);}
+function guess(code){if(DONE||!BY[code]||G.includes(code))return;G.push(code);
+  if(code===T.code||G.length>=6){DONE=true;fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/rejt-"+N+(code===T.code?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
+  save();rows(true);hints();result();stats();$("in").value="";$("sug").hidden=true;$("in").disabled=$("go").disabled=DONE;if(!DONE)$("in").focus();
+  if(code!==T.code&&!DONE)J.toast(nf(dist(BY[code].c,T.c))+" km – "+["észak","északkelet","kelet","délkelet","dél","délnyugat","nyugat","északnyugat"][Math.round(bear(BY[code].c,T.c)/45)%8]+" felé keresd");}
+const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase();let SI=0,SL=[];
+function suggest(){const q=norm($("in").value.trim());if(!q){$("sug").hidden=true;return;}
+  SL=POOL.filter(c=>!G.includes(c.code)&&(norm(c.name).includes(q)||norm(c.en).includes(q))).sort((a,b)=>(norm(a.name).startsWith(q)?0:1)-(norm(b.name).startsWith(q)?0:1)||a.name.localeCompare(b.name,"hu")).slice(0,8);SI=0;
+  $("sug").innerHTML=SL.map((c,i)=>'<button type="button" data-c="'+c.code+'" class="'+(i===0?'a':'')+'"><img src="'+FL(c.code)+'" alt="">'+esc(c.name)+'</button>').join("");$("sug").hidden=!SL.length;}
+$("in").addEventListener("input",suggest);
+$("in").addEventListener("keydown",e=>{if(e.key==="ArrowDown"||e.key==="ArrowUp"){e.preventDefault();SI=(SI+(e.key==="ArrowDown"?1:-1)+SL.length)%Math.max(1,SL.length);$("sug").querySelectorAll("button").forEach((b,i)=>b.classList.toggle("a",i===SI));}
+  else if(e.key==="Enter"){e.preventDefault();if(SL[SI])guess(SL[SI].code);}else if(e.key==="Escape")$("sug").hidden=true;});
+$("sug").addEventListener("click",e=>{const b=e.target.closest("button[data-c]");if(b)guess(b.dataset.c);});
+$("go").addEventListener("click",()=>{if(SL[SI])guess(SL[SI].code);else{const q=norm($("in").value.trim());const c=POOL.find(x=>norm(x.name)===q);if(c)guess(c.code);else J.toast("Válassz a listából egy országot");}});
+document.addEventListener("click",e=>{if(!e.target.closest(".inp"))$("sug").hidden=true;});
+Promise.all([fetch("assets/world-110m.json").then(r=>r.json()),fetch("assets/jatek/orszagkod.json").then(r=>r.json()),fetch("assets/data/naptar.json").then(r=>r.json()).catch(()=>null)]).then(([t,kod,nap])=>{
+  W=topo(t);const L={};(V&&V.list||[]).forEach(c=>L[c.code]=c);
+  W.forEach(c=>{const k=kod[c.n];if(!k||!L[k])return;prep(c);Object.assign(c,L[k]);BY[k]=c;POOL.push(c);});
+  POOL.sort((a,b)=>a.code<b.code?-1:1);
+  const big=POOL.filter(c=>c.A>.35);const r=rng(20261116);const ord=big.slice();for(let i=ord.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[ord[i],ord[j]]=[ord[j],ord[i]];}
+  T=ord[(N-1)%ord.length];
+  try{const td=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});(nap&&nap.v||[]).filter(x=>x.d>=td).sort((a,b)=>a.d<b.d?-1:1).forEach(x=>{if(x.k&&!NAP.find(y=>y.k===x.k))NAP.push({k:x.k,t:new Date(x.d+"T12:00:00").toLocaleDateString("hu-HU",{year:"numeric",month:"long",day:"numeric"})+" – "+(x.t||"választás")});});}catch(e){}
+  sil(T);rows(false);hints();result();stats();$("in").disabled=$("go").disabled=DONE;
+}).catch(()=>{$("sil").innerHTML='<span class="jn">A rejtvény most nem tölthető be. Próbáld újra később.</span>';});
+})();
+</script>
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>
