@@ -1,40 +1,57 @@
 /* 1v1 online párbaj a Voksmérő játékaihoz (napi szó, országrejtvény).
-   Csak linkkel lehet csatlakozni, és egy meccsben pontosan két játékos van.
-   Tárolás: abacus.jasoncameron.dev (névtér: voksmero.hu), csak egyszer írható kulcsokkal:
-   vs<játék>-<id>-a / -b   = a két hely (az első két megnyitó foglalja le)
-   vs<játék>-<id>-<hely>-<n> = az n. tipp eredménye: (kód+1)*100000 + eltelt másodperc
-   Személyes adat nincs: csak a tippek színei / közelsége és az idő kerül fel, a tippelt szó vagy ország nem. */
+   Csak linkkel lehet csatlakozni, és egy meccsben pontosan két játékos van: az első kettő, aki megnyitja a linket.
+   Valós idejű üzenetek: ntfy.sh (nyilvános, ingyenes értesítési szolgáltatás), meccsenként egy kitalálhatatlan nevű témával.
+   Üzenetek: {t:"j",c} csatlakozás · {t:"r",c,n,v,s} az n. tipp eredménye (v = kód, s = eltelt másodperc).
+   Személyes adat nincs: csak egy véletlen játékosazonosító, a tippek színei / közelsége és az idő kerül fel – a tippelt szó vagy ország nem. */
 (function(){
 "use strict";
-var H="https://abacus.jasoncameron.dev/",NS="voksmero.hu";
+var NT="https://ntfy.sh/";
 function ls(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
-function rid(){var a=new Uint32Array(2);(window.crypto||{}).getRandomValues?crypto.getRandomValues(a):(a[0]=Math.random()*4e9,a[1]=Math.random()*4e9);
-  return (a[0].toString(36)+a[1].toString(36)).replace(/[^a-z0-9]/g,"").slice(0,9).padEnd(7,"x");}
-function key(g,id,s,r){return "vs"+g+"-"+id+"-"+s+(r!=null?"-"+r:"");}
-function create(k,v){return fetch(H+"create/"+NS+"/"+k+"?initializer="+v,{credentials:"omit"}).then(function(r){
-  if(!r.ok)return r.status>=500?null:false;return r.json().then(function(j){return !!j&&j.value!=null;});}).catch(function(){return null;});}
-function get(k){return fetch(H+"get/"+NS+"/"+k,{credentials:"omit",cache:"no-store"}).then(function(r){
-  if(r.status===404)return null;if(!r.ok)return undefined;return r.json().then(function(j){return j&&j.value!=null?j.value:null;});}).catch(function(){return undefined;});}
+function rnd(n){var a=new Uint32Array(2);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(a);else{a[0]=Math.random()*4e9;a[1]=Math.random()*4e9;}
+  return (a[0].toString(36)+a[1].toString(36)).replace(/[^a-z0-9]/g,"").slice(0,n).padEnd(n,"x");}
+function rid(){return rnd(9);}
 function hash(s){var h=2166136261;for(var i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return h>>>0;}
+function topic(g,id){return "voksmero-vs"+g+"-"+id;}
+function cid(g,id,create){var C=ls("vm-vs-c",{}),k=g+id;if(!C[k]&&create){C[k]=rnd(10);var ks=Object.keys(C);if(ks.length>80)delete C[ks[0]];lss("vm-vs-c",C);}return C[k]||null;}
+function send(g,id,msg,tries){tries=tries||0;return fetch(NT+topic(g,id),{method:"POST",body:JSON.stringify(msg),credentials:"omit"}).then(function(r){if(!r.ok)throw 0;return true;})
+  .catch(function(){if(tries<5)return new Promise(function(res){setTimeout(function(){res(send(g,id,msg,tries+1));},1200*(tries+1));});return false;});}
+/* meccsenként egy élő kapcsolat: az eddigi üzenetek visszajátszása + az újak azonnal */
+var CONN={};
+function conn(g,id){var k=g+"|"+id;if(CONN[k])return CONN[k];
+  var c={players:[],rows:{},seen:{},subs:[],es:null,open:false};
+  function emit(){c.subs.forEach(function(f){try{f();}catch(e){}});}
+  function onMsg(m){if(!m||m.event!=="message"||c.seen[m.id])return;c.seen[m.id]=1;var d;try{d=JSON.parse(m.message);}catch(e){return;}
+    if(!d||typeof d.c!=="string")return;
+    if(d.t==="j"){if(c.players.indexOf(d.c)<0)c.players.push(d.c);}
+    else if(d.t==="r"&&+d.n>=1&&+d.n<=6){(c.rows[d.c]=c.rows[d.c]||{})[+d.n]={c:+d.v,t:+d.s||0};}
+    emit();}
+  try{c.es=new EventSource(NT+topic(g,id)+"/sse?since=all");
+    c.es.onopen=function(){c.open=true;emit();};
+    c.es.onmessage=function(e){try{onMsg(JSON.parse(e.data));}catch(_){}};
+    c.es.onerror=function(){c.open=false;emit();};}catch(e){}
+  c.sub=function(f){c.subs.push(f);f();return function(){c.subs=c.subs.filter(function(x){return x!==f;});};};
+  c.close=function(){try{c.es.close();}catch(e){}delete CONN[k];};
+  CONN[k]=c;return c;}
 /* helyfoglalás: "a" | "b" | "full" | "err" */
-function join(g,id){var L=ls("vm-vs",{}),me=L[g+id];if(me)return Promise.resolve(me);
-  function save(s){L=ls("vm-vs",{});L[g+id]=s;var ks=Object.keys(L);if(ks.length>60)delete L[ks[0]];lss("vm-vs",L);return s;}
-  return create(key(g,id,"a"),1).then(function(ok){if(ok)return save("a");if(ok===null)return "err";
-    return create(key(g,id,"b"),1).then(function(ok2){if(ok2)return save("b");return ok2===null?"err":"full";});});}
-function post(g,id,s,r,code,sec){var v=(code+1)*100000+Math.max(0,Math.min(99999,Math.round(sec)));
-  var tries=0;(function go(){create(key(g,id,s,r),v).then(function(ok){if(ok===null&&tries++<4)setTimeout(go,1500);});})();}
-function dec(v){return {c:Math.floor(v/100000)-1,t:v%100000};}
+function join(g,id){var me=cid(g,id,true),c=conn(g,id),sent=false;
+  return new Promise(function(res){var done=false,un;
+    var to=setTimeout(function(){if(done)return;done=true;if(un)un();res("err");},15000);
+    un=c.sub(function(){if(done)return;
+      if(c.open&&!sent){sent=true;send(g,id,{t:"j",c:me}).then(function(ok){if(!ok&&!done){done=true;clearTimeout(to);if(un)un();res("err");}});}
+      var i=c.players.indexOf(me);if(i<0){if(c.players.length>=2&&sent){/* a mi csatlakozásunk még úton lehet – megvárjuk */}return;}
+      done=true;clearTimeout(to);setTimeout(function(){un();},0);res(i===0?"a":i===1?"b":"full");});});}
+function post(g,id,s,r,code,sec){send(g,id,{t:"r",c:cid(g,id,true),n:r,v:code,s:Math.max(0,Math.round(sec))});}
 /* ellenfél figyelése: onJoin(), onRow(n,{c,t}) */
-function watch(g,id,opp,onJoin,onRow){var rows=0,joined=false,stop=false;
-  function tick(){if(stop)return;
-    if(!joined){get(key(g,id,opp)).then(function(v){if(stop)return;if(v){joined=true;onJoin();tick();}else setTimeout(tick,2000);});return;}
-    if(rows>=6)return;
-    get(key(g,id,opp,rows+1)).then(function(v){if(stop)return;if(v){rows++;onRow(rows,dec(v));setTimeout(tick,150);}else setTimeout(tick,2000);});}
-  tick();return function(){stop=true;};}
+function watch(g,id,opp,onJoin,onRow){var c=conn(g,id),me=cid(g,id,true),joined=false,got=0;
+  var un=c.sub(function(){var o=c.players.filter(function(p,i){return i<2&&p!==me;})[0];if(!o)return;
+    if(!joined){joined=true;onJoin();}var R=c.rows[o]||{};while(R[got+1]){got++;onRow(got,R[got]);}});
+  return function(){un();c.close();};}
 /* visszavágó: determinisztikus következő azonosító, hogy mindkét játékos ugyanoda kerüljön */
 function next(id){return ("r"+hash(id+"|vv").toString(36)+hash("vv|"+id).toString(36)).slice(0,9);}
-function waitRematch(g,id,cb){var stop=false,n=next(id);(function t(){if(stop)return;get(key(g,n,"a")).then(function(v){if(stop)return;if(v){var L=ls("vm-vs",{});if(L[g+n]!=="a")cb();}else setTimeout(t,3000);});})();return function(){stop=true;};}
+function waitRematch(g,id,cb){var n=next(id),c=conn(g,n),fired=false;
+  var un=c.sub(function(){if(fired)return;var me=cid(g,n,false);if(c.players.some(function(p){return p!==me;})){fired=true;cb();}});
+  return function(){un();c.close();};}
 function startTime(g,id,set){var T=ls("vm-vs-t",{});if(set&&!T[g+id]){T[g+id]=Date.now();var ks=Object.keys(T);if(ks.length>60)delete T[ks[0]];lss("vm-vs-t",T);}return T[g+id]||0;}
 function fmt(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
 /* eredmény: rows = [{c,t}], win = kód, ami a telitalálatot jelenti. 1 = én nyertem, -1 = ellenfél, 0 = döntetlen, null = még nincs vége */
