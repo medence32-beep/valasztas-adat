@@ -55,8 +55,12 @@
 .bar{position:relative;height:26px;border-radius:13px;overflow:hidden;background:var(--line);display:flex}.bar i{display:block;height:100%;transition:width .45s cubic-bezier(.2,.8,.2,1)}
 .bar .bd{background:#2E6FE0}.bar .bdl{background:#8DB3F2}.bar .bt{background:#C9A44A}.bar .brl{background:#F0A39C}.bar .br{background:#D7392F}.bar .bx{flex:1}
 .bar:after{content:"270";position:absolute;left:50.19%;top:-1px;bottom:-1px;border-left:2px solid var(--ink);font:800 10px var(--f-body);color:var(--ink);padding-left:3px;line-height:26px}
-.win{margin-top:12px;padding:12px 14px;border-radius:14px;font:800 17px var(--f-display);text-align:center;transition:background .3s}
-.win.d{background:color-mix(in srgb,#2E6FE0 18%,var(--card));color:#2E6FE0}.win.r{background:color-mix(in srgb,#D7392F 16%,var(--card));color:#D7392F}.win.t{background:var(--bg2);color:var(--ink2)}
+.win{margin-top:14px;display:flex;align-items:center;gap:14px;padding:12px 16px;border-radius:12px;border-left:6px solid var(--line2);background:var(--bg2);transition:background .3s,border-color .3s}
+.win .l{min-width:0;flex:1}.win small{display:block;font:700 10.5px var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink2)}.win b{display:block;font:800 clamp(17px,2vw,20px)/1.15 var(--f-display);text-transform:uppercase;color:var(--ink)}
+.win{flex-wrap:wrap}.win .n{font:900 28px/1 var(--f-display);font-variant-numeric:tabular-nums;text-align:right}.win .n small{text-align:right;letter-spacing:.06em}
+.win .l{flex:1 1 200px}@media(max-width:520px){.win .l{flex-basis:100%}.win .n{display:flex;align-items:baseline;gap:6px;font-size:22px}}
+.win.t{font:600 14px var(--f-body);color:var(--ink2)}
+.win.d{border-color:#2E6FE0;background:color-mix(in srgb,#2E6FE0 10%,var(--card))}.win.d .n{color:#2E6FE0}.win.r{border-color:#D7392F;background:color-mix(in srgb,#D7392F 9%,var(--card))}.win.r .n{color:#D7392F}
 #um{width:100%;height:auto;display:block;-webkit-tap-highlight-color:transparent}
 #um path{stroke:var(--card);stroke-width:1;cursor:pointer;transition:fill .25s,filter .15s;outline:none}#um path:hover{filter:brightness(1.12)}
 #um text{font:800 10px var(--f-body);fill:#fff;pointer-events:none;paint-order:stroke;stroke:rgba(0,0,0,.35);stroke-width:2px}
@@ -125,7 +129,8 @@ function render(){K.forEach(k=>{const v=ST[k]||"0",p=document.querySelector('#um
   const a=tot(),D=a.D+a.d,R=a.R+a.r,w=x=>(x/538*100).toFixed(2)+"%";
   $("sd").firstChild.nodeValue=D;$("sr").firstChild.nodeValue=R;
   $("bar").innerHTML='<i class="bd" style="width:'+w(a.D)+'"></i><i class="bdl" style="width:'+w(a.d)+'"></i><i class="bt" style="width:'+w(a.T)+'"></i><i class="bx"></i><i class="brl" style="width:'+w(a.r)+'"></i><i class="br" style="width:'+w(a.R)+'"></i>';
-  const e=$("win");if(D>=270){e.className="win d";e.textContent="A demokrata jelölt nyer – "+D+" elektori szavazat";}else if(R>=270){e.className="win r";e.textContent="A republikánus jelölt nyer – "+R+" elektori szavazat";}
+  const e=$("win"),W=(c,p,n,o)=>{e.className="win "+c;e.innerHTML='<div class="l"><small>Ezen a térképen nyer</small><b>'+p+'</b></div><div class="n">'+(n>270?'+'+(n-270):'270')+'<small>'+(n>270?'elektor a 270 felett':'épp a határon')+'</small></div>';};
+  if(D>=270)W("d","A demokrata jelölt",D);else if(R>=270)W("r","A republikánus jelölt",R);
   else if(D===269&&R===269){e.className="win t";e.textContent="Döntetlen: 269–269! Ilyenkor a Képviselőház választ elnököt.";}
   else{e.className="win t";e.textContent="Még senki sincs 270 felett · billegő: "+a.T+" · színezetlen: "+a[0];}
   try{history.replaceState(null,"",location.pathname+"#"+enc());}catch(e){}}
