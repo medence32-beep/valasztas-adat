@@ -220,7 +220,7 @@
 .cnt{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center;margin-bottom:14px;font:700 13px var(--f-body)}.cnt b{font:800 12px var(--f-cond);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
 .cnt .bar{height:8px;border-radius:4px;background:var(--bg2);overflow:hidden}.cnt .bar i{display:block;height:100%;width:0;background:var(--acc);border-radius:4px;transition:width .8s}
 .pc .kh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.pc .kh h3{margin:0 0 10px}.pc .kh small{margin:0}
-.exitc{margin-bottom:16px}
+.exitc{margin-bottom:16px}.rsz{margin-bottom:16px}.rsz .kh{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}.rsz h3{margin:0 0 10px;font:800 12px var(--f-cond);letter-spacing:.16em;text-transform:uppercase;color:var(--ink2)}.rsz .kh small{margin:0}
 .exr{display:grid;grid-template-columns:7.5em minmax(0,1fr) 5.2em;gap:10px;align-items:center;padding:6px 0;border-top:1px solid var(--line);font:700 14px var(--f-body)}.exr:first-child{border-top:0}
 .exr .tr{position:relative;height:12px;border-radius:6px;background:var(--bg2)}.exr .tr em{position:absolute;top:0;bottom:0;border-radius:6px;background:var(--c)}.exr .tr u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);opacity:.5}
 .exr b{text-align:right;font:700 13px var(--f-mono)}
@@ -263,20 +263,19 @@
   <div class="cnt"><b id="cntl">Számlálás</b><span class="bar"><i id="rpb"></i></span><span id="rpl">0% feldolgozva</span></div>
   <div class="card pc exitc" id="exitc"><div class="kh"><h3>Exit poll · urnazáráskor (20:00)</h3><small class="rn" id="exsrc">GAD3 / RTVE</small></div>
     <div id="exit"><p class="muted" style="margin:0">Az urnazáráskor a spanyol közmédia (RTVE) megbízásából készült felmérés becsült mandátumsávjai jelennek meg itt – még a tényleges eredmények előtt.</p></div></div>
-  <div class="pg">
-    <div class="card pc"><div class="kh"><h3>Szavazatok</h3><small class="rn">% · változás 2023-hoz képest</small></div><div id="res"></div></div>
-    <div class="card pc"><div class="kh"><h3>Mandátumok · 350 hely</h3><small class="rn">176 a többséghez</small></div><svg id="hemi2" viewBox="0 0 400 214" role="img" aria-label="Mandátumok"></svg><div class="sbar" id="sbar2"></div><div class="slg" id="slg2"><span class="muted">A mandátumok a számlálás alatt folyamatosan változnak.</span></div></div>
-  </div>
-  <div class="card pc koal"><div class="kh"><h3>Koalícióépítő</h3><button type="button" class="kclr" id="kclr">Mind törlése</button></div><p class="rn" style="margin:0 0 10px" id="knote">Kattints a pártokra, és nézd meg, összejön-e a 176 mandátumos többség.</p><div class="kp" id="kp"></div><div class="ks"><div class="kbar" id="kbar"><u></u></div><b id="ksum">0</b></div><div class="kst" id="kst"></div></div>
-</div></section>
-<section class="sec2"><div class="wrap">
-  <div class="sh2 nl"><h2>Részvétel</h2><small>Hivatalos részadatok: 14:00, 18:00 és az urnazárás után</small></div>
+  <div class="rsz"><div class="kh"><h3>Részvétel</h3><small class="rn">Hivatalos részadatok: 14:00, 18:00 és az urnazárás után</small></div>
   <div class="tg">
     <div class="card tc"><span class="tl">14:00</span><b class="tv wait" id="t14">Még nincs adat</b><small>2023: 40,48% <span class="dl" id="d14"></span></small></div>
     <div class="card tc"><span class="tl">18:00</span><b class="tv wait" id="t18">Még nincs adat</b><small>2023: 53,12% <span class="dl" id="d18"></span></small></div>
     <div class="card tc"><span class="tl">Végleges</span><b class="tv wait" id="tv">Még nincs adat</b><small>2023: 70,38% <span class="dl" id="dv"></span></small></div>
     <div class="card tch"><svg id="tchart" viewBox="0 0 320 130" role="img" aria-label="Részvétel a nap folyamán"></svg><div class="tlg"><span><i style="--c:var(--ink3)"></i>2023</span><span><i style="--c:var(--acc)"></i>2026</span></div></div>
   </div>
+  </div>
+  <div class="pg">
+    <div class="card pc"><div class="kh"><h3>Szavazatok</h3><small class="rn">% · változás 2023-hoz képest</small></div><div id="res"></div></div>
+    <div class="card pc"><div class="kh"><h3>Mandátumok · 350 hely</h3><small class="rn">176 a többséghez</small></div><svg id="hemi2" viewBox="0 0 400 214" role="img" aria-label="Mandátumok"></svg><div class="sbar" id="sbar2"></div><div class="slg" id="slg2"><span class="muted">A mandátumok a számlálás alatt folyamatosan változnak.</span></div></div>
+  </div>
+  <div class="card pc koal"><div class="kh"><h3>Koalícióépítő</h3><button type="button" class="kclr" id="kclr">Mind törlése</button></div><p class="rn" style="margin:0 0 10px" id="knote">Kattints a pártokra, és nézd meg, összejön-e a 176 mandátumos többség.</p><div class="kp" id="kp"></div><div class="ks"><div class="kbar" id="kbar"><u></u></div><b id="ksum">0</b></div><div class="kst" id="kst"></div></div>
 </div></section>
 </div>
 
