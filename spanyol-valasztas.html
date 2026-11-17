@@ -436,10 +436,10 @@ const lgo=p=>LOGO[p]?'<img class="lgo'+(p==="ERC"||p==="SALF"?' lgd':'')+'" src=
 const lgs=p=>LOGO[p]?'<img class="jlg'+(p==="ERC"||p==="SALF"?' lgd':'')+'" src="'+LOGO[p]+'" alt="'+esc(p)+'" loading="lazy">':'';
 /* 2023-as listavezetők (a 2023-as eredményeknél ők szerepelnek) */
 const JEL23={"PP":"Alberto Núñez Feijóo","PSOE":"Pedro Sánchez Pérez-Castejón","Vox":"Santiago Abascal Conde","Sumar":"Yolanda Díaz Pérez","ERC":"Gabriel Rufián Romero","Junts":"Míriam Nogueras i Camero","EH Bildu":"Mertxe Aizpurua Arzallus","PNV":"Aitor Esteban Bravo","BNG":"Néstor Rego Candamil","CC":"Cristina Valido García","UPN":"Alberto Catalán Higueras"};
-const FOTO23={"PP":1,"PSOE":1,"Vox":1,"ERC":1,"Junts":1,"BNG":1,"CC":1};
+const FOTO23={"PP":"feijoo","PSOE":"sanchez","Vox":"abascal","ERC":"rufian","Junts":"nogueras","BNG":"rego","CC":"valido","Sumar":"diaz","EH Bildu":"aizpurua","PNV":"esteban","UPN":"catalan"};
 const pnm=(p,y)=>{const J=y?JEL23:JEL;return '<b class="cn">'+esc(J[p]||p)+'</b>'+(LOGO[p]?'<em class="jn">'+lgs(p)+'</em>':(J[p]?'<em class="jn">'+esc(p)+'</em>':''));};
 const mono=p=>{const j=JEL[p];if(!j||/^közös/.test(j))return esc(p.slice(0,3));const w=j.replace(/[„”"]/g,"").split(/\s+/).filter(x=>/^[A-ZÁÉÍÓÖŐÚÜŰÑ]/.test(x));return esc((w[0]||"")[0]+((w[1]||"")[0]||""));};
-const fej=(p,y)=>(y?FOTO23[p]&&FOTO[p]:FOTO[p])?'<img class="fej" style="--c:'+cl(p)+'" src="'+FOTO[p]+'" alt="'+esc((y?JEL23:JEL)[p]||p)+'" loading="lazy">':'<i class="fej fe" aria-hidden="true"></i>';
+const fej=(p,y)=>(y?FOTO23[p]:FOTO[p])?'<img class="fej" style="--c:'+cl(p)+'" src="'+(y?'assets/es/'+FOTO23[p]+'.webp':FOTO[p])+'" alt="'+esc((y?JEL23:JEL)[p]||p)+'" loading="lazy">':'<i class="fej fe" aria-hidden="true"></i>';
 const pcell=(p,y)=>'<span class="pn">'+fej(p,y)+'<span>'+pnm(p,y)+'</span></span>';
 
 let E={st:"elott",part:{},nat:[],prov:{},mun:{},rp:0};
