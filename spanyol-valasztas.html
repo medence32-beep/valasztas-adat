@@ -525,9 +525,11 @@ function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
   el.innerHTML='<div class="tkw"><b class="tkl"><i></i>'+(st==="vege"?"VÉGE":"ÉLŐ")+(demo?" · bemutató":"")+'</b><span class="tkp"><b>'+f1(rp)+'%</b> feldolgozva</span>'+
     s.slice(0,4).map(r=>'<span class="tks" style="--c:'+cl(r[0])+'">'+lgs(r[0])+'<b>'+(r[3]||0)+'</b><small>'+f1(r[2])+'%</small></span>').join("")+
     '<span class="tkm">'+esc(TK.log[0]||("Vezet: "+(JEL[L]||L)))+'</span><span class="tkt">'+tm+'</span></div>';}
-if(/[?&]demo\b/.test(location.search)){let k=0;const B=[["PSOE",33,130],["PP",31,124],["Vox",15,60],["Frente Amplio",6,12],["ERC",2.2,8],["Junts",1.6,6],["EH Bildu",1.4,6],["PNV",1.1,5]];
+(async()=>{const q=new URLSearchParams(location.search).get("demo");if(!q||!(window.crypto&&crypto.subtle))return;
+  const h=[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(q)))].map(x=>x.toString(16).padStart(2,"0")).join("");
+  if(h!=="19a2d798ab5244c05b7ebb0113d2e26aff89abe1027e58c8b8933ef9ae01dd17")return;let k=0;const B=[["PSOE",33,130],["PP",31,124],["Vox",15,60],["Frente Amplio",6,12],["ERC",2.2,8],["Junts",1.6,6],["EH Bildu",1.4,6],["PNV",1.1,5]];
   const step=()=>{k=Math.min(k+7,100);const w=k/100,f=[[-3,-14],[2.5,14],[2.4,12],[0,-2]];const nat=B.map((r,i)=>{const d=f[i]||[0,0];return [r[0],0,+(r[1]+d[0]*w).toFixed(2),Math.round(r[2]+d[1]*w)];});
-    ticker(nat,k,null,k>=100?"vege":"szamlal",1);if(k<100)setTimeout(step,2500);};setTimeout(step,800);}
+    ticker(nat,k,null,k>=100?"vege":"szamlal",1);if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
 
 /* ---------- párbaj: Sánchez (PSOE) – Feijóo (PP) ---------- */
 function duel(pL,pR,sL,sR,src){if(!$("dpL"))return;$("dpL").textContent=pL==null?'–':f1(pL)+'%';$("dpR").textContent=pR==null?'–':f1(pR)+'%';
