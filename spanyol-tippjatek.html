@@ -117,8 +117,9 @@ function upd(){const s=PT.reduce((a,[n])=>a+(+cur.v[n]||0),0),o=Math.max(0,100-s
   $("stk").innerHTML=PT.map(([n,c])=>'<i style="background:'+c+';width:'+cur.v[n]+'%" title="'+esc(n)+'"></i>').join("")+'<i style="background:var(--line2);width:'+o+'%"></i>';
   $("sum").className="sum"+(s>100?" bad":"");$("sum").innerHTML=s>100?'<span>Összesen '+pf(s)+' – csökkents valamelyiken!</span>':'<span>Kisebb pártok és egyéb: '+pf(o)+'</span><span>Első: <b>'+esc(PT.slice().sort((a,b)=>cur.v[b[0]]-cur.v[a[0]])[0][0])+'</b></span>';
   $("save").disabled=s>100||locked();}
-$("pl").addEventListener("input",e=>{const n=e.target.dataset.p||e.target.dataset.n;if(!n)return;cur.v[n]=Math.max(0,Math.min(60,+e.target.value||0));
-  const o=e.target.dataset.p?$("pl").querySelector('[data-n="'+n+'"]'):$("pl").querySelector('[data-p="'+n+'"]');if(o)o.value=cur.v[n];upd();});
+$("pl").addEventListener("input",e=>{const n=e.target.dataset.p||e.target.dataset.n;if(!n)return;const rest=PT.reduce((s,[m])=>m===n?s:s+(+cur.v[m]||0),0);
+  cur.v[n]=Math.round(Math.max(0,Math.min(60,100-rest,+e.target.value||0))*10)/10;
+  $("pl").querySelectorAll('[data-n="'+n+'"],[data-p="'+n+'"]').forEach(x=>{if(x!==e.target||+x.value!==cur.v[n])x.value=cur.v[n];});upd();});
 $("tr").oninput=()=>{cur.t=+$("tr").value;$("tn").value=cur.t;};$("tn").oninput=()=>{cur.t=+$("tn").value||0;$("tr").value=cur.t;};
 function savedBox(){if(!TIP){$("sv").innerHTML="";return;}$("sv").innerHTML='<div class="saved"><b>Tipped elmentve</b> ('+new Date(TIP.at).toLocaleString("hu-HU",{month:"short",day:"numeric",hour:"2-digit",minute:"2-digit"})+'). '+(locked()?'A tippelés lezárult.':'A zárásig bármikor módosíthatod.')+'</div>';}
 $("save").onclick=()=>{if(locked())return;const first=!TIP;TIP={v:Object.assign({},cur.v),t:cur.t,at:Date.now()};J.ls.set("vm-es-tipp",TIP);savedBox();J.toast("Tipp elmentve!");
