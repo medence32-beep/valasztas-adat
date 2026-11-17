@@ -130,11 +130,11 @@ $("simlink").addEventListener("click",()=>{const R={ERC:1.9,Junts:1.6,"EH Bildu"
 $("r23").onclick=()=>{cur.v=Object.assign({},R23);cur.t=66.6;ui();J.toast("A 2023-as eredmény betöltve (Frente Amplio = 2023-as Sumar)");};
 $("avg").onclick=async()=>{try{const d=await (await fetch("assets/data/kutatas/es.json")).json();const P=d.polls.slice(0,12),a={};PT.forEach(([n])=>{const xs=P.map(p=>p.v[n]).filter(x=>x!=null);a[n]=xs.length?Math.round(xs.reduce((s,x)=>s+x,0)/xs.length*10)/10:0;});cur.v=a;ui();J.toast("A legutóbbi 12 kutatás átlaga betöltve");}catch(e){J.toast("Nem sikerült betölteni");}};
 $("shr").onclick=()=>{const t=PT.map(([n])=>n+" "+String(cur.v[n]).replace(".",",")+"%").join(", ");J.share("Az én spanyol tippem – Voksmérő","Az én tippem a spanyol választásra: "+t+", részvétel "+String(cur.t).replace(".",",")+"%. Szerinted?","https://voksmero.hu/spanyol-tippjatek");};
-function cd(){const s=Math.max(0,Math.floor((LOCK-Date.now())/1000));const v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
+function cd(){if(locked()&&!WS){WS=1;who();}const s=Math.max(0,Math.floor((LOCK-Date.now())/1000));const v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
   $("cd").innerHTML=s?["nap","óra","perc","mp"].map((l,i)=>'<div><b>'+String(v[i]).padStart(2,"0")+'</b><span>'+l+'</span></div>').join("")+'<div style="text-align:left;display:flex;align-items:center"><span>a tippelés<br>zárásáig</span></div>':'<div><b>Lezárva</b><span>várjuk az eredményt</span></div>';
   if(!s){$("save").disabled=true;document.querySelectorAll("#pl input,#tr,#tn").forEach(x=>x.disabled=true);}}
-let WT=0;
-async function who(){const ks=PT.map(([n])=>n.replace(/\s/g,""));let bad=0;try{
+let WT=0,WS=0;
+async function who(){if(!locked()){$("who").innerHTML='<p class="jn">A többiek tippjeit a szavazás lezárása után, november 29-én 20:00-tól (magyar idő) mutatjuk.</p>';return;}WS=1;const ks=PT.map(([n])=>n.replace(/\s/g,""));let bad=0;try{
   const g=k=>{const c=new AbortController(),tm=setTimeout(()=>c.abort(),8000);return fetch(AB+"get/voksmero.hu/estipp-"+k,{credentials:"omit",signal:c.signal}).then(r=>{if(r.status===404)return {value:0};if(!r.ok)throw 0;return r.json();}).then(j=>+j.value||0).catch(()=>{bad++;return null;}).finally(()=>clearTimeout(tm));};
   let vs=await Promise.all(ks.map(g));const C=J.ls.get("vm-es-who",null);
   if(bad){if(C&&C.length===vs.length)vs=vs.map((v,i)=>v==null?C[i]:v);else if(bad===vs.length){$("who").innerHTML='<p class="jn">Az összesítés most nem érhető el. '+(WT<2?'Újrapróbálom…':'Nézz vissza később!')+'</p>';if(WT++<2)setTimeout(who,6000);return;}vs=vs.map(v=>v||0);}
