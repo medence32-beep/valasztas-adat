@@ -401,6 +401,15 @@ body.fs-on{overflow:hidden}
 .hl .sb::before{content:"";position:absolute;top:-3px;bottom:-3px;left:50%;width:2px;background:var(--ink);opacity:.35;z-index:1}
 .hleg{display:flex;flex-wrap:wrap;gap:6px 14px;margin-top:10px;font-size:12.5px;color:var(--ink3)}
 @media (max-width:860px){.hgrid{grid-template-columns:minmax(0,1fr)}.hrow{grid-template-columns:minmax(0,1.2fr) minmax(0,1.2fr) 4.2em 3em;gap:8px}}
+.tbl .kt{width:100%;border-collapse:collapse;font-size:13.5px;white-space:nowrap}
+.kt th{font:700 11px var(--f-cond);letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);text-align:right;padding:8px 10px;border-bottom:1px solid var(--line)}
+.kt th:nth-child(-n+2),.kt td:nth-child(-n+2){text-align:left}
+.kt th i{display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--c);margin-right:5px}
+.kt td{padding:11px 10px;border-bottom:1px solid var(--line);text-align:right;font-family:var(--f-mono);font-size:14px;color:var(--ink2)}
+.kt td:first-child{font-family:var(--f-body);font-weight:700;color:var(--ink)}
+.kt td:nth-child(2){font-family:var(--f-body);color:var(--ink2)}
+.kt td.tp{font-weight:800;color:var(--ink)}
+.kt tr.el td{background:var(--bg2);color:var(--ink)}
 </style>
 </head>
 <body>
@@ -446,7 +455,7 @@ body.fs-on{overflow:hidden}
       <div class="chh"><h3>Hogyan alakult?</h3><div class="lg" id="lg"></div></div>
       <div class="chart" id="chart"><div class="ctip" id="ctip"></div></div><div class="cnav" id="cnav"><button type="button" data-d="-1" aria-label="Előző kutatás">‹</button><div class="cni" id="cni" aria-live="polite"></div><button type="button" data-d="1" aria-label="Következő kutatás">›</button></div>
     </div>
-    <div class="card tbl"><table class="pt"><thead><tr><th>Intézet</th><th>Terepmunka</th><th>Minta</th><th>Tisza</th><th>Fidesz–KDNP</th><th>Mi Hazánk</th><th>DK</th><th>MKKP</th><th>Egyéb</th><th>Előny</th></tr></thead><tbody id="ptb"></tbody></table>
+    <div class="card tbl"><table class="kt"><thead><tr><th>Intézet</th><th>Terepmunka</th><th style="--c:var(--p-tisza)"><i></i>Tisza</th><th style="--c:var(--p-fidesz)"><i></i>Fidesz–KDNP</th><th style="--c:var(--p-mh)"><i></i>Mi Hazánk</th><th style="--c:var(--p-dk)"><i></i>DK</th><th style="--c:var(--p-mkkp)"><i></i>MKKP</th><th style="--c:var(--p-oth)"><i></i>Egyéb</th></tr></thead><tbody id="ptb"></tbody></table>
       <div class="more"><button class="qbtn" type="button" id="morebtn">Összes mérés mutatása</button></div></div>
     <p class="src">Források: <a href="https://en.wikipedia.org/wiki/Opinion_polling_for_the_2030_Hungarian_parliamentary_election" target="_blank" rel="noopener">Wikipedia – közvélemény-kutatások</a>, <a href="https://www.origo.hu/belpol/2026/11/median-fidesz-tamogatottsag-tisza-part-nemeth-balazs" target="_blank" rel="noopener">Medián (Origo)</a>, <a href="https://ugytudjuk.hu/cikk/2026-11-06_republikon-oktober-32-szazalekponttal-vezet-a-tisza-a-fidesz-tovabbra-sem-tud-kozelebb-kerulni" target="_blank" rel="noopener">Republikon (Ügytudjuk)</a>, <a href="https://publicus.hu/blog/partok-tamogatottsaga-2026-oktober/" target="_blank" rel="noopener">Publicus</a>, <a href="https://politpro.eu/en/hungary/election/parliament/2030" target="_blank" rel="noopener">PolitPro</a>. A *-gal jelölt dátumok a közlés napját mutatják. A „–” azt jelenti, hogy az intézet nem közölt külön számot. A 2026-os választás sora a listás eredmény.</p>
   </div>
@@ -580,8 +589,8 @@ function avgNow(){const seen={},rows=[];POLLS.slice().sort((a,b)=>dt(b[2])-dt(a[
   $("lg").innerHTML=PARTIES.map(p=>'<span style="--c:'+p.c+'"><i></i>'+esc(p.n)+'</span>').join("")+'<span class="el"><i></i>2026-os választás</span>';
   /* táblázat */
   let all=false;
-  const row=(p,el)=>{const v=[p[4],p[5],p[6]];const mx=Math.max(...v);const cell=(x,k,c)=>'<td>'+(x==null?'<span style="color:var(--ink3)">–</span>':'<span class="w'+(x===mx&&k<7?' wt':'')+'" style="--c:'+(c||"transparent")+'">'+(Number.isInteger(x)?x:f1(x))+'</span>')+'</td>';
-    return '<tr'+(el?' class="el"':'')+'><td class="n">'+esc(p[0])+'<small class="dm">'+esc(p[1])+'</small></td><td>'+esc(p[1])+'</td><td>'+(p[3]?fm(p[3]):"–")+'</td>'+cell(p[4],4,"var(--p-tisza)")+cell(p[5],5,"var(--p-fidesz)")+cell(p[6],6)+cell(p[7],7)+cell(p[8],8)+cell(p[9],9)+'<td class="lead" style="color:var(--p-tisza)">+'+(Number.isInteger(p[4]-p[5])?p[4]-p[5]:f1(p[4]-p[5]))+'</td></tr>';};
+  const row=(p,el)=>{const v=[p[4],p[5],p[6],p[7],p[8]].filter(x=>x!=null);const mx=Math.max(...v);const cell=(x,k)=>'<td class="'+(x===mx&&k<9?'tp':'')+'">'+(x==null?'–':(Number.isInteger(x)?x:f1(x)))+'</td>';
+    return '<tr'+(el?' class="el"':'')+'><td>'+esc(p[0])+'</td><td>'+esc(p[1])+'</td>'+cell(p[4],4)+cell(p[5],5)+cell(p[6],6)+cell(p[7],7)+cell(p[8],8)+cell(p[9],9)+'</tr>';};
   const tb=()=>{const L=all?POLLS:POLLS.slice(0,10);$("ptb").innerHTML=L.map(p=>row(p)).join("")+(all?row(ELECTION,true):"");$("morebtn").textContent=all?"Kevesebb mutatása":"Összes mérés mutatása ("+(POLLS.length+1)+")";};
   $("morebtn").addEventListener("click",()=>{all=!all;tb();});tb();
   /* grafikon */
