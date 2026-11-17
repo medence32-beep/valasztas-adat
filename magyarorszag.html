@@ -544,6 +544,7 @@ const reduce=matchMedia("(prefers-reduced-motion: reduce)").matches;
 /* =================== KÖZVÉLEMÉNY-KUTATÁSOK =================== */
 /* [intézet, terepmunka, dátum (vége), minta, Tisza, Fidesz–KDNP, Mi Hazánk, DK, MKKP, egyéb] – biztos pártválasztók, % */
 const POLLS=[
+["21 Kutatóközpont","nov. 5–12.","2026-11-12",1000,68,24,6,null,null,2],
 ["Medián","okt. 29. – nov. 4.","2026-11-04",1000,68,20,11,null,null,1],
 ["Republikon","okt. 28. – nov. 2.","2026-11-02",1000,64,26,8,null,null,null],
 ["Závecz Research","okt. 18.*","2026-10-18",null,66,23,9,null,null,2],
@@ -574,7 +575,8 @@ const POLLS=[
 ["IDEA","máj. 8–11.","2026-05-11",1000,68,25,5,1,null,1],
 ["Europion","máj. 8–9.","2026-05-09",2000,64,27,7,null,null,3],
 ["Medián","ápr. 27. – máj. 2.","2026-05-02",1000,70,23,6,1,null,0],
-["Medián","ápr. 15–20.","2026-04-20",1000,66,25,6,2,1,0]];
+["Medián","ápr. 15–20.","2026-04-20",1000,66,25,6,2,1,0]
+];
 const ELECTION=["Választás (listás eredmény)","2026. ápr. 12.","2026-04-12",null,55.76,36.33,5.90,1.16,0.85,0];
 const PARTIES=[{k:4,n:"Tisza",c:"var(--p-tisza)"},{k:5,n:"Fidesz–KDNP",c:"var(--p-fidesz)"},{k:6,n:"Mi Hazánk",c:"var(--p-mh)"}];
 const dt=s=>new Date(s+"T12:00:00Z").getTime(),DAY=864e5;
