@@ -8,7 +8,6 @@ var L=[
  ["napi-rejtveny","Napi játék","Melyik ország ez?","linear-gradient(120deg,#0B2A3C,#14506A 50%,#1B7F86)","vilag"],
  ["telepulesem","Kereső","Hogy szavazott a településed?","linear-gradient(150deg,#16231C,#24402E 55%,#5A3A12)","magyar"],
  ["usa-terkep","Térképrajzoló","Rajzold meg a saját térképed","linear-gradient(140deg,#0B1B45,#13285C 55%,#3A1020)","usa"],
- ["spanyol-kviz","Kvíz","Melyik spanyol párthoz állsz közel?","linear-gradient(150deg,#2A0F2E,#6B1840 55%,#B07A00)","spanyol"],
  ["spanyol-tippjatek","Tippjáték","Tippeld meg a spanyol választást","linear-gradient(150deg,#3A0A0E,#7E1218 55%,#B07A00)","spanyol"],
  ["magyar-valasztasok-tortenete","Idővonal","A magyar választások 1990–2026","linear-gradient(120deg,#1B1F5E,#3A2A8C 45%,#7B3FA0)","foto"],
  ["spanyol-szimulator","Szimulátor","Spanyol választási szimulátor","linear-gradient(120deg,#4A0B10,#9E141A 55%,#C78B00)","parl"],
