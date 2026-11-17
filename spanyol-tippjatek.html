@@ -133,8 +133,13 @@ $("shr").onclick=()=>{const t=PT.map(([n])=>n+" "+String(cur.v[n]).replace(".","
 function cd(){const s=Math.max(0,Math.floor((LOCK-Date.now())/1000));const v=[Math.floor(s/86400),Math.floor(s%86400/3600),Math.floor(s%3600/60),s%60];
   $("cd").innerHTML=s?["nap","óra","perc","mp"].map((l,i)=>'<div><b>'+String(v[i]).padStart(2,"0")+'</b><span>'+l+'</span></div>').join("")+'<div style="text-align:left;display:flex;align-items:center"><span>a tippelés<br>zárásáig</span></div>':'<div><b>Lezárva</b><span>várjuk az eredményt</span></div>';
   if(!s){$("save").disabled=true;document.querySelectorAll("#pl input,#tr,#tn").forEach(x=>x.disabled=true);}}
-async function who(){const ks=PT.map(([n])=>n.replace(/\s/g,""));try{const g=k=>fetch(AB+"get/voksmero.hu/estipp-"+k,{credentials:"omit"}).then(r=>r.ok?r.json():{value:0}).then(j=>+j.value||0).catch(()=>0);
-  const vs=await Promise.all(ks.map(g)),tot=vs.reduce((a,b)=>a+b,0);
+let WT=0;
+async function who(){const ks=PT.map(([n])=>n.replace(/\s/g,""));let bad=0;try{
+  const g=k=>{const c=new AbortController(),tm=setTimeout(()=>c.abort(),8000);return fetch(AB+"get/voksmero.hu/estipp-"+k,{credentials:"omit",signal:c.signal}).then(r=>{if(r.status===404)return {value:0};if(!r.ok)throw 0;return r.json();}).then(j=>+j.value||0).catch(()=>{bad++;return null;}).finally(()=>clearTimeout(tm));};
+  let vs=await Promise.all(ks.map(g));const C=J.ls.get("vm-es-who",null);
+  if(bad){if(C&&C.length===vs.length)vs=vs.map((v,i)=>v==null?C[i]:v);else if(bad===vs.length){$("who").innerHTML='<p class="jn">Az összesítés most nem érhető el. '+(WT<2?'Újrapróbálom…':'Nézz vissza később!')+'</p>';if(WT++<2)setTimeout(who,6000);return;}vs=vs.map(v=>v||0);}
+  else J.ls.set("vm-es-who",vs);
+  const tot=vs.reduce((a,b)=>a+b,0);
   $("who").innerHTML=tot?PT.map(([n,c],i)=>[n,c,vs[i]]).filter(x=>x[2]).sort((a,b)=>b[2]-a[2]).map(([n,c,v])=>'<div class="r"><span>'+esc(n)+'</span><i style="background:'+c+';width:'+(v/tot*100)+'%"></i><span>'+Math.round(v/tot*100)+'%</span></div>').join("")+'<p class="jn" style="margin:4px 0 0">'+nf(tot)+' tippelő</p>':'<p class="jn">Még senki nem tippelt – légy te az első!</p>';}catch(e){}}
 async function result(){try{const d=await (await fetch(EL+"?_="+Date.now(),{cache:"no-store"})).json();if(!d||!d.nat||!d.nat.length||!d.rp)return;
   const real={};d.nat.forEach(r=>real[r[0]]=r[2]);const rt=d.part&&d.part.vege;const mine=TIP;
