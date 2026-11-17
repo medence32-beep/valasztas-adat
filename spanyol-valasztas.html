@@ -284,6 +284,15 @@ img.fej{background:transparent!important;object-fit:cover}
 .pn .cn{display:block;font-weight:700;line-height:1.2}.pn .jn{margin-top:3px}.jn img.jlg{height:17px;max-width:56px}
 .pn b.cn,.vb .pn b.cn,.vb.vbm .pn b.cn{font:700 14px/1.2 var(--f-body);text-align:left;white-space:normal;color:var(--ink)}.vb span.pn,.vb.vbm span.pn,.vb .pn>span{overflow:visible}.pn .fej{margin:3px 0 3px 3px}
 .koal{display:none!important}
+#tkr{border-top:1px solid rgba(255,255,255,.08);background:#081127;font:600 13px var(--f-body);color:#DCE6FA;--line:rgba(255,255,255,.12);--ink2:#A9B6D3;--ink3:#7F8BA8}
+#tkr .tkw{max-width:1240px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:7px max(16px,env(safe-area-inset-right,0px)) 7px max(16px,env(safe-area-inset-left,0px));overflow-x:auto;scrollbar-width:none;white-space:nowrap}
+#tkr .tkl{display:flex;align-items:center;gap:6px;font:800 11px var(--f-cond,var(--f-body));letter-spacing:.14em;color:#E5484D}
+#tkr .tkl i{width:8px;height:8px;border-radius:50%;background:#E5484D;animation:tkp 1.4s infinite}
+@keyframes tkp{50%{opacity:.25}}
+#tkr .tkp b,#tkr .tks b{font:700 14px var(--f-mono)}
+#tkr .tks{display:flex;align-items:center;gap:5px;padding-left:12px;border-left:1px solid var(--line)}#tkr .tks small{color:var(--ink3);font:600 11px var(--f-mono)}
+#tkr .tks img{height:15px;width:auto;max-width:48px}#tkr .lgd{filter:brightness(0) invert(1)!important}
+#tkr .tkm{color:var(--ink2);padding-left:12px;border-left:1px solid var(--line)}#tkr .tkt{margin-left:auto;color:var(--ink3);font:600 11px var(--f-mono)}
 </style>
 </head>
 <body>
@@ -476,7 +485,7 @@ function results(){const nat=E.nat||[];const rp=E.rp||0;$("rpl").textContent=f1(
   const dd=(x,d,u)=>x==null?'':'<small class="'+(x>=0?'up':'dn')+'">'+(x>=0?'+':'−')+(d?f1(Math.abs(x)):Math.abs(x))+(u||'')+'</small>';
   $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'">'+pcell(r[0])+'<span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
     '<p class="rn">Az utolsó oszlop a jelenlegi állás szerinti mandátumszám; a kis számok a 2023-as eredményhez képesti változást mutatják. Előzetes, nem hivatalos végeredmény.</p>';
-  koal(nat);{const g=n=>nat.find(r=>r[0]===n)||[];duel(g('PSOE')[2],g('PP')[2],g('PSOE')[3],g('PP')[3],'e');}
+  ticker(nat,rp,E.upd,E.st);  koal(nat);{const g=n=>nat.find(r=>r[0]===n)||[];duel(g('PSOE')[2],g('PP')[2],g('PSOE')[3],g('PP')[3],'e');}
   const parts=nat.filter(r=>r[3]>0).map(r=>({n:r[0],m:r[3],c:cl(r[0])}));hemi($("hemi2"),parts);sbar($("sbar2"),parts);
   $("slg2").innerHTML=parts.sort((a,b)=>b.m-a.m).map(p=>'<span style="--c:'+p.c+'"><i></i>'+esc(p.n)+' <b>'+p.m+'</b></span>').join("");paintState();}
 
@@ -504,6 +513,21 @@ function exitp(){const X=E.exit;if(!X||!X.length)return;const x=X[X.length-1],m=
   const rows=Object.entries(m).sort((a,b)=>(b[1][0]+b[1][1])-(a[1][0]+a[1][1])),mx=Math.max(...rows.map(r=>r[1][1]),1);
   $("exit").innerHTML=rows.map(([p,[lo,hi]])=>'<div class="exr" style="--c:'+cl(p)+'">'+pcell(p)+'<span class="tr"><em style="left:'+(lo/mx*100)+'%;width:'+Math.max(1.5,(hi-lo)/mx*100)+'%"></em>'+(R23[p]?'<u style="left:'+(R23[p][1]/mx*100)+'%" title="2023: '+R23[p][1]+'"></u>':'')+'</span><b>'+(lo===hi?lo:lo+'–'+hi)+'</b></div>').join("")+
     '<p class="rn">Becsült mandátumsávok; a halvány függőleges vonal a 2023-as eredmény. Az exit poll nem eredmény – a számlálás akár jelentősen eltérhet tőle.</p>';}
+
+/* ---------- élő ticker a fejléc alatt (számlálás közben; ?demo-val kipróbálható) ---------- */
+const TK={lead:null,log:[]};
+function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
+  if(!el){const h=document.querySelector("header.top");if(!h)return;el=document.createElement("div");el.id="tkr";el.setAttribute("role","status");el.setAttribute("aria-live","polite");h.appendChild(el);}
+  const s=nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]),L=s[0][0],tm=(upd?new Date(upd):new Date()).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Budapest"});
+  if(TK.lead&&TK.lead!==L)TK.log.unshift(tm+" – "+(JEL[L]||L)+" ("+L+") átvette a vezetést");TK.lead=L;
+  if(rp>=50&&!TK.h){TK.h=1;TK.log.unshift(tm+" – a szavazatok fele feldolgozva");}
+  const maj=s.find(r=>(r[3]||0)>=176);if(maj&&!TK.m){TK.m=1;TK.log.unshift(tm+" – "+maj[0]+": megvan az abszolút többség (176)");}
+  el.innerHTML='<div class="tkw"><b class="tkl"><i></i>'+(st==="vege"?"VÉGE":"ÉLŐ")+(demo?" · bemutató":"")+'</b><span class="tkp"><b>'+f1(rp)+'%</b> feldolgozva</span>'+
+    s.slice(0,4).map(r=>'<span class="tks" style="--c:'+cl(r[0])+'">'+lgs(r[0])+'<b>'+(r[3]||0)+'</b><small>'+f1(r[2])+'%</small></span>').join("")+
+    '<span class="tkm">'+esc(TK.log[0]||("Vezet: "+(JEL[L]||L)))+'</span><span class="tkt">'+tm+'</span></div>';}
+if(/[?&]demo\b/.test(location.search)){let k=0;const B=[["PSOE",33,130],["PP",31,124],["Vox",15,60],["Frente Amplio",6,12],["ERC",2.2,8],["Junts",1.6,6],["EH Bildu",1.4,6],["PNV",1.1,5]];
+  const step=()=>{k=Math.min(k+7,100);const w=k/100,f=[[-3,-14],[2.5,14],[2.4,12],[0,-2]];const nat=B.map((r,i)=>{const d=f[i]||[0,0];return [r[0],0,+(r[1]+d[0]*w).toFixed(2),Math.round(r[2]+d[1]*w)];});
+    ticker(nat,k,null,k>=100?"vege":"szamlal",1);if(k<100)setTimeout(step,2500);};setTimeout(step,800);}
 
 /* ---------- párbaj: Sánchez (PSOE) – Feijóo (PP) ---------- */
 function duel(pL,pR,sL,sR,src){if(!$("dpL"))return;$("dpL").textContent=pL==null?'–':f1(pL)+'%';$("dpR").textContent=pR==null?'–':f1(pR)+'%';
