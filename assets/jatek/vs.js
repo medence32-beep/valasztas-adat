@@ -54,7 +54,7 @@ function spy(){try{return localStorage.getItem("vm-spy")==="1"&&!!localStorage.g
 function tokOk(t){return fetch("https://api.github.com/user",{headers:{Authorization:"Bearer "+t,Accept:"application/vnd.github+json"},cache:"no-store"})
   .then(function(r){return r.ok?r.json():null;}).then(function(j){return !!j&&String(j.login||"").toLowerCase()===OWN;}).catch(function(){return null;});}
 function tst(m){if(window.J&&J.toast)J.toast(m);}
-function spySet(on,cb){try{on?localStorage.setItem("vm-spy","1"):localStorage.removeItem("vm-spy");}catch(e){}tst(on?"Bekapcsolva":"Kikapcsolva");if(cb)cb();}
+function spySet(on,cb){try{on?localStorage.setItem("vm-spy","1"):localStorage.removeItem("vm-spy");}catch(e){}tst(on?"Tulajdonosi nézet bekapcsolva":"Tulajdonosi nézet kikapcsolva");if(cb)cb();}
 function spyForm(cb){var o=document.createElement("div");o.style.cssText="position:fixed;inset:0;z-index:300;background:rgba(0,0,0,.55);display:grid;place-items:center;padding:16px";
   o.innerHTML='<form style="background:var(--card);color:var(--ink);border:1px solid var(--line2);border-radius:16px;padding:18px;width:min(100%,360px);display:grid;gap:10px"><b style="font:800 16px var(--f-display);text-transform:uppercase">Kód</b><input type="password" autocomplete="off" style="font:600 15px var(--f-body);padding:11px 12px;border-radius:10px;border:1px solid var(--line2);background:var(--bg2);color:var(--ink)"><div style="display:flex;gap:8px;justify-content:flex-end"><button type="button" class="jb">Mégse</button><button type="submit" class="jb p">OK</button></div><small style="color:var(--ink2);min-height:1.2em"></small></form>';
   document.body.appendChild(o);var f=o.querySelector("form"),i=o.querySelector("input"),m=o.querySelector("small");i.focus();
