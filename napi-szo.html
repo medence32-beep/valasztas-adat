@@ -225,10 +225,12 @@ function specRender(){const s=SPX;if(!s)return;const p=$("vsp");const A=s.R[0]||
 let SPL=null,SPD=[];
 function spyList(){if(!VS.spy()){if(SPL){SPL();SPL=null;}$("spyl").hidden=true;return;}
   if(!SPL){const ALL={};let busy=false;
-    const poll=async()=>{if(busy||document.visibilityState!=="visible")return;busy=true;const L=Object.values(ALL).sort((a,b)=>b.t-a.t).slice(0,25);
-      for(const m of L){const r=await VS.peek("szo",m.id);if(r){m.n=r.n;m.g=r.g;}}busy=false;spyF(ALL);};
-    const stopL=VS.list("szo",L=>{let nw=false;L.forEach(m=>{if(!ALL[m.id]){ALL[m.id]=m;nw=true;}else ALL[m.id].p=Math.max(ALL[m.id].p,m.p);});spyF(ALL);if(nw)setTimeout(poll,800);});
-    const iv=setInterval(poll,20000);SPL=()=>{stopL();clearInterval(iv);};}spyDraw();}
+    /* takarékosan: a játékszerver (ntfy.sh) IP-nként korlátozza a kéréseket, ezért csak a friss, még egyjátékosnak látszó meccseket nézzük meg, percenként legfeljebb 4-et */
+    const poll=async()=>{if(busy||document.visibilityState!=="visible")return;busy=true;const now=Date.now();
+      const L=Object.values(ALL).filter(m=>m.p<2&&!(m.n>=2)&&now-m.t<45*60e3).sort((a,b)=>b.t-a.t).slice(0,4);
+      for(const m of L){const r=await VS.peek("szo",m.id);if(r)m.n=r.n;}busy=false;spyF(ALL);};
+    const stopL=VS.list("szo",L=>{L.forEach(m=>{if(!ALL[m.id])ALL[m.id]=m;else ALL[m.id].p=Math.max(ALL[m.id].p,m.p);});spyF(ALL);});
+    setTimeout(poll,3000);const iv=setInterval(poll,60000);SPL=()=>{stopL();clearInterval(iv);};}spyDraw();}
 function spyF(A){SPD=Object.values(A).filter(m=>(m.n||0)>=2||m.p>=2).sort((a,b)=>b.t-a.t);spyDraw();}
 function spyDraw(){const e=$("spyl");if(!VS.spy()){e.hidden=true;return;}e.hidden=false;
   const tf=t=>new Date(t).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"});
