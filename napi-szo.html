@@ -211,7 +211,7 @@ function specRender(){const s=SPX;if(!s)return;const p=$("vsp");const A=s.R[0]||
   if(!s.open&&!s.n){p.innerHTML=h+'<div class="msg">Kapcsolódás a meccshez…</div>';return;}
   const vd=s.n>=2?VS.verdict(A,B,242,false):null,end=vd!==null;
   if(end)h+='<div class="vd '+(vd===0?'d':'w')+'">'+(vd>0?'Az 1. játékos nyert':vd<0?'A 2. játékos nyert':'Döntetlen')+'<small>A szó: '+esc(s.w)+'</small></div>';
-  const pc=(lab,R,on)=>{const ok=R.length&&R[R.length-1].c===242,d=ok||R.length>=6;return '<div class="pc"><small>'+lab+'</small><strong>'+(!on?'–':ok?R.length+'/6':d?'X/6':R.length+'. tipp')+'</strong><div class="tx">'+(!on?'még nem csatlakozott':d?(ok?'Kitalálta · '+VS.fmt(R[R.length-1].t):'Nem találta ki'):'gondolkodik…')+'</div>'+mini(R,end)+'</div>';};
+  const pc=(lab,R,on)=>{const ok=R.length&&R[R.length-1].c===242,d=ok||R.length>=6;return '<div class="pc"><small>'+lab+'</small><strong>'+(!on?'–':ok?R.length+'/6':d?'X/6':R.length+'. tipp')+'</strong><div class="tx">'+(!on?'még nem csatlakozott':d?(ok?'Kitalálta · '+VS.fmt(R[R.length-1].t):'Nem találta ki'):end?'nem fejezte be':'gondolkodik…')+'</div>'+mini(R,end)+'</div>';};
   h+='<div class="pl">'+pc("1. játékos",A,s.n>=1)+pc("2. játékos",B,s.n>=2)+'</div>';
   h+='<div class="msg" style="font-size:12.5px">'+(end?'A meccs véget ért.':'Nézőként csak a színeket látod; a tippelt szavak a meccs végén jelennek meg.')+'</div><div class="act"><button class="jb" type="button" data-vs="new">Saját 1v1 meccs indítása</button></div>';
   p.innerHTML=h;}
