@@ -224,10 +224,10 @@ function specRender(){const s=SPX;if(!s)return;const p=$("vsp");const A=s.R[0]||
 /* ---- tulajdonosi meccslista (rejtett nézet) ---- */
 let SPL=null,SPD=[];
 function spyList(){if(!VS.spy()){if(SPL){SPL();SPL=null;}$("spyl").hidden=true;return;}
-  if(!SPL)SPL=VS.list("szo",L=>{SPD=L;spyDraw();});spyDraw();}
+  if(!SPL)SPL=VS.list("szo",L=>{SPD=L.filter(m=>m.p>=2);spyDraw();});spyDraw();}
 function spyDraw(){const e=$("spyl");if(!VS.spy()){e.hidden=true;return;}e.hidden=false;
   const tf=t=>new Date(t).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"});
-  e.innerHTML='<h2>Összes 1v1 meccs <small>(elmúlt 12 óra · csak neked látszik)</small></h2>'+(SPD.length?'<div class="spt">'+SPD.map(m=>'<a href="#nez-'+m.id+'"'+(SPX&&SPX.id===m.id?' class="on"':'')+'><span>'+tf(m.t)+'</span><code>'+m.id+'</code><em>'+(m.p>=2?'2 játékos':'várakozik')+'</em><b>'+esc(vsWord(m.id))+'</b><i>Nézés →</i></a>').join("")+'</div>':'<p class="jn">Még nincs meccs az elmúlt 12 órában (vagy töltődik).</p>');}
+  e.innerHTML='<h2>Összes 1v1 meccs <small>(elmúlt 12 óra · csak neked látszik)</small></h2>'+(SPD.length?'<div class="spt">'+SPD.map(m=>'<a href="#nez-'+m.id+'"'+(SPX&&SPX.id===m.id?' class="on"':'')+'><span>'+tf(m.t)+'</span><code>'+m.id+'</code><em>'+(m.p>=2?'2 játékos':'várakozik')+'</em><b>'+esc(vsWord(m.id))+'</b><i>Nézés →</i></a>').join("")+'</div>':'<p class="jn">Most nincs olyan meccs, amelyben két játékos van (elmúlt 12 óra).</p>');}
 function vsDone(){const vd=VS.verdict(VX.me,VX.op,242,false);if(vd!==null&&!VX.shown){VX.shown=1;setTimeout(()=>{const p=$("vsp");if(p)p.scrollIntoView({behavior:"smooth",block:"center"});},1000);}if(vd!==null&&!VX.rmw){VX.rmw=VS.waitRematch("szo",VX.id,()=>{VX.rm=true;vsRender();});}vsRender();}
 function vsStart(id){VX={id,st:"join",me:[],op:[],opJ:false,t0:0};WORD=vsWord(id);ANS=[...WORD];
   const sv=J.ls.get("vm-szo-vs",{}),o=sv[id]||{g:[],t:[]};G=o.g.slice();DONE=G.length>=6||G[G.length-1]===WORD;
