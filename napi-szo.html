@@ -224,7 +224,9 @@ function specRender(){const s=SPX;if(!s)return;const p=$("vsp");const A=s.R[0]||
 /* ---- tulajdonosi meccslista (rejtett nézet) ---- */
 let SPL=null,SPD=[];
 function spyList(){if(!VS.spy()){if(SPL){SPL();SPL=null;}$("spyl").hidden=true;return;}
-  if(!SPL)SPL=VS.list("szo",L=>{SPD=L.filter(m=>m.p>=2);spyDraw();});spyDraw();}
+  if(!SPL){const W={},ALL={};const stopL=VS.list("szo",L=>{L.slice(0,25).forEach(m=>{ALL[m.id]=m;if(!W[m.id])W[m.id]=VS.spec("szo",m.id,(R,n)=>{ALL[m.id].n=n;ALL[m.id].g=R.map(r=>r.length);spyF(ALL);});});spyF(ALL);});
+    SPL=()=>{stopL();Object.values(W).forEach(f=>f());};}spyDraw();}
+function spyF(A){SPD=Object.values(A).filter(m=>(m.n||0)>=2||m.p>=2).sort((a,b)=>b.t-a.t);spyDraw();}
 function spyDraw(){const e=$("spyl");if(!VS.spy()){e.hidden=true;return;}e.hidden=false;
   const tf=t=>new Date(t).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit"});
   e.innerHTML='<h2>Összes 1v1 meccs <small>(elmúlt 12 óra · csak neked látszik)</small></h2>'+(SPD.length?'<div class="spt">'+SPD.map(m=>'<a href="#nez-'+m.id+'"'+(SPX&&SPX.id===m.id?' class="on"':'')+'><span>'+tf(m.t)+'</span><code>'+m.id+'</code><em>'+(m.p>=2?'2 játékos':'várakozik')+'</em><b>'+esc(vsWord(m.id))+'</b><i>Nézés →</i></a>').join("")+'</div>':'<p class="jn">Most nincs olyan meccs, amelyben két játékos van (elmúlt 12 óra).</p>');}
