@@ -739,7 +739,7 @@ const MI={};
 const tip=$("mtip");function tipOff(){tip.classList.remove("on");}
 svg.addEventListener("pointermove",e=>{if(e.pointerType==="touch"||M&&M.mv)return;const o=pick(e.target);if(!o){tipOff();return;}tip.innerHTML=tipHTML(o);const r=stage.getBoundingClientRect();let x=e.clientX-r.left+14,y=e.clientY-r.top+14;if(x+280>r.width)x=e.clientX-r.left-284;if(y+150>r.height)y=e.clientY-r.top-150;tip.style.left=Math.max(4,x)+"px";tip.style.top=Math.max(4,y)+"px";tip.classList.add("on");});
 svg.addEventListener("pointerleave",tipOff);
-svg.addEventListener("click",e=>{if(supp)return;const o=pick(e.target);if(!o)return;if(o.t==="p"&&KK&&CP!==o.id)openProv(o.id);highlight(o.d);detail(o);if(matchMedia("(max-width:900px)").matches)$("det").scrollIntoView({behavior:"smooth",block:"nearest"});});
+svg.addEventListener("click",e=>{if(supp)return;const o=pick(e.target);if(!o)return;if(o.t==="p"&&KK&&CP!==o.id)openProv(o.id);highlight(o.d);detail(o);});
 
 /* nagyítás / húzás */
 const FZ=null; /* itt kevés az alakzat: a közvetlen viewBox-váltás folyamatos, nincs „ugró” átmenet */
