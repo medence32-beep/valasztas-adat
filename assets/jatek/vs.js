@@ -6,7 +6,10 @@
    Rejtett tulajdonosi nézet: a #kk feliratra 7-szer koppintva, GitHub-kulccsal (a tár tulajdonosa) bekapcsolható. */
 (function(){
 "use strict";
-var NT="https://ntfy.sh/";
+/* két független ntfy-szerver: mindkettőre küldünk és mindkettőt figyeljük, így ha az egyik nem érhető el (vagy korlátoz), a másik viszi a meccset */
+var NTS=["https://ntfy.envs.net/","https://ntfy.sh/"],NT=NTS[1];
+function post1(u,body){var c=new AbortController(),t=setTimeout(function(){c.abort();},8000);return fetch(u,{method:"POST",body:body,credentials:"omit",signal:c.signal}).then(function(r){clearTimeout(t);return r.ok;}).catch(function(){clearTimeout(t);return false;});}
+function postAll(path,body){return new Promise(function(res){var left=NTS.length,done=false;NTS.forEach(function(b){post1(b+path,body).then(function(ok){left--;if(ok&&!done){done=true;res(true);}else if(!left&&!done)res(false);});});});}
 function ls(k,d){try{var v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}}
 function lss(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
 function rnd(n){var a=new Uint32Array(2);if(window.crypto&&crypto.getRandomValues)crypto.getRandomValues(a);else{a[0]=Math.random()*4e9;a[1]=Math.random()*4e9;}
@@ -15,24 +18,25 @@ function rid(){return rnd(9);}
 function hash(s){var h=2166136261;for(var i=0;i<s.length;i++)h=Math.imul(h^s.charCodeAt(i),16777619);return h>>>0;}
 function topic(g,id){return "voksmero-vs"+g+"-"+id;}
 function cid(g,id,create){var C=ls("vm-vs-c",{}),k=g+id;if(!C[k]&&create){C[k]=rnd(10);var ks=Object.keys(C);if(ks.length>80)delete C[ks[0]];lss("vm-vs-c",C);}return C[k]||null;}
-function send(g,id,msg,tries){tries=tries||0;return fetch(NT+topic(g,id),{method:"POST",body:JSON.stringify(msg),credentials:"omit"}).then(function(r){if(!r.ok)throw 0;return true;})
+function send(g,id,msg,tries){tries=tries||0;return postAll(topic(g,id),JSON.stringify(msg)).then(function(ok){if(!ok)throw 0;return true;})
   .catch(function(){if(tries<5)return new Promise(function(res){setTimeout(function(){res(send(g,id,msg,tries+1));},1200*(tries+1));});return false;});}
 /* meccsenként egy élő kapcsolat: az eddigi üzenetek visszajátszása + az újak azonnal */
 var CONN={};
 function conn(g,id){var k=g+"|"+id;if(CONN[k])return CONN[k];
   var c={players:[],rows:{},seen:{},subs:[],es:null,open:false};
   function emit(){c.subs.forEach(function(f){try{f();}catch(e){}});}
-  function onMsg(m){if(!m||m.event!=="message"||c.seen[m.id])return;c.seen[m.id]=1;var d;try{d=JSON.parse(m.message);}catch(e){return;}
+  function onMsg(m,si){if(!m||m.event!=="message"||c.seen[si+":"+m.id])return;c.seen[si+":"+m.id]=1;var d;try{d=JSON.parse(m.message);}catch(e){return;}
     if(!d||typeof d.c!=="string")return;
     if(d.t==="j"){if(c.players.indexOf(d.c)<0)c.players.push(d.c);}
     else if(d.t==="r"&&+d.n>=1&&+d.n<=6){(c.rows[d.c]=c.rows[d.c]||{})[+d.n]={c:+d.v,t:+d.s||0,w:dk(d.w)};}
     emit();}
-  try{c.es=new EventSource(NT+topic(g,id)+"/sse?since=all");
-    c.es.onopen=function(){c.open=true;emit();};
-    c.es.onmessage=function(e){try{onMsg(JSON.parse(e.data));}catch(_){}};
-    c.es.onerror=function(){c.open=false;emit();};}catch(e){}
+  c.ess=[];var op=NTS.map(function(){return false;});
+  NTS.forEach(function(b,i){try{var es=new EventSource(b+topic(g,id)+"/sse?since=all");
+    es.onopen=function(){op[i]=true;c.open=op.indexOf(true)>=0;emit();};
+    es.onmessage=function(e){try{onMsg(JSON.parse(e.data),i);}catch(_){}};
+    es.onerror=function(){op[i]=false;c.open=op.indexOf(true)>=0;emit();};c.ess.push(es);}catch(e){}});
   c.sub=function(f){c.subs.push(f);f();return function(){c.subs=c.subs.filter(function(x){return x!==f;});};};
-  c.close=function(){try{c.es.close();}catch(e){}delete CONN[k];};
+  c.close=function(){c.ess.forEach(function(es){try{es.close();}catch(e){}});delete CONN[k];};
   CONN[k]=c;return c;}
 /* helyfoglalás: "a" | "b" | "full" | "err" */
 function join(g,id){var me=cid(g,id,true),c=conn(g,id),sent=false;
@@ -42,9 +46,9 @@ function join(g,id){var me=cid(g,id,true),c=conn(g,id),sent=false;
       if(c.open&&!sent){sent=true;send(g,id,{t:"j",c:me}).then(function(ok){if(!ok&&!done){done=true;clearTimeout(to);if(un)un();res("err");}});}
       var i=c.players.indexOf(me);if(i<0){if(c.players.length>=2&&sent){/* a mi csatlakozásunk még úton lehet – megvárjuk */}return;}
       done=true;clearTimeout(to);setTimeout(function(){un();},0);if(i<2)reg(g,id,i);res(i===0?"a":i===1?"b":"full");});});}
-function reg(g,id,i){try{fetch(NT+"voksmero-vs"+g+"-lista",{method:"POST",body:JSON.stringify({id:id,p:i+1}),credentials:"omit"}).catch(function(){});}catch(e){}}
+function reg(g,id,i){try{postAll("voksmero-vs"+g+"-lista",JSON.stringify({id:id,p:i+1}));}catch(e){}}
 /* tulajdonosi meccslista: az elmúlt 12 óra meccsei. cb([{id,t,p}]) – p = csatlakozott játékosok száma */
-function list(g,cb){var M={},es=null;try{es=new EventSource(NT+"voksmero-vs"+g+"-lista/sse?since=12h");es.onmessage=function(e){try{var m=JSON.parse(e.data),d=JSON.parse(m.message);if(!d||!/^[a-z0-9]{6,12}$/.test(d.id))return;var o=M[d.id]||(M[d.id]={id:d.id,t:m.time*1000,p:0});o.p=Math.max(o.p,+d.p||0);o.t=Math.min(o.t,m.time*1000);cb(Object.keys(M).map(function(k){return M[k];}).sort(function(a,b){return b.t-a.t;}));}catch(_){}};}catch(e){}cb([]);return function(){try{es.close();}catch(e){}};}
+function list(g,cb){var M={},ESS=[];NTS.forEach(function(b){try{var es=new EventSource(b+"voksmero-vs"+g+"-lista/sse?since=12h");ESS.push(es);es.onmessage=function(e){try{var m=JSON.parse(e.data),d=JSON.parse(m.message);if(!d||!/^[a-z0-9]{6,12}$/.test(d.id))return;var o=M[d.id]||(M[d.id]={id:d.id,t:m.time*1000,p:0});o.p=Math.max(o.p,+d.p||0);o.t=Math.min(o.t,m.time*1000);cb(Object.keys(M).map(function(k){return M[k];}).sort(function(a,b){return b.t-a.t;}));}catch(_){}};}catch(e){}});cb([]);return function(){ESS.forEach(function(es){try{es.close();}catch(e){}});};}
 function ek(x){try{return btoa(unescape(encodeURIComponent(String(x)))).split("").reverse().join("");}catch(e){return "";}}
 function dk(x){try{return x?decodeURIComponent(escape(atob(String(x).split("").reverse().join("")))):"";}catch(e){return "";}}
 function post(g,id,s,r,code,sec,w){send(g,id,{t:"r",c:cid(g,id,true),n:r,v:code,s:Math.max(0,Math.round(sec)),w:ek(w||"")});}
@@ -89,7 +93,8 @@ function verdict(me,op,win,best){function st(R){var s=R.length&&R[R.length-1].c=
 /* nézői mód: csatlakozás nélkül figyeli a meccs két játékosát. cb(sorok:[[{c,t,w}],[...]], játékosszám, kapcsolódva) */
 function spec(g,id,cb){var c=conn(g,id);var un=c.sub(function(){var P=c.players.slice(0,2);cb(P.map(function(p){var R=c.rows[p]||{},o=[];for(var n=1;n<=6&&R[n];n++)o.push(R[n]);return o;}),P.length,c.open);});return function(){un();c.close();};}
 /* egyszeri lekérdezés (nem tart nyitva kapcsolatot): {n: játékosok száma, g:[tippszám1, tippszám2]} */
-function peek(g,id){return fetch(NT+topic(g,id)+"/json?poll=1&since=all",{credentials:"omit"}).then(function(r){return r.ok?r.text():"";}).then(function(t){var P=[],R={};
+function peek1(b,g,id){var c=new AbortController(),tm=setTimeout(function(){c.abort();},6000);return fetch(b+topic(g,id)+"/json?poll=1&since=all",{credentials:"omit",signal:c.signal}).then(function(r){clearTimeout(tm);return r.ok?r.text():"";}).catch(function(){clearTimeout(tm);return "";});}
+function peek(g,id){return Promise.all(NTS.map(function(b){return peek1(b,g,id);})).then(function(a){return a.join("\n");}).then(function(t){var P=[],R={};
   t.split("\n").forEach(function(l){if(!l)return;try{var m=JSON.parse(l),d=JSON.parse(m.message);if(d.t==="j"&&P.indexOf(d.c)<0)P.push(d.c);else if(d.t==="r")R[d.c]=Math.max(R[d.c]||0,+d.n||0);}catch(e){}});
   P=P.slice(0,2);return {n:P.length,g:P.map(function(p){return R[p]||0;})};}).catch(function(){return null;});}
 function nezFromHash(){var m=/^#nez-([a-z0-9]{6,12})$/.exec(location.hash);return m?m[1]:null;}
