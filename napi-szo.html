@@ -164,7 +164,7 @@ const KB=[["Ö","Ü","Ó","Q","W","E","R","T","Z","U","I","O","P","Ő","Ú"],["A
 let MODE="nap",ANS=[],WORD="",G=[],CUR=[],DONE=false,LOCK=false,ST=J.ls.get("vm-szo",{p:{}}),EN=J.ls.get("vm-szo-v",{cur:null,seen:[],p:0,w:0,s:0,b:0,di:[0,0,0,0,0,0]});
 let VX=null,cdT=null,tmT=null;
 /* egyszeri különleges 1v1 meccs: csak ez az egy azonosító; a visszavágó már normál szóval megy */
-const SPEC={vsz7d63de:{w:"VARGASZABOLCS",disp:"VARGA SZABOLCS",gap:[5],rows:12,min:5,max:13}};
+const SPEC={vsz7d63de:{w:"VARGASZABOLCS",disp:"VARGA SZABOLCS",gap:[5],rows:12,min:5,max:13}};SPEC.tstq9k2m7x=SPEC.vsz7d63de;
 let LEN=5,ROWS=6,MINL=5,MAXL=5,FREE=false,GAP=[],DISP="";
 function setRules(id){const s=SPEC[id];LEN=s?s.w.length:5;ROWS=s?s.rows:6;MINL=s?s.min:5;MAXL=s?s.max:5;FREE=!!s;GAP=s?s.gap:[];DISP=s?s.disp:"";document.body.classList.toggle("spc",!!s);}
 const WINC=()=>Math.pow(3,LEN)*0+(Math.pow(3,LEN)-1);
