@@ -83,7 +83,11 @@ function verdict(me,op,win,best){function st(R){var s=R.length&&R[R.length-1].c=
   if(a.s!==b.s)return a.s?1:-1;
   if(a.s){if(a.n!==b.n)return a.n<b.n?1:-1;if(a.t!==b.t)return a.t<b.t?1:-1;return 0;}
   if(best&&a.b!==b.b)return a.b>b.b?1:-1;return 0;}
+/* nézői mód: csatlakozás nélkül figyeli a meccs két játékosát. cb(sorok:[[{c,t,w}],[...]], játékosszám, kapcsolódva) */
+function spec(g,id,cb){var c=conn(g,id);var un=c.sub(function(){var P=c.players.slice(0,2);cb(P.map(function(p){var R=c.rows[p]||{},o=[];for(var n=1;n<=6&&R[n];n++)o.push(R[n]);return o;}),P.length,c.open);});return function(){un();c.close();};}
+function nezFromHash(){var m=/^#nez-([a-z0-9]{6,12})$/.exec(location.hash);return m?m[1]:null;}
+function nezLink(path,id){return "https://voksmero.hu/"+path+"#nez-"+id;}
 function idFromHash(){var m=/^#vs-([a-z0-9]{6,12})$/.exec(location.hash);return m?m[1]:null;}
 function link(path,id){return "https://voksmero.hu/"+path+"#vs-"+id;}
-window.VS={spy:spy,spyArm:spyArm,rid:rid,join:join,post:post,watch:watch,next:next,waitRematch:waitRematch,startTime:startTime,fmt:fmt,verdict:verdict,idFromHash:idFromHash,link:link,hash:hash};
+window.VS={spy:spy,spyArm:spyArm,rid:rid,join:join,post:post,watch:watch,next:next,waitRematch:waitRematch,startTime:startTime,fmt:fmt,verdict:verdict,idFromHash:idFromHash,link:link,hash:hash,spec:spec,nezFromHash:nezFromHash,nezLink:nezLink};
 })();
