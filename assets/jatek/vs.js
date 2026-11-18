@@ -28,7 +28,7 @@ function conn(g,id){var k=g+"|"+id;if(CONN[k])return CONN[k];
   function onMsg(m,si){if(!m||m.event!=="message"||c.seen[si+":"+m.id])return;c.seen[si+":"+m.id]=1;var d;try{d=JSON.parse(m.message);}catch(e){return;}
     if(!d||typeof d.c!=="string")return;
     if(d.t==="j"){if(c.players.indexOf(d.c)<0)c.players.push(d.c);}
-    else if(d.t==="r"&&+d.n>=1&&+d.n<=6){(c.rows[d.c]=c.rows[d.c]||{})[+d.n]={c:+d.v,t:+d.s||0,w:dk(d.w)};}
+    else if(d.t==="r"&&+d.n>=1&&+d.n<=12){(c.rows[d.c]=c.rows[d.c]||{})[+d.n]={c:+d.v,t:+d.s||0,w:dk(d.w)};}
     emit();}
   c.ess=[];var op=NTS.map(function(){return false;});
   NTS.forEach(function(b,i){try{var es=new EventSource(b+topic(g,id)+"/sse?since=all");
@@ -82,7 +82,7 @@ function waitRematch(g,id,cb){var n=next(id),c=conn(g,n),fired=false;
 function startTime(g,id,set){var T=ls("vm-vs-t",{});if(set&&!T[g+id]){T[g+id]=Date.now();var ks=Object.keys(T);if(ks.length>60)delete T[ks[0]];lss("vm-vs-t",T);}return T[g+id]||0;}
 function fmt(s){s=Math.max(0,Math.floor(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
 /* eredmény: rows = [{c,t}], win = kód, ami a telitalálatot jelenti. 1 = én nyertem, -1 = ellenfél, 0 = döntetlen, null = még nincs vége */
-function verdict(me,op,win,best){function st(R){var s=R.length&&R[R.length-1].c===win;return {d:s||R.length>=6,s:s,n:R.length,t:R.length?R[R.length-1].t:0,b:best?Math.max.apply(null,R.map(function(x){return x.c;}).concat(0)):0};}
+function verdict(me,op,win,best,rows){rows=rows||6;function st(R){var s=R.length&&R[R.length-1].c===win;return {d:s||R.length>=rows,s:s,n:R.length,t:R.length?R[R.length-1].t:0,b:best?Math.max.apply(null,R.map(function(x){return x.c;}).concat(0)):0};}
   var a=st(me),b=st(op);
   if(a.s&&!b.s&&b.n>=a.n)return 1;
   if(b.s&&!a.s&&a.n>=b.n)return -1;
@@ -91,7 +91,7 @@ function verdict(me,op,win,best){function st(R){var s=R.length&&R[R.length-1].c=
   if(a.s){if(a.n!==b.n)return a.n<b.n?1:-1;if(a.t!==b.t)return a.t<b.t?1:-1;return 0;}
   if(best&&a.b!==b.b)return a.b>b.b?1:-1;return 0;}
 /* nézői mód: csatlakozás nélkül figyeli a meccs két játékosát. cb(sorok:[[{c,t,w}],[...]], játékosszám, kapcsolódva) */
-function spec(g,id,cb){var c=conn(g,id);var un=c.sub(function(){var P=c.players.slice(0,2);cb(P.map(function(p){var R=c.rows[p]||{},o=[];for(var n=1;n<=6&&R[n];n++)o.push(R[n]);return o;}),P.length,c.open);});return function(){un();c.close();};}
+function spec(g,id,cb){var c=conn(g,id);var un=c.sub(function(){var P=c.players.slice(0,2);cb(P.map(function(p){var R=c.rows[p]||{},o=[];for(var n=1;n<=12&&R[n];n++)o.push(R[n]);return o;}),P.length,c.open);});return function(){un();c.close();};}
 /* egyszeri lekérdezés (nem tart nyitva kapcsolatot): {n: játékosok száma, g:[tippszám1, tippszám2]} */
 function peek1(b,g,id){var c=new AbortController(),tm=setTimeout(function(){c.abort();},6000);return fetch(b+topic(g,id)+"/json?poll=1&since=all",{credentials:"omit",signal:c.signal}).then(function(r){clearTimeout(tm);return r.ok?r.text():"";}).catch(function(){clearTimeout(tm);return "";});}
 function peek(g,id){return Promise.all(NTS.map(function(b){return peek1(b,g,id);})).then(function(a){return a.join("\n");}).then(function(t){var P=[],R={};
