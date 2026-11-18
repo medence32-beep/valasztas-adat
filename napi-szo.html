@@ -166,7 +166,7 @@ let VX=null,cdT=null,tmT=null;
 /* egyszeri különleges 1v1 meccs: csak ez az egy azonosító; a visszavágó már normál szóval megy */
 const SPEC={vsz7d63de:{w:"VARGASZABOLCS",disp:"VARGA SZABOLCS",gap:[5],rows:12,min:5,max:13}};
 /* KULON: amíg igaz, minden ÚJ 1v1 meccs („x”-szel kezdődő azonosító) a különleges szóval megy; a visszavágó („r…”) már normál */
-const KULON=true;const spc=id=>id?(SPEC[id]||(KULON&&/^x/.test(id)?SPEC.vsz7d63de:null)):null;
+const KULON=false;const spc=id=>id?(SPEC[id]||(KULON&&/^x/.test(id)?SPEC.vsz7d63de:null)):null;
 const newId=()=>KULON?"x"+VS.rid().slice(1):VS.rid();
 let LEN=5,ROWS=6,MINL=5,MAXL=5,FREE=false,GAP=[],DISP="";
 function setRules(id){const s=spc(id);LEN=s?s.w.length:5;ROWS=s?s.rows:6;MINL=s?s.min:5;MAXL=s?s.max:5;FREE=!!s;GAP=s?s.gap:[];DISP=s?s.disp:"";document.body.classList.toggle("spc",!!s);}
