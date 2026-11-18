@@ -41,7 +41,10 @@ function join(g,id){var me=cid(g,id,true),c=conn(g,id),sent=false;
     un=c.sub(function(){if(done)return;
       if(c.open&&!sent){sent=true;send(g,id,{t:"j",c:me}).then(function(ok){if(!ok&&!done){done=true;clearTimeout(to);if(un)un();res("err");}});}
       var i=c.players.indexOf(me);if(i<0){if(c.players.length>=2&&sent){/* a mi csatlakozásunk még úton lehet – megvárjuk */}return;}
-      done=true;clearTimeout(to);setTimeout(function(){un();},0);res(i===0?"a":i===1?"b":"full");});});}
+      done=true;clearTimeout(to);setTimeout(function(){un();},0);if(i<2)reg(g,id,i);res(i===0?"a":i===1?"b":"full");});});}
+function reg(g,id,i){try{fetch(NT+"voksmero-vs"+g+"-lista",{method:"POST",body:JSON.stringify({id:id,p:i+1}),credentials:"omit"}).catch(function(){});}catch(e){}}
+/* tulajdonosi meccslista: az elmúlt 12 óra meccsei. cb([{id,t,p}]) – p = csatlakozott játékosok száma */
+function list(g,cb){var M={},es=null;try{es=new EventSource(NT+"voksmero-vs"+g+"-lista/sse?since=12h");es.onmessage=function(e){try{var m=JSON.parse(e.data),d=JSON.parse(m.message);if(!d||!/^[a-z0-9]{6,12}$/.test(d.id))return;var o=M[d.id]||(M[d.id]={id:d.id,t:m.time*1000,p:0});o.p=Math.max(o.p,+d.p||0);o.t=Math.min(o.t,m.time*1000);cb(Object.keys(M).map(function(k){return M[k];}).sort(function(a,b){return b.t-a.t;}));}catch(_){}};}catch(e){}cb([]);return function(){try{es.close();}catch(e){}};}
 function ek(x){try{return btoa(unescape(encodeURIComponent(String(x)))).split("").reverse().join("");}catch(e){return "";}}
 function dk(x){try{return x?decodeURIComponent(escape(atob(String(x).split("").reverse().join("")))):"";}catch(e){return "";}}
 function post(g,id,s,r,code,sec,w){send(g,id,{t:"r",c:cid(g,id,true),n:r,v:code,s:Math.max(0,Math.round(sec)),w:ek(w||"")});}
@@ -89,5 +92,5 @@ function nezFromHash(){var m=/^#nez-([a-z0-9]{6,12})$/.exec(location.hash);retur
 function nezLink(path,id){return "https://voksmero.hu/"+path+"#nez-"+id;}
 function idFromHash(){var m=/^#vs-([a-z0-9]{6,12})$/.exec(location.hash);return m?m[1]:null;}
 function link(path,id){return "https://voksmero.hu/"+path+"#vs-"+id;}
-window.VS={spy:spy,spyArm:spyArm,rid:rid,join:join,post:post,watch:watch,next:next,waitRematch:waitRematch,startTime:startTime,fmt:fmt,verdict:verdict,idFromHash:idFromHash,link:link,hash:hash,spec:spec,nezFromHash:nezFromHash,nezLink:nezLink};
+window.VS={spy:spy,spyArm:spyArm,rid:rid,join:join,post:post,watch:watch,next:next,waitRematch:waitRematch,startTime:startTime,fmt:fmt,verdict:verdict,idFromHash:idFromHash,link:link,hash:hash,spec:spec,nezFromHash:nezFromHash,nezLink:nezLink,list:list};
 })();
