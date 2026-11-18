@@ -165,8 +165,11 @@ let MODE="nap",ANS=[],WORD="",G=[],CUR=[],DONE=false,LOCK=false,ST=J.ls.get("vm-
 let VX=null,cdT=null,tmT=null;
 /* egyszeri különleges 1v1 meccs: csak ez az egy azonosító; a visszavágó már normál szóval megy */
 const SPEC={vsz7d63de:{w:"VARGASZABOLCS",disp:"VARGA SZABOLCS",gap:[5],rows:12,min:5,max:13}};
+/* KULON: amíg igaz, minden ÚJ 1v1 meccs („x”-szel kezdődő azonosító) a különleges szóval megy; a visszavágó („r…”) már normál */
+const KULON=true;const spc=id=>id?(SPEC[id]||(KULON&&/^x/.test(id)?SPEC.vsz7d63de:null)):null;
+const newId=()=>KULON?"x"+VS.rid().slice(1):VS.rid();
 let LEN=5,ROWS=6,MINL=5,MAXL=5,FREE=false,GAP=[],DISP="";
-function setRules(id){const s=SPEC[id];LEN=s?s.w.length:5;ROWS=s?s.rows:6;MINL=s?s.min:5;MAXL=s?s.max:5;FREE=!!s;GAP=s?s.gap:[];DISP=s?s.disp:"";document.body.classList.toggle("spc",!!s);}
+function setRules(id){const s=spc(id);LEN=s?s.w.length:5;ROWS=s?s.rows:6;MINL=s?s.min:5;MAXL=s?s.max:5;FREE=!!s;GAP=s?s.gap:[];DISP=s?s.disp:"";document.body.classList.toggle("spc",!!s);}
 const WINC=()=>Math.pow(3,LEN)*0+(Math.pow(3,LEN)-1);
 function score(g){const res=Array(g.length).fill("x"),left={};ANS.forEach((c,i)=>{if(g[i]!==c)left[c]=(left[c]||0)+1;});
   g.forEach((c,i)=>{if(c===ANS[i])res[i]="g";else if(left[c]){res[i]="y";left[c]--;}});return res;}
@@ -199,7 +202,7 @@ let DICT=null;fetch("assets/jatek/szavak5.txt?v=1").then(r=>r.ok?r.text():Promis
 function newEndless(){const seen=new Set(EN.seen);let c=POOL.concat(W.map(x=>x[0]),W2.map(x=>x[0])).filter(x=>!seen.has(x));if(!c.length){EN.seen=[];c=POOL.slice();}
   const w=c[Math.floor(Math.random()*c.length)];EN.seen.push(w);if(EN.seen.length>4000)EN.seen=EN.seen.slice(-4000);EN.cur={a:w,g:[],d:false,w:false};J.ls.set("vm-szo-v",EN);load();}
 /* ---------- 1v1 ---------- */
-function vsWord(id){if(SPEC[id])return SPEC[id].w;return POOL[VS.hash("szo|"+id)%POOL.length];}
+function vsWord(id){const s=spc(id);if(s)return s.w;return POOL[VS.hash("szo|"+id)%POOL.length];}
 function mini(rows,sp){let h='<div class="mg'+(sp?' lt':'')+'">';for(let i=0;i<ROWS;i++){const r=rows[i],L=sp&&r&&r.w?[...r.w]:[],n=r&&r.w?[...r.w].length:LEN;h+='<div>'+(r?uncode(r.c,n):Array(LEN).fill("")).map((c,j)=>'<i class="'+(c||"")+'">'+esc(L[j]||"")+'</i>').join("")+'</div>';}return h+'</div>';}
 function vsRender(){const v=VX;if(!v)return;const p=$("vsp");p.hidden=false;
   if(v.st==="join"){p.innerHTML='<div class="msg">Csatlakozás a meccshez…</div>';return;}
@@ -274,11 +277,11 @@ function load(){if(SPX&&SPX.stop)SPX.stop();SPX=null;setTimeout(spyList,0);if(VX
   else if(nz){$("h1").textContent="Élő 1v1 meccs";$("lead").textContent="Két játékos, ugyanaz a szó – nézőként követheted, ki halad gyorsabban.";specStart(nz);tmT=setInterval(()=>{if(SPX)specRender();},1000);}
   else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
 function vsGo(id){location.href=location.pathname.replace(/\.html$/,"")+"?m="+id+"#vs-"+id;}
-$("vsnew").onclick=()=>{vsGo(VS.rid());};VS.spyArm($("kk"),()=>{vsRender();specRender();spyList();});
+$("vsnew").onclick=()=>{vsGo(newId());};VS.spyArm($("kk"),()=>{vsRender();specRender();spyList();});
 $("vsp").addEventListener("click",e=>{const b=e.target.closest("[data-vs]");if(!b)return;const a=b.dataset.vs;
   if(a==="copy")J.copy(VS.link("napi-szo",VX.id),"Link a vágólapon – küldd el az ellenfelednek!");
   else if(a==="nez")J.copy(VS.nezLink("napi-szo",VX.id),"Nézői link a vágólapon – aki megnyitja, élőben követheti a meccset");
-  else if(a==="new")vsGo(VS.rid());else if(a==="rematch")vsGo(VS.next(VX.id));});
+  else if(a==="new")vsGo(newId());else if(a==="rematch")vsGo(VS.next(VX.id));});
 $("kb").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");if(b){press(b.dataset.k);b.blur();}});
 document.addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.target.closest&&e.target.closest("input,textarea,button"))return;
   if(e.key==="Enter"){e.preventDefault();press("ENTER");}else if(e.key==="Backspace"){e.preventDefault();press("DEL");}else if(e.key.length===1){const k=e.key.toLocaleUpperCase("hu");if(LET.includes(k))press(k);}});
