@@ -251,10 +251,11 @@ function load(){if(VX&&VX.stop)VX.stop();if(VX&&VX.rmw)VX.rmw();VX=null;clearInt
   if(MODE==="nap"){T=ORD[(N-1)%ORD.length];G=(ST.p[N]&&ST.p[N].g)||[];DONE=!!(ST.p[N]&&ST.p[N].d);draw();}
   else if(MODE==="end"){if(!EN.cur||!BY[EN.cur.c]){newEndless();return;}T=BY[EN.cur.c];G=EN.cur.g.slice();DONE=EN.cur.d;draw();}
   else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
-$("vsnew").onclick=()=>{location.hash="vs-"+VS.rid();};VS.spyArm($("kk"),()=>vsRender());
+function vsGo(id){location.href=location.pathname.replace(/\.html$/,"")+"?m="+id+"#vs-"+id;}
+$("vsnew").onclick=()=>{vsGo(VS.rid());};VS.spyArm($("kk"),()=>vsRender());
 $("vsp").addEventListener("click",e=>{const b=e.target.closest("[data-vs]");if(!b)return;const a=b.dataset.vs;
   if(a==="copy")J.copy(VS.link("napi-rejtveny",VX.id),"Link a vágólapon – küldd el az ellenfelednek!");
-  else if(a==="new")location.hash="vs-"+VS.rid();else if(a==="rematch")location.hash="vs-"+VS.next(VX.id);});
+  else if(a==="new")vsGo(VS.rid());else if(a==="rematch")vsGo(VS.next(VX.id));});
 Promise.all([fetch("assets/world-110m.json").then(r=>r.json()),fetch("assets/jatek/orszagkod.json").then(r=>r.json()),fetch("assets/data/naptar.json").then(r=>r.json()).catch(()=>null)]).then(([t,kod,nap])=>{
   W=topo(t);const L={};(V&&V.list||[]).forEach(c=>L[c.code]=c);
   W.forEach(c=>{const k=kod[c.n];if(!k||!L[k])return;prep(c);Object.assign(c,L[k]);BY[k]=c;POOL.push(c);});

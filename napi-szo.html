@@ -263,11 +263,12 @@ function load(){if(SPX&&SPX.stop)SPX.stop();SPX=null;setTimeout(spyList,0);if(VX
   else if(MODE==="end"){if(!EN.cur){newEndless();return;}WORD=EN.cur.a;ANS=[...WORD];G=EN.cur.g.slice();DONE=EN.cur.d;draw();}
   else if(nz){$("h1").textContent="Élő 1v1 meccs";$("lead").textContent="Két játékos, ugyanaz a szó – nézőként követheted, ki halad gyorsabban.";specStart(nz);tmT=setInterval(()=>{if(SPX)specRender();},1000);}
   else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
-$("vsnew").onclick=()=>{location.hash="vs-"+VS.rid();};VS.spyArm($("kk"),()=>{vsRender();specRender();spyList();});
+function vsGo(id){location.href=location.pathname.replace(/\.html$/,"")+"?m="+id+"#vs-"+id;}
+$("vsnew").onclick=()=>{vsGo(VS.rid());};VS.spyArm($("kk"),()=>{vsRender();specRender();spyList();});
 $("vsp").addEventListener("click",e=>{const b=e.target.closest("[data-vs]");if(!b)return;const a=b.dataset.vs;
   if(a==="copy")J.copy(VS.link("napi-szo",VX.id),"Link a vágólapon – küldd el az ellenfelednek!");
   else if(a==="nez")J.copy(VS.nezLink("napi-szo",VX.id),"Nézői link a vágólapon – aki megnyitja, élőben követheti a meccset");
-  else if(a==="new")location.hash="vs-"+VS.rid();else if(a==="rematch")location.hash="vs-"+VS.next(VX.id);});
+  else if(a==="new")vsGo(VS.rid());else if(a==="rematch")vsGo(VS.next(VX.id));});
 $("kb").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");if(b){press(b.dataset.k);b.blur();}});
 document.addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.target.closest&&e.target.closest("input,textarea,button"))return;
   if(e.key==="Enter"){e.preventDefault();press("ENTER");}else if(e.key==="Backspace"){e.preventDefault();press("DEL");}else if(e.key.length===1){const k=e.key.toLocaleUpperCase("hu");if(LET.includes(k))press(k);}});
