@@ -1,6 +1,6 @@
 /* Választások – közös portál-stílus (főoldal, országoldalak) */
 :root{
-  --bg:#070C18; --bg2:#0C1428; --card:#0F1A31; --card2:#14213D; --ink:#EEF2FA; --ink2:#A3B2CC; --ink3:#66789A;
+  --bg:#070C18; --bg2:#0C1428; --card:#0F1A31; --card2:#14213D; --ink:#EEF2FA; --ink2:#A3B2CC; --ink3:#7E8DAA;
   --line:#1C2A47; --line2:#2A3B5E; --acc:#F2B84B; --acc2:#5FA8FF; --good:#43CF8C; --warn:#F2B84B; --bad:#FF6B5E;
   --hu-r:#D2232C; --hu-g:#2E8B57; --glow:rgba(95,168,255,.18);
   --shadow:0 18px 50px rgba(0,0,0,.42); --shadow2:0 6px 18px rgba(0,0,0,.28);
@@ -11,11 +11,11 @@
   --r:18px; color-scheme:dark;
 }
 @media (prefers-color-scheme: light){:root:not([data-theme="dark"]){
-  --bg:#F4F6FB; --bg2:#E9EEF7; --card:#FFFFFF; --card2:#F6F8FC; --ink:#0B1430; --ink2:#4B5A78; --ink3:#8592AD;
+  --bg:#F4F6FB; --bg2:#E9EEF7; --card:#FFFFFF; --card2:#F6F8FC; --ink:#0B1430; --ink2:#4B5A78; --ink3:#5C6B89;
   --line:#DFE5EF; --line2:#C9D3E3; --acc:#B67A00; --acc2:#1D5FD6; --good:#1E8A55; --bad:#C8352B;
   --glow:rgba(29,95,214,.12); --shadow:0 18px 50px rgba(20,35,70,.12); --shadow2:0 6px 18px rgba(20,35,70,.08); color-scheme:light;}}
 :root[data-theme="light"]{
-  --bg:#F4F6FB; --bg2:#E9EEF7; --card:#FFFFFF; --card2:#F6F8FC; --ink:#0B1430; --ink2:#4B5A78; --ink3:#8592AD;
+  --bg:#F4F6FB; --bg2:#E9EEF7; --card:#FFFFFF; --card2:#F6F8FC; --ink:#0B1430; --ink2:#4B5A78; --ink3:#5C6B89;
   --line:#DFE5EF; --line2:#C9D3E3; --acc:#B67A00; --acc2:#1D5FD6; --good:#1E8A55; --bad:#C8352B;
   --glow:rgba(29,95,214,.12); --shadow:0 18px 50px rgba(20,35,70,.12); --shadow2:0 6px 18px rgba(20,35,70,.08); color-scheme:light;}
 *{box-sizing:border-box}

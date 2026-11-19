@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
-<link rel="stylesheet" href="assets/portal.css?v=16">
+<link rel="stylesheet" href="assets/portal.css?v=17">
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Voksmérő", "item": "https://voksmero.hu/"}, {"@type": "ListItem", "position": 2, "name": "Spanyolország", "item": "https://voksmero.hu/spanyolorszag"}, {"@type": "ListItem", "position": 3, "name": "Spanyol választás 2026", "item": "https://voksmero.hu/spanyol-valasztas"}]}</script>
 <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Event", "name": "Spanyol általános választás 2026", "startDate": "2026-11-29T09:00:00+01:00", "endDate": "2026-11-29T20:00:00+01:00", "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode", "eventStatus": "https://schema.org/EventScheduled", "location": {"@type": "Place", "name": "Spanyolország (minden szavazókör)", "address": {"@type": "PostalAddress", "addressCountry": "ES"}}, "image": ["https://voksmero.hu/assets/og/spanyol.png"], "organizer": {"@type": "Organization", "name": "Junta Electoral Central (Spanyol Központi Választási Bizottság)", "url": "https://www.juntaelectoralcentral.es/"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "EUR", "availability": "https://schema.org/InStock", "url": "https://voksmero.hu/spanyol-valasztas", "validFrom": "2026-10-06T00:00:00+02:00"}, "isAccessibleForFree": true, "description": "Előrehozott általános választás a spanyol Képviselőházba és Szenátusba."}</script>
 <style>
@@ -413,7 +413,7 @@ img.fej{background:transparent!important;object-fit:cover}
 <footer class="foot">
   <div class="wrap">
     <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
-    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="modszertan">Rólunk és módszertan</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
     <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
   </div>
 </footer>
@@ -459,7 +459,7 @@ function paintState(){const ph=phase();document.body.dataset.ph=ph;const eb=$("e
 /* ---------- patkó ---------- */
 const ORD=["Podemos","Frente Amplio","Sumar","EH Bildu","ERC","BNG","PSOE","PNV","Junts","CC","Egyéb","UPN","PP","SALF","Vox"];
 const oi=n=>{const i=ORD.indexOf(n);return i<0?ORD.indexOf("Egyéb"):i;};
-function hemi(svg,parts){const n=N,rows=12,R0=70,R1=196,cx=200,cy=204,rad=[];let tl=0;for(let r=0;r<rows;r++){rad.push(R0+(R1-R0)*r/(rows-1));tl+=rad[r];}
+function hemi(svg,parts){if(svg&&parts&&parts.length)svg.setAttribute('aria-label','Parlamenti patkó, 350 mandátum: '+parts.filter(p=>p.m>0).map(p=>p.n+' '+p.m).join(', ')+'. A többséghez 176 mandátum kell.');const n=N,rows=12,R0=70,R1=196,cx=200,cy=204,rad=[];let tl=0;for(let r=0;r<rows;r++){rad.push(R0+(R1-R0)*r/(rows-1));tl+=rad[r];}
   let left=n;const cnt=rad.map((r,i)=>{const k=i===rows-1?left:Math.round(n*r/tl);left-=k;return k;});const seats=[];
   rad.forEach((r,i)=>{const k=cnt[i];for(let j=0;j<k;j++){const a=Math.PI*(1-(k>1?j/(k-1):.5));seats.push({x:cx+r*Math.cos(a),y:cy-r*Math.sin(a),a:a});}});
   seats.sort((p,q)=>q.a-p.a);const col=[];parts.slice().sort((a,b)=>oi(a.n)-oi(b.n)).forEach(p=>{for(let i=0;i<Math.round(p.m);i++)col.push(p.c);});

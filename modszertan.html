@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="hu">
+<head>
+<meta charset="utf-8">
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=7";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/frissit.js?v=1";s.async=true;document.head.appendChild(s)},2000)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
+<link rel="icon" href="/favicon-96.png" sizes="96x96" type="image/png">
+<link rel="icon" href="/favicon-192.png" sizes="192x192" type="image/png">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="assets/app/apple-touch-icon.png?v=3">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Voksmérő">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#070C18" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#F4F6FB" media="(prefers-color-scheme: light)">
+<title>Rólunk és módszertan | Voksmérő</title>
+<link rel="canonical" href="https://voksmero.hu/modszertan">
+<meta name="description" content="Ki készíti a Voksmérőt, honnan jönnek az adatok, és hogyan számoljuk a kutatási átlagokat, a becsült mandátumokat és az eredményeket.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Voksmérő">
+<meta property="og:title" content="Rólunk és módszertan">
+<meta property="og:description" content="Ki készíti a Voksmérőt, honnan jönnek az adatok, és hogyan számoljuk a kutatási átlagokat, a becsült mandátumokat és az eredményeket.">
+<meta property="og:url" content="https://voksmero.hu/modszertan">
+<meta property="og:locale" content="hu_HU">
+<meta property="og:image" content="https://voksmero.hu/assets/og/index.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://voksmero.hu/assets/og/index.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&family=JetBrains+Mono:wght@500;700&display=swap">
+<link rel="stylesheet" href="assets/portal.css?v=17">
+<style>
+.jw{max-width:1180px;margin:0 auto;padding:26px max(16px,env(safe-area-inset-right,0px)) 48px max(16px,env(safe-area-inset-left,0px))}
+.jk{font:700 12px var(--f-body);letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.jh h1{font:900 clamp(32px,5.6vw,58px)/1 var(--f-display);text-transform:uppercase;margin:6px 0 10px;text-wrap:balance}
+.jh p{color:var(--ink2);max-width:68ch;margin:0}
+.jc{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;min-width:0}
+.jc h2{font:800 19px var(--f-display);text-transform:uppercase;margin:0 0 12px;letter-spacing:.02em}
+.jb{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:9px 16px;font:700 14px var(--f-body);cursor:pointer;text-decoration:none;transition:transform .15s,border-color .15s}
+.jb:hover{border-color:var(--acc)}.jb:active{transform:scale(.97)}.jb.p{background:var(--acc);border-color:var(--acc);color:#14100a}.jb:disabled{opacity:.45;cursor:default}
+.jn{color:var(--ink3);font-size:12.5px}
+.seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
+
+.mt{max-width:760px}
+.mt h2{font:800 22px var(--f-display);text-transform:uppercase;letter-spacing:.02em;margin:34px 0 10px}
+.mt p,.mt li{color:var(--ink2);font-size:16px;line-height:1.65}
+.mt p{margin:0 0 12px}.mt ul{margin:0 0 12px;padding-left:20px}.mt li{margin:4px 0}
+.mt b{color:var(--ink)}.mt a{color:var(--acc)}
+.mt .box{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:14px;background:var(--card);padding:14px 16px;margin:18px 0}
+.mt .box p:last-child{margin:0}
+.mt table{width:100%;border-collapse:collapse;font-size:14.5px;margin:6px 0 14px}.mt td{padding:9px 8px;border-top:1px solid var(--line);vertical-align:top;color:var(--ink2)}.mt td:first-child{font-weight:700;color:var(--ink);white-space:nowrap;padding-left:0}
+@media(max-width:600px){.mt td:first-child{white-space:normal}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="./" aria-label="Voksmérő kezdőlap"><span class="mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16v8H4z"/><path d="M8 12V4h8v8"/><path d="M10 8h4"/></svg></span><span><b>Voksmérő</b><small>A világ választásai magyarul</small></span></a>
+    <nav class="nav" aria-label="Fő navigáció">
+      <a href="./#orszagok">Országok</a>
+      
+      <a href="spanyol-valasztas"><i class="live es"></i><span>SPA<span class="hide-s"> 2026</span></span></a>
+      <a href="spanyol-szimulator">Szimulátor</a>
+      <a href="naptar">Naptár</a>
+    </nav>
+    <button class="ibtn" id="theme" type="button" aria-label="Világos vagy sötét téma" title="Téma váltása"><svg class="thi" viewBox="0 0 26 26" fill="none" stroke="currentColor" stroke-linecap="round" aria-hidden="true"><circle class="ring" cx="13" cy="13" r="12.5" stroke-width="1" vector-effect="non-scaling-stroke"/><g stroke-width="2" transform="translate(5 5) scale(.66667)"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></g></svg></button>
+  </div>
+</header>
+<main class="jw">
+<div class="jh"><div class="jk">Voksmérő</div><h1>Rólunk és módszertan</h1>
+<p>Ki készíti az oldalt, honnan jönnek a számok, és hogyan dolgozzuk fel őket.</p></div>
+<div class="mt">
+
+<h2>Mi a Voksmérő?</h2>
+<p>A Voksmérő <b>független, nem hivatalos</b> választási adatoldal, amelyet egy magánszemély készít és tart fenn. Célja, hogy a világ választásait – eredményeket, közvélemény-kutatásokat, térképeket, választási rendszereket – magyarul, közérthetően és egy helyen mutassa be.</p>
+<p>Az oldal nem áll kapcsolatban egyetlen párttal, jelölttel, kampánnyal vagy választási szervvel sem, és nem ad szavazási tanácsot.</p>
+<div class="box"><p><b>Fontos:</b> a Voksmérő nem hivatalos forrás. A választások végeredményét mindig az illetékes választási hatóság állapítja meg és hirdeti ki – vitás esetben az ő adatuk számít.</p></div>
+
+<h2>Honnan jönnek az adatok?</h2>
+<table>
+<tr><td>Élő eredmények</td><td>A hivatalos választási hatóságok (például a Nemzeti Választási Iroda – valasztas.hu, Spanyolországban a Belügyminisztérium) és nemzetközi hírügynökségek (AP, NBC News) közlései.</td></tr>
+<tr><td>Közvélemény-kutatások</td><td>A kutatóintézetek által nyilvánosságra hozott eredmények, a Wikipedia közvélemény-kutatási összesítő oldalai alapján. Minden táblázat alatt ott a pontos forrás.</td></tr>
+<tr><td>Korábbi eredmények</td><td>A választási hatóságok hivatalos végeredményei.</td></tr>
+<tr><td>Térképek</td><td>Nyílt térképadatok (Natural Earth, es-atlas), Magyarországon a valasztas.hu körzethatárai.</td></tr>
+<tr><td>Zászlók, logók</td><td>Zászlók: flagpedia.net. Pártlogók: Wikimedia Commons (közkincs).</td></tr>
+</table>
+<p>Az adatokat automatikusan és kézzel is frissítjük; a frissítés idejét az oldalak jelzik. A forrásokban lévő hibák vagy késések nálunk is megjelenhetnek.</p>
+
+<h2>Hogyan számolunk?</h2>
+<ul>
+<li><b>Kutatási átlag:</b> egy időszak (például az elmúlt 14 vagy 35 nap) méréseiből intézetenként csak a <b>legfrissebbet</b> vesszük figyelembe, és ezek egyszerű átlagát mutatjuk. Így egy sűrűn mérő intézet sem húzza el az átlagot.</li>
+<li><b>Becsült mandátumok:</b> a kutatóintézetek saját mandátumbecsléseinek átlaga. Ezek bizonytalanok – a valódi eredmény akár több tucat mandátummal is eltérhet.</li>
+<li><b>Százalékok:</b> ahol a szavazatszámok elérhetők, a százalékot magunk számoljuk ki belőlük, két tizedesre kerekítve.</li>
+<li><b>„Eldőlt” verseny:</b> csak akkor jelöljük, ha egy elismert forrás (például az AP) hivatalosan győztest hirdetett. A puszta vezetés nem győzelem.</li>
+<li><b>Szimulátorok:</b> a megadott százalékokra az adott ország valódi választási szabályait alkalmazzák (például a D'Hondt-módszert és a bejutási küszöböt). Szemléltető eszközök, nem előrejelzések.</li>
+</ul>
+
+<h2>Játékok és adatkezelés</h2>
+<p>A játékok (napi szó, országrejtvény, tippjáték) állása a <b>saját böngésződben</b> tárolódik. A látogatottsági és tippstatisztikák névtelen összesítések: nem gyűjtünk nevet, e-mail-címet vagy más személyes adatot. Az 1v1 meccsek egy nyilvános üzenetközvetítőn (ntfy) futnak, csak véletlen azonosítókkal.</p>
+
+<h2>Hibát találtál?</h2>
+<p>Törekszünk a pontosságra, de hibák előfordulhatnak. Ha valahol téves adatot látsz, kérjük, nézd meg az eredeti forrást is – az oldalakon mindenhol megadjuk, honnan származnak a számok.</p>
+</div>
+</main>
+<footer class="foot">
+  <div class="wrap">
+    <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
+    <div><h4>Oldalak</h4><ul><li><a href="./">Kezdőlap</a></li><li><a href="modszertan">Rólunk és módszertan</a></li><li><a href="magyarorszag">Választási térkép</a></li><li><a href="szimulator">Magyar választási szimulátor</a></li><li><a href="spanyol-szimulator">Spanyol választási szimulátor</a></li><li><a href="valasztasi-rendszer">A választási rendszer</a></li><li><a href="eredmenyek">USA 2026 eredmények</a></li><li><a href="spanyol-valasztas">Spanyol választás 2026</a></li><li><a href="naptar">Választási naptár</a></li></ul></div><div><h4>Országok</h4><ul><li><a href="magyarorszag">Magyarország</a></li><li><a href="spanyolorszag">Spanyolország</a></li><li><a href="nemetorszag">Németország</a></li><li><a href="ausztria">Ausztria</a></li><li><a href="szlovakia">Szlovákia</a></li><li><a href="romania">Románia</a></li><li><a href="egyesult-allamok">Egyesült Államok</a></li></ul></div>
+    <div><h4>Zászlók</h4><ul><li><a href="https://flagpedia.net" target="_blank" rel="noopener">flagpedia.net</a></li></ul></div>
+  </div>
+</footer>
+<script>
+window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])),
+ nf:n=>n==null?"–":String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g," "),pf:(x,d)=>x==null||isNaN(x)?"–":x.toFixed(d==null?1:d).replace(".",",")+"%",
+ ls:{get:(k,d)=>{try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}},
+ toast:m=>{let t=document.querySelector(".toast");if(!t){t=document.createElement("div");t.className="toast";document.body.appendChild(t);}t.textContent=m;t.classList.add("on");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("on"),2200);},
+ copy:async(s,ok)=>{try{await navigator.clipboard.writeText(s);J.toast(ok||"Vágólapra másolva");}catch(e){prompt("Másold ki:",s);}},
+ share:async(title,text,url)=>{if(navigator.share){try{await navigator.share({title,text,url});return;}catch(e){if(e&&e.name==="AbortError")return;}}J.copy(text+(url?"\n"+url:""),"Szöveg a vágólapon – illeszd be bárhová");}};
+</script>
+<script src="assets/orszagok.js?v=11"></script>
+<script src="assets/terkep-anim.js?v=4"></script>
+
+<script src="assets/anim.js?v=3" defer></script>
+<script src="assets/app.js?v=9" defer></script>
+</body>
+</html>
