@@ -546,6 +546,7 @@ body.fs-on{overflow:hidden}
           <div class="stkw"><div class="stk" id="stk"></div><i class="mk ogy-only" style="left:50.25%;top:8px"></i><i class="mk ogy-only" style="left:66.83%;top:8px"></i></div>
           <div class="stkm ogy-only"><span class="a">többség · 100</span><span class="b">133 · kétharmad</span></div>
           <table class="st"><thead><tr id="sth"><th>Párt</th><th>Egyéni</th><th>Lista</th><th>Össz.</th></tr></thead><tbody id="stb"></tbody></table>
+          <button class="btn alt" type="button" id="shimg" style="margin-top:10px">Kép a megosztáshoz</button>
         </div>
         <div class="card pad coal ogy-only">
           <div class="ch" style="margin-bottom:2px"><h3>Koalíciók</h3><small id="coalsub"></small></div>
@@ -736,6 +737,30 @@ $("share").addEventListener("click",()=>{const s=btoa(unescape(encodeURIComponen
   const ok=()=>toast("A forgatókönyv linkje kimásolva"),fb=()=>{try{const t=document.createElement("textarea");t.value=url;t.style.cssText="position:fixed;opacity:0";document.body.appendChild(t);t.select();document.execCommand("copy");t.remove();ok();}catch(e){toast("Nem sikerült a másolás");}};
   if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(url).then(ok,fb);else fb();});
 
+
+/* ---------- megosztható kép: patkó + mandátumtábla (1080×1080) ---------- */
+(function(){const b=document.getElementById("shimg");if(!b)return;
+b.addEventListener("click",async()=>{const hm=document.getElementById("hemi"),rows=[...document.querySelectorAll("#stb tr")].map(tr=>{const td=tr.querySelector("td.n"),tt=tr.querySelector("td.t");return td&&tt?{n:td.textContent.replace(/(bent|küszöb alatt)$/,"").trim(),c:getComputedStyle(td).getPropertyValue("--c").trim()||"#8792A8",t:+tt.textContent||0,out:tr.classList.contains("out")}:null;}).filter(Boolean);
+  if(!rows.length){toast("Előbb futtasd le a szimulációt");return;}
+  const S0=1080,c=document.createElement("canvas");c.width=c.height=S0;const x=c.getContext("2d"),FB='"Barlow",system-ui,sans-serif';
+  const g=x.createLinearGradient(0,0,S0,S0);g.addColorStop(0,"#070C18");g.addColorStop(1,"#13213F");x.fillStyle=g;x.fillRect(0,0,S0,S0);x.fillStyle="#F5B83D";x.fillRect(0,0,S0,10);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.fillText("voksmérő",64,92);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,92);
+  x.fillStyle="#A3B2CC";x.font="700 26px "+FB;x.textAlign="right";x.fillText("MAGYAR SZIMULÁTOR · A FORGATÓKÖNYVEM",S0-64,90);x.textAlign="left";
+  const sv=hm.cloneNode(true),o=hm.querySelectorAll("*"),cl=sv.querySelectorAll("*");o.forEach((e,i)=>{const cs=getComputedStyle(e);if(cs.fill&&cs.fill!=="none")cl[i].setAttribute("fill",cs.fill);if(cs.stroke&&cs.stroke!=="none")cl[i].setAttribute("stroke",cs.stroke);cl[i].removeAttribute("class");cl[i].removeAttribute("style");});
+  sv.querySelectorAll("text").forEach(t=>t.remove());sv.setAttribute("xmlns","http://www.w3.org/2000/svg");sv.setAttribute("width","860");sv.setAttribute("height","460");
+  const img=await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(new XMLSerializer().serializeToString(sv));});
+  if(img)x.drawImage(img,110,130,860,460);x.textAlign="center";x.fillStyle="#EEF2FA";x.font="900 64px \"Big Shoulders Display\",Impact,sans-serif";x.fillText("199",S0/2,555);x.fillStyle="#A3B2CC";x.font="700 22px "+FB;x.fillText("MANDÁTUM",S0/2,585);x.textAlign="left";
+  const top=rows.filter(r=>r.t>0).slice(0,6),tot=rows.reduce((a,r)=>a+r.t,0);
+  top.forEach((r,i)=>{const col=i%2,row=Math.floor(i/2),px=64+col*490,py=650+row*66;x.fillStyle=r.c;x.fillRect(px,py,18,42);x.fillStyle="#EEF2FA";x.font="700 30px "+FB;x.fillText(r.n,px+32,py+32);x.textAlign="right";x.font="800 36px "+FB;x.fillText(String(r.t),px+440,py+34);x.textAlign="left";});
+  const w=top[0];x.fillStyle="rgba(255,255,255,.12)";x.fillRect(64,S0-110,S0-128,2);
+  if(w&&tot===199){x.fillStyle="#EEF2FA";x.font="700 28px "+FB;x.fillText(w.n+": "+w.t+" mandátum – "+(w.t>=133?"kétharmad":w.t>=100?"többség":"nincs többség"),64,S0-60);}
+  x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu/szimulator",S0-64,S0-60);x.textAlign="left";
+  const url=c.toDataURL("image/png");let m=document.getElementById("shm");
+  if(!m){m=document.createElement("div");m.id="shm";m.style.cssText="position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px";
+    m.innerHTML='<div style="background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,520px);max-height:100%;overflow:auto"><img id="shpv" alt="Megosztható kép a forgatókönyvről" style="width:100%;height:auto;border-radius:10px;display:block"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="shsh" type="button">Megosztás</button><a class="btn alt" id="shdl" download="voksmero-szimulator.png">Letöltés</a><button class="btn alt" id="shx" type="button">Bezárás</button></div></div>';
+    document.body.appendChild(m);m.addEventListener("click",e=>{if(e.target===m||e.target.id==="shx")m.style.display="none";});}
+  m.style.display="grid";document.getElementById("shpv").src=url;document.getElementById("shdl").href=url;
+  document.getElementById("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-szimulator.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"A forgatókönyvem – Voksmérő szimulátor"});return;}}catch(e){if(e&&e.name==="AbortError")return;}document.getElementById("share").click();};});})();
 /* ---------- adatok ---------- */
 let G=null,J=null;const ready=Promise.all([fetch("assets/sim.json?v=6").then(r=>r.json()),fetch("assets/oevk.json").then(r=>r.json())]).then(([d,j])=>{G=S.prepare(d);J=j;buildMap();});
 const scen=()=>SC.p.map(p=>({id:p.id,name:p.name.trim()||"Névtelen párt",color:p.color,pct:+p.pct||0,prof:p.prof,ide:+p.ide||0,st:p.st||[],sb:p.sb||2,geo:p.geo||"26",type:MODE()==="ep"?"p":p.type,cand:MODE()==="ep"?true:p.cand}));
