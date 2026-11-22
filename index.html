@@ -224,6 +224,7 @@ html.mob .apqr,.apqr[hidden]{display:none}
 @media (max-width:860px){.appsec{grid-template-columns:minmax(0,1fr)}.apvis{min-height:300px;order:-1}.phone{width:min(170px,46vw)}.apico{width:64px;height:64px;right:8%}}
 .ghint{white-space:normal!important;line-height:1.6;top:100%;bottom:auto;margin-top:2px;width:max-content;max-width:min(92vw,520px);text-align:center}
 @media (max-width:860px){.globe{margin-bottom:46px!important}.ghint{font-size:11px}.mk tspan.s{display:none}}.ghint .gk{display:inline-block;width:9px;height:9px;border-radius:2px;margin:0 3px 0 8px;vertical-align:0}.gk.us{background:#E2564B}.gk.hu{background:var(--acc)}.gk.rd{background:#2FB59A}
+.pgi{display:inline-grid;place-items:center;width:28px;height:20px;border-radius:4px;background:var(--bg2);color:var(--acc);font-weight:800;flex:none}
 </style>
 </head>
 <body>
@@ -541,14 +542,18 @@ V.themeBtn($("theme"));V.reveal();
 /* kereső legördülő */
 const q=$("q"),sug=$("sug");let act=-1,cur=[];
 function item(c){return '<a href="'+V.href(c)+'" role="option"><img src="'+V.flag(c.code,40)+'" alt="" loading="lazy"><b>'+esc(c.name)+'</b>'+(c.ready?'<span class="pill ok">Elérhető</span>':'<span class="pill dev">Fejlesztés alatt</span>')+'</a>';}
+/* a kereső az oldalainkat is megtalálja (kulcsszavak alapján) */
+const PG=[["spanyol-valasztas","Spanyol választás 2026","spanyol spanyolorszag sanchez feijoo valasztas eredmeny"],["spanyol-szimulator","Spanyol szimulátor","spanyol szimulator josla mandatum"],["spanyol-tippjatek","Spanyol tippjáték","tipp tippjatek jatek spanyol"],["szimulator","Magyar választási szimulátor","magyar szimulator mandatum ketharmad"],["magyarorszag","Magyarország – térkép és kutatások","magyar magyarorszag kutatas oevk terkep tisza fidesz"],["telepulesem","Hogy szavazott a településed?","telepules telepulesem varos falu kerulet"],["magyar-valasztasok-tortenete","A magyar választások története","tortenet tortenelem 1990 idovonal"],["napi-szo","Napi szó (szójáték)","szo wordle napi jatek szojatek"],["napi-rejtveny","Országrejtvény","orszag rejtveny terkep jatek napi"],["usa-terkep","USA-térképrajzoló","usa amerika terkep elektor rajzolo"],["eredmenyek","USA 2026 eredmények","usa amerika kongresszus szenatus eredmeny"],["naptar","Választási naptár","naptar kovetkezo valasztas datum"],["modszertan","Rólunk és módszertan","rolunk modszertan forras adat"]];
+const nrm=x=>String(x).normalize("NFD").replace(/[\u0300-\u036f]/g,"").toLowerCase();
+function pgs(v){const w=nrm(v).split(/\s+/).filter(Boolean);return w.length?PG.filter(p=>w.every(t=>(nrm(p[1])+" "+p[2]).includes(t))).slice(0,3):[];}
 function show(){const v=q.value.trim();if(!v){sug.hidden=true;q.setAttribute("aria-expanded","false");return;}
-  cur=V.search(v).slice(0,8);act=cur.length?0:-1;
-  sug.innerHTML=cur.length?cur.map(item).join(""):'<div class="em">Nincs ilyen ország a listában.</div>';
+  const pp=pgs(v);cur=pp.map(p=>({pg:p})).concat(V.search(v).slice(0,8-pp.length));act=cur.length?0:-1;
+  sug.innerHTML=cur.length?cur.map(c=>c.pg?'<a href="'+c.pg[0]+'" role="option"><span class="pgi">→</span><b>'+esc(c.pg[1])+'</b><span class="pill ok">Oldal</span></a>':item(c)).join(""):'<div class="em">Nincs ilyen ország vagy oldal.</div>';
   paint();sug.hidden=false;q.setAttribute("aria-expanded","true");}
 function paint(){sug.querySelectorAll("a").forEach((a,i)=>{a.classList.toggle("act",i===act);a.setAttribute("aria-selected",String(i===act));});}
 q.addEventListener("input",show);q.addEventListener("focus",show);
 q.addEventListener("keydown",e=>{if(sug.hidden)return;if(e.key==="ArrowDown"){act=Math.min(cur.length-1,act+1);paint();e.preventDefault();}else if(e.key==="ArrowUp"){act=Math.max(0,act-1);paint();e.preventDefault();}else if(e.key==="Escape"){sug.hidden=true;}});
-$("qs").addEventListener("submit",e=>{e.preventDefault();const c=cur[act>=0?act:0]||V.search(q.value)[0];if(c)location.href=V.href(c);});
+$("qs").addEventListener("submit",e=>{e.preventDefault();const c=cur[act>=0?act:0]||V.search(q.value)[0];if(c)location.href=c.pg?c.pg[0]:V.href(c);});
 document.addEventListener("click",e=>{if(!e.target.closest("#qs"))sug.hidden=true;});
 
 /* országlista */
