@@ -140,6 +140,7 @@ html{overflow-anchor:none}
 .cta2{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
 @media (max-width:900px){.sg,.mapw{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:420px){.sl{grid-template-columns:6.4em minmax(0,1fr) 5em;gap:8px}}
+.shm[hidden]{display:none!important}.shm{position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px}.shbx{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,520px);max-height:100%;overflow:auto}.shbx img{width:100%;height:auto;border-radius:10px;display:block}.sha{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -183,7 +184,7 @@ html{overflow-anchor:none}
     <div class="seats" id="seats"></div>
     <div class="coal" id="coal"></div>
     <div class="shr"><div><b>Oszd meg a jóslatodat!</b><span>A link pontosan a te beállításaidat nyitja meg.</span></div>
-      <div class="shb"><button type="button" class="btn" id="shr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Megosztás</span></button><a class="btn alt" id="shfb" target="_blank" rel="noopener">Facebook</a><button type="button" class="btn alt" id="shcp">Link másolása</button></div>
+      <div class="shb"><button type="button" class="btn" id="shr"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><path d="M8.6 13.5l6.8 4M15.4 6.5l-6.8 4"/></svg><span>Megosztás</span></button><a class="btn alt" id="shfb" target="_blank" rel="noopener">Facebook</a><button type="button" class="btn alt" id="shcp">Link másolása</button><button type="button" class="btn alt" id="shimg">Kép a megosztáshoz</button></div>
       <p class="rn" id="shmsg" aria-live="polite"></p></div>
   </div>
 </div>
@@ -327,6 +328,27 @@ function copyLink(){const txt=shareText()+" "+shareURL();const ok=()=>shmsg("A l
 $("shr").addEventListener("click",()=>{const u=shareURL();try{history.replaceState(null,"",u.replace("https://voksmero.hu/",""));}catch(e){}
   if(navigator.share)navigator.share({title:"Spanyol választási szimulátor – a jóslatom",text:shareText(),url:u}).catch(()=>{});else copyLink();});
 $("shcp").addEventListener("click",copyLink);
+/* megosztható kép a jóslatról (1080×1080): patkó + pártok mandátumai */
+function kep(){if(!FIN)return;const S0=1080,c=document.createElement("canvas");c.width=c.height=S0;const x=c.getContext("2d"),FB='"Barlow",system-ui,sans-serif',FD='"Big Shoulders Display","Arial Narrow",Impact,sans-serif';
+  const g=x.createLinearGradient(0,0,S0,S0);g.addColorStop(0,"#070C18");g.addColorStop(1,"#13213F");x.fillStyle=g;x.fillRect(0,0,S0,S0);x.fillStyle="#F5B83D";x.fillRect(0,0,S0,10);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.fillText("voksmérő",64,92);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,92);
+  x.fillStyle="#A3B2CC";x.font="700 26px "+FB;x.textAlign="right";x.fillText("SPANYOL VÁLASZTÁS · A JÓSLATOM",S0-64,90);x.textAlign="left";
+  const E=Object.entries(FIN.S).filter(([p,n])=>p!==UNK&&n>0).sort((a,b)=>b[1]-a[1]);
+  /* patkó: 350 pont 12 sorban */
+  const rows=12,R0=150,R1=400,cx=S0/2,cy=560,rad=[];let tl=0;for(let r=0;r<rows;r++){rad.push(R0+(R1-R0)*r/(rows-1));tl+=rad[r];}
+  const per=rad.map(r=>Math.round(350*r/tl));let d=350-per.reduce((a,b)=>a+b,0);per[rows-1]+=d;const pts=[];
+  rad.forEach((r,i)=>{for(let k=0;k<per[i];k++){const a=Math.PI-(Math.PI*k/(per[i]-1||1));pts.push([a,r]);}});pts.sort((a,b)=>b[0]-a[0]||a[1]-b[1]);
+  let j=0;E.forEach(([p,n])=>{for(let k=0;k<n&&j<pts.length;k++,j++){const [a,r]=pts[j];x.beginPath();x.arc(cx+r*Math.cos(a),cy-r*Math.sin(a),10.5,0,7);x.fillStyle=COL[p]||"#8792A8";x.fill();}});
+  for(;j<pts.length;j++){const [a,r]=pts[j];x.beginPath();x.arc(cx+r*Math.cos(a),cy-r*Math.sin(a),10.5,0,7);x.fillStyle="#2A3654";x.fill();}
+  const jb=(FIN.S.PP||0)+(FIN.S.Vox||0);x.textAlign="center";x.fillStyle="#EEF2FA";x.font="900 84px "+FD;x.fillText(String(E[0]?E[0][1]:""),cx,cy-40);x.font="700 26px "+FB;x.fillStyle="#A3B2CC";x.fillText(E[0]?E[0][0]+" – első":"",cx,cy);x.textAlign="left";
+  let y=640;E.slice(0,8).forEach(([p,n],i)=>{const col=i%2,row=Math.floor(i/2),px=64+col*490,py=y+row*62;x.fillStyle=COL[p]||"#8792A8";x.fillRect(px,py,18,40);x.fillStyle="#EEF2FA";x.font="700 30px "+FB;x.fillText(p,px+32,py+31);x.textAlign="right";x.font="800 34px "+FB;x.fillText(String(n),px+440,py+32);x.textAlign="left";});
+  x.fillStyle="rgba(255,255,255,.12)";x.fillRect(64,S0-110,S0-128,2);x.fillStyle=jb>=MAJ?"#63BE21":"#A3B2CC";x.font="700 28px "+FB;x.fillText("PP + Vox: "+jb+" mandátum – "+(jb>=MAJ?"megvan a többség":"nincs meg a 176"),64,S0-60);
+  x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu",S0-64,S0-60);x.textAlign="left";
+  const url=c.toDataURL("image/png");let m=$("shm");if(!m){m=document.createElement("div");m.id="shm";m.className="shm";m.innerHTML='<div class="shbx"><img id="shpv" alt="Megosztható kép a jóslatról"><div class="sha"><button class="btn" id="shsh" type="button">Megosztás</button><a class="btn alt" id="shdl" download="voksmero-spanyol-josla.png">Letöltés</a><button class="btn alt" id="shx" type="button">Bezárás</button></div></div>';document.body.appendChild(m);
+    m.addEventListener("click",e=>{if(e.target===m||e.target.id==="shx")m.hidden=true;});}
+  m.hidden=false;$("shpv").src=url;$("shdl").href=url;
+  $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-spanyol-josla.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"A jóslatom a spanyol választásra"});return;}}catch(e){if(e&&e.name==="AbortError")return;}copyLink();};}
+$("shimg").addEventListener("click",kep);
 $("shfb").addEventListener("pointerdown",()=>{$("shfb").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(shareURL());});
 $("shfb").addEventListener("focus",()=>{$("shfb").href="https://www.facebook.com/sharer/sharer.php?u="+encodeURIComponent(shareURL());});
 /* --- választási éjszaka --- */
