@@ -309,6 +309,11 @@ img.fej{background:transparent!important;object-fit:cover}
 #utana .ut2>div{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:12px 14px}
 #utana .ut2 b{display:block;font:800 15px var(--f-body);margin-bottom:4px}
 @media(max-width:900px){#utana .ut{grid-template-columns:minmax(0,1fr)}#utana .ut li{padding:0 0 16px 40px}#utana .ut li::after{top:26px;bottom:0;left:12px;right:auto;width:2px;height:auto}#utana .ut2{grid-template-columns:minmax(0,1fr)}}
+.shi{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:14px}.shi small{color:var(--ink3);font-size:12.5px}
+.shm[hidden]{display:none!important}
+.shm{position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px}
+.shb{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,520px);max-height:100%;overflow:auto}
+.shb img{width:100%;height:auto;border-radius:10px;display:block}.sha{display:flex;gap:8px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -349,6 +354,8 @@ img.fej{background:transparent!important;object-fit:cover}
   </div>
   <div class="dbar"><i id="dbL" style="background:#E30613"></i><span></span><i id="dbR" style="background:#1D84CE"></i></div>
   <div class="dlg"><span id="dlL"></span><span id="dlR"></span></div>
+  <div class="shi"><button class="btn alt" id="shimg" type="button">Kép a megosztáshoz</button><small>Négyzetes kép az aktuális állásról – Facebookra, Instagramra, Messengerre</small></div>
+  <div class="shm" id="shm" hidden><div class="shb"><img id="shpv" alt="Megosztható kép az aktuális állásról"><div class="sha"><button class="btn" id="shsh" type="button">Megosztás</button><a class="btn alt" id="shdl" download="voksmero-spanyol-valasztas.png">Letöltés</a><button class="btn alt" id="shx" type="button">Bezárás</button></div></div></div>
 </div></section>
 
 <div id="live">
@@ -579,6 +586,50 @@ function summ(nat,rp,st,demo){if(!(st==="vege"||rp>=99.5))return;const s=nat.sli
   h+=(w[3]||0)>=176?'<p><b>'+(ar(w[0]).charAt(0).toUpperCase()+ar(w[0]).slice(1))+esc(w[0])+' egyedül is megszerezte az abszolút többséget</b> (176 mandátum).</p>':'<p>Egyik párt sem szerzett abszolút többséget: a miniszterelnök megválasztásához 176 mandátum kell.</p>';
   h+='<p>A PP és a Vox együtt <b>'+jobb+'</b> mandátummal '+(jobb>=176?'többséget alkotna':'nem érné el a többséget')+'. A 2023-ban Pedro Sánchez újraválasztását támogató pártok (PSOE, Frente Amplio, Podemos, ERC, Junts, EH Bildu, PNV, BNG, CC) együtt <b>'+inv+'</b> mandátumot szereztek.</p>';
   el.innerHTML='<div class="wrap"><div class="osz2"><div class="ok"><span class="kicker">'+(demo?'Bemutató · ':'')+'Összefoglaló</span><small>Előzetes, nem hivatalos eredmény · '+f1(rp)+'% feldolgozva</small></div>'+h+'</div></div>';}
+
+/* ---------- megosztható kép (1080×1080, canvas) ---------- */
+function imgL(src){return new Promise(r=>{const i=new Image();i.crossOrigin="anonymous";i.onload=()=>r(i);i.onerror=()=>r(null);i.src=src;});}
+async function shareData(){
+  if(E.nat&&E.nat.length){return {live:true,rows:E.nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]).map(r=>({n:r[0],v:r[2],m:r[3]||0})),lab:E.st==="vege"?"Előzetes végeredmény":"Részeredmény · "+f1(E.rp||0)+"% feldolgozva"};}
+  const K=await fetch("assets/data/kutatas/es.json").then(r=>r.json()).catch(()=>null);if(!K||!K.polls)return null;
+  const P=K.polls,last=new Date(P[0].d+"T12:00:00"),seen={},u=[];P.forEach(p=>{if(last-new Date(p.d+"T12:00:00")>14*864e5||seen[p.f])return;seen[p.f]=1;u.push(p);});
+  const A=(n,f)=>{const v=u.map(p=>p[f]&&p[f][n]).filter(x=>x!=null);return v.length?v.reduce((a,b)=>a+b,0)/v.length:null;};
+  return {live:false,rows:K.parties.map(([n])=>({n,v:A(n,"v"),m:A(n,"m")})).filter(x=>x.v!=null).sort((a,b)=>b.v-a.v),lab:u.length+" közvélemény-kutatás átlaga · "+last.toLocaleDateString("hu-HU",{month:"long",day:"numeric"})};}
+async function shareImg(){const d=await shareData();if(!d){alertBox("Az adatok még töltődnek, próbáld újra pár másodperc múlva.");return;}
+  try{await document.fonts.ready;}catch(e){}
+  const S=1080,c=document.createElement("canvas");c.width=c.height=S;const x=c.getContext("2d");
+  const FD='"Big Shoulders Display","Arial Narrow",Impact,sans-serif',FB='"Barlow",system-ui,sans-serif';
+  const g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#070C18");g.addColorStop(1,"#121D38");x.fillStyle=g;x.fillRect(0,0,S,S);
+  x.fillStyle="#F5B83D";x.fillRect(0,0,S,10);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.textBaseline="alphabetic";x.fillText("voksmérő",64,92);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,92);
+  x.fillStyle="#A3B2CC";x.font="700 26px "+FB;x.textAlign="right";x.fillText("SPANYOL VÁLASZTÁS · NOV. 29.",S-64,90);x.textAlign="left";
+  const g2=n=>d.rows.find(r=>r.n===n)||{v:null,m:null};
+  const duo=[["PSOE","Pedro Sánchez","assets/es/sanchez.webp","#E30613"],["PP","Alberto Núñez Feijóo","assets/es/feijoo.webp","#1D84CE"]];
+  const im=await Promise.all(duo.map(q=>imgL(q[2])));
+  duo.forEach((q,i)=>{const cx=i?S-250:250,cy=290,r=110,v=g2(q[0]);
+    x.save();x.beginPath();x.arc(cx,cy,r,0,7);x.fillStyle="#0F1A31";x.fill();x.clip();if(im[i])x.drawImage(im[i],cx-r,cy-r,2*r,2*r);x.restore();
+    x.beginPath();x.arc(cx,cy,r+4,0,7);x.lineWidth=8;x.strokeStyle=q[3];x.stroke();
+    x.textAlign="center";x.fillStyle="#EEF2FA";x.font="800 34px "+FB;x.fillText(q[1],cx,cy+r+56);
+    x.fillStyle=q[3];x.font="900 92px "+FD;x.fillText(v.v==null?"–":f1(v.v)+"%",cx,cy+r+150);
+    x.fillStyle="#A3B2CC";x.font="700 28px "+FB;x.fillText(v.m==null?"":(d.live?"":"~")+Math.round(v.m)+" mandátum"+(d.live?"":" (becslés)"),cx,cy+r+192);});
+  x.textAlign="center";x.fillStyle="#66789A";x.font="900 60px "+FD;x.fillText("VS",S/2,300);x.textAlign="left";
+  const rows=d.rows.filter(r=>r.n!=="PSOE"&&r.n!=="PP").slice(0,4),y0=690,mx=Math.max(...d.rows.map(r=>r.v||0));
+  const lg=await Promise.all(rows.map(r=>LOGO[r.n]?imgL(LOGO[r.n]):null));
+  rows.forEach((r,i)=>{const y=y0+i*66;x.fillStyle="#EEF2FA";x.font="700 30px "+FB;x.fillText(JEL[r.n]||r.n,64,y+30);
+    x.fillStyle="#1B2846";x.fillRect(600,y+8,280,22);x.fillStyle=cl(r.n);x.fillRect(600,y+8,280*(r.v/mx),22);
+    x.fillStyle="#EEF2FA";x.font="800 32px "+FB;x.textAlign="right";x.fillText(f1(r.v)+"%",S-64,y+32);x.textAlign="left";
+    if(lg[i]){const h=26,w=Math.min(110,lg[i].width/lg[i].height*h);if(r.n==="ERC"||r.n==="SALF")x.filter="brightness(0) invert(1)";x.drawImage(lg[i],600-w-16,y+6,w,h);x.filter="none";}});
+  x.fillStyle="rgba(255,255,255,.12)";x.fillRect(64,S-110,S-128,2);
+  x.fillStyle="#A3B2CC";x.font="600 26px "+FB;x.fillText(d.lab,64,S-62);
+  x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu",S-64,S-62);x.textAlign="left";
+  let url;try{url=c.toDataURL("image/png");}catch(e){alertBox("A kép most nem készíthető el.");return;}
+  $("shpv").src=url;$("shdl").href=url;$("shm").hidden=false;
+  $("shsh").hidden=!(navigator.canShare||window.AppBridge);
+  $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-spanyol-valasztas.png",{type:"image/png"});
+      if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Spanyol választás 2026",text:"Spanyol választás 2026 – voksmero.hu"});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+    if(navigator.share)navigator.share({title:"Spanyol választás 2026",text:"Sánchez vagy Feijóo? Így áll a spanyol választás:",url:"https://voksmero.hu/spanyol-valasztas"});};}
+function alertBox(m){const t=document.createElement("div");t.textContent=m;t.style.cssText="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:400;background:#0B1630;color:#fff;padding:10px 16px;border-radius:12px;font:600 14px system-ui";document.body.appendChild(t);setTimeout(()=>t.remove(),3500);}
+if($("shimg")){$("shimg").onclick=shareImg;$("shx").onclick=()=>{$("shm").hidden=true;};$("shm").addEventListener("click",e=>{if(e.target===$("shm"))$("shm").hidden=true;});}
 
 /* ---------- párbaj: Sánchez (PSOE) – Feijóo (PP) ---------- */
 function duel(pL,pR,sL,sR,src){if(!$("dpL"))return;$("dpL").textContent=pL==null?'–':f1(pL)+'%';$("dpR").textContent=pR==null?'–':f1(pR)+'%';
