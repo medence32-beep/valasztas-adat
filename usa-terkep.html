@@ -48,6 +48,8 @@
 .seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
 
+.shm[hidden]{display:none!important}.shm{position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px}.shb{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,560px);max-height:100%;overflow:auto}.shb img{width:100%;height:auto;border-radius:10px;display:block}.sha{display:flex;gap:8px;flex-wrap:wrap}
+
 .ug{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;margin-top:18px;align-items:start}@media(max-width:960px){.ug{grid-template-columns:1fr}}
 .tot{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;margin-top:18px}
 .tot .s{font:900 clamp(34px,5vw,52px)/1 var(--f-display);font-variant-numeric:tabular-nums}.tot .s small{display:block;font:700 12px var(--f-body);color:var(--ink2);letter-spacing:.06em;text-transform:uppercase;margin-top:4px}
@@ -99,7 +101,7 @@
 <button class="br" data-v="r" type="button">R valószínű</button><button class="bR" data-v="R" type="button">Republikánus</button><button class="b0" data-v="0" type="button">Radír</button></div></div>
 <div class="jc"><h2>Kiinduló térkép</h2><div class="row"><button class="jb" data-p="2024" type="button">2024</button><button class="jb" data-p="2020" type="button">2020</button><button class="jb" data-p="0" type="button">Üres</button><button class="jb" data-p="rnd" type="button">Véletlen</button></div></div>
 <div class="jc"><h2>Kis államok</h2><div class="sm" id="sm"></div></div>
-<div class="jc"><h2>Megosztás</h2><div class="row"><button class="jb p" id="shr" type="button">Térkép megosztása</button><button class="jb" id="cpy" type="button">Link másolása</button></div><p class="jn" style="margin:8px 0 0">A link a te színezésedet tartalmazza – aki megnyitja, ugyanezt a térképet látja.</p></div></div></div>
+<div class="jc"><h2>Megosztás</h2><div class="row"><button class="jb p" id="shr" type="button">Térkép megosztása</button><button class="jb" id="cpy" type="button">Link másolása</button><button class="jb" id="shimg" type="button">Kép a megosztáshoz</button></div><p class="jn" style="margin:8px 0 0">A link a te színezésedet tartalmazza – aki megnyitja, ugyanezt a térképet látja.</p></div></div></div>
 </main>
 <div class="tip" id="tip"></div>
 <footer class="foot">
@@ -155,6 +157,28 @@ fetch("assets/jatek/usa-allamok.json").then(r=>r.json()).then(d=>{S=d;K=Object.k
   if(window.MapAnim)MapAnim.intro(document.querySelectorAll("#um path"),{svg:$("um")});});
 const link=()=>"https://voksmero.hu/usa-terkep#"+enc();
 const txt=()=>{const a=tot();return "Az én térképem: Demokrata "+(a.D+a.d)+" – Republikánus "+(a.R+a.r)+" elektor. Rajzold meg a tiédet!";};
+/* megosztható kép: a kiszínezett térkép + elektori állás (1200×900) */
+async function kep(){const W=1200,H=1000,c=document.createElement("canvas");c.width=W;c.height=H;const x=c.getContext("2d"),FB='"Barlow",system-ui,sans-serif',FD='"Big Shoulders Display","Arial Narrow",Impact,sans-serif';
+  x.fillStyle="#070C18";x.fillRect(0,0,W,H);
+  const sv=$("um").cloneNode(true),orig=$("um").querySelectorAll("path,text"),cl=sv.querySelectorAll("path,text");
+  orig.forEach((o,i)=>{const cs=getComputedStyle(o);cl[i].setAttribute("fill",cs.fill);cl[i].setAttribute("stroke",o.tagName==="path"?"#070C18":"rgba(0,0,0,.35)");cl[i].setAttribute("stroke-width",o.tagName==="path"?"1":"2");cl[i].removeAttribute("style");cl[i].removeAttribute("class");if(o.tagName==="text"){cl[i].setAttribute("font-family","Arial,sans-serif");cl[i].setAttribute("font-weight","800");cl[i].setAttribute("font-size","10");cl[i].setAttribute("paint-order","stroke");}});
+  sv.setAttribute("xmlns","http://www.w3.org/2000/svg");sv.setAttribute("width","1080");sv.setAttribute("height",String(Math.round(1080*512/900)));
+  const img=await new Promise(r=>{const i=new Image();i.onload=()=>r(i);i.onerror=()=>r(null);i.src="data:image/svg+xml;charset=utf-8,"+encodeURIComponent(new XMLSerializer().serializeToString(sv));});
+  x.fillStyle="#EEF2FA";x.font="800 36px "+FB;x.fillText("voksmérő",60,70);x.fillStyle="#F5B83D";x.fillText(".",60+x.measureText("voksmérő").width,70);
+  x.fillStyle="#A3B2CC";x.font="700 24px "+FB;x.textAlign="right";x.fillText("AZ ÉN AMERIKAI TÉRKÉPEM",W-60,68);x.textAlign="left";
+  const a=tot(),D=a.D+a.d,R=a.R+a.r,T0=538;
+  x.font="900 96px "+FD;x.fillStyle="#3B82F6";x.fillText(String(D),60,180);x.textAlign="right";x.fillStyle="#EF4444";x.fillText(String(R),W-60,180);x.textAlign="left";
+  x.font="700 24px "+FB;x.fillStyle="#A3B2CC";x.fillText("DEMOKRATA",60,212);x.textAlign="right";x.fillText("REPUBLIKÁNUS",W-60,212);x.textAlign="left";
+  const bx=60,bw=W-120,by=236;x.fillStyle="#1B2846";x.fillRect(bx,by,bw,22);x.fillStyle="#3B82F6";x.fillRect(bx,by,bw*D/T0,22);x.fillStyle="#EF4444";x.fillRect(bx+bw-bw*R/T0,by,bw*R/T0,22);
+  x.fillStyle="#EEF2FA";x.fillRect(bx+bw/2-1.5,by-8,3,38);x.font="700 20px "+FB;x.textAlign="center";x.fillText("270",bx+bw/2,by+56);x.textAlign="left";
+  if(img)x.drawImage(img,120,300,960,Math.round(960*512/900));
+  const v=D>=270?"Demokrata győzelem":R>=270?"Republikánus győzelem":"Még nincs meg a 270";x.textAlign="center";x.font="800 34px "+FB;x.fillStyle=D>=270?"#3B82F6":R>=270?"#EF4444":"#A3B2CC";x.fillText(v,W/2,H-60);
+  x.textAlign="right";x.font="800 24px "+FB;x.fillStyle="#F5B83D";x.fillText("voksmero.hu/usa-terkep",W-60,H-28);x.textAlign="left";
+  const url=c.toDataURL("image/png");let m=$("shm");if(!m){m=document.createElement("div");m.id="shm";m.className="shm";m.innerHTML='<div class="shb"><img id="shpv" alt="Megosztható kép a térképről"><div class="sha"><button class="jb p" id="shsh" type="button">Megosztás</button><a class="jb" id="shdl" download="voksmero-usa-terkep.png">Letöltés</a><button class="jb" id="shx" type="button">Bezárás</button></div></div>';document.body.appendChild(m);
+    m.addEventListener("click",e=>{if(e.target===m||e.target.id==="shx")m.hidden=true;});}
+  m.hidden=false;$("shpv").src=url;$("shdl").href=url;
+  $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-usa-terkep.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Az én amerikai térképem"});return;}}catch(e){if(e&&e.name==="AbortError")return;}J.share("Az én amerikai térképem – Voksmérő",txt(),link());};}
+$("shimg").onclick=kep;
 $("shr").onclick=()=>J.share("Az én amerikai térképem – Voksmérő",txt(),link());$("cpy").onclick=()=>J.copy(link(),"Link a vágólapon");
 })();
 </script>
