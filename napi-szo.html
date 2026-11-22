@@ -68,6 +68,10 @@
 .vsp .mg.lt i{width:19px;height:19px;display:grid;place-items:center;font:800 10.5px var(--f-body);font-style:normal;color:#fff}.vsp .spy{font-size:12.5px;color:var(--ink3)}.vsp .spy b{letter-spacing:.06em;color:var(--ink2)}
 .vsp .act{display:flex;gap:8px;flex-wrap:wrap}.vsp .pulse{animation:vpu 1.2s ease-in-out infinite}@keyframes vpu{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent)}}
 
+.hmc{padding:12px 14px}.hm{display:flex;gap:10px;align-items:flex-start;cursor:pointer}.hm input{width:20px;height:20px;margin-top:2px;accent-color:var(--acc);flex:none}.hm b{display:block;font:800 15px var(--f-body)}.hm small{display:block;color:var(--ink2);font-size:13px;line-height:1.45;margin-top:2px}
+
+.gst{margin:6px 0 0;font-size:14px;color:var(--ink2)}.gst b{color:var(--ink)}
+
 .arl{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}.arl a{display:grid;gap:2px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--card);color:var(--ink);text-decoration:none}.arl a:hover{border-color:var(--acc)}.arl b{font:900 20px var(--f-display)}.arl small{color:var(--ink2);font-size:12px}.arl i{font-style:normal;font:700 12.5px var(--f-body);color:var(--acc)}.arl a.ok{border-color:color-mix(in srgb,#3A9A57 60%,transparent)}.arl a.ok i{color:#3A9A57}.arl a.no i{color:var(--bad,#D5503F)}
 
 .spc .brd{grid-template-rows:repeat(12,1fr);gap:4px;width:min(100%,640px)}.spc .rw{grid-template-columns:repeat(5,minmax(0,1fr)) 4px repeat(8,minmax(0,1fr));gap:3px}.spc .tl{font-size:clamp(11px,2.6vw,20px);border-radius:5px;border-width:1.5px}.spc .tl.gp{grid-column-start:7}
@@ -125,6 +129,7 @@
 <div class="jc spyl" id="spyl" hidden></div>
 <div class="sg"><div class="jc play"><div class="vsp" id="vsp" hidden></div><div class="brd" id="brd" aria-label="Tipptábla"></div><div id="res" style="width:min(100%,560px)"></div><div class="kb" id="kb"></div></div>
 <div style="display:grid;gap:16px"><div class="jc"><h2 id="sth">Statisztikád</h2><div class="st" id="st"></div><div class="dist" id="dist"></div></div>
+<div class="jc hmc"><label class="hm"><input type="checkbox" id="hard"><span><b>Nehéz mód</b><small>A már megtalált betűket minden további tippben fel kell használni: a zöldet ugyanott, a sárgát valahol.</small></span></label></div>
 <div class="jc rules"><h2>Szabályok</h2><ul>
 <li><span class="ex"><i class="g">V</i></span> zöld: a betű jó helyen van.</li>
 <li><span class="ex"><i class="y">O</i></span> sárga: a betű benne van a szóban, de máshol.</li>
@@ -195,11 +200,19 @@ const verd=w=>w?(G.length<=2?"Lenyűgöző!":G.length<=4?"Szép munka!":"Megvan,
 function archList(){const A=ST.a||{};let h='<div class="arl">';for(let k=N-1;k>=1;k--){const s=(ST.p[k]&&ST.p[k].d?ST.p[k]:null)||A[k],c=s&&s.d?(s.w?"ok":"no"):"";
     h+='<a class="'+c+'" href="napi-szo#nap-'+k+'"><b>#'+k+'</b><small>'+esc(dayDate(k))+'</small><i>'+(s&&s.d?(s.w?s.g.length+'/6':'X/6'):(s&&s.g&&s.g.length?'Folytasd':'Játszd!'))+'</i></a>';}
   $("res").innerHTML='<div class="res"><h3>Korábbi napi szavak</h3><p>Pótold, amiről lemaradtál! Az archívumban játszott szavak nem számítanak bele a sorozatodba.</p>'+(N>1?h+'</div>':'<p>Holnaptól itt lesznek a korábbi napok szavai.</p>')+'</div>';}
+/* közösségi statisztika a napi játékhoz (névtelen számlálók: -w/-l megfejtette/nem, -gK hány tippből) */
+function gstat(pfx,el){if(!el)return;const AB="https://abacus.jasoncameron.dev/get/voksmero.hu/"+pfx;
+  const g=k=>{const c=new AbortController(),tm=setTimeout(()=>c.abort(),7000);return fetch(AB+k,{credentials:"omit",signal:c.signal}).then(r=>r.status===404?{value:0}:r.ok?r.json():Promise.reject()).then(j=>+j.value||0).catch(()=>null).finally(()=>clearTimeout(tm));};
+  el.textContent="Mások eredménye töltődik…";
+  Promise.all(["-w","-l","-g1","-g2","-g3","-g4","-g5","-g6"].map(g)).then(v=>{if(v[0]==null&&v[1]==null){el.textContent="";return;}const w=v[0]||0,l=v[1]||0,t=w+l;if(!t){el.textContent="Te vagy az első, aki befejezte a mai játékot!";return;}
+    const gs=v.slice(2).map(x=>x||0),gt=gs.reduce((a,b)=>a+b,0),avg=gt?gs.reduce((a,b,i)=>a+b*(i+1),0)/gt:null;
+    el.innerHTML='<b>'+t+'</b> játékos fejezte be ma · <b>'+Math.round(w/t*100)+'%</b> megfejtette'+(avg?' · átlagosan <b>'+avg.toFixed(1).replace(".",",")+'</b> tippből':'');});}
 function result(){clearInterval(cdT);if(MODE==="arch"){archList();return;}if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===WORD;
   if(MODE==="arc"){$("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+'<p>'+esc(DEF[WORD]||"")+'</p><div class="act">'+(AD>1?'<a class="jb" href="napi-szo#nap-'+(AD-1)+'">← #'+(AD-1)+'</a>':'')+'<a class="jb" href="napi-szo#archiv">Archívum</a>'+(AD+1<N?'<a class="jb p" href="napi-szo#nap-'+(AD+1)+'">#'+(AD+1)+' →</a>':'<a class="jb p" href="napi-szo">Mai szó →</a>')+'</div></div>';return;}
   if(MODE==="end"){$("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+(DEF[WORD]?'<p>'+esc(DEF[WORD])+'</p>':'<p>'+(w?'Jöhet a következő?':'Ez volt a megfejtés. Próbáld a következőt!')+'</p>')+'<div class="act"><button class="jb p" id="nx" type="button">Következő szó →</button><button class="jb" id="sh" type="button">Megosztás</button></div></div>';
     $("nx").onclick=()=>{newEndless();};$("sh").onclick=()=>J.share("Voksmérő szójáték",'Végtelen mód: '+(w?G.length:"X")+"/6\n"+G.map(g=>score([...g]).map(x=>x==="g"?"🟩":x==="y"?"🟨":"⬜").join("")).join("\n")+"\n","https://voksmero.hu/napi-szo#vegtelen");setTimeout(()=>{const b=$("nx");if(b)b.focus();},50);return;}
-  $("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+'<p>'+esc(DEF[WORD]||"")+'</p><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="napi-szo#vegtelen">Végtelen mód →</a><span class="jn">Új szó: <span class="cd" id="cd"></span></span></div></div>';
+  $("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+'<p>'+esc(DEF[WORD]||"")+'</p><p class="gst" id="gst"></p><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="napi-szo#vegtelen">Végtelen mód →</a><span class="jn">Új szó: <span class="cd" id="cd"></span></span></div></div>';
+  gstat("szo-"+N,$("gst"));
   $("sh").onclick=()=>J.share("Voksmérő napi szó","Voksmérő napi szó #"+N+" "+(w?G.length:"X")+"/6\n"+G.map(g=>score([...g]).map(x=>x==="g"?"🟩":x==="y"?"🟨":"⬜").join("")).join("\n")+"\n","https://voksmero.hu/napi-szo");
   const tick=()=>{const b=new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Budapest"})),s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds()),e=$("cd");if(!e)return;
     e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();cdT=setInterval(tick,1000);}
@@ -263,11 +276,15 @@ function vsStart(id){VX={id,st:"join",me:[],op:[],opJ:false,t0:0};WORD=vsWord(id
     vsRender();});}
 /* ---------- közös ---------- */
 function draw(){board(false);keys();result();stats();}
+/* nehéz mód: a korábbi tippekben talált betűket kötelező újra felhasználni */
+const HARD=()=>!!J.ls.get("vm-szo-hard",false);
+function hardErr(c){for(const w of G){const L=[...w],s=score(L);for(let i=0;i<L.length;i++)if(s[i]==="g"&&c[i]!==L[i])return "Nehéz mód: a(z) "+(i+1)+". betű legyen "+L[i];
+    const need={};L.forEach((x,i)=>{if(s[i]!=="x")need[x]=(need[x]||0)+1;});for(const [x,n] of Object.entries(need))if(c.filter(y=>y===x).length<n)return "Nehéz mód: legyen benne "+x+(n>1?" ("+n+"×)":"");}return "";}
 function submit(){if(DONE||LOCK)return;if(CUR.length<MINL){shake(MINL===5&&MAXL===5?"Öt betű kell":"Legalább "+MINL+" betű kell");return;}
-  const g=CUR.join("");if(FREE?false:DICT?!DICT.has(g):!/[AÁEÉIÍOÓÖŐUÚÜŰ]/.test(g)){shake("Ez a szó nincs a szótárunkban");return;}G.push(g);CUR=[];const win=g===WORD;
+  const g=CUR.join("");if(HARD()&&MODE!=="vs"){const m=hardErr(CUR);if(m){shake(m);return;}}if(FREE?false:DICT?!DICT.has(g):!/[AÁEÉIÍOÓÖŐUÚÜŰ]/.test(g)){shake("Ez a szó nincs a szótárunkban");return;}G.push(g);CUR=[];const win=g===WORD;
   if(win||G.length>=ROWS)DONE=true;
   if(MODE==="arc"){ST.a=ST.a||{};ST.a[AD]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);}
-  else if(MODE==="nap"){if(DONE)fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+(win?"-w":"-l"),{credentials:"omit"}).catch(()=>{});ST.p[N]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);}
+  else if(MODE==="nap"){if(DONE){fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+(win?"-w":"-l"),{credentials:"omit"}).catch(()=>{});if(win)fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+"-g"+G.length,{credentials:"omit"}).catch(()=>{});}ST.p[N]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);}
   else if(MODE==="end"){EN.cur.g=G;EN.cur.d=DONE;EN.cur.w=DONE&&win;if(DONE){EN.p++;if(win){EN.s++;EN.b=Math.max(EN.b,EN.s);EN.di[G.length-1]++;}else EN.s=0;}J.ls.set("vm-szo-v",EN);}
   else if(MODE==="vs"&&VX){const t=(Date.now()-VX.t0)/1000,c=code(score([...g]));VX.me.push({c,t});
     const sv=J.ls.get("vm-szo-vs",{});sv[VX.id]={g:G,t:VX.me.map(x=>Math.round(x.t))};const ks=Object.keys(sv);if(ks.length>40)delete sv[ks[0]];J.ls.set("vm-szo-vs",sv);VS.post("szo",VX.id,VX.slot,G.length,c,t,g);if(DONE)vsDone();}
@@ -299,6 +316,7 @@ $("kb").addEventListener("click",e=>{const b=e.target.closest("button[data-k]");
 document.addEventListener("keydown",e=>{if(e.ctrlKey||e.metaKey||e.altKey)return;if(e.target.closest&&e.target.closest("input,textarea,button"))return;
   if(e.key==="Enter"){e.preventDefault();press("ENTER");}else if(e.key==="Backspace"){e.preventDefault();press("DEL");}else if(e.key.length===1){const k=e.key.toLocaleUpperCase("hu");if(LET.includes(k))press(k);}});
 addEventListener("hashchange",()=>{load();scrollTo({top:0,behavior:"smooth"});});
+const hb=$("hard");hb.checked=HARD();hb.onchange=()=>{if(G.length&&!DONE&&MODE!=="arch"){hb.checked=HARD();J.toast("Játék közben nem lehet váltani – a következő szótól kapcsolhatod.");return;}J.ls.set("vm-szo-hard",hb.checked);J.toast(hb.checked?"Nehéz mód bekapcsolva":"Nehéz mód kikapcsolva");};
 load();
 })();
 </script>
