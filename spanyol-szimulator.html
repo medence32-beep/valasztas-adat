@@ -118,6 +118,13 @@ html{overflow-anchor:none}
 @media (max-width:1100px){.nbody{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.nfeed{grid-column:1/-1}}
 @media (max-width:700px){.nbody{grid-template-columns:minmax(0,1fr)}.nnat .rr{grid-template-columns:6em minmax(0,1fr) 3.8em 5.6em;gap:6px}}
 .mapw{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:start;padding-bottom:16px}
+#utolso{padding-bottom:16px}.mrgc{display:grid;gap:10px;padding:16px 18px}.mrgn{margin:0;color:var(--ink2);font-size:14.5px;line-height:1.55}.mrgs{font-size:13px;color:var(--ink3)}
+.mrg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 22px}
+.mrg li{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;align-items:center;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
+.mrg li:hover b{color:var(--acc)}.mrg b{font-weight:800}.mrg small{grid-column:1;color:var(--ink2);font-size:13px;line-height:1.35}
+.mrg .pp{display:inline-flex;align-items:center;gap:5px;font-weight:700;color:var(--ink)}.mrg .pp i{width:9px;height:9px;border-radius:3px;background:var(--c)}
+.mrg em{grid-row:1/3;grid-column:2;font:900 22px var(--f-display);font-style:normal;font-variant-numeric:tabular-nums;text-align:right}.mrg em span{display:block;font:600 10.5px var(--f-body);color:var(--ink3);letter-spacing:.06em;text-transform:uppercase}
+@media(max-width:700px){.mrg{grid-template-columns:minmax(0,1fr)}}
 .mapc{position:relative;padding:8px;overflow:hidden}
 #map{width:100%;height:auto;display:block}
 #map path{stroke:var(--card);stroke-width:1;vector-effect:non-scaling-stroke;cursor:pointer}
@@ -205,6 +212,10 @@ html{overflow-anchor:none}
     <div class="card det" id="det"><h3>Választókerület</h3><div class="dn">Válassz tartományt</div><p>A térkép a szimulált eredmény szerint mutatja, melyik párt végezne az élen az egyes tartományokban.</p><div class="mlg" id="mlg"></div></div>
   </div>
 </section>
+<section class="wrap" id="utolso">
+  <div class="sh2"><h2>Hol dőlhet el az utolsó hely?</h2></div>
+  <div class="card mrgc"><p class="mrgn">A beállított eredmény szerint ezekben a tartományokban a legszorosabb az utolsó kiosztott mandátum. A szám azt mutatja, nagyjából hány százalékponttal kellene többet kapnia a sorban következő pártnak a tartományban, hogy elvegye ezt a helyet.</p><ol class="mrg" id="mrg"></ol><p class="mrgn mrgs">Kattints egy sorra, és a térképen is megnézheted a tartományt.</p></div>
+</section>
 <section class="wrap how">
   <div class="sh2"><h2>Hogyan számol?</h2></div>
   <p>A kiinduló pont a 2023-as választás tartományi eredménye. Ha egy párt országosan 10%-kal jobban szerepel, mint 2023-ban, a gép minden tartományban ugyanilyen arányban növeli az eredményét (arányos elmozdulás). A Frente Amplio és a Podemos 2023-ban közösen, Sumar néven indult, ezért mindkettő a Sumar akkori tartományi erősségét követi; az új SALF-ot egyenletesen osztjuk szét.</p>
@@ -290,7 +301,18 @@ const u=unk();sm.innerHTML=tot>100.05?'<span>A pártok összesen <b>'+f1(tot)+'%
   $("sumn").textContent=u>0.05&&tot<=100.05?'A meg nem adott '+f1(u)+'%-ot a gép nem osztja szét a pártok között: a neki jutó mandátumok kiosztatlanok maradnak (szürke).':'';
   if(!TP)return;const S={},PR={};
   Object.entries(TP).forEach(([id,t])=>{const sh=provShares(t);const r=dhondt(sh,t.s26,3);PR[id]={sh:sh,r:r};Object.entries(r).forEach(([p,n])=>S[p]=(S[p]||0)+n);});
-  FIN={S:S,PR:PR};if(NT.plan)nreset();last=FIN;render();finUI();}
+  FIN={S:S,PR:PR};if(NT.plan)nreset();last=FIN;render();finUI();marg();}
+/* --- a legszorosabb utolsó helyek: mennyivel kellene több a sorban következő pártnak? --- */
+function marg(){const el=$("mrg");if(!el||!FIN)return;const out=[];
+  Object.entries(TP).forEach(([id,t])=>{const sh=FIN.PR[id].sh,n=t.s26,tot=Math.max(100,Object.values(sh).reduce((a,b)=>a+b,0));
+    const el2=Object.entries(sh).filter(([p,v])=>p!==UNK&&v/tot*100>=3&&v>0);if(!el2.length)return;
+    const q=[];el2.forEach(([p,v])=>{for(let d=1;d<=n+1;d++)q.push({v:v/d,p,d});});q.sort((a,b)=>b.v-a.v);
+    const lastQ=q[n-1];if(!lastQ)return;const nx=q.slice(n).find(x=>x.p!==lastQ.p);if(!nx)return;
+    const need=lastQ.v*nx.d-sh[nx.p];if(need<0)return;out.push({id,t,win:lastQ.p,ch:nx.p,need,n});});
+  out.sort((a,b)=>a.need-b.need);
+  el.innerHTML=out.slice(0,10).map(o=>'<li data-id="'+esc(o.id)+'" tabindex="0" role="button"><b>'+esc(o.t.n)+' <small style="display:inline;color:var(--ink3);font-weight:600">· '+o.n+' hely</small></b><small>Az utolsó hely: <span class="pp" style="--c:'+COL[o.win]+'"><i></i>'+esc(o.win)+'</span> – a következő: <span class="pp" style="--c:'+COL[o.ch]+'"><i></i>'+esc(o.ch)+'</span></small><em>'+(o.need<.05?'<0,1':f1(o.need))+'<span>szp.</span></em></li>').join("")||'<li>Nincs adat.</li>';}
+$("mrg")&&["click","keydown"].forEach(ev=>$("mrg").addEventListener(ev,e=>{if(ev==="keydown"&&e.key!=="Enter"&&e.key!==" ")return;const li=e.target.closest("li[data-id]");if(!li)return;e.preventDefault();
+  if(last&&TP[li.dataset.id]){detail(li.dataset.id);const d=$("det");if(d)d.scrollIntoView({behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth",block:"center"});}}));
 function finUI(){if(!FIN||NT.on||NT.plan)return;const nat={};let W=0;Object.entries(TP).forEach(([id,t])=>{const w=wt(t);W+=w;Object.entries(FIN.PR[id].sh).forEach(([p,v])=>nat[p]=(nat[p]||0)+v*w);});Object.keys(nat).forEach(p=>nat[p]/=W);
   const cur={S:FIN.S,nat:nat,cnt:TV,rp:100};nightUI(cur);$("nclock").textContent="20:00";$("npb").style.width="0";$("npl").textContent="Előnézet: a beállított végeredmény. Indítsd el, hogy végignézd az estét.";$("nvn").textContent="Részvétel: "+f1(TURN)+"% · "+fi(TV)+" érvényes szavazat.";}
 const ORD=["Podemos","Frente Amplio","EH Bildu","ERC","BNG","PSOE","PNV","Junts","CC","UPN","PP","SALF","Vox",UNK];
