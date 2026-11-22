@@ -296,6 +296,19 @@ img.fej{background:transparent!important;object-fit:cover}
 #ossz .osz2{border:1px solid var(--line);border-left:4px solid var(--acc);border-radius:16px;background:var(--card);padding:16px 18px;display:grid;gap:8px}
 #ossz .ok{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}#ossz .ok small{color:var(--ink3);font-size:12px}
 #ossz p{margin:0;color:var(--ink2);font-size:15.5px;line-height:1.5;max-width:75ch}#ossz p b{color:var(--ink)}#ossz .o1{font:700 clamp(18px,2vw,22px)/1.3 var(--f-body);color:var(--ink)}
+#utana .ut{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;counter-reset:u}
+#utana .ut li{position:relative;padding:34px 14px 4px 0;counter-increment:u;min-width:0}
+#utana .ut li::before{content:counter(u);position:absolute;top:0;left:0;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;background:var(--acc);color:#14100a;font:900 13px var(--f-body);z-index:1}
+#utana .ut li::after{content:"";position:absolute;top:12px;left:26px;right:0;height:2px;background:var(--line2)}
+#utana .ut li:last-child::after{display:none}
+#utana .ut li.ux::before{background:var(--card);color:var(--ink);box-shadow:inset 0 0 0 2px var(--ink3)}
+#utana .ud{display:block;font:700 11px var(--f-cond,var(--f-body));letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+#utana .ut b{display:block;font:800 16px/1.2 var(--f-body);margin:3px 0 4px}
+#utana .ut p,#utana .ut2 p{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink2)}
+#utana .ut2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+#utana .ut2>div{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:12px 14px}
+#utana .ut2 b{display:block;font:800 15px var(--f-body);margin-bottom:4px}
+@media(max-width:900px){#utana .ut{grid-template-columns:minmax(0,1fr)}#utana .ut li{padding:0 0 16px 40px}#utana .ut li::after{top:26px;bottom:0;left:12px;right:auto;width:2px;height:auto}#utana .ut2{grid-template-columns:minmax(0,1fr)}}
 </style>
 </head>
 <body>
@@ -401,6 +414,23 @@ img.fej{background:transparent!important;object-fit:cover}
     <div><b>208</b><span>szenátort közvetlenül választanak ugyanezen a napon</span></div>
   </div>
   <div class="lk2"><a class="btn" href="spanyol-szimulator">Szimulátor</a><a class="btn" href="spanyol-tippjatek">Tippjáték</a><a class="btn alt" href="spanyolorszag">A 2023-as eredmények és a választási rendszer</a><a class="btn alt" href="naptar">Választási naptár</a></div>
+</div></section>
+
+<section class="sec2" id="utana"><div class="wrap">
+  <div class="sh2 nl"><h2>Mi jön a választás után?</h2><small>Így lesz Spanyolországban kormány</small></div>
+  <ol class="ut">
+    <li><span class="ud">Nov. 29.</span><b>Választás</b><p>Az este kiderül, kinek hány mandátuma van. A győztes párt még nem lesz automatikusan kormányon.</p></li>
+    <li><span class="ud">Dec. 24-ig</span><b>Alakuló ülés</b><p>Az új parlamentnek legfeljebb 25 napon belül össze kell ülnie, és megválasztja a házelnököt – ez már az első erőpróba.</p></li>
+    <li><span class="ud">Utána</span><b>A király jelöl</b><p>VI. Fülöp sorra fogadja a pártok vezetőit, majd azt javasolja miniszterelnöknek, akinek a legtöbb esélye van a többségre.</p></li>
+    <li><span class="ud">1. szavazás</span><b>176 igen kell</b><p>A jelölt bemutatja a programját, és abszolút többség, azaz legalább 176 képviselő szavazata kell.</p></li>
+    <li><span class="ud">48 óra múlva</span><b>Több igen, mint nem</b><p>Ha az első nem sikerül, a második szavazáson már elég, ha több igen szavazat van, mint nem – a tartózkodók így sokat számítanak.</p></li>
+    <li class="ux"><span class="ud">2 hónap</span><b>Vagy új választás</b><p>Ha az első szavazástól számított két hónapon belül senkit sem választanak meg, a parlament feloszlik, és újra kell választani.</p></li>
+  </ol>
+  <div class="ut2">
+    <div><b>Addig is Sánchez marad</b><p>Az új kormány megalakulásáig a régi ügyvezető („en funciones”) kormányként dolgozik tovább, korlátozott jogkörrel.</p></div>
+    <div><b>2023-ban így ment</b><p>Feijóo szeptemberben 172 szavazatot kapott, ez nem volt elég. Sánchez novemberben 179 szavazattal lett újra miniszterelnök – négy hónappal a választás után.</p></div>
+    <div><b>2019-ben nem sikerült</b><p>Áprilisban senki sem kapott többséget, ezért novemberben újra kellett választani. Ez az eset 2026-ban is előfordulhat.</p></div>
+  </div>
 </div></section>
 
 <section class="sec2"><div class="wrap"><details class="osz"><summary>Összefoglaló és gyakori kérdések</summary>
