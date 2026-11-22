@@ -376,8 +376,8 @@ html.mob .apqr,.apqr[hidden]{display:none}
 <h3>Melyik ország ez?</h3><p>Egy ország körvonala, hat tipp. Napi rejtvény, végtelen mód és 1v1 párbaj.</p><div class="meta" id="rjcd"></div><div class="cta"><span>Mai rejtvény</span><i>→</i></div></a>
 <a class="fc sz" href="napi-szo"><span class="bgi" aria-hidden="true"></span><div class="tag"><span class="pill" style="background:rgba(255,255,255,.18);color:#fff" id="szno">Napi szó</span></div>
 <h3>Találd ki a nap szavát</h3><p>Öt betű a választások világából, hat próbálkozás.</p><div class="meta">Napi szó · végtelen mód · 1v1 online</div><div class="cta"><span>Mai szó</span><i>→</i></div></a>
-<a class="fc tp" href="telepulesem"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""></div>
-<h3>Hogy szavazott a településed?</h3><p>Részvétel, eredmény és rangsor mind a 3177 településre.</p><div class="cta"><span>Keresés</span><i>→</i></div></a>
+<a class="fc tp" href="telepulesparbaj"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/hu.png" srcset="https://flagcdn.com/w160/hu.png 2x" alt=""></div>
+<h3>Településpárbaj</h3><p>Két település, egy kérdés: hol kapott többet a Tisza vagy a Fidesz 2026-ban?</p><div class="meta" id="tpbest"></div><div class="cta"><span>Játék</span><i>→</i></div></a>
 <a class="fc tj" href="spanyol-tippjatek"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/es.png" srcset="https://flagcdn.com/w160/es.png 2x" alt=""><span class="pill" style="background:rgba(255,255,255,.18);color:#fff">November 29.</span></div>
 <h3>Tippeld meg a spanyol választást</h3><p>A választás estéjén kiderül, mennyire voltál pontos.</p><div class="meta" id="jtnap"></div><div class="cta"><span>Tippelek</span><i>→</i></div></a>
 <a class="fc ut" href="usa-terkep"><span class="bgi" aria-hidden="true"></span><div class="tag"><img src="https://flagcdn.com/w80/us.png" srcset="https://flagcdn.com/w160/us.png 2x" alt=""></div>
@@ -386,7 +386,7 @@ html.mob .apqr,.apqr[hidden]{display:none}
 <h3>A magyar választások története</h3><p>Tíz választás, egy idővonalon: parlament, pártok, részvétel.</p><div class="cta"><span>Idővonal</span><i>→</i></div></a>
 </div>
 <script>(function(){var d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"}),n=Math.floor((Date.parse(d+"T00:00:00Z")-Date.UTC(2026,10,16))/864e5)+1;var e=document.getElementById("rjno");if(e)e.textContent="Napi rejtvény · #"+n;e=document.getElementById("szno");if(e)e.textContent="Napi szó · #"+n;
-var t=Math.max(0,Math.round((Date.parse("2026-11-29T00:00:00Z")-Date.parse(d+"T00:00:00Z"))/864e5)),k=document.getElementById("jtnap");if(k)k.textContent=t?"Még "+t+" napig tippelhetsz":"Ma zárul a tippelés";
+var t=Math.max(0,Math.round((Date.parse("2026-11-29T00:00:00Z")-Date.parse(d+"T00:00:00Z"))/864e5)),k=document.getElementById("jtnap");if(k)k.textContent=t?"Még "+t+" napig tippelhetsz":"Ma zárul a tippelés";try{var tb=Math.max(+JSON.parse(localStorage.getItem("vm-tp-best-k")||"0")||0,+JSON.parse(localStorage.getItem("vm-tp-best-n")||"0")||0),te=document.getElementById("tpbest");if(te)te.textContent=tb?"A rekordod: "+tb+" egymás után":"Sorozatjáték · könnyű és nehéz mód";}catch(e){}
 var c=document.getElementById("rjcd");function tk(){var b=new Date(new Date().toLocaleString("en-US",{timeZone:"Europe/Budapest"})),s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds());c.textContent="Új rejtvény "+Math.floor(s/3600)+":"+String(Math.floor(s%3600/60)).padStart(2,"0")+" múlva";}if(c){tk();setInterval(tk,30000);}})();</script>
 </div></section>
 
@@ -404,8 +404,8 @@ var c=document.getElementById("rjcd");function tk(){var b=new Date(new Date().to
 <div class="sh2"><h2 id="h-uj">Új a Voksmérőn</h2></div>
 <div class="ujg">
 <a href="spanyol-valasztas#utana"><small>Spanyol választás</small><b>Mi jön a választás után?</b><span>Hogyan lesz kormány – és mikor kell újra választani.</span></a>
-<a href="spanyol-valasztas#szoros"><small>Spanyol választás</small><b>Ahol kevésen múlt</b><span>A tartományok, ahol pár száz szavazat dönthet.</span></a>
-<a href="telepulesparbaj"><small>Új játék</small><b>Településpárbaj</b><span>Hol kapott többet a Tisza? Két település, egy kérdés.</span></a>
+<a href="spanyol-szimulator#utolso"><small>Spanyol szimulátor</small><b>Hol dől el az utolsó hely?</b><span>A legszorosabb tartományi mandátumok a te tipped szerint.</span></a>
+<a href="telepulesem"><small>Településem</small><b>Hasonlítsd össze!</b><span>Két település 2026-os eredménye egymás mellett.</span></a>
 <a href="fogalomtar"><small>Új oldal</small><b>Választási fogalomtár</b><span>D'Hondt, küszöb, elektor – röviden, kalkulátorral.</span></a>
 </div>
 </div></section>
