@@ -82,6 +82,8 @@ a.ev:hover{border-color:var(--acc2);transform:translateY(-2px)}
 .src ul{margin:6px 0 0;padding-left:18px;columns:2;column-gap:28px}
 @media (max-width:720px){.next{grid-template-columns:auto minmax(0,1fr)}.next .cd{grid-column:1/-1}.cd div{flex:1;min-width:0}
   .ev{grid-template-columns:50px minmax(0,1fr) auto;gap:10px}.ev img{display:none}.ev .r .in{display:none}.src ul{columns:1}}
+.icsb{margin-left:auto;border:1px solid var(--line2);background:var(--card);color:var(--ink);border-radius:999px;padding:7px 13px;font:700 13px var(--f-body);cursor:pointer}.icsb:hover{border-color:var(--acc)}
+.hcal{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}.hcal a,.hcal button{border:1px solid var(--line2);background:var(--bg2);color:var(--ink);border-radius:999px;padding:6px 12px;font:700 13px var(--f-body);text-decoration:none;cursor:pointer}.hcal a:hover,.hcal button:hover{border-color:var(--acc)}
 </style>
 </head>
 <body>
@@ -106,7 +108,7 @@ a.ev:hover{border-color:var(--acc2);transform:translateY(-2px)}
   <div class="next" id="next"></div>
 </div></section>
 <section class="wrap" style="padding-bottom:40px">
-  <div class="bar"><div class="seg" id="flt" role="group" aria-label="Szűrés"><button type="button" class="on" data-f="all">Mind</button><button type="button" data-f="eu">Európa</button><button type="button" data-f="f">Kiemelt</button></div><small id="upd"></small></div>
+  <div class="bar"><div class="seg" id="flt" role="group" aria-label="Szűrés"><button type="button" class="on" data-f="all">Mind</button><button type="button" data-f="eu">Európa</button><button type="button" data-f="f">Kiemelt</button></div><small id="upd"></small><button type="button" class="icsb" id="icsall" title="Az összes közelgő választás letöltése naptárfájlként (Google Naptár, Apple Naptár, Outlook)">📅 Naptárba (.ics)</button></div>
   <div id="list"></div>
   <div class="src" id="src"></div>
 </section>
@@ -139,9 +141,19 @@ function render(){const T=today(),L=D.v.filter(e=>day(e.d)>=T).filter(e=>F==="al
       return '<'+tag+(href?' href="'+href+'"':'')+' class="ev'+(e.f?' f':'')+'"><div class="dt">'+(e.h?'<b style="font-size:20px">'+esc(e.h.split(" ")[0])+'</b><span>'+esc(e.h.split(" ").slice(1).join(" "))+'</span>':'<b>'+d.getDate()+'</b><span>'+MS[d.getMonth()]+'</span>')+'</div>'+
         '<img src="'+V.flag(e.k,80)+'" alt="" loading="lazy"><div><h4>'+esc(c.name)+'</h4><p>'+esc(e.t)+'</p>'+(e.m?'<span class="m">'+esc(e.m)+'</span>':'')+'</div>'+
         '<div class="r"><span class="st '+st[0]+'">'+st[1]+'</span>'+(e.h?'':'<span class="in">'+inTxt(n)+'</span>')+(href?'<span class="go">Oldal megnyitása →</span>':'')+'</div></'+tag+'>';}).join("")+'</div>').join("")||'<p style="color:var(--ink3)">Ebben a szűrésben nincs közelgő választás.</p>';}
+/* naptár-export: .ics fájl (minden naptár beolvassa) és Google Naptár link */
+const ymd=s=>s.replace(/-/g,""),nx=s=>{const d=new Date(s+"T12:00:00Z");d.setUTCDate(d.getUTCDate()+1);return d.toISOString().slice(0,10).replace(/-/g,"");};
+const icsTxt=x=>String(x).replace(/[\\,;]/g,m=>"\\"+m).replace(/\n/g,"\\n");
+function icsOf(L){const now=new Date().toISOString().replace(/[-:]/g,"").slice(0,15)+"Z";
+  return ["BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//Voksmero//Valasztasi naptar//HU","CALSCALE:GREGORIAN","X-WR-CALNAME:Voksmérő – választások"].concat(...L.map(e=>{const c=cinfo(e.k);return ["BEGIN:VEVENT","UID:"+e.d+"-"+e.k+"@voksmero.hu","DTSTAMP:"+now,"DTSTART;VALUE=DATE:"+ymd(e.d),"DTEND;VALUE=DATE:"+nx(e.d),
+    "SUMMARY:"+icsTxt(c.name+": "+e.t),"DESCRIPTION:"+icsTxt((e.m?e.m+"\n":"")+"https://voksmero.hu/"+(c.ready?c.ready.href:"naptar")),"URL:https://voksmero.hu/"+(c.ready?c.ready.href:"naptar"),"END:VEVENT"];})).concat(["END:VCALENDAR"]).join("\r\n");}
+function icsGet(L,fn){const u=URL.createObjectURL(new Blob([icsOf(L)],{type:"text/calendar;charset=utf-8"})),a=document.createElement("a");a.href=u;a.download=fn;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(u);a.remove();},1500);}
+const gcal=e=>{const c=cinfo(e.k);return "https://calendar.google.com/calendar/render?action=TEMPLATE&text="+encodeURIComponent(c.name+": "+e.t)+"&dates="+ymd(e.d)+"/"+nx(e.d)+"&details="+encodeURIComponent((e.m?e.m+"\n":"")+"https://voksmero.hu/"+(c.ready?c.ready.href:"naptar"));};
+document.getElementById("icsall").onclick=()=>{const T=today();icsGet(D.v.filter(x=>day(x.d)>=T&&!x.h),"voksmero-valasztasok.ics");};
 function hero(){const T=today(),e=D.v.find(x=>day(x.d)>=T&&!x.h);if(!e){$("next").hidden=true;return;}const c=cinfo(e.k),d=day(e.d);
   $("next").style.setProperty("--fbg","url("+V.flag(e.k,320)+")");
-  $("next").innerHTML='<img class="fl" src="'+V.flag(e.k,160)+'" alt=""><div><small>Következő választás</small><h2>'+esc(c.name)+'</h2><p>'+esc(e.t)+' · '+d.getFullYear()+'. '+MH[d.getMonth()]+' '+d.getDate()+'.</p></div><div class="cd" id="cd"></div>';
+  $("next").innerHTML='<img class="fl" src="'+V.flag(e.k,160)+'" alt=""><div><small>Következő választás</small><h2>'+esc(c.name)+'</h2><p>'+esc(e.t)+' · '+d.getFullYear()+'. '+MH[d.getMonth()]+' '+d.getDate()+'.</p><div class="hcal"><a href="'+gcal(e)+'" target="_blank" rel="noopener">+ Google Naptár</a><button type="button" id="ics1">+ .ics</button></div></div><div class="cd" id="cd"></div>';
+  $("ics1").onclick=()=>icsGet([e],"voksmero-"+e.k.toLowerCase()+"-"+e.d+".ics");
   const tick=()=>{let ms=d-new Date();if(ms<0)ms=0;const dd=Math.floor(ms/864e5),hh=Math.floor(ms/36e5)%24,mm=Math.floor(ms/6e4)%60,ss=Math.floor(ms/1e3)%60;
     $("cd").innerHTML=[[dd,"nap"],[hh,"óra"],[mm,"perc"],[ss,"mp"]].map(x=>'<div><b>'+String(x[0]).padStart(2,"0")+'</b><span>'+x[1]+'</span></div>').join("");};tick();setInterval(tick,1000);}
 $("flt").addEventListener("click",e=>{const b=e.target.closest("button[data-f]");if(!b)return;F=b.dataset.f;$("flt").querySelectorAll("button").forEach(x=>x.classList.toggle("on",x===b));render();});
