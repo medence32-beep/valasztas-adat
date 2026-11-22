@@ -203,14 +203,31 @@ function gstat(pfx,el){if(!el)return;const AB="https://abacus.jasoncameron.dev/g
   Promise.all(["-w","-l","-g1","-g2","-g3","-g4","-g5","-g6"].map(g)).then(v=>{if(v[0]==null&&v[1]==null){el.textContent="";return;}const w=v[0]||0,l=v[1]||0,t=w+l;if(!t){el.textContent="Te vagy az első, aki befejezte a mai játékot!";return;}
     const gs=v.slice(2).map(x=>x||0),gt=gs.reduce((a,b)=>a+b,0),avg=gt?gs.reduce((a,b,i)=>a+b*(i+1),0)/gt:null;
     el.innerHTML='<b>'+t+'</b> játékos fejezte be ma · <b>'+Math.round(w/t*100)+'%</b> megfejtette'+(avg?' · átlagosan <b>'+avg.toFixed(1).replace(".",",")+'</b> tippből':'');});}
+/* eredmény képként: tippenként a közelség sávja és az irány (az ország nevét nem árulja el) */
+function kepR(w){const S0=1080,c=document.createElement("canvas");c.width=c.height=S0;const x=c.getContext("2d"),FB='"Barlow",system-ui,sans-serif';
+  x.fillStyle="#0B1220";x.fillRect(0,0,S0,S0);x.fillStyle="#1B7F86";x.fillRect(0,0,S0,10);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.fillText("voksmérő",64,92);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,92);
+  x.textAlign="center";x.fillStyle="#EEF2FA";x.font="900 60px "+FB;x.fillText("Országrejtvény #"+N,S0/2,200);x.fillStyle=w?"#3A9A57":"#D5503F";x.font="800 46px "+FB;x.fillText((w?G.length:"X")+"/6",S0/2,262);x.textAlign="left";
+  let y=320;for(let i=0;i<6;i++){const g=G[i];x.fillStyle="#18233A";x.fillRect(120,y,700,72);
+    if(g){const ok=g===T.code,p=ok?100:prox(dist(BY[g].c,T.c));x.fillStyle=p===100?"#3A9A57":p>=85?"#C49A1E":p>=65?"#D9822B":"#3A4A68";x.fillRect(120,y,700*p/100,72);
+      x.fillStyle="#EEF2FA";x.font="800 34px "+FB;x.fillText(p+"%",140,y+48);
+      x.save();x.translate(900,y+36);if(ok){x.fillStyle="#3A9A57";x.beginPath();x.arc(0,0,30,0,7);x.fill();x.strokeStyle="#fff";x.lineWidth=7;x.beginPath();x.moveTo(-13,0);x.lineTo(-3,11);x.lineTo(14,-11);x.stroke();}
+      else{x.rotate(bear(BY[g].c,T.c)*Math.PI/180);x.fillStyle="#EEF2FA";x.beginPath();x.moveTo(0,-30);x.lineTo(20,12);x.lineTo(6,6);x.lineTo(6,28);x.lineTo(-6,28);x.lineTo(-6,6);x.lineTo(-20,12);x.closePath();x.fill();}x.restore();}
+    y+=86;}
+  x.textAlign="center";x.fillStyle="#A3B2CC";x.font="600 26px "+FB;x.fillText("Melyik ország ez? Találd ki te is!",S0/2,S0-90);x.fillStyle="#F5B83D";x.font="800 30px "+FB;x.fillText("voksmero.hu/napi-rejtveny",S0/2,S0-48);x.textAlign="left";
+  const url=c.toDataURL("image/png");let m=$("shm");if(!m){m=document.createElement("div");m.id="shm";m.style.cssText="position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px";
+    m.innerHTML='<div style="background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,480px)"><img id="shpv" alt="Az eredményem képként" style="width:100%;border-radius:10px;display:block"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="jb p" id="shsh" type="button">Megosztás</button><a class="jb" id="shdl" download="voksmero-orszagrejtveny.png">Letöltés</a><button class="jb" id="shx" type="button">Bezárás</button></div></div>';
+    document.body.appendChild(m);m.addEventListener("click",e=>{if(e.target===m||e.target.id==="shx")m.style.display="none";});}
+  m.style.display="grid";$("shpv").src=url;$("shdl").href=url;
+  $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-orszagrejtveny.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Országrejtvény #"+N});return;}}catch(e){if(e&&e.name==="AbortError")return;}$("sh").click();};}
 function result(){clearInterval(cdT);if(MODE==="arch"){archList();return;}if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===T.code,href=T.ready?T.ready.href:"orszag?k="+T.code.toLowerCase();
   if(MODE==="arc"){$("res").innerHTML='<div class="res"><h3>'+(w?(G.length===1?"Elsőre! Zseniális!":G.length<=3?"Szép munka!":"Megvan!"):"Most nem jött össze")+'</h3><div class="cn"><img src="'+FL(T.code)+'" alt=""><b>'+esc(T.name)+'</b></div><div class="act">'+(AD>1?'<a class="jb" href="napi-rejtveny#nap-'+(AD-1)+'">← #'+(AD-1)+'</a>':'')+'<a class="jb" href="napi-rejtveny#archiv">Archívum</a>'+(AD+1<N?'<a class="jb p" href="napi-rejtveny#nap-'+(AD+1)+'">#'+(AD+1)+' →</a>':'<a class="jb p" href="napi-rejtveny">Mai rejtvény →</a>')+'</div></div>';return;}
   $("res").innerHTML='<div class="res"><h3>'+(w?(G.length===1?"Elsőre! Zseniális!":G.length<=3?"Szép munka!":"Megvan!"):"Most nem jött össze")+'</h3><div class="cn"><img src="'+FL(T.code)+'" alt=""><b>'+esc(T.name)+'</b></div>'+
   (MODE==="end"?'<div class="act"><button class="jb p" id="nx" type="button">Következő ország →</button><button class="jb" id="sh" type="button">Megosztás</button><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>':
-  '<p class="gst" id="gst"></p><div class="jn">Következő rejtvény: <span class="cd" id="cd"></span></div><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="napi-rejtveny#vegtelen">Végtelen mód →</a><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>');
+  '<p class="gst" id="gst"></p><div class="jn">Következő rejtvény: <span class="cd" id="cd"></span></div><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><button class="jb" id="shk" type="button">Kép</button><a class="jb" href="napi-rejtveny#vegtelen">Végtelen mód →</a><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>');
   if(MODE==="nap")gstat("rejt-"+N,$("gst"));
   if(MODE==="end"){$("nx").onclick=newEndless;$("sh").onclick=()=>J.share("Voksmérő országrejtvény",shareText(),"https://voksmero.hu/napi-rejtveny#vegtelen");return;}
-  $("sh").onclick=()=>J.share("Voksmérő országrejtvény",shareText(),"https://voksmero.hu/napi-rejtveny");
+  $("sh").onclick=()=>J.share("Voksmérő országrejtvény",shareText(),"https://voksmero.hu/napi-rejtveny");if($("shk"))$("shk").onclick=()=>kepR(w);
   const tick=()=>{const now=new Date(),b=new Date(now.toLocaleString("en-US",{timeZone:"Europe/Budapest"}));const s=86400-(b.getHours()*3600+b.getMinutes()*60+b.getSeconds());
     const e=$("cd");if(!e)return;e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();clearInterval(cdT);cdT=setInterval(tick,1000);}
 function save(){const w=DONE&&G[G.length-1]===T.code;
