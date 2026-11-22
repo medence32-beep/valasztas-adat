@@ -68,6 +68,8 @@
 .vsp .mg.lt i{width:19px;height:19px;display:grid;place-items:center;font:800 10.5px var(--f-body);font-style:normal;color:#fff}.vsp .spy{font-size:12.5px;color:var(--ink3)}.vsp .spy b{letter-spacing:.06em;color:var(--ink2)}
 .vsp .act{display:flex;gap:8px;flex-wrap:wrap}.vsp .pulse{animation:vpu 1.2s ease-in-out infinite}@keyframes vpu{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent)}}
 
+.arl{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}.arl a{display:grid;gap:2px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--card);color:var(--ink);text-decoration:none}.arl a:hover{border-color:var(--acc)}.arl b{font:900 20px var(--f-display)}.arl small{color:var(--ink2);font-size:12px}.arl i{font-style:normal;font:700 12.5px var(--f-body);color:var(--acc)}.arl a.ok{border-color:color-mix(in srgb,#3A9A57 60%,transparent)}.arl a.ok i{color:#3A9A57}.arl a.no i{color:var(--bad,#D5503F)}
+
 .rg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;margin-top:20px;align-items:start}@media(max-width:860px){.rg{grid-template-columns:1fr}}
 .sil{aspect-ratio:1/1;max-height:420px;width:100%;display:grid;place-items:center;background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--acc2) 10%,var(--card)),var(--card));border-radius:14px;border:1px solid var(--line)}
 .sil svg{width:86%;height:86%}.sil path{fill:var(--acc);stroke:var(--card);stroke-width:.6;vector-effect:non-scaling-stroke;animation:silin .7s cubic-bezier(.2,.8,.2,1) both}
@@ -110,7 +112,7 @@
 <main class="jw">
 <section class="jh"><div class="jk" id="kk">Napi országrejtvény</div><h1 id="h1">Melyik ország ez?</h1>
 <p id="lead">Minden nap egy új ország. Hat tippből találd ki a körvonala alapján! Minden tipp után megmutatjuk, milyen messze vagy, és merre kell keresni.</p>
-<nav class="modes" aria-label="Játékmód"><a href="napi-rejtveny" data-m="nap">Napi rejtvény</a><a href="napi-rejtveny#vegtelen" data-m="end">Végtelen</a><button type="button" data-m="vs" id="vsnew"><span class="dot"></span>1v1 online</button></nav></section>
+<nav class="modes" aria-label="Játékmód"><a href="napi-rejtveny" data-m="nap">Napi rejtvény</a><a href="napi-rejtveny#vegtelen" data-m="end">Végtelen</a><a href="napi-rejtveny#archiv" data-m="arch">Archívum</a><button type="button" data-m="vs" id="vsnew"><span class="dot"></span>1v1 online</button></nav></section>
 <div class="rg"><div class="jc"><div class="vsp" id="vsp" hidden style="margin-bottom:12px"></div><div class="sil" id="sil"><span class="jn">Betöltés…</span></div>
 <div class="inp"><input id="in" type="text" placeholder="Írd be egy ország nevét…" autocomplete="off" aria-label="Ország neve"><button class="jb p" id="go" type="button">Tipp</button><div class="sug" id="sug" hidden></div></div>
 <div class="hints" id="hints"></div></div>
@@ -145,7 +147,7 @@ window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(
 const V=window.VALASZTAS,FL=c=>V&&V.flag?V.flag(c,80):"https://flagcdn.com/w80/"+c.toLowerCase()+".png";
 const START=Date.UTC(2026,10,16),DAY=864e5;
 const today=()=>{const s=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});return Math.floor((Date.parse(s+"T00:00:00Z")-START)/DAY)+1;};
-const N=today();
+const N=today();let AD=0;const dayDate=k=>new Date(START+(k-1)*DAY+12*36e5).toLocaleDateString("hu-HU",{month:"long",day:"numeric"});
 let W,POOL=[],BY={},T,ST=J.ls.get("vm-rejt",{p:{}}),G=[],DONE=false,MODE="nap",BIG=[],ORD=[],LOCK=false,VX=null,tmT=null,EN=J.ls.get("vm-rejt-v",{cur:null,seen:[],p:0,s:0,b:0,di:[0,0,0,0,0,0]});
 function topo(t){const tr=t.transform,A=t.arcs.map(a=>{let x=0,y=0;return a.map(p=>{x+=p[0];y+=p[1];return [x*tr.scale[0]+tr.translate[0],y*tr.scale[1]+tr.translate[1]];});});
   const ring=ix=>{let o=[];ix.forEach((i,j)=>{const a=i<0?A[~i].slice().reverse():A[i];o=o.concat(j?a.slice(1):a);});return o;};
@@ -189,7 +191,11 @@ function stats(){$("stc").hidden=MODE==="vs";
   statBox(P.length,cur,best,di,DONE&&ST.p[N]&&ST.p[N].w?G.length:0,"játék");}
 function shareText(){const w=G[G.length-1]===T.code;return "Voksmérő országrejtvény "+(MODE==="end"?"(végtelen)":"#"+N)+" "+(w?G.length:"X")+"/6\n"+G.map(g=>{const ok=g===T.code,d=dist(BY[g].c,T.c);return emo(ok?100:prox(d))+(ok?"🎉":arrow(bear(BY[g].c,T.c)));}).join("")+"\n";}
 let cdT=null;
-function result(){clearInterval(cdT);if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===T.code,href=T.ready?T.ready.href:"orszag?k="+T.code.toLowerCase();
+function archList(){const A=ST.a||{};let h='<div class="arl">';for(let k=N-1;k>=1;k--){const s=(ST.p[k]&&ST.p[k].d?ST.p[k]:null)||A[k],c=s&&s.d?(s.w?"ok":"no"):"";
+    h+='<a class="'+c+'" href="napi-rejtveny#nap-'+k+'"><b>#'+k+'</b><small>'+esc(dayDate(k))+'</small><i>'+(s&&s.d?(s.w?s.g.length+'/6':'X/6'):(s&&s.g&&s.g.length?'Folytasd':'Játszd!'))+'</i></a>';}
+  $("res").innerHTML='<div class="res"><h3>Korábbi napi rejtvények</h3><p>Pótold, amiről lemaradtál! Az archívumban játszott rejtvények nem számítanak bele a sorozatodba.</p>'+(N>1?h+'</div>':'<p>Holnaptól itt lesznek a korábbi napok rejtvényei.</p>')+'</div>';}
+function result(){clearInterval(cdT);if(MODE==="arch"){archList();return;}if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===T.code,href=T.ready?T.ready.href:"orszag?k="+T.code.toLowerCase();
+  if(MODE==="arc"){$("res").innerHTML='<div class="res"><h3>'+(w?(G.length===1?"Elsőre! Zseniális!":G.length<=3?"Szép munka!":"Megvan!"):"Most nem jött össze")+'</h3><div class="cn"><img src="'+FL(T.code)+'" alt=""><b>'+esc(T.name)+'</b></div><div class="act">'+(AD>1?'<a class="jb" href="napi-rejtveny#nap-'+(AD-1)+'">← #'+(AD-1)+'</a>':'')+'<a class="jb" href="napi-rejtveny#archiv">Archívum</a>'+(AD+1<N?'<a class="jb p" href="napi-rejtveny#nap-'+(AD+1)+'">#'+(AD+1)+' →</a>':'<a class="jb p" href="napi-rejtveny">Mai rejtvény →</a>')+'</div></div>';return;}
   $("res").innerHTML='<div class="res"><h3>'+(w?(G.length===1?"Elsőre! Zseniális!":G.length<=3?"Szép munka!":"Megvan!"):"Most nem jött össze")+'</h3><div class="cn"><img src="'+FL(T.code)+'" alt=""><b>'+esc(T.name)+'</b></div>'+
   (MODE==="end"?'<div class="act"><button class="jb p" id="nx" type="button">Következő ország →</button><button class="jb" id="sh" type="button">Megosztás</button><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>':
   '<div class="jn">Következő rejtvény: <span class="cd" id="cd"></span></div><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="napi-rejtveny#vegtelen">Végtelen mód →</a><a class="jb" href="'+href+'">'+esc(T.name)+' oldala →</a></div></div>');
@@ -199,6 +205,7 @@ function result(){clearInterval(cdT);if(!DONE||MODE==="vs"){$("res").innerHTML="
     const e=$("cd");if(!e)return;e.textContent=[Math.floor(s/3600),Math.floor(s%3600/60),s%60].map(x=>String(x).padStart(2,"0")).join(":");if(s<=1)location.reload();};tick();clearInterval(cdT);cdT=setInterval(tick,1000);}
 function save(){const w=DONE&&G[G.length-1]===T.code;
   if(MODE==="nap"){ST.p[N]={g:G,d:DONE,w};J.ls.set("vm-rejt",ST);}
+  else if(MODE==="arc"){ST.a=ST.a||{};ST.a[AD]={g:G,d:DONE,w};J.ls.set("vm-rejt",ST);}
   else if(MODE==="end"){const was=EN.cur.d;EN.cur.g=G.slice();EN.cur.d=DONE;EN.cur.w=w;if(DONE&&!was){EN.p++;if(w){EN.s++;EN.b=Math.max(EN.b,EN.s);EN.di[G.length-1]++;}else EN.s=0;}J.ls.set("vm-rejt-v",EN);}}
 function guess(code){if(DONE||!BY[code]||G.includes(code))return;if(LOCK){J.toast("Várj, amíg az ellenfeled csatlakozik");return;}G.push(code);
   if(code===T.code||G.length>=6){DONE=true;if(MODE==="nap")fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/rejt-"+N+(code===T.code?"-w":"-l"),{credentials:"omit"}).catch(()=>{});}
@@ -242,13 +249,18 @@ function vsStart(id){VX={id,st:"join",me:[],op:[],opJ:false,t0:0};T=BIG[VS.hash(
     VX.stop=VS.watch("orsz",id,s==="a"?"b":"a",()=>{VX.opJ=true;VX.t0=VS.startTime("orsz",id,true);LOCK=false;if(s==="a")J.toast("Az ellenfeled csatlakozott – indul a meccs!");vsRender();},
       (n,r)=>{VX.op[n-1]=r;vsDone();});vsRender();});}
 function load(){if(VX&&VX.stop)VX.stop();if(VX&&VX.rmw)VX.rmw();VX=null;clearInterval(tmT);LOCK=false;$("vsp").hidden=true;$("sil").hidden=false;document.querySelector(".inp").hidden=false;$("in").value="";$("sug").hidden=true;
-  const id=VS.idFromHash();MODE=id?"vs":location.hash==="#vegtelen"?"end":"nap";
-  document.querySelectorAll(".modes [data-m]").forEach(a=>a.classList.toggle("on",a.dataset.m===MODE));
+  const id=VS.idFromHash();const am=/^#nap-(\d+)$/.exec(location.hash);AD=am?+am[1]:0;if(AD<1||AD>=N)AD=0;
+  MODE=id?"vs":location.hash==="#vegtelen"?"end":location.hash==="#archiv"?"arch":AD?"arc":"nap";
+  document.querySelectorAll(".modes [data-m]").forEach(a=>a.classList.toggle("on",a.dataset.m===MODE||(MODE==="arc"&&a.dataset.m==="arch")));
   const H={nap:["Napi országrejtvény · #"+N,"Melyik ország ez?","Minden nap egy új ország. Hat tippből találd ki a körvonala alapján! Minden tipp után megmutatjuk, milyen messze vagy, és merre kell keresni."],
     end:["Országrejtvény · végtelen mód","Ország ország után","Annyi országot fejthetsz meg egymás után, amennyit csak akarsz. Minden kör új, véletlenszerű ország – amíg el nem fogynak, egyik sem ismétlődik."],
+    arch:["Országrejtvény · archívum","Korábbi napi rejtvények","Minden eddigi napi országot bármikor megfejthetsz – látod, melyiket találtad ki, és melyik maradt ki."],
+    arc:["Napi országrejtvény · #"+AD+" (archívum)","Melyik ország ez?","A "+dayDate(AD).replace(/\.$/,"")+"-i rejtvény – ugyanaz az ország, amit aznap mindenki kapott. Nem számít bele a sorozatodba."],
     vs:["Országrejtvény · 1v1 online","Párbaj: ki ismeri fel előbb?","Ugyanaz az ország, két játékos. Az nyer, aki kevesebb tippből kitalálja – egyenlőségnél az, aki gyorsabb volt."]}[MODE];
   $("kk").textContent=H[0];$("h1").textContent=H[1];$("lead").textContent=H[2];
   if(MODE==="nap"){T=ORD[(N-1)%ORD.length];G=(ST.p[N]&&ST.p[N].g)||[];DONE=!!(ST.p[N]&&ST.p[N].d);draw();}
+  else if(MODE==="arch"){$("sil").hidden=true;document.querySelector(".inp").hidden=true;DONE=true;G=[];stats();archList();}
+  else if(MODE==="arc"){const S=(ST.a||{})[AD];T=ORD[(AD-1)%ORD.length];G=(S&&S.g)||[];DONE=!!(S&&S.d);draw();}
   else if(MODE==="end"){if(!EN.cur||!BY[EN.cur.c]){newEndless();return;}T=BY[EN.cur.c];G=EN.cur.g.slice();DONE=EN.cur.d;draw();}
   else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
 function vsGo(id){location.href=location.pathname.replace(/\.html$/,"")+"?m="+id+"#vs-"+id;}

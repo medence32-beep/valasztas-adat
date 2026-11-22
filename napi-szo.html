@@ -280,7 +280,7 @@ function load(){if(SPX&&SPX.stop)SPX.stop();SPX=null;setTimeout(spyList,0);if(VX
   const H={nap:["Napi szó · #"+N,"Találd ki a nap szavát!","Minden nap egy új, öt betűs szó a választások világából. Hat próbálkozásod van – minden tipp után megmutatjuk, mely betűk vannak jó helyen."],
     end:["Szójáték · végtelen mód","Szó szó után","Annyi szót fejthetsz meg egymás után, amennyit csak akarsz. Minden kör új, véletlenszerű szó – szinte soha nem kapod ugyanazt kétszer."],
     arch:["Napi szó · archívum","Korábbi napi szavak","Minden eddigi napi szót bármikor megfejthetsz – látod, melyiket nyerted meg, és melyik maradt ki."],
-    arc:["Napi szó · #"+AD+" (archívum)","A "+dayDate(AD)+"-i szó","Korábbi napi rejtvény – ugyanaz a szó, amit aznap mindenki kapott. Nem számít bele a sorozatodba."],
+    arc:["Napi szó · #"+AD+" (archívum)","A "+dayDate(AD).replace(/\.$/,"")+"-i szó","Korábbi napi rejtvény – ugyanaz a szó, amit aznap mindenki kapott. Nem számít bele a sorozatodba."],
     vs:["Szójáték · 1v1 online","Párbaj: ki találja ki előbb?","Ugyanaz a szó, két játékos. Az nyer, aki kevesebb tippből kitalálja – egyenlőségnél az, aki gyorsabb volt."]}[MODE];
   $("kk").textContent=H[0];$("h1").textContent=H[1];$("lead").textContent=H[2];
   if(MODE==="nap"){WORD=DAILY;ANS=[...WORD];G=(ST.p[N]&&ST.p[N].g)||[];DONE=!!(ST.p[N]&&ST.p[N].d);draw();}
