@@ -48,6 +48,8 @@
 .seg{display:inline-flex;background:var(--bg2);border:1px solid var(--line);border-radius:999px;padding:3px;flex-wrap:wrap}.seg button{border:0;background:none;color:var(--ink2);font:700 13px var(--f-body);padding:7px 13px;border-radius:999px;cursor:pointer}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.2)}
 .toast{position:fixed;left:50%;bottom:calc(22px + env(safe-area-inset-bottom,0px));transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:999px;font:700 14px var(--f-body);transition:.25s;z-index:200;pointer-events:none}.toast.on{opacity:1;transform:translateX(-50%)}
 
+.shm[hidden]{display:none!important}.shm{position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px}.shb{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,520px);max-height:100%;overflow:auto}.shb img{width:100%;height:auto;border-radius:10px;display:block}.sha{display:flex;gap:8px;flex-wrap:wrap}
+
 .srch{position:relative;max-width:640px;margin-top:18px}.srch input{width:100%;font:600 18px var(--f-body);color:var(--ink);background:var(--card);border:1px solid var(--line2);border-radius:16px;padding:15px 18px 15px 48px;box-shadow:var(--shadow)}
 .srch input:focus{outline:2px solid var(--acc);outline-offset:1px}.srch svg{position:absolute;left:16px;top:50%;transform:translateY(-50%);width:20px;height:20px;color:var(--ink3)}
 .sug{position:absolute;left:0;right:0;top:100%;margin-top:6px;background:var(--card);border:1px solid var(--line2);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.25);max-height:320px;overflow:auto;z-index:20}
@@ -135,17 +137,40 @@ async function county(t){const sv=$("tm");if(!sv)return;try{const g=await (await
   let h="";g.s.forEach(s=>{const c=t.m+"-"+s.k,x=BY[c],col=x?P[win(x)][2]:"var(--line)";h+='<path data-c="'+c+'" d="'+s.d+'" style="fill:'+col+';opacity:'+(c===t.c?1:.55)+'"'+(c===t.c?' class="on"':'')+'><title>'+esc(s.n)+'</title></path>';});
   sv.innerHTML=h;const b=sv.getBBox();sv.setAttribute("viewBox",[b.x-4,b.y-4,b.width+8,b.height+8].join(" "));const on=sv.querySelector(".on");if(on)sv.appendChild(on);
   sv.onclick=e=>{const p=e.target.closest("path[data-c]");if(p&&BY[p.dataset.c])show(BY[p.dataset.c],true);};}catch(e){sv.parentNode.innerHTML='<p class="jn">A megye térképe most nem tölthető be.</p>';}}
+/* megosztható kép (1080×1080) a település eredményéről */
+function kep(t){const S=1080,c=document.createElement("canvas");c.width=c.height=S;const x=c.getContext("2d"),FB='"Barlow",system-ui,sans-serif',FD='"Big Shoulders Display","Arial Narrow",Impact,sans-serif';
+  const g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#070C18");g.addColorStop(1,"#13213F");x.fillStyle=g;x.fillRect(0,0,S,S);
+  const w=win(t);x.fillStyle=P[w][2];x.fillRect(0,0,S,12);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.fillText("voksmérő",64,96);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,96);
+  x.fillStyle="#A3B2CC";x.font="700 26px "+FB;x.textAlign="right";x.fillText("2026-OS VÁLASZTÁS · LISTÁS EREDMÉNY",S-64,94);x.textAlign="left";
+  x.fillStyle="#A3B2CC";x.font="700 30px "+FB;x.fillText((MEGYE[t.m]||"")+(t.m!=="01"?" megye":""),64,190);
+  let fs=110;x.font="900 "+fs+"px "+FD;while(x.measureText(t.n.toUpperCase()).width>S-128&&fs>50){fs-=6;x.font="900 "+fs+"px "+FD;}
+  x.fillStyle="#EEF2FA";x.fillText(t.n.toUpperCase(),64,190+fs);
+  const y1=190+fs+70;x.fillStyle=P[w][2];x.font="800 34px "+FB;x.fillText("Itt nyert: "+P[w][1]+" · "+pf(t.s[w]*100),64,y1);
+  const o=P.map((p,i)=>[p,t.s[i],NAT.s[i]]).sort((a,b)=>b[1]-a[1]),mx=Math.max(...o.map(r=>Math.max(r[1],r[2])),.01);let y=y1+70;
+  o.forEach(([p,v,n])=>{x.fillStyle="#EEF2FA";x.font="700 32px "+FB;x.fillText(p[1],64,y+30);x.fillStyle="#1B2846";x.fillRect(380,y+6,460,28);x.fillStyle=p[2];x.fillRect(380,y+6,460*v/mx,28);
+    x.fillStyle="#EEF2FA";x.fillRect(380+460*Math.min(1,n/mx)-2,y,4,40);x.textAlign="right";x.font="800 34px "+FB;x.fillText(pf(v*100),S-64,y+32);x.textAlign="left";y+=72;});
+  x.fillStyle="#A3B2CC";x.font="600 24px "+FB;x.fillText("Fehér jel: az országos eredmény",380,y+10);
+  x.fillStyle="#EEF2FA";x.font="800 34px "+FB;x.fillText("Részvétel: "+pf(t.t*100),64,S-150);x.fillStyle="#A3B2CC";x.font="600 26px "+FB;x.fillText("országosan "+pf(NAT.t*100),64,S-112);
+  x.fillStyle="rgba(255,255,255,.12)";x.fillRect(64,S-88,S-128,2);x.fillStyle="#A3B2CC";x.font="600 26px "+FB;x.fillText("Hogy szavazott a te településed?",64,S-44);
+  x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu/telepulesem",S-64,S-44);x.textAlign="left";
+  const url=c.toDataURL("image/png");let m=$("shm");if(!m){m=document.createElement("div");m.id="shm";m.className="shm";m.innerHTML='<div class="shb"><img id="shpv" alt="Megosztható kép"><div class="sha"><button class="jb p" id="shsh" type="button">Megosztás</button><a class="jb" id="shdl" download="voksmero-telepules.png">Letöltés</a><button class="jb" id="shx" type="button">Bezárás</button></div></div>';document.body.appendChild(m);
+    m.addEventListener("click",e=>{if(e.target===m||e.target.id==="shx")m.hidden=true;});}
+  m.hidden=false;$("shpv").src=url;$("shdl").href=url;$("shdl").download="voksmero-"+t.k+".png";
+  $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-"+t.k+".png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Így szavazott "+t.n});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+    J.share("Így szavazott "+t.n,t.n+": "+P[w][1]+" "+pf(t.s[w]*100)+". Nézd meg, hogy szavazott a te településed!","https://voksmero.hu/telepulesem#"+t.c);};}
 function show(t,scroll){SEL=t;const w=win(t),sim=similar(t);try{history.replaceState(null,"",location.pathname+"#"+t.c);}catch(e){}
   $("out").innerHTML='<div class="tg"><div class="jc th"><div class="jk">'+esc(MEGYE[t.m]||"")+(t.m!=="01"?" megye":"")+'</div><h2>'+esc(t.n)+'</h2><p class="m">'+nf(t.vp)+' választópolgár · '+esc(t.o.split("|").join(", "))+'</p>'+
    '<span class="win" style="background:'+P[w][2]+'">Itt nyert: '+esc(P[w][1])+' · '+pf(t.s[w]*100)+'</span>'+
    '<div class="kp"><div><b>'+pf(t.t*100)+'</b><span>részvétel</span><br>'+diff(t.t,NAT.t)+'</div><div><b>'+nf(t.sz)+'</b><span>szavazó</span></div><div><b>'+(t.vp>=100?RANK.t.get(t.c)+'.':'–')+'</b><span>helyezés részvételben</span></div></div>'+
    '<div class="pr">'+P.map((p,i)=>'<div class="r"><b>'+esc(p[1])+'</b><span class="v"><strong>'+pf(t.s[i]*100)+'</strong>'+diff(t.s[i],NAT.s[i])+'</span><span class="br"><i style="background:'+p[2]+';width:'+(t.s[i]*100).toFixed(2)+'%"></i><u style="left:'+(NAT.s[i]*100).toFixed(2)+'%" title="országos: '+pf(NAT.s[i]*100)+'"></u></span></div>').join("")+'</div>'+
    '<p class="jn" style="margin:10px 0 0">A függőleges vonal az országos (belföldi) eredményt jelöli. pp = százalékpont.</p>'+
-   '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="jb p" id="shr" type="button">Megosztás</button><a class="jb" href="magyarorszag">Országos térkép →</a></div></div>'+
+   '<div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button class="jb p" id="shr" type="button">Megosztás</button><button class="jb" id="shimg" type="button">Kép a megosztáshoz</button><a class="jb" href="magyarorszag">Országos térkép →</a></div></div>'+
    '<div style="display:grid;gap:16px"><div class="jc"><h2>Érdekességek</h2><div class="facts">'+facts(t).map(f=>'<div class="fact"><i>'+f[0]+'</i><span>'+f[1]+'</span></div>').join("")+'</div></div>'+
    '<div class="jc"><h2>'+esc(MEGYE[t.m]||"")+(t.m!=="01"?" megye":"")+'</h2><svg id="tm" role="img" aria-label="A megye települései"></svg><p class="jn" style="margin:6px 0 0">Szín: az adott településen győztes párt. Kattints egy másikra!</p></div>'+
    '<div class="jc"><h2>Hozzá leginkább hasonló települések</h2><div class="sim">'+sim.map(x=>'<button type="button" data-c="'+x.c+'"><span>'+esc(x.n)+'</span><small>'+esc(MEGYE[x.m]||"")+' · '+esc(P[win(x)][1])+' '+pf(x.s[win(x)]*100)+'</small></button>').join("")+'</div></div></div></div>';
   $("shr").onclick=()=>J.share("Így szavazott "+t.n,t.n+": "+P[w][1]+" "+pf(t.s[w]*100)+", részvétel "+pf(t.t*100)+". Nézd meg, hogy szavazott a te településed!","https://voksmero.hu/telepulesem#"+t.c);
+  $("shimg").onclick=()=>kep(t);
   $("out").querySelectorAll(".sim button").forEach(b=>b.onclick=()=>show(BY[b.dataset.c],true));
   county(t);if(window.MapAnim)MapAnim.panel($("out").querySelector(".th"));if(scroll)$("out").scrollIntoView({behavior:"smooth",block:"start"});}
 let SL=[],SI=0;
