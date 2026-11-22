@@ -68,6 +68,8 @@
 .vsp .mg.lt i{width:19px;height:19px;display:grid;place-items:center;font:800 10.5px var(--f-body);font-style:normal;color:#fff}.vsp .spy{font-size:12.5px;color:var(--ink3)}.vsp .spy b{letter-spacing:.06em;color:var(--ink2)}
 .vsp .act{display:flex;gap:8px;flex-wrap:wrap}.vsp .pulse{animation:vpu 1.2s ease-in-out infinite}@keyframes vpu{50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--acc) 30%,transparent)}}
 
+.arl{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}.arl a{display:grid;gap:2px;padding:10px 12px;border-radius:12px;border:1px solid var(--line2);background:var(--card);color:var(--ink);text-decoration:none}.arl a:hover{border-color:var(--acc)}.arl b{font:900 20px var(--f-display)}.arl small{color:var(--ink2);font-size:12px}.arl i{font-style:normal;font:700 12.5px var(--f-body);color:var(--acc)}.arl a.ok{border-color:color-mix(in srgb,#3A9A57 60%,transparent)}.arl a.ok i{color:#3A9A57}.arl a.no i{color:var(--bad,#D5503F)}
+
 .spc .brd{grid-template-rows:repeat(12,1fr);gap:4px;width:min(100%,640px)}.spc .rw{grid-template-columns:repeat(5,minmax(0,1fr)) 4px repeat(8,minmax(0,1fr));gap:3px}.spc .tl{font-size:clamp(11px,2.6vw,20px);border-radius:5px;border-width:1.5px}.spc .tl.gp{grid-column-start:7}
 .spc .vsp .mg i{width:11px;height:11px}.spc .vsp .mg.lt i{width:15px;height:15px;font-size:8.5px}
 
@@ -119,7 +121,7 @@
 <main class="jw">
 <section class="jh"><div class="jk" id="kk">Napi szó</div><h1 id="h1">Találd ki a nap szavát!</h1>
 <p id="lead">Minden nap egy új, öt betűs szó a választások világából. Hat próbálkozásod van – minden tipp után megmutatjuk, mely betűk vannak jó helyen.</p>
-<nav class="modes" aria-label="Játékmód"><a href="napi-szo" data-m="nap">Napi szó</a><a href="napi-szo#vegtelen" data-m="end">Végtelen</a><button type="button" data-m="vs" id="vsnew"><span class="dot"></span>1v1 online</button></nav></section>
+<nav class="modes" aria-label="Játékmód"><a href="napi-szo" data-m="nap">Napi szó</a><a href="napi-szo#vegtelen" data-m="end">Végtelen</a><a href="napi-szo#archiv" data-m="arch">Archívum</a><button type="button" data-m="vs" id="vsnew"><span class="dot"></span>1v1 online</button></nav></section>
 <div class="jc spyl" id="spyl" hidden></div>
 <div class="sg"><div class="jc play"><div class="vsp" id="vsp" hidden></div><div class="brd" id="brd" aria-label="Tipptábla"></div><div id="res" style="width:min(100%,560px)"></div><div class="kb" id="kb"></div></div>
 <div style="display:grid;gap:16px"><div class="jc"><h2 id="sth">Statisztikád</h2><div class="st" id="st"></div><div class="dist" id="dist"></div></div>
@@ -162,7 +164,8 @@ const DAILY=ord[((N-1)%ord.length+ord.length)%ord.length][0];
 const LET="AÁBCDEÉFGHIÍJKLMNOÓÖŐPQRSTUÚÜŰVWXYZ";
 const KB=[["Ö","Ü","Ó","Q","W","E","R","T","Z","U","I","O","P","Ő","Ú"],["A","S","D","F","G","H","J","K","L","É","Á","Ű"],["ENTER","Í","Y","X","C","V","B","N","M","DEL"]];
 let MODE="nap",ANS=[],WORD="",G=[],CUR=[],DONE=false,LOCK=false,ST=J.ls.get("vm-szo",{p:{}}),EN=J.ls.get("vm-szo-v",{cur:null,seen:[],p:0,w:0,s:0,b:0,di:[0,0,0,0,0,0]});
-let VX=null,cdT=null,tmT=null;
+let VX=null,cdT=null,tmT=null,AD=0;
+const dayDate=k=>new Date(START+(k-1)*DAY+12*36e5).toLocaleDateString("hu-HU",{month:"long",day:"numeric"});
 /* egyszeri különleges 1v1 meccs: csak ez az egy azonosító; a visszavágó már normál szóval megy */
 const SPEC={vsz7d63de:{w:"VARGASZABOLCS",disp:"VARGA SZABOLCS",gap:[5],rows:12,min:5,max:13}};
 /* KULON: amíg igaz, minden ÚJ 1v1 meccs („x”-szel kezdődő azonosító) a különleges szóval megy; a visszavágó („r…”) már normál */
@@ -189,7 +192,11 @@ function stats(){$("st").parentNode.hidden=MODE==="vs";
   const di=[0,0,0,0,0,0];won.forEach(([k,v])=>di[v.g.length-1]++);statBox(P.length,cur,best,di,DONE&&ST.p[N]&&ST.p[N].w?G.length:0,"játék");}
 const wd=()=>'<div class="wd">'+ANS.map(c=>'<span>'+esc(c)+'</span>').join("")+'</div>';
 const verd=w=>w?(G.length<=2?"Lenyűgöző!":G.length<=4?"Szép munka!":"Megvan, épphogy!"):"Most nem jött össze";
-function result(){clearInterval(cdT);if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===WORD;
+function archList(){const A=ST.a||{};let h='<div class="arl">';for(let k=N-1;k>=1;k--){const s=(ST.p[k]&&ST.p[k].d?ST.p[k]:null)||A[k],c=s&&s.d?(s.w?"ok":"no"):"";
+    h+='<a class="'+c+'" href="napi-szo#nap-'+k+'"><b>#'+k+'</b><small>'+esc(dayDate(k))+'</small><i>'+(s&&s.d?(s.w?s.g.length+'/6':'X/6'):(s&&s.g&&s.g.length?'Folytasd':'Játszd!'))+'</i></a>';}
+  $("res").innerHTML='<div class="res"><h3>Korábbi napi szavak</h3><p>Pótold, amiről lemaradtál! Az archívumban játszott szavak nem számítanak bele a sorozatodba.</p>'+(N>1?h+'</div>':'<p>Holnaptól itt lesznek a korábbi napok szavai.</p>')+'</div>';}
+function result(){clearInterval(cdT);if(MODE==="arch"){archList();return;}if(!DONE||MODE==="vs"){$("res").innerHTML="";return;}const w=G[G.length-1]===WORD;
+  if(MODE==="arc"){$("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+'<p>'+esc(DEF[WORD]||"")+'</p><div class="act">'+(AD>1?'<a class="jb" href="napi-szo#nap-'+(AD-1)+'">← #'+(AD-1)+'</a>':'')+'<a class="jb" href="napi-szo#archiv">Archívum</a>'+(AD+1<N?'<a class="jb p" href="napi-szo#nap-'+(AD+1)+'">#'+(AD+1)+' →</a>':'<a class="jb p" href="napi-szo">Mai szó →</a>')+'</div></div>';return;}
   if(MODE==="end"){$("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+(DEF[WORD]?'<p>'+esc(DEF[WORD])+'</p>':'<p>'+(w?'Jöhet a következő?':'Ez volt a megfejtés. Próbáld a következőt!')+'</p>')+'<div class="act"><button class="jb p" id="nx" type="button">Következő szó →</button><button class="jb" id="sh" type="button">Megosztás</button></div></div>';
     $("nx").onclick=()=>{newEndless();};$("sh").onclick=()=>J.share("Voksmérő szójáték",'Végtelen mód: '+(w?G.length:"X")+"/6\n"+G.map(g=>score([...g]).map(x=>x==="g"?"🟩":x==="y"?"🟨":"⬜").join("")).join("\n")+"\n","https://voksmero.hu/napi-szo#vegtelen");setTimeout(()=>{const b=$("nx");if(b)b.focus();},50);return;}
   $("res").innerHTML='<div class="res"><h3>'+verd(w)+'</h3>'+wd()+'<p>'+esc(DEF[WORD]||"")+'</p><div class="act"><button class="jb p" id="sh" type="button">Eredmény megosztása</button><a class="jb" href="napi-szo#vegtelen">Végtelen mód →</a><span class="jn">Új szó: <span class="cd" id="cd"></span></span></div></div>';
@@ -259,20 +266,26 @@ function draw(){board(false);keys();result();stats();}
 function submit(){if(DONE||LOCK)return;if(CUR.length<MINL){shake(MINL===5&&MAXL===5?"Öt betű kell":"Legalább "+MINL+" betű kell");return;}
   const g=CUR.join("");if(FREE?false:DICT?!DICT.has(g):!/[AÁEÉIÍOÓÖŐUÚÜŰ]/.test(g)){shake("Ez a szó nincs a szótárunkban");return;}G.push(g);CUR=[];const win=g===WORD;
   if(win||G.length>=ROWS)DONE=true;
-  if(MODE==="nap"){if(DONE)fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+(win?"-w":"-l"),{credentials:"omit"}).catch(()=>{});ST.p[N]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);}
+  if(MODE==="arc"){ST.a=ST.a||{};ST.a[AD]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);}
+  else if(MODE==="nap"){if(DONE)fetch("https://abacus.jasoncameron.dev/hit/voksmero.hu/szo-"+N+(win?"-w":"-l"),{credentials:"omit"}).catch(()=>{});ST.p[N]={g:G,d:DONE,w:DONE&&win};J.ls.set("vm-szo",ST);}
   else if(MODE==="end"){EN.cur.g=G;EN.cur.d=DONE;EN.cur.w=DONE&&win;if(DONE){EN.p++;if(win){EN.s++;EN.b=Math.max(EN.b,EN.s);EN.di[G.length-1]++;}else EN.s=0;}J.ls.set("vm-szo-v",EN);}
   else if(MODE==="vs"&&VX){const t=(Date.now()-VX.t0)/1000,c=code(score([...g]));VX.me.push({c,t});
     const sv=J.ls.get("vm-szo-vs",{});sv[VX.id]={g:G,t:VX.me.map(x=>Math.round(x.t))};const ks=Object.keys(sv);if(ks.length>40)delete sv[ks[0]];J.ls.set("vm-szo-vs",sv);VS.post("szo",VX.id,VX.slot,G.length,c,t,g);if(DONE)vsDone();}
   board(true);keys();setTimeout(()=>{result();stats();vsRender();if(DONE&&win&&MODE!=="vs")J.toast(["Zseniális!","Lenyűgöző!","Nagyszerű!","Szép munka!","Megvan!","Épphogy!"][G.length-1]);},950);}
 function press(k){if(DONE)return;if(LOCK){J.toast("Várj, amíg az ellenfeled csatlakozik");return;}if(k==="ENTER")return submit();if(k==="DEL"){CUR.pop();board(false);return;}if(CUR.length<MAXL&&LET.includes(k)){CUR.push(k);board(false);}}
 function load(){if(SPX&&SPX.stop)SPX.stop();SPX=null;setTimeout(spyList,0);if(VX&&VX.stop)VX.stop();if(VX&&VX.rmw)VX.rmw();VX=null;clearInterval(tmT);CUR=[];LOCK=false;$("vsp").hidden=true;$("brd").hidden=$("kb").hidden=false;
-  const nz=VS.nezFromHash(),id=VS.idFromHash()||nz;setRules(id);MODE=id?"vs":location.hash==="#vegtelen"?"end":"nap";
-  document.querySelectorAll(".modes [data-m]").forEach(a=>a.classList.toggle("on",a.dataset.m===MODE));
+  const nz=VS.nezFromHash(),id=VS.idFromHash()||nz;setRules(id);const am=/^#nap-(\d+)$/.exec(location.hash);AD=am?+am[1]:0;if(AD<1||AD>=N)AD=0;
+  MODE=id?"vs":location.hash==="#vegtelen"?"end":location.hash==="#archiv"?"arch":AD?"arc":"nap";
+  document.querySelectorAll(".modes [data-m]").forEach(a=>a.classList.toggle("on",a.dataset.m===MODE||(MODE==="arc"&&a.dataset.m==="arch")));
   const H={nap:["Napi szó · #"+N,"Találd ki a nap szavát!","Minden nap egy új, öt betűs szó a választások világából. Hat próbálkozásod van – minden tipp után megmutatjuk, mely betűk vannak jó helyen."],
     end:["Szójáték · végtelen mód","Szó szó után","Annyi szót fejthetsz meg egymás után, amennyit csak akarsz. Minden kör új, véletlenszerű szó – szinte soha nem kapod ugyanazt kétszer."],
+    arch:["Napi szó · archívum","Korábbi napi szavak","Minden eddigi napi szót bármikor megfejthetsz – látod, melyiket nyerted meg, és melyik maradt ki."],
+    arc:["Napi szó · #"+AD+" (archívum)","A "+dayDate(AD)+"-i szó","Korábbi napi rejtvény – ugyanaz a szó, amit aznap mindenki kapott. Nem számít bele a sorozatodba."],
     vs:["Szójáték · 1v1 online","Párbaj: ki találja ki előbb?","Ugyanaz a szó, két játékos. Az nyer, aki kevesebb tippből kitalálja – egyenlőségnél az, aki gyorsabb volt."]}[MODE];
   $("kk").textContent=H[0];$("h1").textContent=H[1];$("lead").textContent=H[2];
   if(MODE==="nap"){WORD=DAILY;ANS=[...WORD];G=(ST.p[N]&&ST.p[N].g)||[];DONE=!!(ST.p[N]&&ST.p[N].d);draw();}
+  else if(MODE==="arch"){$("brd").hidden=$("kb").hidden=true;DONE=true;G=[];stats();archList();}
+  else if(MODE==="arc"){const S=(ST.a||{})[AD];WORD=ord[((AD-1)%ord.length+ord.length)%ord.length][0];ANS=[...WORD];G=(S&&S.g)||[];DONE=!!(S&&S.d);draw();}
   else if(MODE==="end"){if(!EN.cur){newEndless();return;}WORD=EN.cur.a;ANS=[...WORD];G=EN.cur.g.slice();DONE=EN.cur.d;draw();}
   else if(nz){$("h1").textContent="Élő 1v1 meccs";$("lead").textContent="Két játékos, ugyanaz a szó – nézőként követheted, ki halad gyorsabban.";specStart(nz);tmT=setInterval(()=>{if(SPX)specRender();},1000);}
   else{vsStart(id);tmT=setInterval(()=>{if(VX&&VX.opJ&&!DONE)vsRender();},1000);}}
