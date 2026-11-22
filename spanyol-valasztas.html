@@ -2,7 +2,7 @@
 <html lang="hu">
 <head>
 <meta charset="utf-8">
-<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A&&window.AppBridge){try{if(AppBridge.megoszt)navigator.share=function(d){d=d||{};AppBridge.megoszt(d.title||"",d.text||"",d.url||"");return Promise.resolve();}}catch(e){}addEventListener("touchstart",function(e){try{var t=e.target;AppBridge.huzhat(window.scrollY<=0&&!(t&&t.closest&&t.closest("svg,canvas,input,textarea,select,[data-nopull],.brd,.kb,.map,#stage,#mapc,.chart")))}catch(x){}},{passive:true,capture:true})}addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=7";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/frissit.js?v=1";s.async=true;document.head.appendChild(s)},2000)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
+<script id="tiszta-url">if(/\.html$/.test(location.pathname)&&history.replaceState)history.replaceState(history.state,"",location.pathname.replace(/index\.html$/,"").replace(/\.html$/,"")+location.search+location.hash);var A=/ValasztasokApp/.test(navigator.userAgent),L=A||(window.matchMedia&&matchMedia("(pointer:coarse)").matches);if(A)document.documentElement.classList.add("in-apk");if(A&&window.AppBridge){try{if(AppBridge.megoszt)navigator.share=function(d){d=d||{};AppBridge.megoszt(d.title||"",d.text||"",d.url||"");return Promise.resolve();}}catch(e){}addEventListener("touchstart",function(e){try{var t=e.target;AppBridge.huzhat(window.scrollY<=0&&!(t&&t.closest&&t.closest("svg,canvas,input,textarea,select,[data-nopull],.brd,.kb,.map,#stage,#mapc,.chart")))}catch(x){}},{passive:true,capture:true})}addEventListener("load",function(){var s=document.createElement("script");s.src="assets/ajanlo.js?v=7";document.head.appendChild(s)});if(A)addEventListener("load",function(){var s=document.createElement("script");s.src="assets/apk.js?h="+Math.floor(Date.now()/36e5);document.head.appendChild(s)});if(A&&window.AppBridge)try{if(AppBridge.verzio()<14){var F=+localStorage.getItem("vm-fr")||0;if(Date.now()-F>18e5){localStorage.setItem("vm-fr",Date.now());setTimeout(function(){AppBridge.frissites()},3000)}}}catch(e){}addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/sz.js?n=4&h="+Math.floor(Date.now()/36e5);s.async=true;document.head.appendChild(s)},1200)});addEventListener("DOMContentLoaded",function(){var m=document.querySelector("main");if(!m)return;if(!m.id)m.id="tartalom";var a=document.createElement("a");a.href="#"+m.id;a.textContent="Ugrás a tartalomra";a.style.cssText="position:fixed;left:12px;top:-60px;z-index:1000;background:#F5B83D;color:#14100a;padding:10px 14px;border-radius:10px;font:700 15px system-ui,sans-serif;text-decoration:none;transition:top .15s";a.onfocus=function(){a.style.top="12px"};a.onblur=function(){a.style.top="-60px"};document.body.insertBefore(a,document.body.firstChild)});addEventListener("load",function(){setTimeout(function(){var s=document.createElement("script");s.src="assets/frissit.js?v=1";s.async=true;document.head.appendChild(s)},2000)});if(L){document.documentElement.classList.add("lite");document.write("<style>.lite *,.lite *::before,.lite *::after{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}.lite svg *{filter:none!important}.lite .sec-anim{animation:none!important}.lite .live-dot,.lite .lv,.lite .pill.live i{animation:none!important}</style>")}</script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png">
@@ -325,6 +325,7 @@ img.fej{background:transparent!important;object-fit:cover}
 #szoros .szp{display:block;font:800 16px var(--f-body);margin-bottom:2px}
 #szoros .szf{color:var(--ink3);font-size:12.5px;margin:10px 0 0;max-width:80ch}
 @media(max-width:760px){#szoros .szl{grid-template-columns:minmax(0,1fr)}}
+#ertb.on{border-color:var(--acc);color:var(--acc)}
 </style>
 </head>
 <body>
@@ -365,7 +366,7 @@ img.fej{background:transparent!important;object-fit:cover}
   </div>
   <div class="dbar"><i id="dbL" style="background:#E30613"></i><span></span><i id="dbR" style="background:#1D84CE"></i></div>
   <div class="dlg"><span id="dlL"></span><span id="dlR"></span></div>
-  <div class="shi"><button class="btn alt" id="shimg" type="button">Kép a megosztáshoz</button><small>Négyzetes kép az aktuális állásról – Facebookra, Instagramra, Messengerre</small></div>
+  <div class="shi"><button class="btn alt" id="shimg" type="button">Kép a megosztáshoz</button><button class="btn alt" id="ertb" type="button" hidden>🔔 Szólj, ha fordul az állás</button><small>Négyzetes kép az aktuális állásról – Facebookra, Instagramra, Messengerre</small></div>
   <div class="shm" id="shm" hidden><div class="shb"><img id="shpv" alt="Megosztható kép az aktuális állásról"><div class="sha"><button class="btn" id="shsh" type="button">Megosztás</button><a class="btn alt" id="shdl" download="voksmero-spanyol-valasztas.png">Letöltés</a><button class="btn alt" id="shx" type="button">Bezárás</button></div></div></div>
 </div></section>
 
@@ -577,12 +578,20 @@ function exitp(){const X=E.exit;if(!X||!X.length)return;const x=X[X.length-1],m=
 
 /* ---------- élő ticker a fejléc alatt (számlálás közben; ?demo-val kipróbálható) ---------- */
 const TK={lead:null,log:[]};
+/* böngészős értesítés a választás estéjén (csak ha a látogató kérte, és az oldal nyitva van egy lapon) */
+const NK="vm-es-ert",APP=/ValasztasokApp/.test(navigator.userAgent);
+function szol(cim,szoveg){try{if(APP||!("Notification" in window)||Notification.permission!=="granted"||localStorage.getItem(NK)!=="1")return;if(!document.hidden)return;
+  const n=new Notification(cim,{body:szoveg,icon:"assets/app/icon-192.png",tag:"vm-es-"+cim});n.onclick=()=>{window.focus();n.close();};}catch(e){}}
+function ertUI(){const b=$("ertb");if(!b)return;if(APP||!("Notification" in window)){b.hidden=true;return;}b.hidden=false;const on=localStorage.getItem(NK)==="1"&&Notification.permission!=="denied";
+  b.textContent=on?"🔔 Értesítés bekapcsolva":"🔔 Szólj, ha fordul az állás";b.classList.toggle("on",on);}
+if($("ertb")){ertUI();$("ertb").onclick=async()=>{try{if(localStorage.getItem(NK)==="1"){localStorage.removeItem(NK);ertUI();return;}
+  const p=await Notification.requestPermission();if(p==="granted"){localStorage.setItem(NK,"1");alertBox("Rendben! Ha ez a lap nyitva marad, szólunk, ha fordul az állás vagy megvan a többség.");}else alertBox("Az értesítést a böngésződ letiltotta – a címsor melletti lakatnál engedélyezheted.");}catch(e){}ertUI();};}
 function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
   if(!el){const h=document.querySelector("header.top");if(!h)return;el=document.createElement("div");el.id="tkr";el.setAttribute("role","status");el.setAttribute("aria-live","polite");h.appendChild(el);}
   const s=nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]),L=s[0][0],tm=(upd?new Date(upd):new Date()).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Budapest"});
-  if(TK.lead&&TK.lead!==L)TK.log.unshift(tm+" – "+(JEL[L]||L)+" ("+L+") átvette a vezetést");TK.lead=L;
-  if(rp>=50&&!TK.h){TK.h=1;TK.log.unshift(tm+" – a szavazatok fele feldolgozva");}
-  const maj=s.find(r=>(r[3]||0)>=176);if(maj&&!TK.m){TK.m=1;TK.log.unshift(tm+" – "+maj[0]+": megvan az abszolút többség (176)");}
+  if(TK.lead&&TK.lead!==L)TK.log.unshift(tm+" – "+(JEL[L]||L)+" ("+L+") átvette a vezetést");szol("Fordulat: "+L+" vezet",(JEL[L]||L)+" pártja átvette a vezetést · "+f1(rp)+"% feldolgozva");TK.lead=L;
+  if(rp>=50&&!TK.h){TK.h=1;TK.log.unshift(tm+" – a szavazatok fele feldolgozva");szol("A szavazatok fele megszámolva",s.slice(0,3).map(r=>r[0]+" "+(r[3]||0)).join(" · "));}
+  const maj=s.find(r=>(r[3]||0)>=176);if(maj&&!TK.m){TK.m=1;TK.log.unshift(tm+" – "+maj[0]+": megvan az abszolút többség (176)");szol(maj[0]+": abszolút többség",maj[0]+" "+(maj[3]||0)+" mandátummal egyedül is megvan a 176.");}
   el.innerHTML='<div class="tkw"><b class="tkl"><i></i>'+(st==="vege"?"VÉGE":"ÉLŐ")+(demo?" · bemutató":"")+'</b><span class="tkp"><b>'+f1(rp)+'%</b> feldolgozva</span>'+
     s.slice(0,4).map(r=>'<span class="tks" style="--c:'+cl(r[0])+'">'+lgs(r[0])+'<b>'+(r[3]||0)+'</b><small>'+f1(r[2])+'%</small></span>').join("")+
     '<span class="tkm">'+esc(TK.log[0]||("Vezet: "+(JEL[L]||L)))+'</span><span class="tkt">'+tm+'</span></div>';}
