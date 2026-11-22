@@ -314,6 +314,8 @@ img.fej{background:transparent!important;object-fit:cover}
 .shm{position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px}
 .shb{background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,520px);max-height:100%;overflow:auto}
 .shb img{width:100%;height:auto;border-radius:10px;display:block}.sha{display:flex;gap:8px;flex-wrap:wrap}
+#mode button[hidden]{display:none}
+#det p.chg{font-size:15px;color:var(--ink)}
 </style>
 </head>
 <body>
@@ -392,7 +394,7 @@ img.fej{background:transparent!important;object-fit:cover}
   <div class="sh2 nl"><h2>Térkép</h2><small id="msub">52 választókerület · a településekhez kapcsold be a Közelképet</small></div>
   <div class="mapw">
     <div class="card mapc" id="mapc">
-      <div class="mbar"><div class="seg" id="mode" role="group" aria-label="Nézet"><button type="button" class="on" data-m="prov">2026</button><button type="button" data-m="p23">2023</button></div><button type="button" class="kkb" id="kk" aria-pressed="false" title="Települések megjelenítése a kiválasztott tartományban"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2M11 8v6M8 11h6"/></svg>Közelkép: települések</button>
+      <div class="mbar"><div class="seg" id="mode" role="group" aria-label="Nézet"><button type="button" class="on" data-m="prov">2026</button><button type="button" data-m="p23">2023</button><button type="button" data-m="chg" id="mchg" hidden>Változás</button></div><button type="button" class="kkb" id="kk" aria-pressed="false" title="Települések megjelenítése a kiválasztott tartományban"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="M20 20l-4.2-4.2M11 8v6M8 11h6"/></svg>Közelkép: települések</button>
         <div class="srch"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg><input id="q" type="search" placeholder="Település keresése, pl. Sevilla" autocomplete="off" aria-label="Település keresése"><div class="sug" id="sug" hidden></div></div></div>
       <div class="stage" id="stage"><svg id="map" viewBox="0 0 1000 860" role="img" aria-label="Spanyolország térképe"><g class="pr" id="gpr"></g><g class="mu" id="gmu"></g><g class="pv" id="gpv"></g><g id="gx"></g><g class="hl" id="ghl"></g></svg>
         <div class="mload" id="mload">Térkép betöltése…</div>
@@ -572,7 +574,12 @@ function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
   const h=[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(q)))].map(x=>x.toString(16).padStart(2,"0")).join("");
   if(h!=="19a2d798ab5244c05b7ebb0113d2e26aff89abe1027e58c8b8933ef9ae01dd17")return;let k=0;const B=[["PSOE",33,130],["PP",31,124],["Vox",15,60],["Frente Amplio",6,12],["ERC",2.2,8],["Junts",1.6,6],["EH Bildu",1.4,6],["PNV",1.1,5]];
   const step=()=>{k=Math.min(k+7,100);const w=k/100,f=[[-3,-14],[2.5,14],[2.4,12],[0,-2]];const nat=B.map((r,i)=>{const d=f[i]||[0,0];return [r[0],0,+(r[1]+d[0]*w).toFixed(2),Math.round(r[2]+d[1]*w)];});
-    ticker(nat,k,null,k>=100?"vege":"szamlal",1);summ(nat,k,k>=100?"vege":"szamlal",1);if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
+    ticker(nat,k,null,k>=100?"vege":"szamlal",1);summ(nat,k,k>=100?"vege":"szamlal",1);
+    /* a bemutatóban az eredménytábla és a térkép is kitalált adatot kap (2023-as alapon, néhány fordulattal) */
+    try{const pr={};if(TP)Object.entries(TP).forEach(([id,tp],i)=>{let w=n23(tp.w);if(w==="PSOE"&&(i%3===0))w="PP";else if(w==="PP"&&i%7===0)w="Vox";
+      const r=Object.entries(tp.v||{}).slice(0,4).map(([p,v])=>[n23(p),p===tp.w?v:v*0.9,null]);r.forEach(x=>{if(x[0]===w)x[1]=Math.max(x[1],r[0][1]+1.5);});r.sort((a,b)=>b[1]-a[1]);
+      pr[id]={w,p:r[0][1],rp:k,r};});
+      E={st:k>=100?"vege":"szamlal",rp:k,upd:new Date().toISOString(),part:{},nat:nat.map(r=>[r[0],0,r[2],r[3]]),prov:pr,mun:{}};results();paintMap();}catch(e){}if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
 
 /* ---------- választás esti összefoglaló (a számlálás végén magától; a bemutatóban is) ---------- */
 function summ(nat,rp,st,demo){if(!(st==="vege"||rp>=99.5))return;const s=nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]);if(!s.length)return;
@@ -747,19 +754,26 @@ function setKK(on){KK=on;const b=$("kk");b.classList.toggle("on",on);b.setAttrib
 $("kk").addEventListener("click",()=>setKK(!KK));
 const DET0=$("det").innerHTML;
 let PMODE=null;
-function paintMap(){if(!TP)return;
+const n23=p=>p==="Sumar"?"Frente Amplio":p;
+function paintMap(){if(!TP)return;if($("mchg"))$("mchg").hidden=!Object.values(E.prov||{}).some(t=>t&&t.w);if(MODE==="chg"&&$("mchg").hidden){MODE="prov";$("mode").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.m==="prov"));}
   const live=E.mun||{},lp=E.prov||{};
-  const fl=window.MapAnim&&PMODE===MODE&&MODE!=="p23"?(p,w)=>{if(w&&p.dataset.w!=null&&p.dataset.w!==w)MapAnim.flash(p,cl(w),$("gx"));}:()=>{};
+  const fl=window.MapAnim&&PMODE===MODE&&MODE==="prov"?(p,w)=>{if(w&&p.dataset.w!=null&&p.dataset.w!==w)MapAnim.flash(p,cl(w),$("gx"));}:()=>{};
   $("gmu").querySelectorAll("path").forEach(p=>{if(p.classList.contains("kz"))return;const id=p.dataset.id;let w=null,s=null;
     if(MODE==="p23"){const x=m23(id);if(x&&x.w){w=x.w;s=shade(cl(x.w),x.p);}}
+    else if(MODE==="chg"){const r=live[id],x=m23(id);if(r&&r.w){w=r.w;s=[cl(r.w),x&&x.w&&n23(x.w)===r.w?.16:.95];}}
     else{const r=live[id];if(r&&r.w){fl(p,r.w);w=r.w;s=shade(cl(r.w),r.p);}}
     if(s){p.classList.remove("e");p.style.fill=s[0];p.style.fillOpacity=s[1];}else{p.classList.add("e");p.style.fill="";p.style.fillOpacity="";}p.dataset.w=MODE==="p23"?"":(w||"");});
   $("gpr").querySelectorAll("path").forEach(p=>{const id=p.dataset.p;let c=null,o=1,w="";if(MODE==="p23"&&TP[id]){c=cl(TP[id].w);const s=shade(c,TP[id].p);o=s[1];}else if(MODE==="prov"&&lp[id]&&lp[id].w){w=lp[id].w;fl(p,w);const s=shade(cl(w),lp[id].p);c=s[0];o=s[1];}
+    else if(MODE==="chg"&&lp[id]&&lp[id].w){w=lp[id].w;c=cl(w);o=TP[id]&&n23(TP[id].w)===w?.16:.95;}
     if(KK&&CP===id){c="var(--empty)";o=1;}/* Közelképben a megnyitott tartomány alapszíne nem látszik át a települések között */
     p.style.fill=c||"var(--empty)";p.style.fillOpacity=o;p.dataset.w=w;});
   PMODE=MODE;
   legend();if(SEL)detail(SEL);}
 function legend(){const cnt={};let tot=0;
+  if(MODE==="chg"){const fl={};let same=0;Object.entries(E.prov||{}).forEach(([id,t])=>{if(!t||!t.w||!TP[id])return;const a=n23(TP[id].w);if(a===t.w)same++;else{const k=a+" → "+t.w;fl[k]=(fl[k]||0)+1;}});
+    const e=Object.entries(fl).sort((a,b)=>b[1]-a[1]);
+    $("mlg").innerHTML=(e.length?e.map(([k,n])=>'<span style="--c:'+cl(k.split(" → ")[1])+'"><i></i>'+esc(k)+': '+fi(n)+' tartomány</span>').join(""):'<span>Egyetlen tartományban sem lett más az első</span>')+'<span style="--c:color-mix(in srgb,var(--ink3) 30%,transparent)"><i></i>Nem változott: '+fi(same)+'</span>';
+    if(!(KK&&CP))$("msub").textContent="Élénk szín: ott más párt lett az első, mint 2023-ban · halvány: ugyanaz maradt";return;}
   if(MODE==="p23")Object.values(TP).forEach(t=>{cnt[t.w]=(cnt[t.w]||0)+1;});
   else if(MODE==="prov")Object.values(E.prov||{}).forEach(t=>{if(t.w){cnt[t.w]=(cnt[t.w]||0)+1;tot++;}});
   else Object.values(E.mun||{}).forEach(t=>{if(t.w){cnt[t.w]=(cnt[t.w]||0)+1;tot++;}});
@@ -769,7 +783,7 @@ function legend(){const cnt={};let tot=0;
   const unit=munL?"település":"tartomány";const e=Object.entries(cnt).sort((a,b)=>b[1]-a[1]);
   $("mlg").innerHTML=(e.length?e.map(([p,n])=>'<span style="--c:'+cl(p)+'"><i></i>'+esc(p)+' – '+fi(n)+' '+unit+'</span>').join(""):'')+(MODE!=="p23"?'<span style="--c:var(--empty)"><i></i>Még nincs eredmény</span>':'');
   if(!(KK&&CP))$("msub").textContent=(MODE==="p23"?"2023 · tartományonként az első helyezett (Közelképben településenként)":"52 választókerület · 2026")+" · a településekhez kapcsold be a Közelképet";}
-function setMode(m){MODE=m;$("mode").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));paintMap();}
+function setMode(m){if(m==="chg")loadM23().then(()=>{if(MODE==="chg")paintMap();}).catch(()=>{});MODE=m;$("mode").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.m===m));paintMap();}
 $("mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]");if(b)setMode(b.dataset.m);});
 
 const pname=id=>(TP&&TP[id]?TP[id].n:(PRV[id]?PRV[id].n:""));
@@ -798,7 +812,7 @@ function detail(o){const key=MODE+"|"+(o.t==="m"?"m"+o.o.id:"p"+o.id),isNew=key!
     else h+=r&&r.r?'<p>'+(r.rp!=null?f1(r.rp)+'% feldolgozva':'')+(r.part!=null?' · részvétel: '+f2(r.part)+'%':'')+'</p>'+vbLive(r.r):'<p class="nodata">Még nincs adat</p><p>A település eredményei november 29-én az urnazárás (20:00) után, a számlálás során érkeznek. '+(t?'A település a(z) '+esc(t.n)+' választókerülethez tartozik, amely 2026-ban '+t.s26+' képviselőt választ.':'')+'</p>';}
   else{const id=o.id,t=TP&&TP[id],lv=(E.prov||{})[id];h='<h3>Választókerület</h3><div class="dn">'+esc(pname(id))+'</div>';
     if(MODE==="p23"&&t)h+='<p>2023-ban '+t.s+' mandátum; első: <b>'+esc(t.w)+'</b> ('+f1(t.p)+'%).</p>'+(t.el?'<div class="mst"><span><small>Részvétel</small><b>'+f1((t.vt-(t.cv||0))/(t.el-(t.ce||0))*100)+'%</b></span><span><small>Érvényes szavazat</small><b>'+fi(t.vv)+'</b></span><span><small>Mandátum 2026</small><b>'+t.s26+'</b></span></div>':'')+vbars(t)+(t.sz?'<p class="src">A szavazatszámok a spanyolországi lakóhelyű választók szavazatai (a külföldön élők levélszavazatai nélkül), a százalékok és a mandátumok a hivatalos végeredményből.</p>':'');
-    else h+=(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');}
+    else h+=(MODE==="chg"&&t&&lv&&lv.w?'<p class="chg">2023-ban: <b>'+esc(n23(t.w))+'</b> → 2026-ban: <b>'+esc(lv.w)+'</b>'+(n23(t.w)===lv.w?' (nem változott)':' – <b>fordulat</b>')+'</p>':'')+(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');}
   $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
 function vbars(t,lim){const e=Object.entries(t.v||{}).slice(0,lim||8);if(!e.length)return chips(Object.entries(t.r));const mx=e[0][1];
   return '<div class="vb vbm">'+e.map(([p,v])=>'<div style="--c:'+cl(p)+'">'+pcell(p,23)+'<em style="width:'+(v/mx*100)+'%"></em><b>'+f1(v)+'%'+(t.r[p]?' · '+t.r[p]+' hely':'')+(t.sz&&t.sz[p]?'<small>'+fi(t.sz[p])+' szavazat</small>':'')+'</b></div>').join("")+'</div>';}
