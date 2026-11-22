@@ -450,6 +450,7 @@ body.fs-on{overflow:hidden}
     <div class="sh"><div><span class="kicker">Pártpreferencia</span><h2 id="h-p">Közvélemény-kutatások</h2><p>A biztos pártválasztók körében mért támogatottság. A kártyák az elmúlt 35 nap méréseinek átlagát mutatják (intézetenként a legfrissebb mérés).</p></div></div>
     <div class="avg" id="avg"></div>
     <p class="avgnote" id="avgnote"></p>
+    <button class="btn alt" type="button" id="avgimg" style="margin:6px 0 14px">Kép a megosztáshoz</button>
     <div class="card chartcard">
       <div class="chh"><h3>Hogyan alakult?</h3><div class="lg" id="lg"></div></div>
       <div class="chart" id="chart"><div class="ctip" id="ctip"></div></div><div class="cnav" id="cnav"><button type="button" data-d="-1" aria-label="Előző kutatás">‹</button><div class="cni" id="cni" aria-live="polite"></div><button type="button" data-d="1" aria-label="Következő kutatás">›</button></div>
@@ -962,6 +963,29 @@ fetch("assets/oevk.json").then(r=>r.json()).then(j=>{J=j;B=[0,0,j.W,j.H];svg.set
     $("hall").addEventListener("click",ev=>{const r=ev.target.closest(".hl");if(r)show(+r.dataset.y);});
     show(j.e[j.e.length-1].y);}).catch(()=>{});
 })();
+</script>
+<script>
+/* kutatási átlag megosztható képként (1080×1080) */
+(function(){const b=document.getElementById("avgimg");if(!b)return;b.addEventListener("click",()=>{
+  const C=[...document.querySelectorAll("#avg .pc")].map(e=>({n:e.querySelector(".pn").textContent.trim(),v:parseFloat(e.querySelector(".pv").textContent.replace(",",".")),c:getComputedStyle(e).getPropertyValue("--c").trim()||"#8792A8"})).filter(x=>!isNaN(x.v));
+  if(!C.length)return;const note=(document.getElementById("avgnote")||{}).textContent||"";
+  const S0=1080,c=document.createElement("canvas");c.width=c.height=S0;const x=c.getContext("2d"),FB='"Barlow",system-ui,sans-serif',FD='"Big Shoulders Display","Arial Narrow",Impact,sans-serif';
+  const g=x.createLinearGradient(0,0,S0,S0);g.addColorStop(0,"#070C18");g.addColorStop(1,"#13213F");x.fillStyle=g;x.fillRect(0,0,S0,S0);x.fillStyle="#F5B83D";x.fillRect(0,0,S0,10);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.fillText("voksmérő",64,92);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,92);
+  x.fillStyle="#A3B2CC";x.font="700 26px "+FB;x.textAlign="right";x.fillText("MAGYARORSZÁG · KUTATÁSI ÁTLAG",S0-64,90);x.textAlign="left";
+  x.fillStyle="#EEF2FA";let fz=76;x.font="900 "+fz+"px "+FD;while(x.measureText("HOGY ÁLLNAK A PÁRTOK?").width>S0-128&&fz>40){fz-=4;x.font="900 "+fz+"px "+FD;}x.fillText("HOGY ÁLLNAK A PÁRTOK?",64,210);
+  const mx=Math.max(...C.map(r=>r.v),1);let y=290;C.forEach(r=>{x.fillStyle="#EEF2FA";x.font="700 34px "+FB;x.fillText(r.n,64,y+34);x.fillStyle="#1B2846";x.fillRect(64,y+52,S0-128,30);x.fillStyle=r.c;x.fillRect(64,y+52,(S0-128)*r.v/mx,30);
+    x.textAlign="right";x.font="900 54px "+FD;x.fillText(String(r.v).replace(".",",")+"%",S0-64,y+40);x.textAlign="left";y+=120;});
+  x.fillStyle="#A3B2CC";x.font="600 22px "+FB;const words=note.split(" ");let line="",ly=S0-170;words.forEach(w=>{if(x.measureText(line+w).width>S0-128){x.fillText(line,64,ly);ly+=30;line="";}line+=w+" ";});if(line&&ly<S0-110)x.fillText(line,64,ly);
+  x.fillStyle="rgba(255,255,255,.12)";x.fillRect(64,S0-90,S0-128,2);x.fillStyle="#A3B2CC";x.font="600 24px "+FB;x.fillText("Biztos pártválasztók körében",64,S0-46);
+  x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu/magyarorszag",S0-64,S0-46);x.textAlign="left";
+  const url=c.toDataURL("image/png");let m=document.getElementById("shm");
+  if(!m){m=document.createElement("div");m.id="shm";m.style.cssText="position:fixed;inset:0;z-index:300;background:rgba(3,6,14,.78);display:grid;place-items:center;padding:16px";
+    m.innerHTML='<div style="background:var(--card);border:1px solid var(--line2);border-radius:18px;padding:14px;display:grid;gap:12px;width:min(100%,520px);max-height:100%;overflow:auto"><img id="shpv" alt="Megosztható kép a kutatási átlagról" style="width:100%;height:auto;border-radius:10px;display:block"><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" id="shsh" type="button">Megosztás</button><a class="btn alt" id="shdl" download="voksmero-kutatasok.png">Letöltés</a><button class="btn alt" id="shx" type="button">Bezárás</button></div></div>';
+    document.body.appendChild(m);m.addEventListener("click",e=>{if(e.target===m||e.target.id==="shx")m.style.display="none";});}
+  m.style.display="grid";document.getElementById("shpv").src=url;document.getElementById("shdl").href=url;
+  document.getElementById("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-kutatasok.png",{type:"image/png"});if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Kutatási átlag – Voksmérő"});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+    if(navigator.share)navigator.share({title:"Kutatási átlag – Voksmérő",url:"https://voksmero.hu/magyarorszag#kutatasok"}).catch(()=>{});};});})();
 </script>
 <script src="assets/anim.js?v=3" defer></script>
 <script src="assets/app.js?v=9" defer></script>
