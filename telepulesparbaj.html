@@ -97,8 +97,8 @@
 <div class="jh"><div class="jk">Játék · 2026-os választás</div><h1>Településpárbaj</h1>
 <p>Két település, egy kérdés: hol kapott nagyobb arányt a Tisza vagy a Fidesz, és hol mentek el többen szavazni a 2026-os országgyűlési választáson? Amíg eltalálod, megy tovább.</p></div>
 <div class="tp">
-<div class="tpbar"><div class="seg" role="group" aria-label="Nehézség"><button type="button" data-m="k" class="on" aria-pressed="true">Könnyű</button><button type="button" data-m="n" aria-pressed="false">Nehéz</button></div>
-<div class="tpst"><div><b id="sc">0</b><small>Sorozat</small></div><div><b id="bs">0</b><small>Rekord</small></div></div></div>
+<div class="tpbar"><div class="seg" role="group" aria-label="Nehézség"><button type="button" data-m="d" aria-pressed="false">Napi 10</button><button type="button" data-m="k" class="on" aria-pressed="true">Könnyű</button><button type="button" data-m="n" aria-pressed="false">Nehéz</button></div>
+<div class="tpst"><div><b id="sc">0</b><small id="scl">Sorozat</small></div><div><b id="bs">0</b><small id="bsl">Rekord</small></div></div></div>
 <div class="jc" style="display:grid;gap:14px">
 <h2 class="tpq" id="q" aria-live="polite">Betöltés…</h2>
 <div class="tpp"><button type="button" class="tpo" id="o0" disabled><span class="tg"></span><span class="n">–</span><span class="m"></span><span class="v"></span><span class="b"><em></em></span></button>
@@ -107,7 +107,7 @@
 <div class="tpn"><button type="button" class="jb p" id="nx" hidden>Következő →</button><p class="tph" id="hint">Válassz a két település közül – billentyűzeten az 1 és a 2 is működik.</p></div>
 </div>
 <div class="tpend" id="end" hidden><h2 class="tpq" id="et"></h2><p id="ep"></p><div class="act"><button type="button" class="jb p" id="again">Új játék</button><button type="button" class="jb" id="shr">Megosztás</button></div></div>
-<p class="jn">A százalékok a 2026. április 12-i országgyűlési választás belföldi pártlistás szavazatai alapján (a levélszavazatok településhez nem rendelhetők): a pártok aránya a Tisza, a Fidesz–KDNP, a Mi Hazánk, a DK és az MKKP szavazatainak összegéhez viszonyítva, a részvétel a megjelentek aránya a névjegyzékhez képest. Forrás: Nemzeti Választási Iroda (valasztas.hu). Könnyű mód: legalább 5000 választópolgárú települések és nagy különbségek; nehéz mód: legalább 500 választópolgár, szorosabb párok.</p>
+<p class="jn">A százalékok a 2026. április 12-i országgyűlési választás belföldi pártlistás szavazatai alapján (a levélszavazatok településhez nem rendelhetők): a pártok aránya a Tisza, a Fidesz–KDNP, a Mi Hazánk, a DK és az MKKP szavazatainak összegéhez viszonyítva, a részvétel a megjelentek aránya a névjegyzékhez képest. Forrás: Nemzeti Választási Iroda (valasztas.hu). Napi 10: mindenkinek ugyanaz a tíz kérdés, naponta újak. Könnyű mód: legalább 5000 választópolgárú települések és nagy különbségek; nehéz mód: legalább 500 választópolgár, szorosabb párok.</p>
 <div class="tpl"><a href="telepulesem">Nézd meg a saját településed →</a><a href="magyarorszag">Választási térkép →</a><a href="napi-szo">Napi szó →</a><a href="napi-rejtveny">Országrejtvény →</a></div>
 </div>
 </main>
@@ -130,23 +130,26 @@ window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(
 <script src="assets/terkep-anim.js?v=4"></script>
 <script>
 (function(){const $=J.$;
-const MEGYE={"01":"Budapest","02":"Baranya","03":"Bács-Kiskun","04":"Békés","05":"Borsod-Abaúj-Zemplén","06":"Csongrád-Csanád","07":"Fejér","08":"Győr-Moson-Sopron","09":"Hajdú-Bihar","10":"Heves","11":"Komárom-Esztergom","12":"Nógrád","13":"Pest","14":"Somogy","15":"Szabolcs-Szatmár-Bereg","16":"Jász-Nagykun-Szolnok","17":"Tolna","18":"Vas","19":"Veszprém","20":"Zala"};
+const MEGYE={"01":"Budapest","02":"Baranya","03":"Bács-Kiskun","04":"Békés","05":"Borsod-Abaúj-Zemplén","06":"Csongrád-Csanád","07":"Fejér","08":"Győr-Moson-Sopron","09":"Hajdú-Bihar","10":"Heves","11":"Jász-Nagykun-Szolnok","12":"Komárom-Esztergom","13":"Nógrád","14":"Pest","15":"Somogy","16":"Szabolcs-Szatmár-Bereg","17":"Tolna","18":"Vas","19":"Veszprém","20":"Zala"};
 /* kérdéstípusok: [kulcs, kérdés eleje, kiemelt rész, szín, érték-függvény, csak nehéz módban] */
 const Q=[["T","Hol kapott nagyobb arányt","a Tisza?","#2F6FE4",t=>t.s[0]],["F","Hol kapott nagyobb arányt","a Fidesz–KDNP?","#EE8410",t=>t.s[1]],
   ["R","Hol volt magasabb","a részvétel?","#8E6BD8",t=>t.t],["M","Hol kapott nagyobb arányt","a Mi Hazánk?","#5E8F22",t=>t.s[2],1],["D","Hol kapott nagyobb arányt","a DK?","#1F9BDE",t=>t.s[3],1]];
-let T=[],mode=J.ls.get("vm-tp-mode","k"),sc=0,cur=null,busy=false,last=[];
-const best=()=>J.ls.get("vm-tp-best-"+mode,0);
+let T=[],mode=J.ls.get("vm-tp-mode","k"),sc=0,cur=null,busy=false,last=[],rnd=Math.random,qi=0,res=[];
+/* napi mód: mindenkinek ugyanaz a 10 kérdés (a dátumból vetett véletlenszám) */
+const DAY=(()=>{const d=new Date().toLocaleDateString("sv-SE",{timeZone:"Europe/Budapest"});return Math.floor((Date.parse(d+"T00:00:00Z")-Date.UTC(2026,10,16))/864e5)+1;})(),DN=10,DK="vm-tp-d-"+DAY;
+function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return ((t^t>>>14)>>>0)/4294967296;};}
+const best=()=>mode==="d"?DN:J.ls.get("vm-tp-best-"+mode,0);
 function pf(x){return (x*100).toFixed(1).replace(".",",")+"%";}
-function pool(){return mode==="k"?T.filter(t=>t.vp>=5000):T.filter(t=>t.vp>=500);}
+function pool(){return mode==="n"?T.filter(t=>t.vp>=500):T.filter(t=>t.vp>=5000);}
 function pick(){const P=pool(),qs=Q.filter(q=>mode==="n"||!q[5]);
-  for(let tries=0;tries<400;tries++){const q=qs[Math.floor(Math.random()*qs.length)],a=P[Math.floor(Math.random()*P.length)],b=P[Math.floor(Math.random()*P.length)];
+  for(let tries=0;tries<400;tries++){const q=qs[Math.floor(rnd()*qs.length)],a=P[Math.floor(rnd()*P.length)],b=P[Math.floor(rnd()*P.length)];
     if(a===b||last.includes(a.c)||last.includes(b.c))continue;const d=Math.abs(q[4](a)-q[4](b));
-    if(mode==="k"?(d<.05||d>.35):(d<.008||d>.12))continue;
-    if(mode==="k"&&a.m===b.m&&a.m==="01"&&Math.random()<.6)continue;
+    if(mode==="k"?(d<.05||d>.35):mode==="d"?(d<.02||d>.25):(d<.008||d>.12))continue;
+    if(mode!=="n"&&a.m===b.m&&a.m==="01"&&rnd()<.6)continue;
     last=[a.c,b.c].concat(last).slice(0,12);return {q,o:[a,b]};}
   return null;}
-function stats(){$("sc").textContent=sc;$("bs").textContent=best();}
-function round(){cur=pick();if(!cur){$("q").textContent="Nincs elég adat.";return;}busy=false;const q=cur.q;
+function stats(){const d=mode==="d";$("scl").textContent=d?"Pont":"Sorozat";$("bsl").textContent=d?"Kérdés":"Rekord";$("sc").textContent=sc;$("bs").textContent=d?Math.min(qi+1,DN)+"/"+DN:best();}
+function round(){if(mode==="d"&&res.length>=DN){dayEnd();return;}if(mode==="d")qi=res.length;stats();cur=pick();if(!cur){$("q").textContent="Nincs elég adat.";return;}busy=false;const q=cur.q;
   $("q").style.setProperty("--c",q[3]);$("q").innerHTML='<i aria-hidden="true"></i>'+J.esc(q[1])+' <span>'+J.esc(q[2])+'</span>';
   cur.o.forEach((t,i)=>{const b=$("o"+i);b.className="tpo";b.disabled=false;b.style.setProperty("--c",q[3]);
     b.querySelector(".n").textContent=t.n;b.querySelector(".m").textContent=t.m==="01"?"Budapest":MEGYE[t.m]+" vármegye";
@@ -158,13 +161,24 @@ function answer(i){if(busy||!cur)return;busy=true;const q=cur.q,v=cur.o.map(q[4]
     requestAnimationFrame(()=>{b.querySelector(".b em").style.width=(v[j]/mx*100)+"%";});
     if(j===w)b.classList.add("ok");if(j===i&&!ok)b.classList.add("no");b.querySelector(".tg").textContent=j===w?"Több":(j===i?"A te tipped":"");});
   $("hint").hidden=true;
+  if(mode==="d"){if(ok)sc++;res.push(ok?1:0);J.ls.set(DK,{r:res});stats();if(res.length>=DN){setTimeout(dayEnd,700);return;}$("nx").hidden=false;$("nx").focus({preventScroll:true});return;}
   if(ok){sc++;if(sc>best())J.ls.set("vm-tp-best-"+mode,sc);stats();$("nx").hidden=false;$("nx").focus({preventScroll:true});}
   else{const b=best(),rec=sc>0&&sc>=b;$("et").textContent=sc===0?"Most nem jött be":sc+" helyes válasz egymás után";
     $("ep").textContent=(rec&&sc>0?"Új rekord! ":"")+"A különbség "+(Math.abs(v[0]-v[1])*100).toFixed(1).replace(".",",")+" százalékpont volt. "+(rec?"":"A rekordod: "+b+". ")+"Próbálod újra?";
     $("end").hidden=false;try{$("end").scrollIntoView({block:"nearest",behavior:matchMedia("(prefers-reduced-motion: reduce)").matches?"auto":"smooth"});}catch(e){}J.ls.set("vm-tp-n",J.ls.get("vm-tp-n",0)+1);setTimeout(()=>$("again").focus({preventScroll:true}),50);}}
-function start(){sc=0;stats();round();}
-$("o0").onclick=()=>answer(0);$("o1").onclick=()=>answer(1);$("nx").onclick=round;$("again").onclick=start;
-$("shr").onclick=()=>J.share("Településpárbaj","Településpárbaj ("+(mode==="k"?"könnyű":"nehéz")+" mód): "+sc+" helyes válasz egymás után a 2026-os választási eredményekről. Te mennyit tudsz?","https://voksmero.hu/telepulesparbaj");
+function grid(){return res.map(x=>x?"🟩":"🟥").join("");}
+function dayEnd(){const ok=res.filter(x=>x).length;sc=ok;qi=DN-1;stats();$("nx").hidden=true;$("hint").hidden=true;
+  $("et").textContent="Napi 10 · #"+DAY+": "+ok+"/"+DN;$("ep").textContent=grid()+" – "+(ok>=9?"Lenyűgöző! ":ok>=7?"Szép munka! ":ok>=5?"Nem rossz! ":"Holnap új esély! ")+"Holnap új 10 kérdés jön; addig játszhatsz a könnyű vagy a nehéz módban.";
+  $("again").textContent="Könnyű mód";$("end").hidden=false;try{$("end").scrollIntoView({block:"nearest"});}catch(e){}}
+function start(){sc=0;last=[];$("again").textContent="Új játék";
+  if(mode==="d"){rnd=mulberry(DAY*7919+13);const sv=J.ls.get(DK,null);res=sv&&sv.r?sv.r.slice(0,DN):[];
+    /* a már lejátszott kérdéseket újrasorsoljuk, hogy a sorrend ugyanaz maradjon */
+    for(let i=0;i<res.length;i++)pick();sc=res.filter(x=>x).length;qi=res.length;
+    if(res.length>=DN){stats();const q=$("q");q.innerHTML="Mára megvan a 10 kérdés";cur=null;["o0","o1"].forEach(id=>{const b=$(id);b.className="tpo";b.disabled=true;b.querySelector(".n").textContent="–";b.querySelector(".m").textContent="";b.querySelector(".v").textContent="";b.querySelector(".tg").textContent="";b.querySelector(".b em").style.width="0";});dayEnd();return;}}
+  else{rnd=Math.random;res=[];qi=0;}
+  stats();round();}
+$("o0").onclick=()=>answer(0);$("o1").onclick=()=>answer(1);$("nx").onclick=round;$("again").onclick=()=>{if(mode==="d"){const k=document.querySelector('.seg [data-m="k"]');if(k){k.click();return;}}start();};
+$("shr").onclick=()=>mode==="d"?J.share("Településpárbaj","Településpárbaj #"+DAY+" – "+res.filter(x=>x).length+"/"+DN+"\n"+grid(),"https://voksmero.hu/telepulesparbaj"):J.share("Településpárbaj","Településpárbaj ("+(mode==="k"?"könnyű":"nehéz")+" mód): "+sc+" helyes válasz egymás után a 2026-os választási eredményekről. Te mennyit tudsz?","https://voksmero.hu/telepulesparbaj");
 document.querySelectorAll(".seg [data-m]").forEach(b=>{b.onclick=()=>{mode=b.dataset.m;J.ls.set("vm-tp-mode",mode);document.querySelectorAll(".seg [data-m]").forEach(x=>{x.classList.toggle("on",x===b);x.setAttribute("aria-pressed",x===b?"true":"false");});last=[];start();};
   b.classList.toggle("on",b.dataset.m===mode);b.setAttribute("aria-pressed",b.dataset.m===mode?"true":"false");});
 addEventListener("keydown",e=>{if(e.target.closest&&e.target.closest("input,textarea"))return;if(e.key==="1"||e.key==="ArrowLeft"){if(!busy){e.preventDefault();answer(0);}}else if(e.key==="2"||e.key==="ArrowRight"){if(!busy){e.preventDefault();answer(1);}}

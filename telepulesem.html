@@ -123,7 +123,7 @@ window.J={$:id=>document.getElementById(id),esc:s=>String(s==null?"":s).replace(
 <script>
 (function(){"use strict";const {$,esc,nf,pf}=J;
 const P=[["T","Tisza","#2F6FE4"],["F","Fidesz–KDNP","#EE8410"],["M","Mi Hazánk","#5E8F22"],["D","DK","#1F9BDE"],["K","MKKP","#8E8E8E"]];
-const MEGYE={"01":"Budapest","02":"Baranya","03":"Bács-Kiskun","04":"Békés","05":"Borsod-Abaúj-Zemplén","06":"Csongrád-Csanád","07":"Fejér","08":"Győr-Moson-Sopron","09":"Hajdú-Bihar","10":"Heves","11":"Komárom-Esztergom","12":"Nógrád","13":"Pest","14":"Somogy","15":"Szabolcs-Szatmár-Bereg","16":"Jász-Nagykun-Szolnok","17":"Tolna","18":"Vas","19":"Veszprém","20":"Zala"};
+const MEGYE={"01":"Budapest","02":"Baranya","03":"Bács-Kiskun","04":"Békés","05":"Borsod-Abaúj-Zemplén","06":"Csongrád-Csanád","07":"Fejér","08":"Győr-Moson-Sopron","09":"Hajdú-Bihar","10":"Heves","11":"Jász-Nagykun-Szolnok","12":"Komárom-Esztergom","13":"Nógrád","14":"Pest","15":"Somogy","16":"Szabolcs-Szatmár-Bereg","17":"Tolna","18":"Vas","19":"Veszprém","20":"Zala"};
 const norm=s=>String(s||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase().replace(/[^a-z0-9]/g,"");
 let T=[],BY={},NAT=null,RANK={},SEL=null;
 function prep(d){T=d.r.map(r=>{const v=r[4]+r[5]+r[6]+r[7]+r[8]||1;return {c:r[0],n:r[1],m:r[0].slice(0,2),vp:r[2],sz:r[3],v:v,s:[r[4]/v,r[5]/v,r[6]/v,r[7]/v,r[8]/v],o:r[9],t:r[2]?r[3]/r[2]:0,k:norm(r[1])};});
