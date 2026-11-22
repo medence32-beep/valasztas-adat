@@ -30,6 +30,7 @@
 .nf h1{margin:14px 0 0;font:900 clamp(30px,5vw,48px)/1 var(--f-display);text-transform:uppercase}
 .nf p{color:var(--ink2);max-width:46ch;margin:14px auto 0}
 .nf .acts{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:26px}
+.guess{margin:14px 0 0;font-size:17px}.guess a{color:var(--acc);font-weight:800}
 </style>
 </head>
 <body>
@@ -47,7 +48,16 @@
   </div>
 </header>
 <main class="nf wrap"><div><b>404</b><h1>Ez az oldal nem létezik</h1><p>Lehet, hogy elírtad a címet, vagy az oldal közben átköltözött. Innen biztosan továbbjutsz:</p>
-<div class="acts"><a class="btn" href="./">Kezdőlap</a><a class="btn alt" href="magyarorszag">Magyarország</a><a class="btn alt" href="szimulator">Szimulátor</a><a class="btn alt" href="eredmenyek">USA 2026</a></div></div></main>
+<p class="guess" id="guess" hidden></p>
+<div class="acts"><a class="btn" href="./">Kezdőlap</a><a class="btn alt" href="spanyol-valasztas">Spanyol választás</a><a class="btn alt" href="magyarorszag">Magyarország</a><a class="btn alt" href="naptar">Naptár</a><a class="btn alt" href="napi-szo">Napi szó</a><a class="btn alt" href="napi-rejtveny">Országrejtvény</a></div></div></main>
+<script>
+/* „Erre gondoltál?” – a beírt címhez leghasonlóbb oldal (szerkesztési távolság alapján) */
+(function(){var P=[["spanyol-valasztas","Spanyol választás 2026"],["spanyolorszag","Spanyolország"],["spanyol-szimulator","Spanyol szimulátor"],["spanyol-tippjatek","Spanyol tippjáték"],["magyarorszag","Magyarország"],["szimulator","Magyar szimulátor"],["telepulesem","Hogy szavazott a településed?"],["magyar-valasztasok-tortenete","A magyar választások története"],["eredmenyek","USA 2026 eredmények"],["egyesult-allamok","Egyesült Államok"],["usa-terkep","USA-térképrajzoló"],["naptar","Választási naptár"],["napi-szo","Napi szó"],["napi-rejtveny","Országrejtvény"],["nemetorszag","Németország"],["ausztria","Ausztria"],["szlovakia","Szlovákia"],["romania","Románia"],["valasztasi-rendszer","A választási rendszer"],["modszertan","Rólunk és módszertan"]];
+var q=decodeURIComponent(location.pathname).replace(/^\/+|\/+$/g,"").replace(/\.html$/,"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/[^a-z0-9]+/g,"-");if(!q)return;
+function d(a,b){var m=[],i,j;for(i=0;i<=a.length;i++){m[i]=[i];}for(j=1;j<=b.length;j++)m[0][j]=j;for(i=1;i<=a.length;i++)for(j=1;j<=b.length;j++)m[i][j]=Math.min(m[i-1][j]+1,m[i][j-1]+1,m[i-1][j-1]+(a[i-1]===b[j-1]?0:1));return m[a.length][b.length];}
+var best=null,bs=1e9;P.forEach(function(p){var s=d(q,p[0]);if(p[0].indexOf(q)>=0||q.indexOf(p[0])>=0)s=Math.min(s,2);if(s<bs){bs=s;best=p;}});
+if(best&&bs<=Math.max(3,Math.floor(best[0].length*.4))){var e=document.getElementById("guess");e.hidden=false;e.innerHTML='Erre gondoltál? <a href="'+best[0]+'">'+best[1]+' →</a>';}})();
+</script>
 <footer class="foot">
   <div class="wrap">
     <div><h4>Voksmérő</h4><p>Független, nem hivatalos választási adatoldal. Az oldalak folyamatosan bővülnek.</p></div>
