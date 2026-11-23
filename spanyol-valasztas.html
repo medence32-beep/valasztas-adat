@@ -374,7 +374,7 @@ img.fej{background:transparent!important;object-fit:cover}
   </div>
   <div class="dbar"><i id="dbL" style="background:#E30613"></i><span></span><i id="dbR" style="background:#1D84CE"></i></div>
   <div class="dlg"><span id="dlL"></span><span id="dlR"></span></div>
-  <div class="shi"><button class="btn alt" id="shimg" type="button">Kép a megosztáshoz</button><button class="btn alt" id="ertb" type="button" hidden>🔔 Szólj, ha fordul az állás</button><small>Négyzetes kép az aktuális állásról – Facebookra, Instagramra, Messengerre</small></div>
+  <div class="shi"><button class="btn alt" id="shimg" type="button">Kép a megosztáshoz</button><button class="btn alt" id="ertb" type="button" hidden>Értesítések</button><small>Négyzetes kép az aktuális állásról – Facebookra, Instagramra, Messengerre</small></div>
   <div class="shm" id="shm" hidden><div class="shb"><img id="shpv" alt="Megosztható kép az aktuális állásról"><div class="sha"><button class="btn" id="shsh" type="button">Megosztás</button><a class="btn alt" id="shdl" download="voksmero-spanyol-valasztas.png">Letöltés</a><button class="btn alt" id="shx" type="button">Bezárás</button></div></div></div>
 </div></section>
 
@@ -607,9 +607,9 @@ const NK="vm-es-ert",APP=/ValasztasokApp/.test(navigator.userAgent);
 function szol(cim,szoveg){try{if(APP||!("Notification" in window)||Notification.permission!=="granted"||localStorage.getItem(NK)!=="1")return;if(!document.hidden)return;
   const n=new Notification(cim,{body:szoveg,icon:"assets/app/icon-192.png",tag:"vm-es-"+cim});n.onclick=()=>{window.focus();n.close();};}catch(e){}}
 function ertUI(){const b=$("ertb");if(!b)return;if(APP||!("Notification" in window)){b.hidden=true;return;}b.hidden=false;const on=localStorage.getItem(NK)==="1"&&Notification.permission!=="denied";
-  b.textContent=on?"🔔 Értesítés bekapcsolva":"🔔 Szólj, ha fordul az állás";b.classList.toggle("on",on);}
+  b.textContent=on?"Értesítések: be":"Értesítések";b.classList.toggle("on",on);}
 if($("ertb")){ertUI();$("ertb").onclick=async()=>{try{if(localStorage.getItem(NK)==="1"){localStorage.removeItem(NK);ertUI();return;}
-  const p=await Notification.requestPermission();if(p==="granted"){localStorage.setItem(NK,"1");alertBox("Rendben! Ha ez a lap nyitva marad, szólunk, ha fordul az állás vagy megvan a többség.");}else alertBox("Az értesítést a böngésződ letiltotta – a címsor melletti lakatnál engedélyezheted.");}catch(e){}ertUI();};}
+  const p=await Notification.requestPermission();if(p==="granted"){localStorage.setItem(NK,"1");alertBox("Bekapcsolva. Amíg ez a lap nyitva van, értesítést kapsz, ha változik a vezető párt vagy valaki eléri a többséget.");}else alertBox("Az értesítést a böngésződ letiltotta – a címsor melletti lakatnál engedélyezheted.");}catch(e){}ertUI();};}
 function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
   if(!el){const h=document.querySelector("header.top");if(!h)return;el=document.createElement("div");el.id="tkr";el.setAttribute("role","status");el.setAttribute("aria-live","polite");h.appendChild(el);}
   const s=nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]),L=s[0][0],tm=(upd?new Date(upd):new Date()).toLocaleTimeString("hu-HU",{hour:"2-digit",minute:"2-digit",timeZone:"Europe/Budapest"});
