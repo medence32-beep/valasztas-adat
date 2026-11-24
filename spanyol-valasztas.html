@@ -660,7 +660,7 @@ function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
     try{const pr={};if(TP)Object.entries(TP).forEach(([id,tp],i)=>{let w=n23(tp.w);if(w==="PSOE"&&(i%3===0))w="PP";else if(w==="PP"&&i%7===0)w="Vox";
       const r=Object.entries(tp.v||{}).slice(0,4).map(([p,v])=>[n23(p),p===tp.w?v:v*0.9,null]);r.forEach(x=>{if(x[0]===w)x[1]=Math.max(x[1],r[0][1]+1.5);});r.sort((a,b)=>b[1]-a[1]);
       pr[id]={w,p:r[0][1],rp:k,r};});
-      E={st:k>=100?"vege":"szamlal",rp:k,upd:new Date().toISOString(),part:{},nat:nat.map(r=>[r[0],r[1],r[2],r[3]]),prov:pr,mun:{}};results();paintMap();}catch(e){}if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
+      E={st:k>=100?"vege":"szamlal",rp:k,upd:new Date().toISOString(),part:Object.assign({"14":41.85,"18":54.12},k>=30?{"vege":71.06}:{}),nat:nat.map(r=>[r[0],r[1],r[2],r[3]]),prov:pr,mun:{}};turnout();results();paintMap();}catch(e){}if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
 
 /* ---------- választás esti összefoglaló (a számlálás végén magától; a bemutatóban is) ---------- */
 function summ(nat,rp,st,demo){if(!(st==="vege"||rp>=99.5))return;const s=nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]);if(!s.length)return;
