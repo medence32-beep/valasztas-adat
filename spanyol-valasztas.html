@@ -314,6 +314,17 @@ img.fej{background:transparent!important;object-fit:cover}
 #utana .ut b{display:block;font:800 16px/1.2 var(--f-body);margin:3px 0 4px}
 #utana .ut p,#utana .ut2 p{margin:0;font-size:13.5px;line-height:1.5;color:var(--ink2)}
 #utana .ut2{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:18px}
+#utana .ukov{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 18px;align-items:center;border:1px solid var(--line2);border-left:4px solid var(--acc);border-radius:14px;background:var(--card);padding:14px 16px;margin:4px 0 22px}
+#utana .ukov[hidden]{display:none!important}
+#utana .ukov small{grid-column:1/-1;font:700 11px var(--f-cond,var(--f-body));letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+#utana .ukov b{font:800 19px/1.25 var(--f-body)}#utana .ukov p{grid-column:1/-1;margin:0;color:var(--ink2);font-size:14px;line-height:1.5}
+#utana .ukcd{display:flex;gap:10px;font-variant-numeric:tabular-nums}#utana .ukcd span{display:grid;justify-items:center;min-width:44px}#utana .ukcd i{font:900 26px/1 var(--f-display);font-style:normal}#utana .ukcd em{font:700 10px var(--f-body);font-style:normal;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+#utana .uksz{grid-column:1/-1;display:grid;gap:8px;margin-top:4px}
+#utana .uksz div{display:grid;gap:4px}#utana .uksz .bar{position:relative;height:14px;border-radius:99px;background:var(--bg2);overflow:hidden;display:flex}
+#utana .uksz .bar i{display:block;height:100%}#utana .uksz .bar u{position:absolute;top:-2px;bottom:-2px;left:calc(176/350*100%);width:2px;background:var(--ink)}
+#utana .uksz span{font-size:13.5px;color:var(--ink2)}#utana .uksz span b{font-size:14px;color:var(--ink)}
+#utana .ut li.on::before{box-shadow:0 0 0 5px color-mix(in srgb,var(--acc) 30%,transparent)}#utana .ut li.on b{color:var(--acc)}#utana .ut li.kesz::before{content:"✓"}
+@media(max-width:600px){#utana .ukov{grid-template-columns:minmax(0,1fr)}}
 #utana .ut2>div{border:1px solid var(--line);border-radius:14px;background:var(--card);padding:12px 14px}
 #utana .ut2 b{display:block;font:800 15px var(--f-body);margin-bottom:4px}
 @media(max-width:900px){#utana .ut{grid-template-columns:minmax(0,1fr)}#utana .ut li{padding:0 0 16px 40px}#utana .ut li::after{top:26px;bottom:0;left:12px;right:auto;width:2px;height:auto}#utana .ut2{grid-template-columns:minmax(0,1fr)}}
@@ -452,9 +463,10 @@ img.fej{background:transparent!important;object-fit:cover}
 
 <section class="sec2" id="utana"><div class="wrap">
   <div class="sh2 nl"><h2>Mi jön a választás után?</h2><small>Így lesz Spanyolországban kormány</small></div>
-  <ol class="ut">
+  <div class="ukov" id="ukov" aria-live="polite" hidden></div>
+  <ol class="ut" id="utl">
     <li><span class="ud">Nov. 29.</span><b>Választás</b><p>Az este kiderül, kinek hány mandátuma van. A győztes párt még nem lesz automatikusan kormányon.</p></li>
-    <li><span class="ud">Dec. 24-ig</span><b>Alakuló ülés</b><p>Az új parlamentnek legfeljebb 25 napon belül össze kell ülnie, és megválasztja a házelnököt – ez már az első erőpróba.</p></li>
+    <li><span class="ud">Dec. 23.</span><b>Alakuló ülés</b><p>Az új parlament december 23-án 10 órakor ül össze (így rögzíti a választást kiíró királyi rendelet), és megválasztja a házelnököt – ez már az első erőpróba.</p></li>
     <li><span class="ud">Utána</span><b>A király jelöl</b><p>VI. Fülöp sorra fogadja a pártok vezetőit, majd azt javasolja miniszterelnöknek, akinek a legtöbb esélye van a többségre.</p></li>
     <li><span class="ud">1. szavazás</span><b>176 igen kell</b><p>A jelölt bemutatja a programját, és abszolút többség, azaz legalább 176 képviselő szavazata kell.</p></li>
     <li><span class="ud">48 óra múlva</span><b>Több igen, mint nem</b><p>Ha az első nem sikerül, a második szavazáson már elég, ha több igen szavazat van, mint nem – a tartózkodók így sokat számítanak.</p></li>
@@ -864,6 +876,29 @@ function detail(o){const key=MODE+"|"+(o.t==="m"?"m"+o.o.id:"p"+o.id),isNew=key!
     else h+=(MODE==="chg"&&t&&lv&&lv.w?'<p class="chg">2023-ban: <b>'+esc(n23(t.w))+'</b> → 2026-ban: <b>'+esc(lv.w)+'</b>'+(n23(t.w)===lv.w?' (nem változott)':' – <b>fordulat</b>')+'</p>':'')+(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');
     if((MODE==="p23"&&t&&t.v)||(MODE!=="p23"&&lv&&lv.r))h+='<p><button class="btn alt pimg" type="button" data-pi="'+esc(id)+'">Kép a tartományról</button></p>';}
   $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
+/* ---------- kormányalakítás-követő (assets/data/es-kormany.json, kézzel frissítve) ---------- */
+(function(){const el=$("ukov");if(!el)return;const VAL=new Date("2026-11-29T20:00:00+01:00");let K=null;
+  const HO=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."];
+  const dstr=d=>d.getFullYear()+". "+HO[d.getMonth()]+" "+d.getDate()+".";
+  function cd(t){const ms=Math.max(0,t-Date.now()),d=Math.floor(ms/864e5),h=Math.floor(ms%864e5/36e5),m=Math.floor(ms%36e5/6e4);
+    return '<div class="ukcd" aria-label="Hátralévő idő">'+(d?'<span><i>'+d+'</i><em>nap</em></span>':'')+'<span><i>'+h+'</i><em>óra</em></span><span><i>'+m+'</i><em>perc</em></span></div>';}
+  function szav(v){const tot=350,ok=v.ok!=null?v.ok:(v.n===1?v.igen>=176:v.igen>v.nem);
+    return '<div><span>'+(v.n||1)+'. szavazás · '+dstr(new Date(v.d))+' · '+esc(v.jelolt||"")+': <b>'+v.igen+' igen</b>, '+v.nem+' nem'+(v.tart?', '+v.tart+' tartózkodás':'')+' – '+(ok?'<b>megválasztották</b>':'nem sikerült')+'</span>'+
+      '<div class="bar" role="img" aria-label="'+v.igen+' igen, '+v.nem+' nem"><i style="width:'+(v.igen/tot*100)+'%;background:var(--good,#3A9A57)"></i><i style="width:'+((v.tart||0)/tot*100)+'%;background:var(--line2)"></i><i style="width:'+(v.nem/tot*100)+'%;background:var(--bad,#C8102E)"></i><u></u></div></div>';}
+  function lep(n){document.querySelectorAll("#utl li").forEach((li,i)=>{li.classList.toggle("on",i===n);li.classList.toggle("kesz",i<n);});}
+  function draw(){const now=Date.now(),k=K||{},al=k.alakulo?new Date(k.alakulo):new Date("2026-12-23T10:00:00+01:00"),sz=k.szavazasok||[];let h="";
+    if(k.vege){lep(6);h='<small>Megalakult a kormány</small><b>'+esc(k.vege.nev)+(k.vege.part?' ('+esc(k.vege.part)+')':'')+' a miniszterelnök</b><p>A Kongresszus '+(k.vege.d?dstr(new Date(k.vege.d)):'')+' bizalmat szavazott neki.</p>';}
+    else if(k.uj_valasztas){lep(5);h='<small>Új választás</small><b>A parlament feloszlott</b><p>Két hónap alatt senki sem kapott többséget; az új választás: '+esc(k.uj_valasztas)+'.</p>';}
+    else if(now<VAL){lep(0);h='<small>Következik</small><b>A választás – urnazárás 20:00-kor</b>'+cd(VAL)+'<p>Utána jön az alakuló ülés ('+dstr(al)+'), majd a miniszterelnök-jelölt bizalmi szavazása.</p>';}
+    else if(now<al&&!k.hazelnok){lep(1);h='<small>Következik</small><b>Alakuló ülés – '+dstr(al)+' 10:00</b>'+cd(al)+'<p>Az új Kongresszus ekkor választ házelnököt: az első jele annak, ki tud többséget összerakni. Addig Sánchez ügyvezető kormánya dolgozik.</p>';}
+    else if(!k.jelolt){lep(2);h='<small>Most zajlik</small><b>A király egyeztet a pártokkal</b><p>'+(k.hazelnok?'A Kongresszus elnöke: <b>'+esc(k.hazelnok)+'</b>. ':'')+'VI. Fülöp a pártvezetőkkel folytatott tárgyalások után jelöli ki, ki próbálkozhat a kormányalakítással.</p>';}
+    else{const ut=sz[sz.length-1],first=sz[0];
+      if(!sz.length){lep(3);h='<small>Most zajlik</small><b>Jelölt: '+esc(k.jelolt)+'</b><p>A beiktatási vitán a jelölt bemutatja programját; az első szavazáson 176 igen kell.</p>';}
+      else{const okU=ut.ok!=null?ut.ok:(ut.n===1?ut.igen>=176:ut.igen>ut.nem);lep(okU?6:(ut.n===2?4:3));const hat=first&&!okU?new Date(new Date(first.d).getTime()+61*864e5):null;
+        h='<small>'+(okU?'Megvan az új miniszterelnök':'Beiktatási szavazás')+'</small><b>'+(okU?'':'Jelölt: ')+esc(k.jelolt)+'</b><div class="uksz">'+sz.map(szav).join("")+'</div><p>A függőleges vonal a 176 mandátumos abszolút többség.'+(hat?' Ha senkit sem választanak meg, a határidő után ('+dstr(hat)+') új választás jön.':'')+'</p>';}}
+    el.innerHTML=h;el.hidden=false;}
+  fetch("assets/data/es-kormany.json?_="+Math.floor(Date.now()/3e5)).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{K=j;draw();setInterval(draw,60000);});})();
+
 /* ---------- megosztható kép egy tartományról (1080×1080) ---------- */
 async function provImg(id){const t=TP&&TP[id],lv=(E.prov||{})[id],y23=MODE==="p23";let rows,lab;
   if(y23&&t&&t.v){rows=Object.entries(t.v).map(([p,v])=>({n:p,v,m:(t.r||{})[p]||0}));lab="2023-as végeredmény · "+t.s+" mandátum";}

@@ -1,0 +1,10 @@
+{
+  "_megjegyzes": "A spanyol kormányalakítás állása (kézzel frissítve). alakulo: az alakuló ülés ideje (RD 806/2026: dec. 23. 10:00). hazelnok: a megválasztott házelnök neve. jelolt: a király által javasolt miniszterelnök-jelölt (párt). szavazasok: [{d: ISO-idő, n: 1|2, jelolt, igen, nem, tart, ok}]. vege: {nev, part, d} ha megvan a kormányfő; uj_valasztas: dátum, ha feloszlatták.",
+  "alakulo": "2026-12-23T10:00:00+01:00",
+  "hazelnok": null,
+  "jelolt": null,
+  "szavazasok": [],
+  "vege": null,
+  "uj_valasztas": null,
+  "upd": "2026-11-24"
+}
