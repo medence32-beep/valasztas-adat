@@ -348,6 +348,13 @@ img.fej{background:transparent!important;object-fit:cover}
 #szoros .szf{color:var(--ink3);font-size:12.5px;margin:10px 0 0;max-width:80ch}
 @media(max-width:760px){#szoros .szl{grid-template-columns:minmax(0,1fr)}}
 #ertb.on{border-color:var(--acc);color:var(--acc)}
+/* exit poll: tömör sorok (párt · sáv · tartomány) */
+.exitc{padding:12px 14px!important}.exitc .kh h3{margin-bottom:6px!important}
+.exr{grid-template-columns:8.6em minmax(0,1fr) 4.6em!important;grid-template-areas:none!important;row-gap:0!important;gap:8px!important;padding:3px 0!important;font-size:13px!important}
+.exr>*{grid-area:auto!important}
+.exn{display:flex;align-items:center;gap:6px;min-width:0;font:700 13px var(--f-body);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.exn i{width:8px;height:8px;border-radius:2px;background:var(--c);flex:none}
+.exr .tr{height:8px!important}.exr b{font-size:12.5px!important}
+.exitc .rn{font-size:12px;margin:6px 0 0}
 </style>
 </head>
 <body>
@@ -629,7 +636,7 @@ function prep(){if(E.nat&&E.nat.length)return;
 /* exit poll: mandátumsávok */
 function exitp(){const X=E.exit;if(!X||!X.length)return;const x=X[X.length-1],m=x.m||{};$("exsrc").textContent=(x.f||"")+(x.t?" · "+x.t:"");
   const rows=Object.entries(m).sort((a,b)=>(b[1][0]+b[1][1])-(a[1][0]+a[1][1])),mx=Math.max(...rows.map(r=>r[1][1]),1);
-  $("exit").innerHTML=rows.map(([p,[lo,hi]])=>'<div class="exr" style="--c:'+cl(p)+'">'+pcell(p)+'<span class="tr"><em style="left:'+(lo/mx*100)+'%;width:'+Math.max(1.5,(hi-lo)/mx*100)+'%"></em>'+(R23[p]?'<u style="left:'+(R23[p][1]/mx*100)+'%" title="2023: '+R23[p][1]+'"></u>':'')+'</span><b>'+(lo===hi?lo:lo+'–'+hi)+'</b></div>').join("")+
+  $("exit").innerHTML=rows.map(([p,[lo,hi]])=>'<div class="exr" style="--c:'+cl(p)+'"><span class="exn"><i></i>'+esc(p)+'</span><span class="tr"><em style="left:'+(lo/mx*100)+'%;width:'+Math.max(1.5,(hi-lo)/mx*100)+'%"></em>'+(R23[p]?'<u style="left:'+(R23[p][1]/mx*100)+'%" title="2023: '+R23[p][1]+'"></u>':'')+'</span><b>'+(lo===hi?lo:lo+'–'+hi)+'</b></div>').join("")+
     '<p class="rn">Becsült mandátumsávok; a halvány függőleges vonal a 2023-as eredmény. Az exit poll nem eredmény – a számlálás akár jelentősen eltérhet tőle.</p>';}
 
 /* ---------- élő ticker a fejléc alatt (számlálás közben; ?demo-val kipróbálható) ---------- */
