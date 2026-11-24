@@ -1,0 +1,80 @@
+name: Spanyol eredmény kézi frissítése
+
+# A spanyol választás estéjén (nov. 29.) telefonról is kitölthető űrlap: az itt megadott számok
+# azonnal megjelennek a spanyol-valasztas oldalon (az „elo” ágon át, Pages-építés nélkül).
+# Amit üresen hagysz, az nem változik. Ha a hivatalos forrás már be van kötve, az eredményt az írja,
+# ilyenkor innen csak az exit poll és a hiányzó adatok kerülnek át.
+on:
+  workflow_dispatch:
+    inputs:
+      rp:
+        description: "Feldolgozottság, % (pl. 45,2)"
+        required: false
+      nat:
+        description: "Pártok: párt % mandátum; … (pl. PP 33,1 137; PSOE 31,7 121; Vox 15,2 52)"
+        required: false
+      part:
+        description: "Részvétel (pl. 14=41,2 18=52 vege=69,8)"
+        required: false
+      exit:
+        description: "Exit poll (pl. GAD3/RTVE: PP 128-134, PSOE 110-116, Vox 50-55)"
+        required: false
+      allapot:
+        description: "Állapot"
+        type: choice
+        options: ["", "szamlalas", "vege"]
+        default: ""
+      torles:
+        description: "Kézi adatok törlése"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: es-kezi
+  cancel-in-progress: false
+
+jobs:
+  frissites:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Forráskód (privát tárhely)
+        uses: actions/checkout@v4
+        with:
+          repository: medence32-beep/voksmero-forras
+          token: ${{ secrets.FORRAS_TOKEN }}
+          path: _forras
+      - name: Eszközök bekötése
+        run: ln -sfn _forras/tools tools
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Kézi adatok frissítése és feltöltése
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RP: ${{ inputs.rp }}
+          NAT: ${{ inputs.nat }}
+          PART: ${{ inputs.part }}
+          EXIT: ${{ inputs.exit }}
+          ALLAPOT: ${{ inputs.allapot }}
+          TORLES: ${{ inputs.torles && 'igen' || '' }}
+        run: |
+          rm -rf /tmp/elo && mkdir -p /tmp/elo
+          if git fetch -q origin elo 2>/dev/null; then
+            for f in es-elo.json cv-elo.json es-kezi.json; do git show FETCH_HEAD:$f > /tmp/elo/$f 2>/dev/null || rm -f /tmp/elo/$f; done
+          fi
+          [ -f /tmp/elo/es-kezi.json ] && cp /tmp/elo/es-kezi.json es-kezi.json
+          [ -f /tmp/elo/es-elo.json ] && cp /tmp/elo/es-elo.json es-elo.json
+          python3 tools/es_kezi_bevitel.py
+          set +e; python3 tools/es_elo.py; rc=$?; set -e
+          if [ -f es-kezi.json ]; then cp es-kezi.json /tmp/elo/; else rm -f /tmp/elo/es-kezi.json; fi
+          if [ $rc -eq 0 ]; then cp es-elo.json /tmp/elo/; fi
+          if [ "$TORLES" = "igen" ] && [ ! -f es-kezi.json ]; then rm -f /tmp/elo/es-elo.json; fi
+          cd /tmp/elo && git init -q && git checkout -q -b elo && git add -A \
+            && git -c user.name="eredmenyfrissito[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -q -m "kézi élő adatok" --allow-empty \
+            && git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:elo
+          echo "Kész – az oldal 1 percen belül mutatja."
