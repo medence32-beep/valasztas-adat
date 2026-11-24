@@ -37,9 +37,9 @@ function flagSrcset(code){code=code.toLowerCase();return "https://flagcdn.com/w8
 function search(q){q=norm(q);if(!q)return list.slice();return list.filter(function(c){var a=norm(c.name),b=norm(c.en);return a.indexOf(q)>=0||b.indexOf(q)>=0||c.code.toLowerCase()===q;})
   .sort(function(x,y){var ax=norm(x.name).indexOf(q)===0?0:1,ay=norm(y.name).indexOf(q)===0?0:1;return ax-ay||x.name.localeCompare(y.name,"hu");});}
 /* téma */
-try{var t=localStorage.getItem("ve-theme");if(t==="dark"||t==="light")document.documentElement.setAttribute("data-theme",t);}catch(e){}
-function themeBtn(el){if(!el)return;el.addEventListener("click",function(){var cur=document.documentElement.getAttribute("data-theme")||(matchMedia("(prefers-color-scheme: light)").matches?"light":"dark");
-  var nx=cur==="dark"?"light":"dark";document.documentElement.setAttribute("data-theme",nx);try{localStorage.setItem("ve-theme",nx);}catch(e){}});}
+/* csak sötét téma (a világos mód megszűnt) */
+document.documentElement.setAttribute("data-theme","dark");
+function themeBtn(el){if(el)el.hidden=true;}
 function reveal(){var els=document.querySelectorAll(".reveal");if(!("IntersectionObserver" in window)||matchMedia("(prefers-reduced-motion: reduce)").matches){els.forEach(function(e){e.classList.add("in");});return;}
   var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target);}});},{rootMargin:"0px 0px -6% 0px"});els.forEach(function(e){io.observe(e);});}
 window.VALASZTAS={list:list,CONT:CONT,READY:READY,name:nm,norm:norm,href:href,flag:flag,flagSrcset:flagSrcset,search:search,themeBtn:themeBtn,reveal:reveal};
