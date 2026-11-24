@@ -876,7 +876,18 @@ $("mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]"
 
 const pname=id=>(TP&&TP[id]?TP[id].n:(PRV[id]?PRV[id].n:""));
 function vbLive(r){const e=(r||[]).slice(0,8);if(!e.length)return '';const mx=e[0][1]||1;
-  return '<div class="vb vbm">'+e.map(x=>'<div style="--c:'+cl(x[0])+'">'+pcell(x[0])+'<em style="width:'+(x[1]/mx*100)+'%"></em><b>'+f1(x[1])+'%'+(x[2]!=null?' · '+x[2]+' hely':'')+(x[3]>0?'<small>'+fi(x[3])+' szavazat</small>':'')+'</b></div>').join('')+'</div>';}
+  return '<div class="vb vbm vbl">'+e.map(x=>'<div data-p="'+esc(x[0])+'" style="--c:'+cl(x[0])+'">'+pcell(x[0])+'<em style="width:'+(x[1]/mx*100)+'%"></em><b><span class="anr" data-k="p">'+f1(x[1])+'%</span>'+(x[2]!=null?' · <span class="anr" data-k="m">'+x[2]+'</span> hely':'')+(x[3]>0?'<small><span class="anr" data-k="s">'+fi(x[3])+'</span> szavazat</small>':'')+'</b></div>').join('')+'</div>';}
+/* a tartomány/település panel animációja: megnyitáskor nulláról nő, új adatnál a régi értékről */
+const VBPREV={};
+function animVB(key,isNew,fp){const box=document.querySelector("#det .vbl");if(!box)return;const rows=box.querySelectorAll("div[data-p]");const mx=Math.max(...[...rows].map(r=>parseFloat(r.querySelector("em").style.width)||0),1);
+  const old=isNew?null:VBPREV[key],now={};
+  rows.forEach(el=>{const p=el.dataset.p,o=old&&old[p],em=el.querySelector("em"),w=parseFloat(em.style.width)||0,n={w};
+    el.querySelectorAll(".anr").forEach(c=>{n[c.dataset.k]=parseFloat(c.textContent.replace(/\s/g,"").replace(",","."))||0;});now[p]=n;
+    const ch=!o||Object.keys(n).some(k=>o[k]!==n[k]);if(!RMOT||!ch)return;
+    em.style.transition="none";em.style.width=(o?o.w:0)+"%";em.getBoundingClientRect();em.style.transition="width 1s cubic-bezier(.2,.8,.2,1)";em.style.width=w+"%";
+    el.querySelectorAll(".anr").forEach(c=>{const k=c.dataset.k,fmt=k==="p"?(x=>f1(x)+"%"):k==="s"?(x=>fi(x)):(x=>String(Math.round(x)));tween(c,o?o[k]:0,n[k],fmt,o?900:1100);});
+    if(fp&&fp[p]!=null){const dy=fp[p]-el.getBoundingClientRect().top;if(Math.abs(dy)>2){el.style.transition="none";el.style.transform="translateY("+dy+"px)";el.getBoundingClientRect();el.style.transition="transform .7s cubic-bezier(.2,.8,.2,1)";el.style.transform="";}}});
+  VBPREV[key]=now;}
 function indulok(t){let ps=(t&&t.v&&Object.keys(t.v).length?Object.keys(t.v):Object.keys(R23)).filter(p=>p!=="UPN").map(p=>p==="Sumar"?"Frente Amplio":p);["Podemos","SALF"].forEach(p=>{if(ps.indexOf(p)<0)ps.push(p);});ps=ps.slice(0,9);
   const v23=p=>t&&t.v?(p==="Frente Amplio"?t.v.Sumar:t.v[p]):null;
   return '<h4 class="indh">Pártok és jelöltek 2026</h4><div class="ind">'+ps.map(p=>'<div>'+pcell(p)+'<small>'+(v23(p)!=null?'2023: '+f1(v23(p))+'%'+(p==="Frente Amplio"?' (Sumar)':''):(p==='Podemos'?'2023: a Sumar listáján':'új lista'))+'</small></div>').join('')+'</div>';}
@@ -902,7 +913,8 @@ function detail(o){const key=MODE+"|"+(o.t==="m"?"m"+o.o.id:"p"+o.id),isNew=key!
     if(MODE==="p23"&&t)h+='<p>2023-ban '+t.s+' mandátum; első: <b>'+esc(t.w)+'</b> ('+f1(t.p)+'%).</p>'+(t.el?'<div class="mst"><span><small>Részvétel</small><b>'+f1((t.vt-(t.cv||0))/(t.el-(t.ce||0))*100)+'%</b></span><span><small>Érvényes szavazat</small><b>'+fi(t.vv)+'</b></span><span><small>Mandátum 2026</small><b>'+t.s26+'</b></span></div>':'')+vbars(t)+(t.sz?'<p class="src">A szavazatszámok a spanyolországi lakóhelyű választók szavazatai (a külföldön élők levélszavazatai nélkül), a százalékok és a mandátumok a hivatalos végeredményből.</p>':'');
     else h+=(MODE==="chg"&&t&&lv&&lv.w?'<p class="chg">2023-ban: <b>'+esc(n23(t.w))+'</b> → 2026-ban: <b>'+esc(lv.w)+'</b>'+(n23(t.w)===lv.w?' (nem változott)':' – <b>fordulat</b>')+'</p>':'')+(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');
     if((MODE==="p23"&&t&&t.v)||(MODE!=="p23"&&lv&&lv.r))h+='<p><button class="btn alt pimg" type="button" data-pi="'+esc(id)+'">Kép a tartományról</button></p>';}
-  $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
+  const fpv={};if(!isNew)document.querySelectorAll("#det .vbl div[data-p]").forEach(el=>fpv[el.dataset.p]=el.getBoundingClientRect().top);
+  $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';animVB(key,isNew,fpv);legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
 /* ---------- kormányalakítás-követő (assets/data/es-kormany.json, kézzel frissítve) ---------- */
 (function(){const el=$("ukov");if(!el)return;const VAL=new Date("2026-11-29T20:00:00+01:00");let K=null;
   const HO=["jan.","febr.","márc.","ápr.","máj.","jún.","júl.","aug.","szept.","okt.","nov.","dec."];
