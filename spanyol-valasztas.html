@@ -630,7 +630,7 @@ const NK="vm-es-ert",APP=/ValasztasokApp/.test(navigator.userAgent);
 function szol(cim,szoveg){try{if(APP||!("Notification" in window)||Notification.permission!=="granted"||localStorage.getItem(NK)!=="1")return;if(!document.hidden)return;
   const n=new Notification(cim,{body:szoveg,icon:"assets/app/icon-192.png",tag:"vm-es-"+cim});n.onclick=()=>{window.focus();n.close();};}catch(e){}}
 function ertUI(){const b=$("ertb");if(!b)return;if(APP||!("Notification" in window)){b.hidden=true;return;}b.hidden=false;const on=localStorage.getItem(NK)==="1"&&Notification.permission!=="denied";
-  b.textContent=on?"Értesítések: be":"Értesítések";b.classList.toggle("on",on);}
+  b.textContent=on?"Értesítések: Be":"Értesítések";b.classList.toggle("on",on);}
 if($("ertb")){ertUI();$("ertb").onclick=async()=>{try{if(localStorage.getItem(NK)==="1"){localStorage.removeItem(NK);ertUI();return;}
   const p=await Notification.requestPermission();if(p==="granted"){localStorage.setItem(NK,"1");alertBox("Bekapcsolva. Amíg ez a lap nyitva van, értesítést kapsz, ha változik a vezető párt vagy valaki eléri a többséget.");}else alertBox("Az értesítést a böngésződ letiltotta – a címsor melletti lakatnál engedélyezheted.");}catch(e){}ertUI();};}
 function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
