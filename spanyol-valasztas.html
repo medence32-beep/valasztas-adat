@@ -89,6 +89,7 @@
 .prog{display:flex;align-items:center;gap:12px;margin-bottom:12px;font-size:13px;color:var(--ink2)}
 .prog .bar{flex:1;height:8px;border-radius:4px;background:var(--bg2);overflow:hidden}.prog .bar i{display:block;height:100%;background:var(--acc);width:0}
 .rr{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1.6fr) 4.2em 3.4em;gap:10px;align-items:center;padding:8px 0;border-top:1px solid var(--line);font-size:14.5px}
+.rr .vsz{display:block;font:600 12px var(--f-mono,monospace);font-style:normal;color:var(--ink2);margin-top:2px;font-variant-numeric:tabular-nums}
 .rr .pn{display:flex;align-items:center;gap:8px;font-weight:700;min-width:0}.rr .pn i{width:10px;height:10px;border-radius:3px;background:var(--c);flex:none}
 .rr .tr{position:relative;height:10px;border-radius:5px;background:var(--bg2)}.rr .tr em{display:block;height:100%;border-radius:5px;background:var(--c)}
 .rr .v,.rr .s{text-align:right;font:700 13px var(--f-mono)}.rr .s{color:var(--ink3)}.rr .s b{color:var(--ink)}
@@ -565,7 +566,7 @@ function results(){const nat=E.nat||[];const rp=E.rp||0;$("rpl").textContent=f1(
   if(!nat.length){prep();paintState();return;}$("cntl").textContent=E.st==="vege"?"Végeredmény":"Számlálás";
   const mx=Math.max(...nat.map(r=>r[2]));
   const dd=(x,d,u)=>x==null?'':'<small class="'+(x>=0?'up':'dn')+'">'+(x>=0?'+':'−')+(d?f1(Math.abs(x)):Math.abs(x))+(u||'')+'</small>';
-  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'">'+pcell(r[0])+'<span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
+  $("res").innerHTML=nat.filter(r=>r[2]>=.5||r[3]).map(r=>{const o=R23[r[0]];return '<div class="rr" style="--c:'+cl(r[0])+'">'+(r[1]>0?pcell(r[0]).replace(/<\/span><\/span>$/,'<em class="vsz">'+fi(r[1])+' szavazat</em></span></span>'):pcell(r[0]))+'<span class="tr"><em style="width:'+(r[2]/mx*100)+'%"></em></span><span class="v">'+f2(r[2])+'%'+(o?dd(r[2]-o[0],1):'')+'</span><span class="s"><b>'+(r[3]||0)+'</b>'+(o?dd((r[3]||0)-o[1],0):'')+'</span></div>';}).join("")+
     '<p class="rn">Az utolsó oszlop a jelenlegi állás szerinti mandátumszám; a kis számok a 2023-as eredményhez képesti változást mutatják. Előzetes, nem hivatalos végeredmény.</p>';
   ticker(nat,rp,E.upd,E.st);summ(nat,rp,E.st);pvr(nat,rp,E.st);  koal(nat);{const g=n=>nat.find(r=>r[0]===n)||[];duel(g('PSOE')[2],g('PP')[2],g('PSOE')[3],g('PP')[3],'e');}
   const parts=nat.filter(r=>r[3]>0).map(r=>({n:r[0],m:r[3],c:cl(r[0])}));hemi($("hemi2"),parts);sbar($("sbar2"),parts);
@@ -634,13 +635,13 @@ function ticker(nat,rp,upd,st,demo){if(!nat||!nat.length)return;let el=$("tkr");
 (async()=>{const q=new URLSearchParams(location.search).get("demo");if(!q||!(window.crypto&&crypto.subtle))return;
   const h=[...new Uint8Array(await crypto.subtle.digest("SHA-256",new TextEncoder().encode(q)))].map(x=>x.toString(16).padStart(2,"0")).join("");
   if(h!=="19a2d798ab5244c05b7ebb0113d2e26aff89abe1027e58c8b8933ef9ae01dd17")return;let k=0;const B=[["PSOE",33,130],["PP",31,124],["Vox",15,60],["Frente Amplio",6,12],["ERC",2.2,8],["Junts",1.6,6],["EH Bildu",1.4,6],["PNV",1.1,5]];
-  const step=()=>{k=Math.min(k+7,100);const w=k/100,f=[[-3,-14],[2.5,14],[2.4,12],[0,-2]];const nat=B.map((r,i)=>{const d=f[i]||[0,0];return [r[0],0,+(r[1]+d[0]*w).toFixed(2),Math.round(r[2]+d[1]*w)];});
+  const step=()=>{k=Math.min(k+7,100);const w=k/100,f=[[-3,-14],[2.5,14],[2.4,12],[0,-2]];const nat=B.map((r,i)=>{const d=f[i]||[0,0],pc=+(r[1]+d[0]*w).toFixed(2);return [r[0],Math.round(pc/100*24.6e6*k/100),pc,Math.round(r[2]+d[1]*w)];});
     ticker(nat,k,null,k>=100?"vege":"szamlal",1);summ(nat,k,k>=100?"vege":"szamlal",1);
     /* a bemutatóban az eredménytábla és a térkép is kitalált adatot kap (2023-as alapon, néhány fordulattal) */
     try{const pr={};if(TP)Object.entries(TP).forEach(([id,tp],i)=>{let w=n23(tp.w);if(w==="PSOE"&&(i%3===0))w="PP";else if(w==="PP"&&i%7===0)w="Vox";
       const r=Object.entries(tp.v||{}).slice(0,4).map(([p,v])=>[n23(p),p===tp.w?v:v*0.9,null]);r.forEach(x=>{if(x[0]===w)x[1]=Math.max(x[1],r[0][1]+1.5);});r.sort((a,b)=>b[1]-a[1]);
       pr[id]={w,p:r[0][1],rp:k,r};});
-      E={st:k>=100?"vege":"szamlal",rp:k,upd:new Date().toISOString(),part:{},nat:nat.map(r=>[r[0],0,r[2],r[3]]),prov:pr,mun:{}};results();paintMap();}catch(e){}if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
+      E={st:k>=100?"vege":"szamlal",rp:k,upd:new Date().toISOString(),part:{},nat:nat.map(r=>[r[0],r[1],r[2],r[3]]),prov:pr,mun:{}};results();paintMap();}catch(e){}if(k<100)setTimeout(step,2500);};setTimeout(step,800);})();
 
 /* ---------- választás esti összefoglaló (a számlálás végén magától; a bemutatóban is) ---------- */
 function summ(nat,rp,st,demo){if(!(st==="vege"||rp>=99.5))return;const s=nat.slice().sort((a,b)=>(b[3]||0)-(a[3]||0)||b[2]-a[2]);if(!s.length)return;
@@ -849,7 +850,7 @@ $("mode").addEventListener("click",e=>{const b=e.target.closest("button[data-m]"
 
 const pname=id=>(TP&&TP[id]?TP[id].n:(PRV[id]?PRV[id].n:""));
 function vbLive(r){const e=(r||[]).slice(0,8);if(!e.length)return '';const mx=e[0][1]||1;
-  return '<div class="vb vbm">'+e.map(x=>'<div style="--c:'+cl(x[0])+'">'+pcell(x[0])+'<em style="width:'+(x[1]/mx*100)+'%"></em><b>'+f1(x[1])+'%'+(x[2]!=null?' · '+x[2]+' hely':'')+'</b></div>').join('')+'</div>';}
+  return '<div class="vb vbm">'+e.map(x=>'<div style="--c:'+cl(x[0])+'">'+pcell(x[0])+'<em style="width:'+(x[1]/mx*100)+'%"></em><b>'+f1(x[1])+'%'+(x[2]!=null?' · '+x[2]+' hely':'')+(x[3]>0?'<small>'+fi(x[3])+' szavazat</small>':'')+'</b></div>').join('')+'</div>';}
 function indulok(t){let ps=(t&&t.v&&Object.keys(t.v).length?Object.keys(t.v):Object.keys(R23)).filter(p=>p!=="UPN").map(p=>p==="Sumar"?"Frente Amplio":p);["Podemos","SALF"].forEach(p=>{if(ps.indexOf(p)<0)ps.push(p);});ps=ps.slice(0,9);
   const v23=p=>t&&t.v?(p==="Frente Amplio"?t.v.Sumar:t.v[p]):null;
   return '<h4 class="indh">Pártok és jelöltek 2026</h4><div class="ind">'+ps.map(p=>'<div>'+pcell(p)+'<small>'+(v23(p)!=null?'2023: '+f1(v23(p))+'%'+(p==="Frente Amplio"?' (Sumar)':''):(p==='Podemos'?'2023: a Sumar listáján':'új lista'))+'</small></div>').join('')+'</div>';}
