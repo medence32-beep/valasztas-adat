@@ -679,7 +679,7 @@ async function shareImg(){const d=await shareData();if(!d){alertBox("Az adatok m
   x.fillStyle="#A3B2CC";x.font="600 26px "+FB;x.fillText(d.lab,64,S-62);
   x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu",S-64,S-62);x.textAlign="left";
   let url;try{url=c.toDataURL("image/png");}catch(e){alertBox("A kép most nem készíthető el.");return;}
-  $("shpv").src=url;$("shdl").href=url;$("shm").hidden=false;
+  $("shpv").src=url;$("shdl").href=url;$("shdl").setAttribute("download","voksmero-spanyol-valasztas.png");$("shm").hidden=false;
   $("shsh").hidden=!(navigator.canShare||window.AppBridge);
   $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],"voksmero-spanyol-valasztas.png",{type:"image/png"});
       if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Spanyol választás 2026",text:"Spanyol választás 2026 – voksmero.hu"});return;}}catch(e){if(e&&e.name==="AbortError")return;}
@@ -861,8 +861,42 @@ function detail(o){const key=MODE+"|"+(o.t==="m"?"m"+o.o.id:"p"+o.id),isNew=key!
     else h+=r&&r.r?'<p>'+(r.rp!=null?f1(r.rp)+'% feldolgozva':'')+(r.part!=null?' · részvétel: '+f2(r.part)+'%':'')+'</p>'+vbLive(r.r):'<p class="nodata">Még nincs adat</p><p>A település eredményei november 29-én az urnazárás (20:00) után, a számlálás során érkeznek. '+(t?'A település a(z) '+esc(t.n)+' választókerülethez tartozik, amely 2026-ban '+t.s26+' képviselőt választ.':'')+'</p>';}
   else{const id=o.id,t=TP&&TP[id],lv=(E.prov||{})[id];h='<h3>Választókerület</h3><div class="dn">'+esc(pname(id))+'</div>';
     if(MODE==="p23"&&t)h+='<p>2023-ban '+t.s+' mandátum; első: <b>'+esc(t.w)+'</b> ('+f1(t.p)+'%).</p>'+(t.el?'<div class="mst"><span><small>Részvétel</small><b>'+f1((t.vt-(t.cv||0))/(t.el-(t.ce||0))*100)+'%</b></span><span><small>Érvényes szavazat</small><b>'+fi(t.vv)+'</b></span><span><small>Mandátum 2026</small><b>'+t.s26+'</b></span></div>':'')+vbars(t)+(t.sz?'<p class="src">A szavazatszámok a spanyolországi lakóhelyű választók szavazatai (a külföldön élők levélszavazatai nélkül), a százalékok és a mandátumok a hivatalos végeredményből.</p>':'');
-    else h+=(MODE==="chg"&&t&&lv&&lv.w?'<p class="chg">2023-ban: <b>'+esc(n23(t.w))+'</b> → 2026-ban: <b>'+esc(lv.w)+'</b>'+(n23(t.w)===lv.w?' (nem változott)':' – <b>fordulat</b>')+'</p>':'')+(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');}
+    else h+=(MODE==="chg"&&t&&lv&&lv.w?'<p class="chg">2023-ban: <b>'+esc(n23(t.w))+'</b> → 2026-ban: <b>'+esc(lv.w)+'</b>'+(n23(t.w)===lv.w?' (nem változott)':' – <b>fordulat</b>')+'</p>':'')+(lv&&lv.r?'<p>'+(lv.rp!=null?f1(lv.rp)+'% feldolgozva':'')+'</p>'+vbLive(lv.r):'<p class="nodata">Még nincs adat</p><p>Az eredmények november 29-én az urnazárás (20:00) után érkeznek. A választókerület 2026-ban '+(t?t.s26:'?')+' képviselőt választ. A 2023-as eredményt a térkép fölötti „2023” gombbal nézheted meg.</p>');
+    if((MODE==="p23"&&t&&t.v)||(MODE!=="p23"&&lv&&lv.r))h+='<p><button class="btn alt pimg" type="button" data-pi="'+esc(id)+'">Kép a tartományról</button></p>';}
   $("det").innerHTML=h+'<div class="mlg" id="mlg"></div>';legend();if(isNew&&window.MapAnim)MapAnim.panel($("det"));}
+/* ---------- megosztható kép egy tartományról (1080×1080) ---------- */
+async function provImg(id){const t=TP&&TP[id],lv=(E.prov||{})[id],y23=MODE==="p23";let rows,lab;
+  if(y23&&t&&t.v){rows=Object.entries(t.v).map(([p,v])=>({n:p,v,m:(t.r||{})[p]||0}));lab="2023-as végeredmény · "+t.s+" mandátum";}
+  else if(lv&&lv.r){rows=lv.r.map(r=>({n:r[0],v:r[1],m:r[2]||0}));lab=(E.st==="vege"?"Előzetes végeredmény":"Részeredmény · "+f1(lv.rp||0)+"% feldolgozva")+(t?" · "+t.s26+" mandátum":"");}
+  else return;
+  rows=rows.filter(r=>r.v!=null).sort((a,b)=>b.m-a.m||b.v-a.v).slice(0,6);if(!rows.length)return;
+  try{await document.fonts.ready;}catch(e){}
+  const S=1080,c=document.createElement("canvas");c.width=c.height=S;const x=c.getContext("2d");
+  const FD='"Big Shoulders Display","Arial Narrow",Impact,sans-serif',FB='"Barlow",system-ui,sans-serif';
+  const g=x.createLinearGradient(0,0,S,S);g.addColorStop(0,"#070C18");g.addColorStop(1,"#121D38");x.fillStyle=g;x.fillRect(0,0,S,S);
+  x.fillStyle=cl(rows[0].n);x.fillRect(0,0,S,10);
+  x.fillStyle="#EEF2FA";x.font="800 40px "+FB;x.fillText("voksmérő",64,92);x.fillStyle="#F5B83D";x.fillText(".",64+x.measureText("voksmérő").width,92);
+  x.fillStyle="#A3B2CC";x.font="700 26px "+FB;x.textAlign="right";x.fillText(y23?"SPANYOL VÁLASZTÁS · 2023":"SPANYOL VÁLASZTÁS · NOV. 29.",S-64,90);x.textAlign="left";
+  let fs=124;const nm=pname(id).toUpperCase();x.font="900 "+fs+"px "+FD;while(x.measureText(nm).width>S-128&&fs>60){fs-=4;x.font="900 "+fs+"px "+FD;}
+  x.fillStyle="#EEF2FA";x.fillText(nm,64,250);
+  x.fillStyle="#A3B2CC";x.font="600 30px "+FB;x.fillText(lab,64,306);
+  const mx=Math.max(...rows.map(r=>r.v)),y0=380,rh=Math.min(100,560/rows.length);
+  rows.forEach((r,i)=>{const y=y0+i*rh;x.fillStyle=cl(r.n);x.fillRect(64,y+4,10,rh-28);
+    x.fillStyle="#EEF2FA";x.font="800 38px "+FB;x.fillText(r.n,96,y+34);
+    x.fillStyle="#1B2846";x.fillRect(96,y+50,620,18);x.fillStyle=cl(r.n);x.fillRect(96,y+50,620*(r.v/mx),18);
+    x.textAlign="right";x.fillStyle="#EEF2FA";x.font="900 54px "+FD;x.fillText(r.m?r.m+"":"–",S-64,y+58);
+    x.fillStyle="#A3B2CC";x.font="700 28px "+FB;x.fillText(f1(r.v)+"%",S-150,y+58);x.textAlign="left";});
+  x.fillStyle="#66789A";x.font="700 20px "+FB;x.textAlign="right";x.fillText("MANDÁTUM",S-64,y0-14);x.textAlign="left";
+  x.fillStyle="rgba(255,255,255,.12)";x.fillRect(64,S-110,S-128,2);
+  x.fillStyle="#A3B2CC";x.font="600 26px "+FB;x.fillText(y23?"Forrás: spanyol Belügyminisztérium":"Előzetes, nem hivatalos eredmény · Belügyminisztérium",64,S-62);
+  x.fillStyle="#F5B83D";x.font="800 28px "+FB;x.textAlign="right";x.fillText("voksmero.hu",S-64,S-62);x.textAlign="left";
+  let url;try{url=c.toDataURL("image/png");}catch(e){alertBox("A kép most nem készíthető el.");return;}
+  const fn="voksmero-"+norm(pname(id)).replace(/[^a-z0-9]+/g,"-")+".png";
+  $("shpv").src=url;$("shdl").href=url;$("shdl").setAttribute("download",fn);$("shm").hidden=false;$("shsh").hidden=!(navigator.canShare||window.AppBridge);
+  $("shsh").onclick=async()=>{try{const bl=await (await fetch(url)).blob(),f=new File([bl],fn,{type:"image/png"});
+      if(navigator.canShare&&navigator.canShare({files:[f]})){await navigator.share({files:[f],title:"Spanyol választás – "+pname(id)});return;}}catch(e){if(e&&e.name==="AbortError")return;}
+    if(navigator.share)navigator.share({title:"Spanyol választás – "+pname(id),url:"https://voksmero.hu/spanyol-valasztas"});};}
+$("det")&&$("det").addEventListener("click",e=>{const b=e.target.closest&&e.target.closest("button[data-pi]");if(b)provImg(b.dataset.pi);});
 function vbars(t,lim){const e=Object.entries(t.v||{}).slice(0,lim||8);if(!e.length)return chips(Object.entries(t.r));const mx=e[0][1];
   return '<div class="vb vbm">'+e.map(([p,v])=>'<div style="--c:'+cl(p)+'">'+pcell(p,23)+'<em style="width:'+(v/mx*100)+'%"></em><b>'+f1(v)+'%'+(t.r[p]?' · '+t.r[p]+' hely':'')+(t.sz&&t.sz[p]?'<small>'+fi(t.sz[p])+' szavazat</small>':'')+'</b></div>').join("")+'</div>';}
 let SK="n",SU=true;
