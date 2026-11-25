@@ -109,7 +109,7 @@ a.ev:hover{border-color:var(--acc2);transform:translateY(-2px)}
   <div class="next" id="next"></div>
 </div></section>
 <section class="wrap" style="padding-bottom:40px">
-  <div class="bar"><div class="seg" id="flt" role="group" aria-label="Szűrés"><button type="button" class="on" data-f="all">Mind</button><button type="button" data-f="eu">Európa</button><button type="button" data-f="f">Kiemelt</button></div><small id="upd"></small><button type="button" class="icsb" id="icsall" title="Az összes közelgő választás letöltése naptárfájlként (Google Naptár, Apple Naptár, Outlook)">📅 Naptárba (.ics)</button></div>
+  <div class="bar"><div class="seg" id="flt" role="group" aria-label="Szűrés"><button type="button" class="on" data-f="all">Mind</button><button type="button" data-f="eu">Európa</button><button type="button" data-f="f">Kiemelt</button></div><small id="upd"></small><button type="button" class="icsb" id="icsall" title="Az összes közelgő választás a saját naptáradba">Mentés a naptárba</button></div>
   <div id="list"></div>
   <div class="src" id="src"></div>
 </section>
@@ -153,7 +153,7 @@ const gcal=e=>{const c=cinfo(e.k);return "https://calendar.google.com/calendar/r
 document.getElementById("icsall").onclick=()=>{const T=today();icsGet(D.v.filter(x=>day(x.d)>=T&&!x.h),"voksmero-valasztasok.ics");};
 function hero(){const T=today(),e=D.v.find(x=>day(x.d)>=T&&!x.h);if(!e){$("next").hidden=true;return;}const c=cinfo(e.k),d=day(e.d);
   $("next").style.setProperty("--fbg","url("+V.flag(e.k,320)+")");
-  $("next").innerHTML='<img class="fl" src="'+V.flag(e.k,160)+'" alt=""><div><small>Következő választás</small><h2>'+esc(c.name)+'</h2><p>'+esc(e.t)+' · '+d.getFullYear()+'. '+MH[d.getMonth()]+' '+d.getDate()+'.</p><div class="hcal"><a href="'+gcal(e)+'" target="_blank" rel="noopener">+ Google Naptár</a><button type="button" id="ics1">+ .ics</button></div></div><div class="cd" id="cd"></div>';
+  $("next").innerHTML='<img class="fl" src="'+V.flag(e.k,160)+'" alt=""><div><small>Következő választás</small><h2>'+esc(c.name)+'</h2><p>'+esc(e.t)+' · '+d.getFullYear()+'. '+MH[d.getMonth()]+' '+d.getDate()+'.</p><div class="hcal"><a href="'+gcal(e)+'" target="_blank" rel="noopener">+ Google Naptár</a><button type="button" id="ics1">+ Más naptár</button></div></div><div class="cd" id="cd"></div>';
   $("ics1").onclick=()=>icsGet([e],"voksmero-"+e.k.toLowerCase()+"-"+e.d+".ics");
   const tick=()=>{let ms=d-new Date();if(ms<0)ms=0;const dd=Math.floor(ms/864e5),hh=Math.floor(ms/36e5)%24,mm=Math.floor(ms/6e4)%60,ss=Math.floor(ms/1e3)%60;
     $("cd").innerHTML=[[dd,"nap"],[hh,"óra"],[mm,"perc"],[ss,"mp"]].map(x=>'<div><b>'+String(x[0]).padStart(2,"0")+'</b><span>'+x[1]+'</span></div>').join("");};tick();setInterval(tick,1000);}
