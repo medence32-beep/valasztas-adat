@@ -1,0 +1,66 @@
+name: Asztali alkalmazás (Windows)
+
+# Megépíti a Windowsos Voksmérő-alkalmazást, és kiteszi a GitHub „asztali” kiadásába.
+# Állandó letöltési link: https://github.com/medence32-beep/valasztas-adat/releases/download/asztali/Voksmero-telepito.exe
+# Az „asztali” kiadás soha nem lesz „latest”, hogy az Android-alkalmazás állandó linkje (releases/latest) működjön tovább.
+# Az alkalmazás az élő weboldalt mutatja, így a tartalom újratelepítés nélkül is mindig friss.
+# A forráskód a privát voksmero-forras tárhely asztali/ mappájában van; az építést kézzel kell indítani.
+on:
+  workflow_dispatch: {}
+  repository_dispatch:
+    types: [asztali]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: asztali
+  cancel-in-progress: true
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Forráskód (privát tárhely)
+        uses: actions/checkout@v4
+        with:
+          repository: medence32-beep/voksmero-forras
+          token: ${{ secrets.FORRAS_TOKEN }}
+          path: _forras
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Függőségek
+        working-directory: _forras/asztali
+        run: npm install --no-audit --no-fund
+      - name: Verziószám
+        working-directory: _forras/asztali
+        run: npm pkg set version=1.0.${{ github.run_number }}
+      - name: Építés
+        working-directory: _forras/asztali
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: "false"
+        run: npx electron-builder --win nsis --x64 --publish never
+      - name: Kiadás
+        env:
+          GH_TOKEN: ${{ github.token }}
+          R: ${{ github.repository }}
+          V: 1.0.${{ github.run_number }}
+        run: |
+          F=_forras/asztali/dist/Voksmero-telepito.exe
+          ls -la "$F"
+          {
+            if [ -s _forras/asztali/ujdonsagok.txt ]; then cat _forras/asztali/ujdonsagok.txt; else git -C _forras log -1 --pretty=%s | sed 's/^/• /'; fi
+            echo
+            echo "Telepítés: töltsd le a Voksmero-telepito.exe fájlt, és indítsd el. Ha a Windows figyelmeztet („A Windows megvédte a számítógépet”), kattints a „További információ”, majd a „Futtatás mindenképp” gombra – az alkalmazás nincs digitálisan aláírva."
+            echo "Az alkalmazás magától szól, ha új verzió érhető el."
+          } > jegyzet.txt
+          if ! gh release view asztali -R "$R" >/dev/null 2>&1; then
+            gh release create asztali -R "$R" --title "Voksmérő asztali alkalmazás $V" --notes-file jegyzet.txt --latest=false
+          fi
+          gh release upload asztali "$F" -R "$R" --clobber
+          gh release edit asztali -R "$R" --title "Voksmérő asztali alkalmazás $V" --notes-file jegyzet.txt --latest=false
