@@ -1,4 +1,4 @@
-/* Telefonos alkalmazás (PWA): service worker regisztrálása és telepítési ajánló. */
+/* Telefonos alkalmazás (PWA): service worker regisztrálása és telepítési ajánló; letöltési linkek (Android, Windows). */
 (function(){
   "use strict";
   var root=new URL("./",document.baseURI);
@@ -13,6 +13,7 @@
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",boot);else boot();
   var UA0=navigator.userAgent||"";
   if(/ValasztasokApp/.test(UA0)){document.documentElement.classList.add("is-app","in-apk");return;}
+  if(/VoksmeroAsztali/.test(UA0)){document.documentElement.classList.add("is-app","in-asztali");return;}
   var standalone=matchMedia("(display-mode: standalone)").matches||navigator.standalone===true;
   if(standalone){document.documentElement.classList.add("is-app");return;}
   var ua=navigator.userAgent||"",ios=/iPhone|iPad|iPod/.test(ua)||(/Macintosh/.test(ua)&&navigator.maxTouchPoints>1);
@@ -33,6 +34,7 @@
   var ICON=new URL("assets/app/icon-192.png?v=3",root).href;
   var SHARE='<svg class="sh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>';
   var APK="https://github.com/medence32-beep/valasztas-adat/releases/latest/download/Voksmero.apk";
+  var WIN="https://github.com/medence32-beep/valasztas-adat/releases/download/asztali/Voksmero-telepito.exe";
   var android=/Android/i.test(ua),deferred=null,card=null;
   var DL='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11M7 10l5 5 5-5"/><path d="M5 20h14"/></svg>';
   function show(mode){if(card)return;card=document.createElement("div");card.className="appc";card.setAttribute("role","dialog");card.setAttribute("aria-label","Alkalmazás");
@@ -57,7 +59,9 @@
     if(ios){var b=document.createElement("button");b.type="button";b.className="app-link";b.setAttribute("data-app-link","");
       b.innerHTML='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg>Hozzáadás a főképernyőhöz';
       b.onclick=function(){hide();setTimeout(function(){show("ios");},50);};w.appendChild(b);}
-    else{var a=document.createElement("a");a.className="app-link";a.setAttribute("data-app-link","");a.href=APK;a.style.textDecoration="none";
+    else{if(/Windows NT/.test(ua)&&!mobile){var wl=document.createElement("a");wl.className="app-link";wl.href=WIN;wl.style.textDecoration="none";
+        wl.innerHTML=DL+'Windows-alkalmazás letöltése';w.appendChild(wl);}
+      var a=document.createElement("a");a.className="app-link";a.setAttribute("data-app-link","");a.href=APK;a.style.textDecoration="none";
       a.innerHTML=DL+'Android-alkalmazás letöltése (APK)';a.onclick=function(){if(android)setTimeout(showHelp,300);};w.appendChild(a);}
     (f.querySelector(".wrap")||f).appendChild(w);}
   if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",addLink);else addLink();

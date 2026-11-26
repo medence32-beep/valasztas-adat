@@ -45,6 +45,17 @@ jobs:
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: "false"
         run: npx electron-builder --win nsis --x64 --publish never
+      - name: Próbaindítás
+        working-directory: _forras/asztali
+        run: |
+          T="$RUNNER_TEMP/teszt.json"
+          set +e
+          VOKSMERO_TESZT="$T" timeout 120 ./dist/win-unpacked/Voksmero.exe
+          K=$?
+          set -e
+          echo "Kilépési kód: $K"
+          cat "$T" || true
+          [ "$K" = "0" ]
       - name: Kiadás
         env:
           GH_TOKEN: ${{ github.token }}
